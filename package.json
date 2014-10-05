@@ -34,11 +34,22 @@
   },
   "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
   "dependencies": {
-    "nodemon": "^1.2.1",
     "LiveScript": "^1.3.0",
+    "bluebird": "^2.3.4",
+    "body-parser": "^1.9.0",
     "express": "^4.9.5",
-    "stylus": "^0.49.1",
+    "famous": "^0.3.0-rc",
+    "feathers": "^1.0.0",
+    "feathers-hooks": "^0.4.0",
+    "feathers-passport": "^0.1.1",
+    "gulp": "^3.8.8",
+    "gulp-webpack": "^0.4.1",
     "jade": "^1.7.0",
-    "primus": "^2.4.9"
+    "nodemon": "^1.2.1",
+    "primus": "^2.4.9",
+    "react": "^0.11.2",
+    "react-router": "^0.8.0",
+    "redis": "^0.12.1",
+    "stylus": "^0.49.1"
   }
 }
