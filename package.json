@@ -1,0 +1,44 @@
+{
+  "name": "instant-skeleton",
+  "version": "0.0.1",
+  "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "./bin/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DimensionSoftware/instant-skeleton.git"
+  },
+  "keywords": [
+    "Dimension",
+    "Software",
+    "Instant",
+    "Skeleton",
+    "Best",
+    "Most",
+    "Opinionated",
+    "Realtime",
+    "Framework",
+    "Lift",
+    "Heavy",
+    "Functionality",
+    "Lightening",
+    "Quick",
+    "Node.JS"
+  ],
+  "author": "Dimension Software",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DimensionSoftware/instant-skeleton/issues"
+  },
+  "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
+  "dependencies": {
+    "nodemon": "^1.2.1",
+    "LiveScript": "^1.3.0",
+    "express": "^4.9.5",
+    "stylus": "^0.49.1",
+    "jade": "^1.7.0",
+    "primus": "^2.4.9"
+  }
+}
