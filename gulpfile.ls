@@ -1,5 +1,5 @@
 
-require! <[gulp del gulp-util gulp-livescript gulp-stylus gulp-jade gulp-webpack gulp-watch gulp-livereload]>
+require! <[gulp del gulp-nodemon gulp-util gulp-livescript gulp-stylus gulp-jade gulp-webpack gulp-watch gulp-livereload]>
 
 # TODO build jade, stylus, etc...
 # ---------
@@ -27,6 +27,11 @@ gulp.task \pack <[build:client]> ->
 # ---------
 gulp.task \clean (cb) ->
   del <[./build/**]> cb
+
+# develop
+# ---------
+gulp.task \develop <[build]> ->
+  gulp-nodemon {script: './build/main.js'}
 
 
 gulp.task \default <[build pack]>
