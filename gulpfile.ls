@@ -1,6 +1,8 @@
 
 require! <[gulp del gulp-nodemon gulp-util gulp-livescript gulp-stylus gulp-jade gulp-webpack gulp-watch gulp-livereload]>
 
+is-production = process.env.NODE_ENV is \production
+
 # TODO build jade, stylus, etc...
 # ---------
 gulp.task \build:server ->
@@ -34,4 +36,7 @@ gulp.task \develop <[build]> ->
   gulp-nodemon {script: './build/main.js'}
 
 
-gulp.task \default <[build pack]>
+# main
+default-tasks = <[build pack]>
+unless is-production then default-tasks.push \develop
+gulp.task \default default-tasks
