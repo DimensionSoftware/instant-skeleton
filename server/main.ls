@@ -1,11 +1,13 @@
 
 require! {
+  shelljs
 }
 
 # init
 # ---------
 starting = false
 instance = void
+global.CHANGESET = get-CHANGESET!
 
 # main
 # ---------
@@ -17,7 +19,7 @@ function restart
   start = ->
     starting := true
     App = require \./App
-    instance := new App (process.argv.2 or parse-int(process.env.NODE_PORT) or 3000)
+    instance := new App (process.argv.2 or (parse-int process.env.NODE_PORT) or 3000)
       ..start -> starting := false
 
   if starting then return console.warn 'Still restarting...' # guard
