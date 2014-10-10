@@ -2,7 +2,7 @@
   "name": "instant-skeleton",
   "version": "0.0.1",
   "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
-  "main": "build/main.js",
+  "main": "build/server/main.js",
   "scripts": {
     "test": "./bin/test",
     "start": "gulp"
