@@ -29,15 +29,17 @@
     return gulp.src('./build/{client,shared}/*.js').pipe(gulpWebpack()).pipe(gulp.dest('./public'));
   });
   gulp.task('watch', function(){
-    livereload.listen();
-    return gulp.watch('build/**');
+    gulp.watch('./{client,shared,server}/*.ls', ['build:js']);
+    gulp.watch('./client/stylus/*.styl', ['build:stylus']);
+    return gulpLivereload.listen();
   });
   gulp.task('clean', function(cb){
     return del(['./build/**'], cb);
   });
-  gulp.task('develop', ['build'], function(){
+  gulp.task('develop', ['build', 'watch'], function(){
     return gulpNodemon({
-      script: './build/server/main.js'
+      script: './build/server/main.js',
+      nodeArgs: '--harmony'
     });
   });
   defaultTasks = ['build', 'pack'];
