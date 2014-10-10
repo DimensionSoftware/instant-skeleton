@@ -3,36 +3,30 @@ require! <[gulp del gulp-nodemon gulp-util gulp-livescript gulp-stylus nib gulp-
 
 is-production = process.env.NODE_ENV is \production
 
-# TODO build jade, stylus, etc...
+# build transformations
 # ---------
+# TODO jade
 gulp.task \build:stylus ->
-  gulp.src './client/stylus/master.styl'
-    .pipe gulp-stylus {use: [nib!], +compress}
-    .pipe gulp.dest './public'
-
-gulp.task \build:server ->
-  gulp.src './server/*.ls'
+  gulp.src \./client/stylus/master.styl
+    .pipe gulp-stylus {use: nib!, +compress}
+    .pipe gulp.dest \./public
+gulp.task \build:js ->
+  gulp.src './{client,shared,server}/*.ls'
     .pipe gulp-livescript {+bare}
-    .on \error -> throw it
     .pipe gulp.dest './build'
-gulp.task \build:client ->
-  gulp.src './client/*.ls'
-    .pipe gulp-livescript {+bare}
-    .on \error -> throw it
-    .pipe gulp.dest './build/client'
-gulp.task \build <[build:server build:client build:stylus]>
+gulp.task \build <[build:js build:stylus]>
 
 # asset optimization
 # ---------
-gulp.task \pack <[build:client]> ->
-  gulp.src './build/client/*.js'
+gulp.task \pack <[build:js]> ->
+  gulp.src './build/{client,shared}/*.js'
     .pipe gulp-webpack!
     .pipe gulp.dest './public'
   # TODO html, css, etc...
 
 gulp.task \watch ->
   livereload.listen!
-  gulp.watch 'build/**' 
+  gulp.watch 'build/**'
 
 # cleanup
 # ---------
@@ -42,7 +36,7 @@ gulp.task \clean (cb) ->
 # develop
 # ---------
 gulp.task \develop <[build]> ->
-  gulp-nodemon {script: './build/main.js'}
+  gulp-nodemon {script: './build/server/main.js'}
 
 
 # main
