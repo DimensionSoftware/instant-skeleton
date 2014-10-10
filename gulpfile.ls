@@ -25,8 +25,9 @@ gulp.task \pack <[build:js]> ->
   # TODO html, css, etc...
 
 gulp.task \watch ->
-  livereload.listen!
-  gulp.watch 'build/**'
+  gulp.watch './{client,shared,server}/*.ls' [\build:js]
+  gulp.watch './client/stylus/*.styl' [\build:stylus]
+  gulp-livereload.listen!
 
 # cleanup
 # ---------
@@ -35,8 +36,8 @@ gulp.task \clean (cb) ->
 
 # develop
 # ---------
-gulp.task \develop <[build]> ->
-  gulp-nodemon {script: './build/server/main.js'}
+gulp.task \develop <[build watch]> ->
+  gulp-nodemon {script: './build/server/main.js', node-args: '--harmony'}
 
 
 # main
