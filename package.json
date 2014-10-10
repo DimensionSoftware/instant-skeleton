@@ -55,6 +55,8 @@
     "gulp-webpack": "^0.4.1",
     "jade": "^1.7.0",
     "koa": "^0.12.2",
+    "koa-livereload": "^0.1.23",
+    "koa-logger": "^1.2.2",
     "nib": "^1.0.4",
     "nodemon": "^1.2.1",
     "prelude-ls": "^1.1.1",
