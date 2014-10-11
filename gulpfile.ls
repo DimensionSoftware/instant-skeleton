@@ -1,7 +1,7 @@
 
-require! <[gulp del gulp-nodemon gulp-util gulp-livescript gulp-stylus nib gulp-jade gulp-webpack gulp-watch gulp-livereload]>
+require! <[gulp gulp-shell del gulp-nodemon gulp-util gulp-livescript gulp-stylus nib gulp-jade gulp-webpack gulp-watch gulp-livereload]>
 
-is-production = process.env.NODE_ENV is \production
+env = process.env.NODE_ENV
 
 # build transformations
 # ---------
@@ -31,16 +31,18 @@ gulp.task \watch ->
 
 # cleanup
 # ---------
+gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
 gulp.task \clean (cb) ->
   del <[./build/**]> cb
 
-# develop
+# env tasks
 # ---------
-gulp.task \develop <[build watch]> ->
-  gulp-nodemon {script: './build/server/main.js', node-args: '--harmony'}
-
+script = './build/server/main.js'
+gulp.task \development <[build watch]> ->
+  gulp-nodemon {script, node-args: '--harmony'}
+gulp.task \production <[build]> (gulp-shell.task 'pm2 start processes.json')
 
 # main
 default-tasks = <[build pack]>
-unless is-production then default-tasks.push \develop
+  ..push env
 gulp.task \default default-tasks

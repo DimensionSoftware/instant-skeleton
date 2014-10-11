@@ -5,7 +5,8 @@
   "main": "build/server/main.js",
   "scripts": {
     "test": "./bin/test",
-    "start": "gulp"
+    "start": "gulp",
+    "stop": "gulp stop"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "gulp-livereload": "^2.1.1",
     "gulp-livescript": "^1.1.0",
     "gulp-nodemon": "^1.0.4",
+    "gulp-shell": "^0.2.10",
     "gulp-stylus": "^1.3.3",
     "gulp-watch": "^1.0.7",
     "gulp-webpack": "^0.4.1",
