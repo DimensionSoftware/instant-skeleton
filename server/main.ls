@@ -3,6 +3,8 @@ require! {
   shelljs
 }
 
+# XXX the goal of main.ls is to encapsulate instances of App
+
 # init
 # ---------
 starting = false
