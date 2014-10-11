@@ -1,13 +1,16 @@
 
 require! {
   http
+
   koa
+  \koa-locals
   \koa-logger
   \koa-livereload
 
   \./pages
 }
 
+env = global.ENV = process.env.NODE_ENV or \development
 
 module.exports =
   class App
@@ -17,11 +20,9 @@ module.exports =
       @app = app = koa!
 
       # config environment
-      if process.env.NODE_ENV isnt \test
-        app.use koa-logger!
-
-      if process.env.NODE_ENV isnt \production
-        app.use koa-livereload!
+      koa-locals app, {} # init locals
+      if env isnt \test then app.use koa-logger!
+      if env isnt \production then app.use koa-livereload!
 
       # apply routes
       app.use pages
