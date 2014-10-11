@@ -13,6 +13,13 @@ global.CHANGESET = get-CHANGESET!
 # ---------
 restart!
 process.on \SIGHUP -> restart!
+process.on \message (msg) ->
+  cl = console.log
+  switch msg
+    | \shutdown => # force after 2s
+      cl 'Closing all connections: '
+      instance.stop -> cl \done.
+      set-timeout (-> cl \killed.; process.exit 0), 2000ms
 
 
 function restart
