@@ -1,8 +1,10 @@
 
 require! {
   http
+  lodash
 
   koa
+  \koa-jade
   \koa-locals
   \koa-logger
   \koa-livereload
@@ -26,7 +28,15 @@ module.exports =
       if env isnt \production then app.use koa-livereload!
       app.use middleware.config-locals
 
-      # apply routes
+      # apply pages
+      app.use koa-jade.middleware {
+        view-path: \shared/views
+        pretty:    global.ENV isnt \production
+        no-cache:  global.ENV isnt \production
+        helper-path: [_: lodash]
+        -compile-debug
+        -debug
+      }
       app.use pages
 
       # listen

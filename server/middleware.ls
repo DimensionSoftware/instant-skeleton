@@ -1,4 +1,5 @@
 
+require! <[fs ]>
 
 config = JSON.parse(fs.read-file-sync './config.json') # intentionally crashes if malformed & sync
 
