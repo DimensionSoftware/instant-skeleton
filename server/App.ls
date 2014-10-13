@@ -24,7 +24,7 @@ module.exports =
       koa-locals app, {} # init locals
       if env isnt \test then app.use koa-logger!
       if env isnt \production then app.use koa-livereload!
-      app.use middleware.config
+      app.use middleware.config-locals
 
       # apply routes
       app.use pages
