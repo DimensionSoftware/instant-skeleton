@@ -13,7 +13,7 @@
   gulpWebpack = require('gulp-webpack');
   gulpWatch = require('gulp-watch');
   gulpLivereload = require('gulp-livereload');
-  env = process.env.NODE_ENV;
+  env = process.env.NODE_ENV || 'development';
   gulp.task('build:stylus', function(){
     return gulp.src('./client/stylus/master.styl').pipe(gulpStylus({
       use: nib(),

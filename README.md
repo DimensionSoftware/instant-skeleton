@@ -1,4 +1,4 @@
-instant-skeleton
+Instant-Skeleton
 ================
 
 The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS
@@ -13,7 +13,7 @@ The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lighte
 ## References
 * **Gulp** -- http://gulpjs.com/
 * **LiveScript** -- http://livescript.net
-* **Koa** -- koajs.com
+* **Koa** -- http://koajs.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
 * **PM2** -- https://github.com/Unitech/pm2
 

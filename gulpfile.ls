@@ -1,7 +1,7 @@
 
 require! <[gulp gulp-shell del gulp-nodemon gulp-util gulp-livescript gulp-stylus nib gulp-jade gulp-webpack gulp-watch gulp-livereload]>
 
-env = process.env.NODE_ENV
+env = process.env.NODE_ENV or \development
 
 # build transformations
 # ---------
