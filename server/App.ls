@@ -2,6 +2,7 @@
 require! {
   http
   lodash
+  \pretty-error
 
   koa
   \koa-jade
@@ -14,6 +15,7 @@ require! {
 }
 
 env = global.ENV = process.env.NODE_ENV or \development
+pe  = new pretty-error!
 
 module.exports =
   class App
@@ -21,6 +23,9 @@ module.exports =
 
     start: (cb = (->)) ->
       @app = app = koa!
+
+      app.on \error (err) ->
+        console.error(pe.render err)
 
       # config environment
       koa-locals app, {} # init locals
