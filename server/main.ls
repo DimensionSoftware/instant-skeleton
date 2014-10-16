@@ -10,6 +10,7 @@ require! {
 starting = false
 instance = void
 global.CHANGESET = get-CHANGESET!
+global.React     = require \react/addons
 
 # main
 # ---------
