@@ -6,6 +6,7 @@ require! {
 
   koa
   \koa-jade
+  \koa-static
   \koa-locals
   \koa-logger
   \koa-livereload
@@ -24,8 +25,10 @@ module.exports =
     start: (cb = (->)) ->
       @app = app = koa!
 
-      app.on \error (err) ->
+      app.on \error (err) -> # error handler
         console.error(pe.render err)
+
+      app.use koa-static('./public')
 
       # config environment
       koa-locals app, {} # init locals
