@@ -20,16 +20,22 @@
       compress: true
     })).pipe(gulp.dest('./public'));
   });
+  gulp.task('build:react', function(){
+    return gulp.src('./shared/react/*.ls').pipe(gulpLivescript({
+      bare: true
+    })).pipe(gulp.dest('./build/shared/react'));
+  });
   gulp.task('build:js', function(){
     return gulp.src('./{client,shared,server}/*.ls').pipe(gulpLivescript({
       bare: true
     })).pipe(gulp.dest('./build'));
   });
   gulp.task('build', ['build:js', 'build:stylus']);
-  gulp.task('pack', ['build:js'], function(){
+  gulp.task('pack', ['build:js', 'build:react'], function(){
     return gulp.src('./build/{client,shared}/*.js').pipe(gulpWebpack()).pipe(gulp.dest('./public'));
   });
   gulp.task('watch', function(){
+    gulp.watch('./shared/react/*.ls', ['build:react']);
     gulp.watch('./{client,shared,server}/*.ls', ['build:js']);
     gulp.watch('./client/stylus/*.styl', ['build:stylus']);
     return gulpLivereload.listen();
