@@ -26,6 +26,9 @@ gulp.task \pack <[build:js build:react]> ->
   gulp.src './build/{client,shared}/*.js'
     .pipe gulp-webpack!
     .pipe gulp.dest './public/builds'
+  gulp.src './client/vendor/*.js'
+    .pipe gulp-webpack!
+    .pipe gulp.dest './public/vendor'
   # TODO html, css, etc...
 
 gulp.task \watch ->
