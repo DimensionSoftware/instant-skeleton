@@ -8,5 +8,5 @@ window.storage = {} <<< # to better use local storage
 
 # main
 # ---------
-<~ $
+#<~ $ # TODO use head.js or otherwise loader
 # TODO browser world, stage 2
