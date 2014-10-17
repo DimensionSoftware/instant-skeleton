@@ -15,8 +15,9 @@ require! {
   \./middleware
 }
 
-env = global.ENV = process.env.NODE_ENV or \development
-pe  = new pretty-error!
+env  = global.ENV  = process.env.NODE_ENV or \development
+port = global.PORT = process.env.NODE_PORT or 80
+pe   = new pretty-error!
 
 module.exports =
   class App
@@ -24,11 +25,10 @@ module.exports =
 
     start: (cb = (->)) ->
       @app = app = koa!
+        ..on \error (err) -> # error handler
+          console.error(pe.render err)
 
-      app.on \error (err) -> # error handler
-        console.error(pe.render err)
-
-      app.use koa-static('./public')
+      app.use(koa-static './public')
 
       # config environment
       koa-locals app, {} # init locals
@@ -39,8 +39,8 @@ module.exports =
       # apply pages
       app.use koa-jade.middleware {
         view-path: \shared/views
-        pretty:    global.ENV isnt \production
-        no-cache:  global.ENV isnt \production
+        pretty:    env isnt \production
+        no-cache:  env isnt \production
         helper-path: [_: lodash]
         -compile-debug
         -debug
@@ -49,7 +49,7 @@ module.exports =
 
       # listen
       app.server = http.create-server app.callback!
-        ..listen process.env.NODE_PORT or 80
+        ..listen port
 
       # TODO websockets
       # TODO db
@@ -57,5 +57,5 @@ module.exports =
       app
 
     stop: (cb = (->)) !->
-      # TODO stop app instance
-      @app.server.close cb
+      # TODO cleanup
+      @app.server.close cb # quit listening
