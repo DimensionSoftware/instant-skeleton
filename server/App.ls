@@ -15,7 +15,7 @@ require! {
   \./middleware
 }
 
-env  = global.ENV  = process.env.NODE_ENV or \development
+env  = global.ENV  = process.env.NODE_ENV  or \development
 port = global.PORT = process.env.NODE_PORT or 80
 pe   = new pretty-error!
 

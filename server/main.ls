@@ -9,7 +9,8 @@ require! {
 # ---------
 starting = false
 instance = void
-global.CHANGESET = get-CHANGESET!
+global.CHANGESET = get-latest-webpack 'public/builds'
+global.VENDORSET = get-latest-webpack 'public/vendor'
 global.React     = require \react/addons
 
 # main
@@ -38,6 +39,7 @@ function restart
   else
     start!
 
-function get-CHANGESET
-  {code, output} = shelljs.exec 'ls -t public/builds|head -1' {+silent} # use latest webpack hash
+
+function get-latest-webpack dest
+  {code, output} = shelljs.exec "ls -t #dest|head -1" {+silent} # use latest webpack hash
   output.trim!replace /\.js$/ '' # strip extension

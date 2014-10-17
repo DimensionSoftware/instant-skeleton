@@ -45,4 +45,5 @@ html
       != body
 
     //- ...and boot latest app (uses webpack hash) last!
-    script(type='text/javascript', src="#{cacheUrls[2]}/builds/#{global.CHANGESET}.js")
+    script(type='text/javascript', src="#{cacheUrls[2]}/vendor/#{global.VENDORSET}.js")
+    script(type='text/javascript', src="#{cacheUrls[3]}/builds/#{global.CHANGESET}.js")
