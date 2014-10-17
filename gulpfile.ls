@@ -25,7 +25,7 @@ gulp.task \build <[build:js build:stylus]>
 gulp.task \pack <[build:js build:react]> ->
   gulp.src './build/{client,shared}/*.js'
     .pipe gulp-webpack!
-    .pipe gulp.dest './public'
+    .pipe gulp.dest './public/builds'
   # TODO html, css, etc...
 
 gulp.task \watch ->

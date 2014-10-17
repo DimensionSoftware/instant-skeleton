@@ -39,5 +39,5 @@ function restart
     start!
 
 function get-CHANGESET
-  {code, output} = shelljs.exec 'git rev-parse HEAD' {+silent}
-  output.trim!
+  {code, output} = shelljs.exec 'ls -t public/builds|head -1' {+silent} # use latest webpack hash
+  output.trim!replace /\.js$/ '' # strip extension

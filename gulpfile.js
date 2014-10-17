@@ -32,7 +32,7 @@
   });
   gulp.task('build', ['build:js', 'build:stylus']);
   gulp.task('pack', ['build:js', 'build:react'], function(){
-    return gulp.src('./build/{client,shared}/*.js').pipe(gulpWebpack()).pipe(gulp.dest('./public'));
+    return gulp.src('./build/{client,shared}/*.js').pipe(gulpWebpack()).pipe(gulp.dest('./public/builds'));
   });
   gulp.task('watch', function(){
     gulp.watch('./shared/react/*.ls', ['build:react']);

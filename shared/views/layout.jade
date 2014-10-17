@@ -38,7 +38,11 @@ html
 
     link(href="#{cacheUrls[1]}/master.css?#{global.CHANGESET}", rel='stylesheet', type='text/css')
 
-    //- TODO the only .js in our <head> 
+    //- XXX no <scripts> in <head>
   body
+    //- render page soon as possible
     block body
       != body
+
+    //- ...and boot latest app (uses webpack hash) last!
+    script(type='text/javascript', src="#{cacheUrls[2]}/builds/#{global.CHANGESET}.js")
