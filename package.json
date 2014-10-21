@@ -5,6 +5,7 @@
   "main": "build/server/main.js",
   "scripts": {
     "test": "./bin/test",
+    "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
     "start": "gulp",
     "stop": "gulp stop"
   },
