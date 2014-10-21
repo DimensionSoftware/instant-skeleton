@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head><title>shared/helpers</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="shared/helpers"><meta name="groc-project-path" content="shared/helpers.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/shared/helpers.ls">shared/helpers.ls</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Think of this as a debounce that remembers intermediate calls and summarizes them instead of throwing them away.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>initial must be a Function.</strong><br/>(-fn function that returns initial-state for use with fold and combiner-fn)</p>
+</li>
+<li><p><strong>combiner must be a Function.</strong><br/>(-fn given an array of arrays of function arguments, fold them into a value that can be used by final-fn)</p>
+</li>
+<li><p><strong>final must be a Function.</strong><br/>(-fn function to run after nothing has happend for longer than delay milliseconds)</p>
+</li>
+<li><p><strong>delay must be a Number.</strong><br/>(milliseconds to wait for inactivity before running final-fn)</p>
+</li>
+</ul>
+<p><strong>Returns a Function</strong><br/>(a function that will collapse and summarize bursts)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">burst</span> = <span class="hljs-params">(initial-fn, combiner-fn, final-fn, delay)</span> -&gt;</span>
+  ax           = []
+  accumulating = <span class="hljs-literal">false</span>
+  wait         = <span class="hljs-literal">null</span>
+  <span class="hljs-function"><span class="hljs-title">finish</span> = -&gt;</span>
+    initial-value = initial-fn!
+    <span class="hljs-comment">#console.log \finished, { initial-value, ax }</span>
+    final = fold combiner-fn, initial-value, ax
+    <span class="hljs-comment">#console.log \final, final</span>
+    final-fn(final)
+    ax           := []
+    accumulating := <span class="hljs-literal">false</span>
+    wait         := <span class="hljs-literal">null</span>
+
+  <span class="hljs-function"><span class="hljs-params">(...args)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> accumulating
+      accumulating := <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">else</span>
+      clear-timeout(wait) <span class="hljs-keyword">if</span> wait
+    wait := set-timeout finish, delay
+    ax.push args</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Don&#39;t run next unless condition-fn returns true.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>condition must be a Function.</strong><br/>(-fn a function that returns true or false based on its args)</p>
+</li>
+<li><p><strong>next must be a Function.</strong><br/>(if condition-fn returns true, this function is called with the same args)</p>
+</li>
+</ul>
+<p><strong>Returns a Function</strong><br/>(a function that will only run if condition-fn is true)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">prereq</span> = <span class="hljs-params">(condition-fn, next)</span> -&gt;</span>
+  <span class="hljs-function"><span class="hljs-params">(...args)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> condition-fn ...args
+      next ...args</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>A v8-friendly way to catch exceptions.
+<a href="https://github.com/petkaantonov/bluebird/wiki/Optimization-killers">https://github.com/petkaantonov/bluebird/wiki/Optimization-killers</a></p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>fn must be a Function.</strong><br/>(a function that might throw an exception.)</p>
+</li>
+<li><p><strong>ctx must be an Object.</strong><br/>(the value of <code>this</code> for fn)</p>
+</li>
+<li><p><strong>args must be an Array.</strong><br/>(arguments for fn)</p>
+</li>
+</ul>
+<p><strong>Returns an Object</strong><br/>(the return value of fn or an exception)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">try-catch</span> = <span class="hljs-params">(fn, ctx, args)</span> -&gt;</span>
+  <span class="hljs-keyword">try</span>
+    fn.apply ctx, args
+  <span class="hljs-keyword">catch</span> e
+    e</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>vim:fdm=indent</p></div></div></div></div></body></html>

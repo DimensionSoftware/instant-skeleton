@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><title>server/App</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/App"><meta name="groc-project-path" content="server/App.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/server/App.ls">server/App.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-built_in">require</span>! {
+  http
+  lodash
+  <span class="hljs-string">\pretty-error</span>
+
+  koa
+  <span class="hljs-string">\koa-jade</span>
+  <span class="hljs-string">\koa-static</span>
+  <span class="hljs-string">\koa-locals</span>
+  <span class="hljs-string">\koa-logger</span>
+  <span class="hljs-string">\koa-livereload</span>
+
+  <span class="hljs-string">\./pages</span>
+  <span class="hljs-string">\./middleware</span>
+}
+
+env  = <span class="hljs-built_in">global</span>.ENV  = process.env.NODE_ENV  <span class="hljs-keyword">or</span> <span class="hljs-string">\development</span>
+port = <span class="hljs-built_in">global</span>.PORT = process.env.NODE_PORT <span class="hljs-keyword">or</span> <span class="hljs-number">80</span>
+pe   = <span class="hljs-keyword">new</span> pretty-error!
+
+<span class="hljs-built_in">module</span>.exports =
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span></span>
+    <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@port</span>)</span> -&gt;</span>
+
+    <span class="hljs-attribute">start</span>: <span class="hljs-function"><span class="hljs-params">(cb = (-&gt;))</span> -&gt;</span>
+      <span class="hljs-property">@app</span> = app = koa!
+        ..<span class="hljs-literal">on</span> <span class="hljs-string">\error</span> <span class="hljs-function"><span class="hljs-params">(err)</span> -&gt;</span> <span class="hljs-comment"># error handler</span>
+          <span class="hljs-built_in">console</span>.error(pe.render err)
+
+      app.use(koa-static <span class="hljs-string">'./public'</span>)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>config environment</p></div></div><div class="code"><div class="wrapper">      koa-locals app, {} <span class="hljs-comment"># init locals</span>
+      <span class="hljs-keyword">if</span> env <span class="hljs-keyword">isnt</span> <span class="hljs-string">\test</span> <span class="hljs-keyword">then</span> app.use koa-logger!
+      <span class="hljs-keyword">if</span> env <span class="hljs-keyword">isnt</span> <span class="hljs-string">\production</span> <span class="hljs-keyword">then</span> app.use koa-livereload!
+      app.use middleware.config-locals</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>apply pages</p></div></div><div class="code"><div class="wrapper">      app.use koa-jade.middleware {
+        <span class="hljs-attribute">view-path</span>: <span class="hljs-string">\shared/views</span>
+        <span class="hljs-attribute">pretty</span>:    env <span class="hljs-keyword">isnt</span> <span class="hljs-string">\production</span>
+        <span class="hljs-attribute">no-cache</span>:  env <span class="hljs-keyword">isnt</span> <span class="hljs-string">\production</span>
+        <span class="hljs-attribute">helper-path</span>: [<span class="hljs-attribute">_</span>: lodash]
+        -compile-debug
+        -debug
+      }
+      app.use pages</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>listen</p></div></div><div class="code"><div class="wrapper">      app.server = http.create-server app.callback!
+        ..listen port</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO websockets
+TODO db</p></div></div><div class="code"><div class="wrapper">      app
+
+    <span class="hljs-attribute">stop</span>: <span class="hljs-function"><span class="hljs-params">(cb = (-&gt;))</span> !-&gt;</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO cleanup</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-property">@app</span>.server.close cb <span class="hljs-comment"># quit listening</span></div></div></div></div></body></html>

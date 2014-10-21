@@ -1,0 +1,9 @@
+*.pid
+*.log
+*.jar
+.*.swp
+nohup.out
+build/
+logs/
+public/master.css
+public/builds
