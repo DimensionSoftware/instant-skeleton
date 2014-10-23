@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# 2014-10-22:v1
+# %changeset%
 
 # Explicitly cached 'master entries'.
 CACHE:
-*
+/
 
 # Resources that require the user to be online.
 NETWORK:
