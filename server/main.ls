@@ -9,9 +9,6 @@ require! {
 # ---------
 starting = false
 instance = void
-global.CHANGESET = get-latest-webpack 'public/builds'
-global.VENDORSET = get-latest-webpack 'public/vendor'
-global.React     = require \react/addons
 
 # main
 # ---------
@@ -29,8 +26,15 @@ process.on \message (msg) ->
 function restart
   start = ->
     starting := true
-    App = require \./App
-    instance := new App (process.argv.2 or (parse-int process.env.NODE_PORT) or 3000)
+    App  = require \./App
+    args = [
+      process.argv.2 or (parse-int process.env.NODE_PORT) or 3000 # port
+      get-latest-webpack 'public/builds'                          # changeset
+      get-latest-webpack 'public/vendor'                          # vendorset
+    ]
+
+    # start!
+    instance := new App ...args
       ..start -> starting := false
 
   if starting then return console.warn 'Still restarting...' # guard
