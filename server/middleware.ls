@@ -30,8 +30,7 @@ export app-cache = (next) ->*
         .pipe replacestream '%changeset%', @locals.changeset # use changeset to blow cache
     else
       @status = 404
-  else
-    yield next
+  yield next
 
 # localize config.json for env
 export config-locals = (next) ->*
