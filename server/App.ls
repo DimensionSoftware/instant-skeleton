@@ -27,7 +27,7 @@ module.exports =
     start: (cb = (->)) ->
       @app = app = koa!
 
-      koa-locals app, {@port, @changeset, @vendorset} # init locals
+      koa-locals app, {env, @port, @changeset, @vendorset} # init locals
 
       app
         ..on \error (err) ->
