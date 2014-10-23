@@ -9,17 +9,25 @@ require! {
 
 global <<< require \prelude-ls
 
-config = JSON.parse(fs.read-file-sync './config.json') # intentionally crashes if malformed & sync
+cwd     = process.cwd!
+config  = require "#cwd/config.json"
+html404 = fs.read-file-sync "#cwd/public/404.html" .to-string!
+html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
 
-export four-oh-four-handler = (next) ->*
-  return unless @status is 404 # guard
-  @status = 404 # so koa doesn't 200 or 404
-  switch (@accepts \html \json)
-  | \json =>
-    @body = message: 'Page Not Found!'
-  | otherwise => # TODO load static jade assets
-    @type = \html
-    @body = '404, Page Not Found!'
+
+export error-handler = (next) ->*
+  try
+    yield next
+    if @status is 404 then throw 404
+  catch
+    @status = if typeof! e is \Number then e else e.status or 500 # default 500
+    switch @accepts(\html \text \json) # -> out!
+    | \json =>
+      @body = message: if @status is 404 then 'Page Not Found!' else 'Error, Try Again!'
+    | otherwise =>
+      @type = \html
+      @body = if @status is 404 then html404 else html50x
+    @app.emit \error, e, @ # report to koa, too
 
 # app-cache manifest needs headers
 export app-cache = (next) ->*
@@ -31,6 +39,7 @@ export app-cache = (next) ->*
     else
       @status = 404
   yield next
+
 
 # localize config.json for env
 export config-locals = (next) ->*
@@ -45,6 +54,8 @@ export config-locals = (next) ->*
         "#v:#{@locals.port}"
   yield next
 
+
+# react
 export react = (next) ->* # set body to react tree
   locals  = {} <<< @locals
   path    = url.parse (@url or '/') .pathname
