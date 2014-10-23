@@ -21,17 +21,14 @@ pe   = new pretty-error!
 
 module.exports =
   class App
-    (@port) ->
+    (@port, @changeset, @vendorset) ->
 
     start: (cb = (->)) ->
       @app = app = koa!
-        ..on \error (err) -> # error handler
-          console.error(pe.render err)
 
-      app.use(koa-static './public')
+      koa-locals app, {@port, @changeset, @vendorset} # init locals
 
       # config environment
-      koa-locals app, {} # init locals
       if env isnt \test then app.use koa-logger!
       if env isnt \production then app.use koa-livereload!
       app.use middleware.config-locals
