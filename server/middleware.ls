@@ -10,6 +10,14 @@ global <<< require \prelude-ls
 
 config = JSON.parse(fs.read-file-sync './config.json') # intentionally crashes if malformed & sync
 
+# app-cache manifest needs headers
+export app-cache = (next) ->*
+  if @path is '/manifest.appcache'
+    @type = \text/cache-manifest
+    @body = fs.create-read-stream 'public/manifest.appcache'
+  else
+    yield next
+
 # localize config.json for env
 export config-locals = (next) ->*
   config <<< config[global.ENV]      # merge in current env's config
