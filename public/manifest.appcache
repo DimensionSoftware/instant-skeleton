@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# 2014-10-22:v1
+
+# Explicitly cached 'master entries'.
+CACHE:
+*
+
+# Resources that require the user to be online.
+NETWORK:
+*
+
+# offline.html will be displayed if the user is offline
+FALLBACK:
+/ /offline.html
