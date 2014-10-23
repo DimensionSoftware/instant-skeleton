@@ -32,6 +32,7 @@ module.exports =
       app
         ..on \error (err) ->
           console.error(pe.render err) # error handler
+        ..use middleware.error-handler # 404 & 50x handler
         ..use middleware.app-cache     # offline support
         ..use(koa-static './public')   # static assets handler
         ..use middleware.config-locals # load config into locals
