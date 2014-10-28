@@ -29,6 +29,7 @@ export error-handler = (next) ->*
       @body = if @status is 404 then html404 else html50x
     @app.emit \error, e, @ # report to koa, too
 
+
 # app-cache manifest needs headers
 export app-cache = (next) ->*
   if @path is '/manifest.appcache'
