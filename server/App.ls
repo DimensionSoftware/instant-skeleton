@@ -20,9 +20,10 @@ env  = global.ENV  = process.env.NODE_ENV  or \development
 port = global.PORT = process.env.NODE_PORT or 80
 pe   = new pretty-error!
 
+## App's purpose is to abstract instantiation from starting & stopping
 module.exports =
   class App
-    (@port, @changeset, @vendorset) ->
+    (@port=\ephemeral, @changeset, @vendorset) ->
 
     start: (cb = (->)) ->
       console.log "[1;37;30m+ [1;37;40m#env[0;m on port [1;37;40m#{@port}[0;m"
@@ -53,8 +54,8 @@ module.exports =
       if env isnt \production then app.use koa-livereload!
 
       # listen
-      app.server = http.create-server (~> cb app; app.callback!)
-        ..listen port
+      app.server = http.create-server app.callback!
+      unless env is \test then app.server.listen port
 
       # TODO websockets
       # TODO db
