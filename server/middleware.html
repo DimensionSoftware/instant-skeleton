@@ -1,25 +1,55 @@
 <!DOCTYPE html><html lang="en"><head><title>server/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/middleware"><meta name="groc-project-path" content="server/middleware.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/server/middleware.ls">server/middleware.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-built_in">require</span>! {
   fs
   url
+  replacestream
 
   <span class="hljs-string">\../shared/react/App</span>
 }
 
 <span class="hljs-built_in">global</span> &lt;&lt;&lt; <span class="hljs-built_in">require</span> <span class="hljs-string">\prelude-ls</span>
 
-config = JSON.parse(fs.read-file-sync <span class="hljs-string">'./config.json'</span>) <span class="hljs-comment"># intentionally crashes if malformed &amp; sync</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>localize config.json for env</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">config-locals</span> = <span class="hljs-params">(next)</span> -&gt;*</span>
-  config &lt;&lt;&lt; config[<span class="hljs-built_in">global</span>.ENV]      <span class="hljs-comment"># merge in current env's config</span>
+cwd     = process.cwd!
+config  = <span class="hljs-built_in">require</span> <span class="hljs-string">"<span class="hljs-subst">#cwd</span>/config.json"</span>
+html404 = fs.read-file-sync <span class="hljs-string">"<span class="hljs-subst">#cwd</span>/public/404.html"</span> .<span class="hljs-keyword">to</span>-string!
+html50x = fs.read-file-sync <span class="hljs-string">"<span class="hljs-subst">#cwd</span>/public/50x.html"</span> .<span class="hljs-keyword">to</span>-string!
+
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">error-handler</span> = <span class="hljs-params">(next)</span> -&gt;*</span>
+  <span class="hljs-keyword">try</span>
+    yield next
+    <span class="hljs-keyword">if</span> <span class="hljs-property">@status</span> <span class="hljs-keyword">is</span> <span class="hljs-number">404</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">throw</span> <span class="hljs-number">404</span>
+  <span class="hljs-keyword">catch</span>
+    <span class="hljs-property">@status</span> = <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span>! e <span class="hljs-keyword">is</span> <span class="hljs-string">\Number</span> <span class="hljs-keyword">then</span> e <span class="hljs-keyword">else</span> e.status <span class="hljs-keyword">or</span> <span class="hljs-number">500</span> <span class="hljs-comment"># default 500</span>
+    <span class="hljs-keyword">switch</span> <span class="hljs-property">@accepts</span>(<span class="hljs-string">\html</span> <span class="hljs-string">\text</span> <span class="hljs-string">\json)</span> <span class="hljs-comment"># -&gt; out!</span>
+    | <span class="hljs-string">\json</span> =&gt;
+      <span class="hljs-property">@body</span> = <span class="hljs-attribute">message</span>: <span class="hljs-keyword">if</span> <span class="hljs-property">@status</span> <span class="hljs-keyword">is</span> <span class="hljs-number">404</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'Page Not Found!'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'Error, Try Again!'</span>
+    | <span class="hljs-keyword">otherwise</span> =&gt;
+      <span class="hljs-property">@type</span> = <span class="hljs-string">\html</span>
+      <span class="hljs-property">@body</span> = <span class="hljs-keyword">if</span> <span class="hljs-property">@status</span> <span class="hljs-keyword">is</span> <span class="hljs-number">404</span> <span class="hljs-keyword">then</span> html404 <span class="hljs-keyword">else</span> html50x
+    <span class="hljs-property">@app</span>.emit <span class="hljs-string">\error,</span> e, @ <span class="hljs-comment"># report to koa, too</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>app-cache manifest needs headers</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">app-cache</span> = <span class="hljs-params">(next)</span> -&gt;*</span>
+  <span class="hljs-keyword">if</span> <span class="hljs-property">@path</span> <span class="hljs-keyword">is</span> <span class="hljs-string">'/manifest.appcache'</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-property">@locals</span>.env <span class="hljs-keyword">is</span> <span class="hljs-string">\production</span> <span class="hljs-comment"># use appcache</span>
+      <span class="hljs-property">@type</span> = <span class="hljs-string">\text/cache-manifest</span>
+      <span class="hljs-property">@body</span> = fs.create-read-stream <span class="hljs-string">'public/manifest.appcache'</span>
+        .pipe replacestream <span class="hljs-string">\%changeset%</span>  <span class="hljs-property">@locals</span>.changeset <span class="hljs-comment"># use changeset to blow cache</span>
+        .pipe replacestream <span class="hljs-string">\%vendorset%</span>  <span class="hljs-property">@locals</span>.vendorset
+        .pipe replacestream <span class="hljs-string">\%cacheUrls%</span>  <span class="hljs-property">@locals</span>.cache-urls.<span class="hljs-number">0</span>
+        .pipe replacestream <span class="hljs-string">\%cacheUrls1%</span> <span class="hljs-property">@locals</span>.cache-urls.<span class="hljs-number">1</span>
+        .pipe replacestream <span class="hljs-string">\%cacheUrls2%</span> <span class="hljs-property">@locals</span>.cache-urls.<span class="hljs-number">2</span>
+        .pipe replacestream <span class="hljs-string">\%cacheUrls3%</span> <span class="hljs-property">@locals</span>.cache-urls.<span class="hljs-number">3</span>
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-property">@status</span> = <span class="hljs-number">404</span>
+  <span class="hljs-keyword">else</span> yield next</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>localize config.json for env</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">config-locals</span> = <span class="hljs-params">(next)</span> -&gt;*</span>
+  config &lt;&lt;&lt; config[<span class="hljs-property">@locals</span>.env]     <span class="hljs-comment"># merge in current env's config</span>
   [<span class="hljs-property">@locals</span>[k] = v <span class="hljs-keyword">for</span> k,v <span class="hljs-keyword">of</span> config] <span class="hljs-comment"># ...and localize!</span>
 
-  <span class="hljs-keyword">if</span> <span class="hljs-built_in">global</span>.PORT <span class="hljs-keyword">isnt</span> <span class="hljs-number">80</span> <span class="hljs-comment"># add port to urls</span>
+  <span class="hljs-keyword">if</span> <span class="hljs-property">@locals</span>.port <span class="hljs-keyword">isnt</span> <span class="hljs-number">80</span> <span class="hljs-comment"># add port to urls</span>
     <span class="hljs-keyword">for</span> k,v <span class="hljs-keyword">of</span> config <span class="hljs-keyword">when</span> k.<span class="hljs-keyword">to</span>-lower-<span class="hljs-keyword">case</span>!match <span class="hljs-string">\url</span>
       <span class="hljs-property">@locals</span>[k] = <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span>! v <span class="hljs-keyword">is</span> <span class="hljs-string">\Array</span>
-        v |&gt; map (<span class="hljs-function">-&gt;</span> <span class="hljs-string">"<span class="hljs-subst">#<span class="hljs-literal">it</span></span>:<span class="hljs-subst">#{<span class="hljs-built_in">global</span>.PORT}</span>"</span>)
+        v |&gt; map (<span class="hljs-function">~&gt;</span> <span class="hljs-string">"<span class="hljs-subst">#<span class="hljs-literal">it</span></span>:<span class="hljs-subst">#{<span class="hljs-property">@locals</span>.port}</span>"</span>)
       <span class="hljs-keyword">else</span>
-        <span class="hljs-string">"<span class="hljs-subst">#v</span>:<span class="hljs-subst">#{<span class="hljs-built_in">global</span>.PORT}</span>"</span>
-  yield next
-
-<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">react</span> = <span class="hljs-params">(next)</span> -&gt;*</span> <span class="hljs-comment"># set body to react tree</span>
+        <span class="hljs-string">"<span class="hljs-subst">#v</span>:<span class="hljs-subst">#{<span class="hljs-property">@locals</span>.port}</span>"</span>
+  yield next</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>react</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">react</span> = <span class="hljs-params">(next)</span> -&gt;*</span> <span class="hljs-comment"># set body to react tree</span>
   locals  = {} &lt;&lt;&lt; <span class="hljs-property">@locals</span>
   path    = url.parse (<span class="hljs-property">@url</span> <span class="hljs-keyword">or</span> <span class="hljs-string">'/'</span>) .pathname
   app     = App {path, locals}

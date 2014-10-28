@@ -1,9 +1,6 @@
-*.pid
-*.log
-*.jar
-.*.swp
-nohup.out
-build/
-logs/
-public/master.css
+build
+logs
+npm-debug.log
 public/builds
+public/master.css
+public/vendor
