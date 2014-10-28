@@ -3,12 +3,19 @@
   "version": "0.0.1",
   "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
   "main": "build/server/main.js",
+  "config": {
+    "blanket": {
+      "pattern": "![node_modules] build/**.js",
+      "data-cover-never": "node_modules"
+    }
+  },
   "scripts": {
     "test": "NODE_ENV=test npm run unit",
     "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
     "start": "gulp",
     "stop": "gulp stop",
     "unit": "mocha -R nyan --harmony",
+    "coverage": "mocha -r blanket -R html-cov --harmony > coverage.html && open coverage.html"
   },
   "repository": {
     "type": "git",
