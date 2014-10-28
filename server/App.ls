@@ -25,6 +25,8 @@ module.exports =
     (@port, @changeset, @vendorset) ->
 
     start: (cb = (->)) ->
+      console.log "[1;37;30m+ [1;37;40m#env[0;m on port [1;37;40m#{@port}[0;m"
+
       @app = app = koa!
 
       koa-locals app, {env, @port, @changeset, @vendorset} # init locals
@@ -51,7 +53,7 @@ module.exports =
       if env isnt \production then app.use koa-livereload!
 
       # listen
-      app.server = http.create-server app.callback!
+      app.server = http.create-server (~> cb app; app.callback!)
         ..listen port
 
       # TODO websockets
@@ -61,4 +63,5 @@ module.exports =
 
     stop: (cb = (->)) !->
       # TODO cleanup
+      console.log "[1;37;30m- [1;37;40m#env[0;m on port [1;37;40m#{@port}[0;m"
       @app.server.close cb # quit listening
