@@ -304,8 +304,8 @@ Scrolling
 By default, the router will manage the scroll position between route
 transitions. When a user clicks "back" or "forward", it will restore
 their scroll position. If they visit a new route, it will automatically
-scroll the window to the top. You can opt out of this with the
-`preserverScrollPosition` option on [Routes][Routes] or [Route][Route].
+scroll the window to the top. You can configure this options on
+[Routes][Routes].
 
 Bells and Whistles
 ------------------
@@ -371,3 +371,16 @@ redirecting transitions, query parameters and more.
   [API]:../api/
   [path-matching]:./path-matching.md
 
+CommonJS Guide
+--------------
+
+In order for the above examples to work in a CommonJS environment you'll need to `require` the following:
+
+```
+var Router = require('react-router');
+var Route = Router.Route;
+var Routes = Router.Routes;
+var NotFoundRoute = Router.NotFoundRoute;
+var DefaultRoute = Router.DefaultRoute;
+var Link = Router.Link;
+```
