@@ -14,7 +14,9 @@ function encodeURLPath(path) {
   return String(path).split('/').map(encodeURL).join('/');
 }
 
-var paramMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$]*)|[*.()\[\]\\+|{}^$]/g;
+var paramCompileMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$]*)|[*.()\[\]\\+|{}^$]/g;
+var paramInjectMatcher = /:([a-zA-Z_$][a-zA-Z0-9_$?]*[?]?)|[*]/g;
+var paramInjectTrailingSlashMatcher = /\/\/\?|\/\?/g;
 var queryMatcher = /\?(.+)/;
 
 var _compiledPatterns = {};
@@ -22,7 +24,7 @@ var _compiledPatterns = {};
 function compilePattern(pattern) {
   if (!(pattern in _compiledPatterns)) {
     var paramNames = [];
-    var source = pattern.replace(paramMatcher, function (match, paramName) {
+    var source = pattern.replace(paramCompileMatcher, function (match, paramName) {
       if (paramName) {
         paramNames.push(paramName);
         return '([^/?#]+)';
@@ -82,13 +84,21 @@ var Path = {
 
     var splatIndex = 0;
 
-    return pattern.replace(paramMatcher, function (match, paramName) {
+    return pattern.replace(paramInjectMatcher, function (match, paramName) {
       paramName = paramName || 'splat';
 
-      invariant(
-        params[paramName] != null,
-        'Missing "' + paramName + '" parameter for path "' + pattern + '"'
-      );
+      // If param is optional don't check for existence
+      if (paramName.slice(-1) !== '?') {
+        invariant(
+          params[paramName] != null,
+          'Missing "' + paramName + '" parameter for path "' + pattern + '"'
+        );
+      } else {
+        paramName = paramName.slice(0, -1)
+        if (params[paramName] == null) {
+            return '';
+        }
+      }
 
       var segment;
       if (paramName === 'splat' && Array.isArray(params[paramName])) {
@@ -103,7 +113,7 @@ var Path = {
       }
 
       return encodeURLPath(segment);
-    });
+    }).replace(paramInjectTrailingSlashMatcher, '/');
   },
 
   /**
@@ -111,7 +121,7 @@ var Path = {
    * in the given path, null if the path contains no query string.
    */
   extractQuery: function (path) {
-    var match = decodeURL(path).match(queryMatcher);
+    var match = path.match(queryMatcher);
     return match && qs.parse(match[1]);
   },
 

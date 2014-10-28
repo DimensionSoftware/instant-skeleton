@@ -9,9 +9,8 @@ Methods
 
 ### `setup(onChange)`
 
-Called when the router is first setup. Whenever an external actor should
-cause the router to react, call `onChange` (for example, on
-`window.hashchange`).
+Called when the router is first setup. The `onChange` function should be
+called without any arguments when the location changes.
 
 ### `teardown`
 
@@ -32,7 +31,8 @@ Called when the router attempts to go back one entry in the history.
 
 ### `getCurrentPath`
 
-Should return the current path as a string.
+Should return the current URL path, complete with query string (if applicable).
+This method should be ready to go immediately after setup.
 
 ### `toString`
 
@@ -41,26 +41,5 @@ Should return a useful string for logging and debugging.
 Example
 -------
 
-This is a terrible example, you're probably better off looking at the
-implementations in this repository.
-
-```js
-var MyLocation = {
-
-  setup: function (onChange) {},
-
-  teardown: function () {},
-
-  push: function (path) {},
-
-  replace: function (path) {},
-
-  pop: function () {},
-
-  getCurrentPath: function () {},
-
-  toString: function () {}
-
-};
-```
-
+For examples of how to implement your own location, please see the locations
+included in this repository.
