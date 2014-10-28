@@ -12,6 +12,7 @@ instance = void
 
 # main
 # ---------
+console.log "\n[1;37m,.._________[0;m"
 restart!
 process.on \SIGHUP -> restart!
 process.on \message (msg) ->
