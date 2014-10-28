@@ -35,10 +35,15 @@ export app-cache = (next) ->*
     if @locals.env is \production # use appcache
       @type = \text/cache-manifest
       @body = fs.create-read-stream 'public/manifest.appcache'
-        .pipe replacestream '%changeset%', @locals.changeset # use changeset to blow cache
+        .pipe replacestream \%changeset%  @locals.changeset # use changeset to blow cache
+        .pipe replacestream \%vendorset%  @locals.vendorset
+        .pipe replacestream \%cacheUrls%  @locals.cache-urls.0
+        .pipe replacestream \%cacheUrls1% @locals.cache-urls.1
+        .pipe replacestream \%cacheUrls2% @locals.cache-urls.2
+        .pipe replacestream \%cacheUrls3% @locals.cache-urls.3
     else
       @status = 404
-  yield next
+  else yield next
 
 
 # localize config.json for env
