@@ -4,6 +4,13 @@ CACHE MANIFEST
 # Explicitly cached 'master entries'.
 CACHE:
 /
+%cacheUrls1%/master.css?%changeset%
+%cacheUrls2%/vendor/%vendorset%.js
+%cacheUrls3%/builds/%changeset%.js
+%cacheUrls%/images/favicon.ico
+%cacheUrls%/images/apple-touch-icon.png
+%cacheUrls%/images/apple-touch-icon-72x72.png
+%cacheUrls%/images/apple-touch-icon-114x114.png
 
 # Resources that require the user to be online.
 NETWORK:
