@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/primus/create-server.svg?branch=master)](https://travis-ci.org/primus/create-server)
 [![NPM version](https://badge.fury.io/js/create-server.svg)](http://badge.fury.io/js/create-server)
+[![Coverage Status](https://img.shields.io/coveralls/primus/create-server.svg)](https://coveralls.io/r/primus/create-server?branch=master)
 
 I've found my self writing this particular piece of snippet over and over again.
 If you need to have a common API for creating a HTTP, HTTPS or SPDY server this

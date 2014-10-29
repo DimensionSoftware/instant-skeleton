@@ -296,7 +296,7 @@ function merge(target, additional) {
 //
 // Attach some convenience functions.
 //
-predefine.extend = require('extendable');
+predefine.extend = require('extendible');
 predefine.descriptor = descriptor;
 predefine.create = create;
 predefine.remove = remove;
