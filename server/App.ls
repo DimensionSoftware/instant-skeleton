@@ -1,9 +1,14 @@
-global.React = require \react/addons
+global.React  = require \react/addons
+global.Router = require \react-router
+
+# App
+#####
+
 require! {
   fs
   http
   lodash
-  \pretty-error
+  'pretty-error': PrettyError
 
   koa
   \koa-jade
@@ -12,15 +17,19 @@ require! {
   \koa-logger
   \koa-livereload
 
+  primus: Primus
+  \primus-emitter
+
   \./pages
+  \./services
   \./middleware
 }
 
-env  = global.ENV  = process.env.NODE_ENV  or \development
-port = global.PORT = process.env.NODE_PORT or 80
-pe   = new pretty-error!
+env  = process.env.NODE_ENV  or \development
+port = process.env.NODE_PORT or 80
+pe   = new PrettyError!
 
-## App's purpose is to abstract instantiation from starting & stopping
+### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
   class App
     (@port=\ephemeral, @changeset, @vendorset) ->
@@ -57,7 +66,11 @@ module.exports =
       app.server = http.create-server app.callback!
       unless env is \test then app.server.listen port
 
-      # TODO websockets
+      # services
+      primus = new Primus app.server, transformer: \engine.io
+      primus.use \emitter primus-emitter
+      services.init primus, @changeset
+
       # TODO db
 
       app

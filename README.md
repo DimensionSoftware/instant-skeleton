@@ -9,6 +9,10 @@ Best opinionated realtime framework to lift heavy functionality lightening quick
 
     $ npm install && npm start
 
+## Overview
+
+    Building your application is simple: add _Pages_ (isomorphic bits of React) and _Services_ (RESTful & Realtime API endpoints)
+
 ## Environment Variables
 * `NODE_ENV`  -- development, production or test
 * `NODE_PORT` -- port to listen on
@@ -19,6 +23,8 @@ Best opinionated realtime framework to lift heavy functionality lightening quick
     * **Prelude.ls** -- http://preludels.com
 * **Koa** -- http://koajs.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
+* **Primus** -- https://github.com/primus/primus
+    * **Engine.io** -- https://github.com/Automattic/engine.io
 * **PM2** -- https://github.com/Unitech/pm2
 
 ## TODO
