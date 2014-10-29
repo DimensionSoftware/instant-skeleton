@@ -43,7 +43,7 @@ are made readable and which one's are writable.
 
 This allows you to add `Backbone` inspired `.extend` functionality to your
 constructors. This makes inheriting a lot easier and readable. See the
-`extendable` module in npm for information.
+`extendible` module in npm for information.
 
 ```js
 function Foo() {}
