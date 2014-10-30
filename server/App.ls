@@ -36,7 +36,7 @@ module.exports =
     (@port=\ephemeral, @changeset, @vendorset) ->
 
     start: (cb = (->)) ->
-      console.log "[1;37;30m+ [1;37;40m#env[0;m on port [1;37;40m#{@port}[0;m"
+      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
 
       @app = koa!
 
@@ -78,7 +78,7 @@ module.exports =
       @app
 
     stop: (cb = (->)) ->
-      console.log "[1;37;30m- [1;37;40m#env[0;m on port [1;37;40m#{@port}[0;m"
+      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & quit listening
       @primus.destroy!
       @app.server.close cb
