@@ -31,7 +31,7 @@ function restart
     args = [
       process.argv.2 or (parse-int process.env.NODE_PORT) or 3000 # port
       get-latest-webpack 'public/builds'                          # changeset
-      get-latest-webpack 'public/vendor'                          # vendorset
+      get-latest-webpack 'public/vendor/builds'                   # vendorset
     ]
 
     # start!
