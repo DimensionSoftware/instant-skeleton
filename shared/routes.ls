@@ -1,5 +1,5 @@
 export list = [
-  [ \Homepage,             '/' ]
+  [ \HomePage,             '/' ]
   [ \Hello,                '/hello' ]
 
   # route examples:
