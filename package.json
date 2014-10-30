@@ -12,7 +12,7 @@
   "scripts": {
     "test": "NODE_ENV=test npm run unit",
     "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
-    "start": "gulp",
+    "start": "node --harmony `which gulp`",
     "stop": "gulp stop",
     "unit": "mocha -R nyan --harmony",
     "coverage": "mocha -r blanket -R html-cov --harmony > coverage.html && open coverage.html"

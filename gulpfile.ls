@@ -1,11 +1,36 @@
 
-require! <[gulp gulp-shell del gulp-nodemon gulp-util gulp-livescript gulp-stylus nib gulp-jade gulp-webpack gulp-watch gulp-livereload]>
+require! {
+  del
+  gulp
+  \gulp-jade
+  \gulp-livereload
+  \gulp-livescript
+  \gulp-nodemon
+  \gulp-shell
+  \gulp-shell
+  \gulp-stylus
+  \gulp-util
+  \gulp-watch
+  \gulp-webpack
+  nib
+
+  primus: Primus
+
+  './server/App': App
+}
 
 env = process.env.NODE_ENV or \development
 
 # build transformations
 # ---------
-# TODO jade
+# TODO shared jade
+# TODO save primus.js at every build
+gulp.task \build:primus (cb) ->
+  #app = new App
+  #<~ app.start
+  #app.primus.save './public/vendor/primus.js'
+  #app.stop cb
+  cb!
 gulp.task \build:stylus ->
   gulp.src \./client/stylus/master.styl
     .pipe gulp-stylus {use: nib!, +compress}
@@ -18,11 +43,11 @@ gulp.task \build:js ->
   gulp.src './{client,shared,server}/*.ls'
     .pipe gulp-livescript {+bare}
     .pipe gulp.dest './build'
-gulp.task \build <[build:js build:stylus]>
+gulp.task \build <[build:primus build:js build:stylus]>
 
 # asset optimization
 # ---------
-gulp.task \pack <[build:js build:react]> ->
+gulp.task \pack <[build:primus build:js build:react]> ->
   gulp.src './build/{client,shared}/*.js'
     .pipe gulp-webpack!
     .pipe gulp.dest './public/builds'
@@ -33,7 +58,7 @@ gulp.task \pack <[build:js build:react]> ->
 
 gulp.task \watch ->
   gulp.watch './shared/react/*.ls' [\build:react]
-  gulp.watch './{client,shared,server}/*.ls' [\build:js]
+  gulp.watch './{client,shared,server}/*.ls' [\build:js \pack]
   gulp.watch './client/stylus/*.styl' [\build:stylus]
   gulp-livereload.listen!
 
