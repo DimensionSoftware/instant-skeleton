@@ -26,7 +26,6 @@ require! {
 }
 
 env  = process.env.NODE_ENV  or \development
-port = process.env.NODE_PORT or 80
 pe   = new PrettyError!
 
 ### App's purpose is to abstract instantiation from starting & stopping
@@ -64,7 +63,7 @@ module.exports =
 
       # listen
       app.server = http.create-server app.callback!
-      unless env is \test then app.server.listen port
+      unless env is \test then app.server.listen @port
 
       # services
       primus = new Primus app.server, transformer: \engine.io
