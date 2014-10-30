@@ -70,6 +70,7 @@ module.exports =
       # services
       @primus = new Primus @app.server, transformer: \engine.io
         ..use \emitter primus-emitter
+        #..remove \primus.js
       services.init @primus, @changeset
 
       # TODO db
