@@ -51,4 +51,4 @@ html(manifest=(env === 'production' ? '/manifest.appcache' : undefined))
     else
       script(type='text/javascript', src="#{cacheUrls[2]}/vendor/head.min.js")
     script(type='text/javascript').
-      head.load("#{cacheUrls[2]}/primus/primus.js", "#{cacheUrls[3]}/vendor/#{vendorset}.js", "#{cacheUrls[4]}/builds/#{changeset}.js");
+      head.load("#{cacheUrls[2]}/primus/primus.js", "#{cacheUrls[3]}/vendor/builds/#{vendorset}.js", "#{cacheUrls[4]}/builds/#{changeset}.js");
