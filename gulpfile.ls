@@ -53,7 +53,7 @@ gulp.task \pack <[build:primus build:js build:react]> ->
     .pipe gulp.dest './public/builds'
   gulp.src './client/vendor/*.js'
     .pipe gulp-webpack!
-    .pipe gulp.dest './public/vendor'
+    .pipe gulp.dest './public/vendor/builds'
   # TODO html, css, etc...
 
 gulp.task \watch ->
