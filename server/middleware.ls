@@ -67,6 +67,7 @@ export react = (next) ->* # set body to react tree
   path    = url.parse (@url or '/') .pathname
   app     = App {path, locals}
   @locals.body = React.render-component-to-string app
+  yield @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
 export react-or-json = (next) ->*

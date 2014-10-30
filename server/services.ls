@@ -4,7 +4,7 @@
     spark.send \CHANGESET changeset
 
 
-# TODO flesh out services
+# TODO flesh out TODO service
 @example-service =
   find: (params, cb) ->
   get: (id, params, cb) ->
