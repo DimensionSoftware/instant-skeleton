@@ -36,7 +36,10 @@
     "Functionality",
     "Lightening",
     "Quick",
-    "Node.JS"
+    "Node.JS",
+    "Meteor",
+    "Derby",
+    "JS"
   ],
   "author": "Dimension Software",
   "license": "ISC",
