@@ -5,6 +5,14 @@ window.storage = {} <<< # to better use local storage
   has: (k)    -> local-storage.has-own-property k
   set: (k, v) -> local-storage.set-item k, JSON.stringify v
 
+window.notify = (title, obj={body:'', icon:''}) -> # to better use desktop notifications
+  icon = './images/apple-touch-icon-72x72.png'
+  show = -> new Notification title, {icon} <<< obj
+  if Notification.permission is \granted then show!
+  else
+    <- Notification.request-permission
+    show!
+
 
 # main
 # ---------
