@@ -39,7 +39,12 @@
   gulp.task('build', ['build:primus', 'build:js', 'build:stylus']);
   gulp.task('pack', ['build:primus', 'build:js', 'build:react'], function(){
     gulp.src('./build/{client,shared}/*.js').pipe(gulpWebpack()).pipe(gulp.dest('./public/builds'));
-    return gulp.src('./client/vendor/*.js').pipe(gulpWebpack()).pipe(gulp.dest('./public/vendor/builds'));
+    return gulp.src('./client/vendor/*.js').pipe(gulpWebpack({
+      devTool: 'source-map',
+      context: __dirname + "/build",
+      entry: './client/layout.js',
+      optimize: env === 'production'
+    })).pipe(gulp.dest('./public/vendor/builds'));
   });
   gulp.task('watch', function(){
     gulp.watch('./shared/react/*.ls', ['build:react']);
