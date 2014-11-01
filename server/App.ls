@@ -33,7 +33,7 @@ pe   = new PrettyError!
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
   class App
-    (@port=\ephemeral, @changeset, @vendorset) ->
+    (@port=\ephemeral, @changeset='deadbeef', @vendorset='deadbeef') ->
 
     start: (cb = (->)) ->
       console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
@@ -65,13 +65,14 @@ module.exports =
 
       # listen
       @app.server = http.create-server @app.callback!
-      unless env is \test then @app.server.listen @port, cb
 
       # services
       @primus = new Primus @app.server, transformer: \engine.io
         ..use \emitter primus-emitter
         #..remove \primus.js
       services.init @primus, @changeset
+
+      unless env is \test then @app.server.listen @port, cb
 
       # TODO db
 
