@@ -4,7 +4,8 @@ Instant-Skeleton
 Best _opinionated_ realtime framework to lift heavy functionality lightening quick with Node.JS
 
 **PROTIP**  [Be sure to peruse our fancy documentation](http://dimensionsoftware.github.io/instant-skeleton)
-**FORK ME** Pull request friendly
+
+**FORK ME** Pull request friendly!
 
 ## Quick Start
 
@@ -12,16 +13,16 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 
 ## Overview
 
-Building your realtime application is simple: add _Pages_ (isomorphic bits of React) and _Services_ (RESTful & Realtime API
+Building your SEO-friendly realtime application is simple: add _Pages_ (isomorphic bits of React) and _Services_ (RESTful & Realtime API
 endpoints).  As an example, a basic TODO application is implemented herein.
 
 * Add a New Page
 
-    $ vim server/pages.ls    # add a route here
+        $ vim server/pages.ls    # add a route here
 
 * Add a New RESTful Service
 
-    $ vim server/services.ls # add a service here
+        $ vim server/services.ls # add a service here
 
 
 ## Environment Variables
@@ -41,11 +42,15 @@ endpoints).  As an example, a basic TODO application is implemented herein.
 ## Contributors
 
 [According to GitHub](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
+
 [Become a Contributor!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
 ## TODO
 * Famo.us
 * Selenium tests
 * Wire up react + react router
+* Coverage working with LiveScript
 * Websockets + feathers-like services
+* Implement TODO example app inside skeleton
+* Better WebPack config that correctly exports modules
 * Bootstrap data-layer -- bookshelf or https://www.youtube.com/watch?v=41oDDTRWjIQ
