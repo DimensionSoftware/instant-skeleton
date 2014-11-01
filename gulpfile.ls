@@ -52,7 +52,12 @@ gulp.task \pack <[build:primus build:js build:react]> ->
     .pipe gulp-webpack!
     .pipe gulp.dest './public/builds'
   gulp.src './client/vendor/*.js'
-    .pipe gulp-webpack!
+    .pipe gulp-webpack {
+      dev-tool: \source-map
+      context:  "#__dirname/build"
+      entry:    './client/layout.js'
+      optimize: env is \production
+    }
     .pipe gulp.dest './public/vendor/builds'
   # TODO html, css, etc...
 
