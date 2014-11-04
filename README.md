@@ -1,5 +1,8 @@
+![Instant Skeleton](https://raw.githubusercontent.com/dimensionsoftware/instant-skeleton/gh-pages/assets/skull_keys.png)
+
 Instant-Skeleton
 ================
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Build bigger with less
 ----------------------
@@ -7,9 +10,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 
 **PROTIP**  [Be sure to peruse our fancy documentation](http://dimensionsoftware.github.io/instant-skeleton)
 
-**FORK ME** Pull request friendly!
-
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+**FORK** [Pull request friendly!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
 ## Quick Start
 
@@ -17,7 +18,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 
 ## Overview
 
-Building your SEO-friendly, realtime application is simple: add **Pages** (declarative, isomorphic bits of React) and **Services** (RESTful & Realtime API endpoints).  To get started instantly, this skeleton implements a basic TODO (the "hello world" of realtime frameworks) as a starting example.
+Building your SEO-friendly, realtime application is simple: add **Pages** <small>(declarative, isomorphic bits of React)</small> and **Services** <small>(RESTful & Realtime API endpoints)</small>.  To get started instantly, this skeleton implements a basic TODO application <small>(the "hello world" of realtime frameworks)</small> as a starting example.
 
 * Add a new **Page**
 
@@ -38,13 +39,16 @@ Building your SEO-friendly, realtime application is simple: add **Pages** (decla
     * **Prelude.ls** -- http://preludels.com
 * **Koa** -- http://koajs.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
+    * **React Router** -- https://github.com/rackt/react-router
 * **Primus** -- https://github.com/primus/primus
     * **Engine.io** -- https://github.com/Automattic/engine.io
 * **PM2** -- https://github.com/Unitech/pm2
 
 ## Principles
 
-How much does your stack weigh?  Keeping this codebase light as possible means true agility and speed.  This stack is fast and functional.  From nothing you have the potential to build greatness; only with Instant Skeleton, you start way ahead with the best curated tools for lifting heavy, realtime functionality into the browser lightening quick.
+How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise stack is fast, functional and streaming in realtime.
+
+From nothing, you have potential to build greatness; only-- with Instant Skeleton, you start way ahead with the best curated tools for lifting heavy, realtime functionality into the browser lightening quick.
 
 ## Contributors
 
