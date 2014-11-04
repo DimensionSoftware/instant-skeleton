@@ -1,8 +1,5 @@
 
-# immutable (ease-of-access)
-global.React  = require \react/addons
-global.Router = require \react-router
-
+global <<< require \prelude-ls # immutable (ease-of-access)
 
 # App
 #####
@@ -27,8 +24,8 @@ require! {
   \./middleware
 }
 
-env  = process.env.NODE_ENV or \development
-pe   = new PrettyError!
+env = process.env.NODE_ENV or \development
+pe  = new PrettyError!
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -48,7 +45,7 @@ module.exports =
         ..use middleware.error-handler # 404 & 50x handler
         ..use middleware.config-locals # load config into locals
         ..use middleware.app-cache     # offline support
-        ..use(koa-static './public')   # static assets handler
+        ..use(koa-static './public')   # static assets handler -- XXX slated for moving to separate process
         ..use koa-jade.middleware {    # use minimalistic jade layout (escape-hatch from react)
           view-path: \shared/views
           pretty:    env isnt \production
