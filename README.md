@@ -1,5 +1,6 @@
 Instant-Skeleton
 ================
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Best _opinionated_ realtime framework to lift heavy functionality lightening quick with Node.JS
 
