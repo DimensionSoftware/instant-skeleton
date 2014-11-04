@@ -37,11 +37,11 @@ gulp.task \build:stylus ->
     .pipe gulp.dest \./public
 gulp.task \build:react ->
   gulp.src './shared/react/*.ls'
-    .pipe gulp-livescript {+bare}
+    .pipe gulp-livescript {+bare, -header}
     .pipe gulp.dest './build/shared/react'
 gulp.task \build:js ->
   gulp.src './{client,shared,server}/*.ls'
-    .pipe gulp-livescript {+bare}
+    .pipe gulp-livescript {+bare, -header}
     .pipe gulp.dest './build'
 gulp.task \build <[build:primus build:js build:stylus]>
 

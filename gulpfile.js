@@ -28,12 +28,14 @@
   });
   gulp.task('build:react', function(){
     return gulp.src('./shared/react/*.ls').pipe(gulpLivescript({
-      bare: true
+      bare: true,
+      header: false
     })).pipe(gulp.dest('./build/shared/react'));
   });
   gulp.task('build:js', function(){
     return gulp.src('./{client,shared,server}/*.ls').pipe(gulpLivescript({
-      bare: true
+      bare: true,
+      header: false
     })).pipe(gulp.dest('./build'));
   });
   gulp.task('build', ['build:primus', 'build:js', 'build:stylus']);

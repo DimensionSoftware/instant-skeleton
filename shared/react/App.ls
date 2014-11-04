@@ -1,8 +1,17 @@
 
-{div} = React.DOM
+require! {
+  '../routes'
+}
+
+require! {
+  react: {DOM}:React
+  'react-router': {Route,Link}:Router
+}
+
 
 module.exports = React.create-class {
   display-name: \App
+
   render: ->
-    div void 'Hello from React!'
+    DOM.div void 'Hello from React!'
 }

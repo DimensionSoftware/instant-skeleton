@@ -4,10 +4,10 @@ require! {
   url
   replacestream
 
+  react: React
+
   \../shared/react/App
 }
-
-global <<< require \prelude-ls
 
 cwd     = process.cwd!
 config  = require "#cwd/config.json"
@@ -63,15 +63,15 @@ export config-locals = (next) ->*
 
 # react
 export react = (next) ->* # set body to react tree
-  locals  = {} <<< @locals
-  path    = url.parse (@url or '/') .pathname
-  app     = App {path, locals}
-  @locals.body = React.render-component-to-string app
+  locals = {} <<< @locals
+  path   = url.parse (@url or '/') .pathname
+  app    = React.create-element App, {path, locals}
+  @locals.body = React.render-to-string app
   yield @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
 export react-or-json = (next) ->*
   surf = ~> @body = {} <<< @locals
   if @query[\_surf] then surf! else switch @type # explicit or content negotiation
-  | \application/json => surf!
-  | otherwise         => yield react
+    | \application/json => surf!
+    | otherwise         => yield react
