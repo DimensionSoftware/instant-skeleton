@@ -12,9 +12,9 @@ app = koa!
 module.exports = koa-router app
 
 # <page routes>
-app.get '/hello' (next) ->*
+app.get r(\Hello), (next) ->*
   @locals.body = "Hello #{@ip or \World}!"
-  yield mw.react-or-json
+  yield @render \layout @locals # XXX example rendering only jade (no react)
   yield next
 
 app.get r(\HomePage), (next) ->*

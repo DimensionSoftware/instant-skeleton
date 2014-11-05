@@ -4,7 +4,8 @@ require! {
   url
   replacestream
 
-  react: React
+  react: {DOM}:React
+  'react-router': {DefaultRoute,NotFoundRoute,Route,Routes,Link}:Router
 
   \../shared/react/App
 }
@@ -62,11 +63,21 @@ export config-locals = (next) ->*
 
 
 # react
+function create-element
+  React.create-element ...
+
 export react = (next) ->* # set body to react tree
   locals = {} <<< @locals
   path   = url.parse (@url or '/') .pathname
-  app    = React.create-element App, {path, locals}
-  @locals.body = React.render-to-string app
+  # FIXME this isn't working server-side
+  #four04 = React.create-class {display-name:404, render: -> DOM.h1 {} \404}
+  #hello  = React.create-class {render: -> DOM.div void 'Hello World!'}
+
+  #app = Routes {on-error: -> throw it}, [
+  #  Route path:'/', handler:(create-element hello, {})
+  #  NotFoundRoute handler:(create-element four04, {})
+  #]
+  @locals.body = React.render-to-string (React.create-element App, {path, locals})
   yield @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
