@@ -1,0 +1,20 @@
+var multilevel = require('..');
+var net = require('net');
+
+var port = process.argv[2];
+var num = Math.round(Number(process.argv[3]));
+var str = process.argv[4];
+
+var write = require('./write')(str);
+
+var db = multilevel.client()
+var stream = db.createRpcStream()
+var con = net.connect(port)
+stream.pipe(con).pipe(stream)
+
+var start = Date.now()
+write(db, num, function (err, results) {
+  console.log(Date.now() - start)
+  con.destroy();
+  process.exit(0);
+})  

@@ -1,0 +1,26 @@
+
+var sublevel = require('level-sublevel')
+
+require('./util')(function (test, _, getDb) {
+  test('async', function (t) {
+    t.plan(3)
+  
+    getDb(function (db) {
+      db = sublevel(db)
+      db.sublevel('foo')
+      t.notOk(db.isClient)
+      return { db: db }
+    }, 
+    function (db, dispose) {
+      t.ok(db.isClient)
+      db.sublevels['foo'].put('foo', 'bar', function (err) {
+        if (err) throw err
+        db.sublevels['foo'].get('foo', function (err, value) {
+          if (err) throw err
+          t.equal(value, 'bar')
+          dispose()
+        })
+      })
+    })
+  })
+})
