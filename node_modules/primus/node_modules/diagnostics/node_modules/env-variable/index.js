@@ -21,12 +21,14 @@ function env(environment) {
       env.merge(environment, env.parse(window.name));
     }
 
-    if (window.localStorage) {
-      try { env.merge(environment, env.parse(window.localStorage.env || window.localStorage.debug)); }
-      catch (e) {}
-    }
+    try { env.merge(environment, env.parse(window.localStorage.env || window.localStorage.debug)); }
+    catch (e) {}
 
-    if (window.location && 'string' === typeof window.location.hash && window.location.hash.length) {
+    if (
+         'object' === typeof window.location
+      && 'string' === typeof window.location.hash
+      && window.location.hash.length
+    ) {
       env.merge(environment, env.parse(window.location.hash.charAt(0) === '#'
         ? window.location.hash.slice(1)
         : window.location.hash
