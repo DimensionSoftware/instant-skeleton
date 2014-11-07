@@ -12,6 +12,8 @@ require! {
   \gulp-util
   \gulp-watch
   \gulp-webpack
+  \webpack
+  \jquery
   nib
 
   primus: Primus
@@ -37,31 +39,43 @@ gulp.task \build:stylus ->
     .pipe gulp.dest \./public
 gulp.task \build:react ->
   gulp.src './shared/react/*.ls'
-    .pipe gulp-livescript {+bare, -header}
+    .pipe gulp-livescript {+bare, -header} # strip
     .pipe gulp.dest './build/shared/react'
 gulp.task \build:js ->
   gulp.src './{client,shared,server}/*.ls'
-    .pipe gulp-livescript {+bare, -header}
+    .pipe gulp-livescript {+bare, -header} # strip
     .pipe gulp.dest './build'
 gulp.task \build <[build:primus build:js build:stylus]>
 
 # asset optimization
 # ---------
 gulp.task \pack <[build:primus build:js build:react]> ->
-  gulp.src './build/{client,shared}/*.js'
-    .pipe gulp-webpack!
-    .pipe gulp.dest './public/builds'
-  gulp.src './client/vendor/*.js'
+  # main app bundle
+  plugins =
+    * new webpack.DefinePlugin { 'process.env': {NODE_ENV: env} } # for react
+    * new webpack.optimize.DedupePlugin
+    * new webpack.ProvidePlugin { $: jquery }
+  if env is \production then plugins = plugins ++ new webpack.optimize.UglifyJsPlugin
+  gulp.src './{client,shared}'
     .pipe gulp-webpack {
+      plugins
       dev-tool: \source-map
-      context:  "#__dirname/build"
-      entry:    './client/layout.js'
       optimize: env is \production
+      module:
+        loaders:
+          * test: /\.jade$/, loader: \jade-loader?self
+          * test: /\.json$/, loader: \json
+          * test: /\.ls$/,   loader: \livescript
+      #amd: { +jquery }
+      entry: './build/client/layout.js'
+      node:
+        fs: \empty
     }
-    .pipe gulp.dest './public/vendor/builds'
+    .pipe gulp.dest './public/builds'
   # TODO html, css, etc...
 
 gulp.task \watch ->
+  gulp.watch './shared/views/*.jade' [\pack]
   gulp.watch './shared/react/*.ls' [\build:react]
   gulp.watch './{client,shared,server}/*.ls' [\build:js \pack]
   gulp.watch './client/stylus/*.styl' [\build:stylus]

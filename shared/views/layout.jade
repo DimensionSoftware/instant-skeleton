@@ -47,9 +47,9 @@ html(manifest=(env === 'production' ? '/manifest.appcache' : undefined))
 
     //- last, use head.js to boot app quickly
     if env === 'production'
-      script(type='text/javascript', src="//cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js")
     else
-      script(type='text/javascript', src="#{cacheUrls[2]}/vendor/head.min.js")
-    script(type='text/javascript').
-      head.load("#{cacheUrls[2]}/primus/primus.js", "#{cacheUrls[3]}/vendor/builds/#{vendorset}.js", "#{cacheUrls[4]}/builds/#{changeset}.js");
+      script(src="#{cacheUrls[2]}/vendor/head.min.js")
+    script.
+      head.load(["#{cacheUrls[2]}/primus/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
       window.locals=!{JSON.stringify(locals)};
