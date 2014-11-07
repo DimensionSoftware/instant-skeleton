@@ -6,7 +6,7 @@ window.storage = {} <<< # to better use local storage
   has: (k)    -> local-storage.has-own-property k
   set: (k, v) -> local-storage.set-item k, JSON.stringify v
 
-window.notify = (title, obj={body:'', icon:''}) -> # to better use desktop notifications
+window.notify = (title, obj={body:''}) -> # to better use desktop notifications
   icon = './images/apple-touch-icon-72x72.png'
   show = -> new Notification title, {icon} <<< obj
   if Notification.permission is \granted then show!
@@ -46,5 +46,5 @@ primus = window.primus = Primus.connect!
         notify 'Reload' {body:'A newer version has launched!'}
 
 
-# front
+# front!
 console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"
