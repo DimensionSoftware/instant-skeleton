@@ -1,4 +1,5 @@
 
+$ = require \jquery
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
   get: (k)    -> try local-storage.get-item k |> JSON.parse
@@ -16,13 +17,15 @@ window.notify = (title, obj={body:'', icon:''}) -> # to better use desktop notif
 
 # main
 # ---------
-# configure client
-<~ head.ready
-# TODO browser world, stage 2
+<- head.ready # browser world, stage 2
 
 # configure primus
-window.primus = Primus.connect!
+primus = window.primus = Primus.connect!
   ..on \open ->
+    # pass spark-id as data on every AJAX request
+    window.spark-id <- primus.id
+    $.ajax-setup data: { spark-id }
+
     # alert user of a stale page?
     if locals.env is \production and window.closed-duration-i
       clear-interval that
