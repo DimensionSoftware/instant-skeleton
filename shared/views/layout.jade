@@ -52,4 +52,4 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       script(src="#{cacheUrls[2]}/vendor/head.min.js")
     script.
       head.load(["#{cacheUrls[2]}/primus/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
-      window.locals=!{JSON.stringify(locals)};
+      window.locals=!{delete(locals.body) && JSON.stringify(locals)};
