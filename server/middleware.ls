@@ -8,6 +8,7 @@ require! {
   react: {DOM}:React
   'react-router': {DefaultRoute,NotFoundRoute,Route,Routes,Link}:Router
 
+  \../shared/features
   \../shared/react/App
 }
 
@@ -35,7 +36,7 @@ export error-handler = (next) ->*
 # app-cache manifest needs headers
 export app-cache = (next) ->*
   if @path is '/manifest.appcache'
-    if @locals.env is \production # use appcache
+    if features.offline # use appcache
       @type = \text/cache-manifest
       @body = fs.create-read-stream 'public/manifest.appcache'
         .pipe replacestream \%changeset%  @locals.changeset # use changeset to blow cache
@@ -51,6 +52,7 @@ export app-cache = (next) ->*
 # localize config.json for env
 export config-locals = (next) ->*
   config <<< config[@locals.env]     # merge in current env's config
+  config.features = features         # merge in features
   [@locals[k] = v for k,v of config] # ...and localize!
 
   if @locals.port isnt 80 # add port to urls

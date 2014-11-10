@@ -6,7 +6,7 @@
 |██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌
 |▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪|  s o f t w a r e .com
 |-->
-html(manifest=(env === 'production' ? '/manifest.appcache' : undefined))
+html(manifest=(features.offline ? '/manifest.appcache' : undefined))
   head
     meta(charset='utf-8')
     block title

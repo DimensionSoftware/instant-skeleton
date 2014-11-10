@@ -65,7 +65,7 @@
     "engine.io": "^1.4.2",
     "famous": "^0.3.0",
     "geoip-lite": "^1.1.4",
-    "gulp": "^3.8.8",
+    "gulp": "^3.8.10",
     "gulp-jade": "^0.8.0",
     "gulp-livereload": "^2.1.1",
     "gulp-livescript": "^1.1.0",
