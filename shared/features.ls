@@ -10,4 +10,6 @@ dev  = env is \dev
 
 
 module.exports =
+  offline: prod
+
   hello-page: !prod # disable in production
