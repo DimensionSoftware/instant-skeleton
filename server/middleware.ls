@@ -10,6 +10,7 @@ require! {
 
   \../shared/features
   \../shared/react/App
+  '../shared/helpers': h
 }
 
 cwd     = process.cwd!
@@ -68,6 +69,13 @@ export config-locals = (next) ->*
 export geoip = (next) ->*
   @locals.geo = geo.lookup @ip
   yield next
+
+
+# etags
+export etags = (next) ->*
+  yield next
+  if b = @locals.body?to-string!
+    @etag = h.digest b
 
 
 # react

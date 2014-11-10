@@ -1,4 +1,8 @@
 
+require! {
+  \crypto
+}
+
 # Think of this as a debounce that remembers intermediate calls and summarizes them instead of throwing them away.
 #
 # @param  {Function} initial-fn         function that returns initial-state for use with fold and combiner-fn
@@ -50,5 +54,8 @@ export try-catch = (fn, ctx, args) ->
     fn.apply ctx, args
   catch e
     e
+
+export digest = (body) ->
+  crypto.create-hash \md5 .update body .digest \hex
 
 # vim:fdm=indent
