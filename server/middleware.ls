@@ -3,6 +3,7 @@ require! {
   fs
   url
   replacestream
+  'geoip-lite':geo
 
   react: {DOM}:React
   'react-router': {DefaultRoute,NotFoundRoute,Route,Routes,Link}:Router
@@ -65,6 +66,11 @@ export config-locals = (next) ->*
 # react
 function create-element
   React.create-element ...
+# geoip
+export geoip = (next) ->*
+  @locals.geo = geo.lookup @ip
+  yield next
+
 
 export react = (next) ->* # set body to react tree
   locals = {} <<< @locals
