@@ -56,7 +56,8 @@ module.exports =
           -compile-debug
           -debug
         }
-        ..use pages # apply pages
+        ..use middleware.etags # auto etag every page for caching
+        ..use pages            # apply pages
 
       # config environment
       if env isnt \test then @app.use koa-logger!

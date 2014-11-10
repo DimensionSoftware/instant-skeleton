@@ -5,7 +5,6 @@ require! {
 
   './middleware': mw
 
-  '../shared/helpers': h
   '../shared/features'
   '../shared/routes': {r, rn}
 }
