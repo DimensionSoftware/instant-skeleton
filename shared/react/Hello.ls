@@ -1,8 +1,8 @@
 
-require! 'react': {div}:React
+require! react: {DOM}:React
 
 module.exports = React.create-class do
   display-name: \Hello
 
   render: ->
-    div class-name: \Hello, \YO
+    DOM.div class-name: \Hello, \YO
