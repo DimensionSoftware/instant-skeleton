@@ -6,24 +6,19 @@ require! {
   '../routes'
 }
 
-
 # Dynamically load components referenced in routes.list.
 pages = routes.list |> fold ((namespace, route) ->
   c = try
-    React.create-factory(require "./#{route.0}")
+    require "./#{route.0}"
   catch
     console?warn "Could not load #{route.0}", e
   namespace[route.0] = c if c
   namespace), {}
 
-module.exports = React.create-class {
-  display-name: \App
 
-  location: (route) ->
-    name = route.0
-    pages[name]
+# XXX - might want to do this manually instead of automatically if using react-router and nesting
+module.exports = Routes location: \history,
+  (pages |> obj-to-pairs |> map (([name, component]) -> Route path: routes.r(name), handler: component))
 
-  render: ->
-    #locations-for-routes = routes.list |> filter (-> pages[it.0]) |> map (~> @location it)
-    DOM.div void 'Hello from app!'
-}
+# https://github.com/rackt/react-router/issues/57
+# https://github.com/rackt/react-router/pull/181
