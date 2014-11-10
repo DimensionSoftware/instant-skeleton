@@ -5,7 +5,6 @@ CACHE MANIFEST
 CACHE:
 /
 %cacheUrls1%/master.css?%changeset%
-%cacheUrls2%/vendor/%vendorset%.js
 %cacheUrls3%/builds/%changeset%.js
 %cacheUrls%/images/favicon.ico
 %cacheUrls%/images/apple-touch-icon.png
