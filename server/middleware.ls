@@ -3,6 +3,7 @@ require! {
   fs
   url
   replacestream
+  'geoip-lite':geo
 
   react: {DOM}:React
   'react-router': {DefaultRoute,NotFoundRoute,Route,Routes,Link}:Router
@@ -38,7 +39,6 @@ export app-cache = (next) ->*
       @type = \text/cache-manifest
       @body = fs.create-read-stream 'public/manifest.appcache'
         .pipe replacestream \%changeset%  @locals.changeset # use changeset to blow cache
-        .pipe replacestream \%vendorset%  @locals.vendorset
         .pipe replacestream \%cacheUrls%  @locals.cache-urls.0
         .pipe replacestream \%cacheUrls1% @locals.cache-urls.1
         .pipe replacestream \%cacheUrls2% @locals.cache-urls.2
@@ -62,10 +62,13 @@ export config-locals = (next) ->*
   yield next
 
 
-# react
-function create-element
-  React.create-element ...
+# geoip
+export geoip = (next) ->*
+  @locals.geo = geo.lookup @ip
+  yield next
 
+
+# react
 export react = (next) ->* # set body to react tree
   locals = {} <<< @locals
   path   = url.parse (@url or '/') .pathname
@@ -88,3 +91,6 @@ export react-or-json = (next) ->*
   if @query[\_surf] then surf! else switch @type # explicit or content negotiation
     | \application/json => surf!
     | otherwise         => yield react
+
+function create-element
+  React.create-element ...
