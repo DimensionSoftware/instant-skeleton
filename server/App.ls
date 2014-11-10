@@ -22,6 +22,8 @@ require! {
   \./pages
   \./services
   \./middleware
+
+  \../shared/features
 }
 
 env = process.env.NODE_ENV or \development

@@ -20,16 +20,19 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 
 ## Overview
 
-Building your SEO-friendly, realtime application is simple: add **Pages** <small>(declarative, isomorphic bits of React)</small> and **Services** <small>(RESTful & Realtime API endpoints)</small>.  To get started instantly, this skeleton implements a basic TODO application <small>(the "hello world" of realtime frameworks)</small> as a starting example.
+Building your SEO-friendly, realtime application is simple: add **Pages** <small>(declarative, isomorphic bits of React)</small> and **Services** <small>(RESTful & Realtime API endpoints)</small>.  To get started instantly, this skeleton implements a basic TODO application <small>(COMING SOON- the _"hello world"_ of realtime frameworks)</small> as a starting example.
 
 * Add a new **Page**
 
-        $ vim server/pages.ls    # add a route here
+        $ vim server/pages.ls
 
 * Add a new **Service**
 
-        $ vim server/services.ls # add a service here
+        $ vim server/services.ls
 
+* Enable and Disable **Features** <small>with zero impact for unused features</small>
+
+        $ vim shared/features.ls
 
 ## Environment Variables
 * `NODE_ENV`  -- development, production or test
@@ -50,11 +53,21 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
 
 How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise stack is fast, functional and streaming in realtime.
 
-With technologies like Famo.us and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true first-class mobile experiencess.  Got 60fps?  High-speed, secure websockets?  We do.
+With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
+first-class mobile experiencess.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
 
 From nothing, you have potential to build greatness; only-- with Instant Skeleton, you start way ahead with the best
 curated tools for lifting heavy, realtime functionality into the browser with insane productivity.  Unlock the
 potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/DimensionSoftware/instant-skeleton/fork)
+
+## FAQ
+
+1. How is this different from Meteor.JS?
+
+       + We &hearts; [NPM](http://npmjs.org).  Please use it.
+       + Write less code with fewer bugs: [LiveScript](http://livescript.net/).
+       + Our templates leverage the power of Javascript with [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
+
 
 ## Contributors
 
@@ -70,6 +83,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 [According to GitHub](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors) . [Become a Contributor](https://github.com/DimensionSoftware/instant-skeleton/fork) .  [Pull request friendly!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
 ## TODO
+
+**HEAD'S UP**  This code is not ready for prime-time!  COMING SOON:
+
 * Famo.us+react
 * Selenium tests
 * Wire up react + react router
@@ -79,11 +95,8 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 * Better WebPack config that correctly exports modules
 * Bootstrap data-layer -- bookshelf or https://www.youtube.com/watch?v=41oDDTRWjIQ
 
-
 <center>
-![Fine Software by Dimension](https://dimensionsoftware.com/images/dimension_icon.png)
-
 <small>
-[Fine Software by Dimension](https://dimensionsoftware.com)
+[![Fine Software by Dimension](https://dimensionsoftware.com/images/dimension_icon.png)](https://dimensionsoftware.com)
 </small>
 </center>
