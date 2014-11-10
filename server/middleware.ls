@@ -80,7 +80,9 @@ export react = (next) ->* # set body to react tree
   #  Route path:'/', handler:(create-element hello, {})
   #  NotFoundRoute handler:(create-element four04, {})
   #]
-  @locals.body = React.render-to-string (create-element App, {path, locals})
+  # https://github.com/rackt/react-router/issues/57
+  # https://github.com/rackt/react-router/pull/181
+  @locals.body = yield Router.render-routes-to-string App, path, _
   yield @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
