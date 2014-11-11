@@ -38,6 +38,9 @@ export error-handler = (next) ->*
 export app-cache = (next) ->*
   if @path is '/manifest.appcache'
     if features.offline # use appcache
+      # no-cache for broken browsers (FF)
+      @set \pragma \no-cache
+      @set \cache-control \no-cache
       @type = \text/cache-manifest
       @body = fs.create-read-stream 'public/manifest.appcache'
         .pipe replacestream \%changeset%  @locals.changeset # use changeset to blow cache
