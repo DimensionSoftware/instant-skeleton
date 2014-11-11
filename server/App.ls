@@ -11,10 +11,11 @@ require! {
 
   koa
   \koa-jade
-  \koa-static
   \koa-locals
   \koa-logger
+  \koa-static
   \koa-livereload
+  'koa-helmet': helmet
 
   primus: Primus
   \primus-emitter
@@ -44,6 +45,7 @@ module.exports =
       @app
         ..on \error (err) ->
           console.error(pe.render err) # error handler
+        ..use helmet.defaults!         # solid secure base (can be overridden)
         ..use middleware.error-handler # 404 & 50x handler
         ..use middleware.config-locals # load config into locals
         ..use middleware.app-cache     # offline support
