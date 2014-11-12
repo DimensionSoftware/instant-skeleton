@@ -13,9 +13,9 @@ require! {
   \koa-jade
   \koa-locals
   \koa-logger
-  \koa-static
   \koa-livereload
   'koa-helmet': helmet
+  'koa-static-cache': koa-static
 
   primus: Primus
   \primus-emitter
@@ -49,7 +49,10 @@ module.exports =
         ..use middleware.error-handler # 404 & 50x handler
         ..use middleware.config-locals # load config into locals
         ..use middleware.app-cache     # offline support
-        ..use(koa-static './public')   # static assets handler -- XXX slated for moving to separate process
+        ..use koa-static './public' {  # static assets handler -- XXX slated for moving to separate process
+          buffer: env is \production
+          cache-control: if env is \production then 'public, max-age=86400' else 'no-store, no-cache, must-revalidate'
+        }
         ..use koa-jade.middleware {    # use minimalistic jade layout (escape-hatch from react)
           view-path: \shared/views
           pretty:    env isnt \production
