@@ -7,14 +7,16 @@ require! {
 
 # init
 # ---------
-starting = false
+starting = false # keep track of app state
 instance = void
 
 # main
 # ---------
 console.log "\n[1;37m,.._________[0;m"
-restart!
+restart! # initial b00t-up!
+
 process.on \SIGHUP -> restart!
+
 process.on \message (msg) ->
   cl = console.log
   switch msg
@@ -31,7 +33,6 @@ function restart
     args = [
       process.argv.2 or (parse-int process.env.NODE_PORT) or 3000 # port
       get-latest-webpack 'public/builds'                          # changeset
-      get-latest-webpack 'public/vendor/builds'                   # vendorset
     ]
 
     # start!
@@ -39,7 +40,7 @@ function restart
       ..start -> starting := false
 
   if starting then return console.warn 'Still restarting...' # guard
-  if instance
+  if instance # stop running app first
     instance.stop start
   else
     start!

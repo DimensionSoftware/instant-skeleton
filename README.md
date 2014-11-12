@@ -64,8 +64,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 1. How is this different from Meteor.JS?
 
-       + We &hearts; [NPM](http://npmjs.org).  Please use it.
-       + Write less code with fewer bugs: [LiveScript](http://livescript.net/).
+       + Instant Skeleton is tiny.
+       + We &hearts; [NPM](http://npmjs.org).  Please use it!
+       + We're functional [LiveScript](http://livescript.net): write less code with fewer bugs.
        + Our templates leverage the power of Javascript with [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
 
 
@@ -84,7 +85,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 ## TODO
 
-**HEAD'S UP**  This code is not ready for prime-time!  COMING SOON:
+**This code is not yet ready for prime-time**
 
 * Famo.us+react
 * Selenium tests
@@ -92,11 +93,12 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 * Coverage working with LiveScript
 * Websockets + feathers-like services
 * Implement TODO example app inside skeleton
-* Better WebPack config that correctly exports modules
 * Bootstrap data-layer -- bookshelf or https://www.youtube.com/watch?v=41oDDTRWjIQ
+
+&nbsp;
 
 <center>
 <small>
-[![Fine Software by Dimension](https://dimensionsoftware.com/images/dimension_icon.png)](https://dimensionsoftware.com)
+[![Fine Software by Dimension](https://dimensionsoftware.com/images/dimension_full_logo.png)](https://dimensionsoftware.com)
 </small>
 </center>

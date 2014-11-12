@@ -10,7 +10,7 @@ require! {
 
   \../shared/features
   \../shared/react/App
-  '../shared/helpers': h
+  \../shared/helpers
 }
 
 cwd     = process.cwd!
@@ -38,7 +38,6 @@ export error-handler = (next) ->*
 export app-cache = (next) ->*
   if @path is '/manifest.appcache'
     if features.offline # use appcache
-      # no-cache for broken browsers (FF)
       @set \pragma \no-cache
       @set \cache-control \no-cache
       @type = \text/cache-manifest
@@ -76,9 +75,9 @@ export geoip = (next) ->*
 
 # etags
 export etags = (next) ->*
-  yield next
-  if b = @locals.body?to-string!
-    @etag = h.digest b
+  yield next                  # wait for body
+  if @locals.body?to-string!  # ...and digest if exists on way up
+    @etag = helpers.digest that
 
 
 # react
