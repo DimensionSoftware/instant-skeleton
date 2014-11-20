@@ -27,13 +27,12 @@ env    = process.env.NODE_ENV or \development
 # build transformations
 # ---------
 # TODO shared jade
-# TODO save primus.js at every build
 gulp.task \build:primus (cb) ->
-  #app = new App
-  #<~ app.start
-  #app.primus.save './public/vendor/primus.js'
-  #app.stop cb
-  cb!
+  app = new App 31337
+  <- app.start
+  app # save primus from koa config
+    ..primus.save './public/vendor/primus.js'
+    ..stop cb
 gulp.task \build:stylus ->
   gulp.src \./client/stylus/master.styl
     .pipe gulp-stylus {use: nib!, +compress}
@@ -46,7 +45,7 @@ gulp.task \build:js ->
   gulp.src './{client,shared,server}/*.ls'
     .pipe gulp-livescript {+bare, -header} # strip
     .pipe gulp.dest './build'
-gulp.task \build <[build:primus build:react build:js build:stylus]>
+gulp.task \build <[build:react build:js build:stylus]>
 
 # asset optimization
 # ---------
@@ -95,6 +94,6 @@ gulp.task \development [\pack \watch] ->
 gulp.task \production (gulp-shell.task 'pm2 start processes.json')
 
 # main
-default-tasks = [\pack]
+default-tasks = <[build:primus pack]>
   ..push env
 gulp.task \default default-tasks

@@ -51,5 +51,5 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     else
       script(src="#{cacheUrls[2]}/vendor/head.min.js")
     script.
-      head.load(["#{cacheUrls[2]}/primus/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
+      head.load(["#{cacheUrls[2]}/vendor/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
       window.locals=!{delete(locals.body) && JSON.stringify(locals)};
