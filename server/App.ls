@@ -33,10 +33,10 @@ pe  = new PrettyError!
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
   class App
-    (@port=\ephemeral, @changeset='deadbeef', @vendorset='deadbeef') ->
+    (@port=\ephemeral, @changeset=\latest, @vendorset=\latest) ->
 
     start: (cb = (->)) ->
-      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
 
       @app = koa!
 
@@ -84,7 +84,7 @@ module.exports =
       @app
 
     stop: (cb = (->)) ->
-      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
       # cleanup & quit listening
       @primus.destroy!
       @app.server.close cb
