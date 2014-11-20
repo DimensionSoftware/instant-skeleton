@@ -18,7 +18,7 @@
     "start": "node --harmony `which gulp`",
     "stop": "node --harmony `which gulp` stop",
     "unit": "mocha -R nyan --harmony",
-    "coverage": "mocha -r blanket -R html-cov --harmony > coverage.html && open coverage.html",
+    "coverage": "mocha -r blanket -R html-cov --harmony > build/coverage.html && open build/coverage.html",
     "clean": "node --harmony `which gulp` clean"
   },
   "browser": {
@@ -48,7 +48,7 @@
     "Derby",
     "JS"
   ],
-  "author": "Dimension Software",
+  "author": "Dimension Software <hello@dimensionsoftware.com> (https://dimensionsoftware.com)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DimensionSoftware/instant-skeleton/issues"
