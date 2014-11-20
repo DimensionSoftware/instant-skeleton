@@ -21,7 +21,8 @@ require! {
   './server/App': App
 }
 
-env = process.env.NODE_ENV or \development
+config = require './package.json'
+env    = process.env.NODE_ENV or \development
 
 # build transformations
 # ---------
@@ -45,11 +46,11 @@ gulp.task \build:js ->
   gulp.src './{client,shared,server}/*.ls'
     .pipe gulp-livescript {+bare, -header} # strip
     .pipe gulp.dest './build'
-gulp.task \build <[build:primus build:js build:stylus]>
+gulp.task \build <[build:primus build:react build:js build:stylus]>
 
 # asset optimization
 # ---------
-gulp.task \pack <[build:primus build:js build:react]> ->
+gulp.task \pack <[build ]> ->
   # main app bundle
   plugins =
     * new webpack.DefinePlugin { 'process.env': {NODE_ENV: env} } # for react
@@ -76,8 +77,8 @@ gulp.task \pack <[build:primus build:js build:react]> ->
 
 gulp.task \watch ->
   gulp.watch './shared/views/*.jade' [\pack]
-  gulp.watch './shared/react/*.ls' [\build:react]
-  gulp.watch './{client,shared,server}/*.ls' [\build:js \pack]
+  gulp.watch './shared/react/*.ls' [\pack]
+  gulp.watch './{client,shared,server}/*.ls' [\pack]
   gulp.watch './client/stylus/*.styl' [\build:stylus]
   gulp-livereload.listen!
 
@@ -89,12 +90,11 @@ gulp.task \clean (cb) ->
 
 # env tasks
 # ---------
-script = './build/server/main.js'
-gulp.task \development <[build watch]> ->
-  gulp-nodemon {script, node-args: '--harmony'}
-gulp.task \production <[build]> (gulp-shell.task 'pm2 start processes.json')
+gulp.task \development [\pack \watch] ->
+  gulp-nodemon {script:config.main, node-args: '--harmony'}
+gulp.task \production (gulp-shell.task 'pm2 start processes.json')
 
 # main
-default-tasks = <[build pack]>
+default-tasks = [\pack]
   ..push env
 gulp.task \default default-tasks
