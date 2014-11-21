@@ -22,7 +22,7 @@ html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
 export error-handler = (next) ->*
   try
     yield next
-    if @status is 404 then throw 404
+    if @status is 404 then throw 404 # no stack trace needed
   catch
     @status = if typeof! e is \Number then e else e.status or 500 # default 500
     switch @accepts(\html \text \json) # -> out!
@@ -31,7 +31,7 @@ export error-handler = (next) ->*
     | otherwise =>
       @type = \html
       @body = if @status is 404 then html404 else html50x
-    @app.emit \error, e, @ # report to koa, too
+    unless @status is 404 then @app.emit \error, e, @ # report to koa, too
 
 
 # app-cache manifest needs headers
