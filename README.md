@@ -1,5 +1,5 @@
 <center>
-![Instant Skeleton](https://raw.githubusercontent.com/dimensionsoftware/instant-skeleton/gh-pages/assets/skull_keys.png)
+[![Instant Skeleton](https://raw.githubusercontent.com/dimensionsoftware/instant-skeleton/gh-pages/assets/skull_keys.png)](https://dimensionsoftware.com)
 
 Instant-Skeleton
 ================
@@ -86,13 +86,15 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 ## TODO
 
-**This code is not yet ready for prime-time**
+**We appreciate your enthusiasm; this code is not yet ready for prime-time!**
 
 * Famo.us+react
 * Selenium tests
+* Feathers-like services
+* Beautiful documentation and better literate .ls
 * Coverage working with LiveScript
-* Websockets + feathers-like services
 * Implement TODO example app inside skeleton
+* Require client-side vendor/ (moment, accounting, etc...)
 * Bootstrap data-layer -- bookshelf or https://www.youtube.com/watch?v=41oDDTRWjIQ
 
 &nbsp;
