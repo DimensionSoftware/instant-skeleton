@@ -13,10 +13,10 @@ app = koa!
 module.exports = koa-router app
 
 # <page routes>
-if features.hello-page
-  app.get r(\Hello), mw.geoip, (next) ->*
+if features.hello-page # example rendering only jade (no react)
+  app.get '/hello' mw.geoip, (next) ->*
     @locals.body = "Hello #{@ip or \World} from #{@locals.geo?country or \Earth}!"
-    yield @render \layout @locals # XXX example rendering only jade (no react)
+    yield @render \layout @locals
     yield next
 
 app.get r(\HomePage), (next) ->*
