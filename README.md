@@ -24,6 +24,7 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
 
 * Add a new **Page**
 
+        $ vim shared/routes.ls
         $ vim server/pages.ls
 
 * Add a new **Service**
@@ -44,7 +45,7 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
     * **Prelude.ls** -- http://preludels.com
 * **Koa** -- http://koajs.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
-    * **React Router** -- https://github.com/rackt/react-router
+    * **React Router Component** -- https://github.com/STRML/react-router-component
 * **Primus** -- https://github.com/primus/primus
     * **Engine.io** -- https://github.com/Automattic/engine.io
 * **PM2** -- https://github.com/Unitech/pm2
@@ -89,7 +90,6 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 * Famo.us+react
 * Selenium tests
-* Wire up react + react router
 * Coverage working with LiveScript
 * Websockets + feathers-like services
 * Implement TODO example app inside skeleton
