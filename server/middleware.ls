@@ -13,7 +13,11 @@ require! {
 }
 
 cwd     = process.cwd!
-config  = require "#cwd/config.json"
+config  =
+  try
+    require "#cwd/config.json"
+  catch
+    throw Error "Bad config.json: #e"
 html404 = fs.read-file-sync "#cwd/public/404.html" .to-string!
 html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
 
@@ -53,12 +57,12 @@ export app-cache = (next) ->*
 
 # localize config.json for env
 export config-locals = (next) ->*
-  config <<< config[@locals.env]     # merge in current env's config
-  config.features = features         # merge in features
-  [@locals[k] = v for k,v of config] # ...and localize!
+  new-config = config <<< config[@locals.env] # merge in current env's config
+  new-config.features = features          # merge in features
+  [@locals[k] = v for k,v of new-config]  # ...and localize!
 
   if @locals.port isnt 80 # add port to urls
-    for k,v of config when k.to-lower-case!match \url
+    for k,v of new-config when k.to-lower-case!match \url
       @locals[k] = if typeof! v is \Array
         v |> map (~> "#it:#{@locals.port}")
       else
