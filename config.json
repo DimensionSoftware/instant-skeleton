@@ -28,13 +28,29 @@
     "//muscache5.develop.com"
   ],
 
-  "production" : {
+  "development": {
+    "limits": {
+      "max": 0,
+      "whiteList": ["::ffff:127.0.0.1"]
+    }
+  },
+
+  "test": {
+  },
+
+  "production": {
     "cacheUrls": [
       "//muscache.dimensionsoftware.com",
       "//muscache2.dimensionsoftware.com",
       "//muscache3.dimensionsoftware.com",
       "//muscache4.dimensionsoftware.com",
       "//muscache5.dimensionsoftware.com"
-    ]
+    ],
+    "limits": {
+      "whiteList": [],
+      "blackList": [],
+      "duration": 1800000,
+      "max": 800
+    }
   }
 }

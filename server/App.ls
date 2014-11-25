@@ -46,12 +46,13 @@ module.exports =
         ..on \error (err) ->
           console.error(pe.render err) # error handler
         ..use middleware.error-handler # 404 & 50x handler
-        ..use helmet.defaults!         # solid secure base (can be overridden)
+        ..use middleware.config-locals # load env-sensitive config into locals
+        ..use middleware.rate-limit    # rate limiting for all requests (override in config.json)
+        ..use helmet.defaults!         # solid secure base
         ..use koa-static './public' {  # static assets handler -- XXX slated for moving to separate process
           buffer: env is \production
           cache-control: if env is \production then 'public, max-age=86400' else 'no-store, no-cache, must-revalidate'
         }
-        ..use middleware.config-locals # load config into locals
         ..use middleware.app-cache     # offline support
         ..use koa-jade.middleware {    # use minimalistic jade layout (escape-hatch from react)
           view-path: \shared/views
