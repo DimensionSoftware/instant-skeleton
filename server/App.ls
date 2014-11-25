@@ -75,7 +75,7 @@ module.exports =
       # services
       @primus = new Primus @app.server, transformer: \engine.io
         ..use \emitter primus-emitter
-        #..remove \primus.js
+        ..remove \primus.js
       services.init @primus, @changeset
 
       unless env is \test then @app.server.listen @port, cb
