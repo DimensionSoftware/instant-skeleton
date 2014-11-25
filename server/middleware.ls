@@ -58,12 +58,14 @@ export app-cache = (next) ->*
 
 # localize config.json for env
 export config-locals = (next) ->*
-  new-config = config <<< config[@locals.env] # merge in current env's config
-  new-config.features = features              # merge in features
-  [@locals[k] = v for k,v of new-config]      # ...and localize!
+  merge = {}
+  merge{name,title,url,cache-urls,meta-keywords} = config # pick these
+  merge <<< config[@locals.env]     # merge in current env's config
+  merge.features = features         # merge in features
+  [@locals[k] = v for k,v of merge] # ...and localize!
 
   if @locals.port isnt 80 # add port to urls
-    for k,v of new-config when k.to-lower-case!match \url
+    for k,v of merge when k.to-lower-case!match \url
       @locals[k] = if typeof! v is \Array
         v |> map (~> "#it:#{@locals.port}")
       else
