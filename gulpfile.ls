@@ -87,7 +87,7 @@ gulp.task \clean (cb) ->
 # env tasks
 # ---------
 gulp.task \development [\pack \watch] ->
-  gulp-nodemon {script:config.main, node-args: '--harmony'}
+  gulp-nodemon {script:config.main, ignore:<[cookbook logs ./node_modules/** ./build/**]>, node-args:'--harmony'}
 gulp.task \production (gulp-shell.task 'pm2 start processes.json')
 
 # main
