@@ -1,6 +1,6 @@
 
-$ = require \jquery
-features     = require \../shared/features
+$ = window.$ = require \jquery
+
 
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k

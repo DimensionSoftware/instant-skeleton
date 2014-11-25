@@ -13,7 +13,6 @@ require! {
   \gulp-watch
   \gulp-webpack
   \webpack
-  \jquery
   nib
 
   primus: Primus
@@ -54,7 +53,6 @@ gulp.task \pack <[build ]> ->
   plugins =
     * new webpack.DefinePlugin { 'process.env': {NODE_ENV: env} } # for react
     * new webpack.optimize.DedupePlugin
-    * new webpack.ProvidePlugin { $: jquery }
   if env is \production then plugins = plugins ++ new webpack.optimize.UglifyJsPlugin
   gulp.src './{client,shared}'
     .pipe gulp-webpack {
@@ -66,7 +64,6 @@ gulp.task \pack <[build ]> ->
           * test: /\.jade$/, loader: \jade-loader?self
           * test: /\.json$/, loader: \json
           * test: /\.ls$/,   loader: \livescript
-      #amd: { +jquery }
       entry: './build/client/layout.js'
       node:
         fs: \empty

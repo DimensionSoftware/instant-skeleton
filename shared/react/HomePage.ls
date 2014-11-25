@@ -7,4 +7,4 @@ module.exports = React.create-class do
 
   render: ->
     div class-name: \HomePage,
-      h1 void, 'Hello World!???'
+      h1 void, 'Hello World!'
