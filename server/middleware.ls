@@ -3,7 +3,8 @@ require! {
   fs
   url
   replacestream
-  'geoip-lite':geo
+  'geoip-lite': geo
+  'koa-better-ratelimit': limit
 
   react: {create-element, DOM}:React
 
@@ -68,6 +69,18 @@ export config-locals = (next) ->*
       else
         "#v:#{@locals.port}"
   yield next
+
+
+# rate limiting
+rate-fn = void
+export rate-limit = (next) ->* # apply our config
+  unless rate-fn then rate-fn := limit { # lazy singleton
+    max:@locals.limits?max or 500
+    duration:@locals.limits?duration or (1000 * 60 * 60 * 1)
+    white-list:@locals.limits?white-list or []
+    black-list:@locals.limits?black-list or []
+  }
+  yield (rate-fn.bind @) next
 
 
 # geoip
