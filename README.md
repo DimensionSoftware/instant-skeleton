@@ -40,15 +40,34 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
 * `NODE_PORT` -- port to listen on
 
 ## References
-* **Gulp** -- http://gulpjs.com
-* **LiveScript** -- http://livescript.net
+
+Backend Weapons
+
+* **LiveScript** -- https://livescript.net
     * **Prelude.ls** -- http://preludels.com
+* **Gulp** -- http://gulpjs.com
+    * **LiveReload** -- https://github.com/vohof/gulp-livereload
+    * **NodeMon** --  https://github.com/JacksonGariety/gulp-nodemon
+    * **WebPack** -- https://github.com/shama/gulp-webpack
 * **Koa** -- http://koajs.com
+    * **GeoIP Lite** -- https://github.com/bluesmoon/node-geoip
+    * **Helmet** -- https://github.com/venables/koa-helmet
+    * **Level** -- https://github.com/purposeindustries/koa-level
+    * **Rate Limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
+    * **Static Cache** -- https://github.com/koajs/static-cache
+* **PM2** -- https://github.com/Unitech/pm2
+
+Shared Weapons
+
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
     * **React Router Component** -- https://github.com/STRML/react-router-component
 * **Primus** -- https://github.com/primus/primus
     * **Engine.io** -- https://github.com/Automattic/engine.io
-* **PM2** -- https://github.com/Unitech/pm2
+    * **Substream** -- https://github.com/primus/substream
+
+Frontend Weapons
+
+* **Famo.us** -- https://famo.us
 
 ## Principles
 
