@@ -10,14 +10,19 @@ require! {
   'pretty-error': PrettyError
 
   koa
+  \levelup
+  'level-sublevel/legacy': sublevel
   \koa-jade
+  \koa-level
   \koa-locals
   \koa-logger
   \koa-livereload
   'koa-helmet': helmet
+  'koa-generic-session': sess
   'koa-static-cache': koa-static
 
   primus: Primus
+  \substream
   \primus-emitter
 
   \./pages
@@ -29,6 +34,9 @@ require! {
 
 env = process.env.NODE_ENV or \development
 pe  = new PrettyError!
+
+db  = sublevel(levelup './shared/db')
+sdb = db.sublevel \session
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -43,18 +51,20 @@ module.exports =
       koa-locals @app, {env, @port, @changeset, @vendorset} # init locals
 
       @app
+        ..keys = ['iAsNHei275_#@$#%^&'] # secrets
         ..on \error (err) ->
-          console.error(pe.render err) # error handler
-        ..use middleware.error-handler # 404 & 50x handler
-        ..use middleware.config-locals # load env-sensitive config into locals
-        ..use middleware.rate-limit    # rate limiting for all requests (override in config.json)
-        ..use helmet.defaults!         # solid secure base
-        ..use koa-static './public' {  # static assets handler -- XXX slated for moving to separate process
+          console.error(pe.render err)  # error handler
+        ..use middleware.error-handler  # 404 & 50x handler
+        ..use middleware.config-locals  # load env-sensitive config into locals
+        ..use middleware.rate-limit     # rate limiting for all requests (override in config.json)
+        ..use helmet.defaults!          # solid secure base
+        ..use koa-static './public' {   # static assets handler -- XXX slated for moving to separate process
           buffer: env is \production
           cache-control: if env is \production then 'public, max-age=86400' else 'no-store, no-cache, must-revalidate'
         }
-        ..use middleware.app-cache     # offline support
-        ..use koa-jade.middleware {    # use minimalistic jade layout (escape-hatch from react)
+        ..use middleware.app-cache        # offline support
+        ..use sess store:koa-level db:sdb # session support
+        ..use koa-jade.middleware {       # use minimalistic jade layout (escape-hatch from react)
           view-path: \shared/views
           pretty:    env isnt \production
           no-cache:  env isnt \production
@@ -62,8 +72,8 @@ module.exports =
           -compile-debug
           -debug
         }
-        ..use middleware.etags # auto etag every page for caching
-        ..use pages            # apply pages
+        ..use middleware.etags          # auto etag every page for caching
+        ..use pages                     # apply pages
 
       # config environment
       if env isnt \test then @app.use koa-logger!
@@ -74,13 +84,12 @@ module.exports =
 
       # services
       @primus = new Primus @app.server, transformer: \engine.io
+        ..use \substream substream
         ..use \emitter primus-emitter
         ..remove \primus.js
       services.init @primus, @changeset
 
       unless env is \test then @app.server.listen @port, cb
-
-      # TODO db
 
       @app
 
@@ -89,3 +98,4 @@ module.exports =
       # cleanup & quit listening
       @primus.destroy!
       @app.server.close cb
+      db.close!
