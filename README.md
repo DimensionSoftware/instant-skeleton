@@ -3,7 +3,7 @@
 
 Instant-Skeleton
 ================
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Dimension Software](http://img.shields.io/badge/HTML-5-brightgreen.svg)](https://dimensionsoftware.com)
 </center>
 
 Build Bigger with Less
@@ -65,10 +65,10 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 1. How is this different from Meteor.JS?
 
-       + Instant Skeleton is tiny.
-       + We &hearts; [NPM](http://npmjs.org).  Please use it!
-       + We're functional [LiveScript](http://livescript.net): write less code with fewer bugs.
-       + Our templates leverage the power of Javascript with [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
+       + We &hearts; [NPM](http://npmjs.org).
+       + Instant Skeleton is tiny, fast &amp; secure.
+       + We are functional [LiveScript](http://livescript.net): write less code with fewer bugs.
+       + Isomorphic Web Components leveraging [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
 
 
 ## Contributors
