@@ -15,8 +15,6 @@ require! {
   \webpack
   nib
 
-  primus: Primus
-
   './server/App': App
 }
 
