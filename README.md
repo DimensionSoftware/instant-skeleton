@@ -3,7 +3,8 @@
 
 Instant-Skeleton
 ================
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Dimension Software](http://img.shields.io/badge/HTML-5-brightgreen.svg)](https://dimensionsoftware.com)
+[![Gitter](https://badges.gitter.im/Join
+Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Dimension Software](http://img.shields.io/badge/HTML-5-blue.svg?style=flat)](https://dimensionsoftware.com)
 </center>
 
 Build Bigger with Less
@@ -20,7 +21,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 
 ## Overview
 
-Building your SEO-friendly, realtime application is simple: add **Pages** <small>(declarative, isomorphic bits of React)</small> and **Services** <small>(RESTful & Realtime API endpoints)</small>.  To get started instantly, this skeleton implements a basic TODO application <small>(COMING SOON- the _"hello world"_ of realtime frameworks)</small> as a starting example.
+Building your SEO-friendly, realtime application is simple: add **Pages** <small>(declarative, isomorphic bits of React)</small> and **Services** <small>(RESTful & Realtime API endpoints)</small>.
 
 * Add a new **Page**
 
@@ -39,42 +40,46 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
 * `NODE_ENV`  -- development, production or test
 * `NODE_PORT` -- port to listen on
 
+[Load local environment variables with a .env file](https://github.com/motdotla/dotenv)
+
 ## References
 
-Backend Weapons
+Backend
+
+* **Gulp** -- http://gulpjs.com
+    * **livereload** -- https://github.com/vohof/gulp-livereload
+    * **nodemon** --  https://github.com/JacksonGariety/gulp-nodemon
+    * **webpack** -- https://github.com/shama/gulp-webpack
+* **Koa** -- http://koajs.com
+    * **geoip lite** -- https://github.com/bluesmoon/node-geoip
+    * **helmet** -- https://github.com/venables/koa-helmet
+    * **level** -- https://github.com/purposeindustries/koa-level
+    * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
+    * **static cache** -- https://github.com/koajs/static-cache
+* **PM2** -- https://github.com/Unitech/pm2
+* **Dotenv** -- https://github.com/motdotla/dotenv
+
+Shared
 
 * **LiveScript** -- https://livescript.net
-    * **Prelude.ls** -- http://preludels.com
-* **Gulp** -- http://gulpjs.com
-    * **LiveReload** -- https://github.com/vohof/gulp-livereload
-    * **NodeMon** --  https://github.com/JacksonGariety/gulp-nodemon
-    * **WebPack** -- https://github.com/shama/gulp-webpack
-* **Koa** -- http://koajs.com
-    * **GeoIP Lite** -- https://github.com/bluesmoon/node-geoip
-    * **Helmet** -- https://github.com/venables/koa-helmet
-    * **Level** -- https://github.com/purposeindustries/koa-level
-    * **Rate Limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
-    * **Static Cache** -- https://github.com/koajs/static-cache
-* **PM2** -- https://github.com/Unitech/pm2
-
-Shared Weapons
-
+    * **prelude.ls** -- http://preludels.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
-    * **React Router Component** -- https://github.com/STRML/react-router-component
+    * **react router component** -- https://github.com/STRML/react-router-component
 * **Primus** -- https://github.com/primus/primus
-    * **Engine.io** -- https://github.com/Automattic/engine.io
-    * **Substream** -- https://github.com/primus/substream
+    * **engine.io** -- https://github.com/Automattic/engine.io
+    * **substream** -- https://github.com/primus/substream
 
-Frontend Weapons
+Frontend
 
 * **Famo.us** -- https://famo.us
+* **Stylus + NIB** -- https://learnboost.github.io/stylus
 
 ## Principles
 
 How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise stack is fast, functional and streaming in realtime.
 
 With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
-first-class mobile experiencess.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
+first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
 
 From nothing, you have potential to build greatness; only-- with Instant Skeleton, you start way ahead with the best
 curated tools for lifting heavy, realtime functionality into the browser with insane productivity.  Unlock the
@@ -90,11 +95,13 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + Isomorphic Web Components leveraging [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
 
 
-## Contributors
+## Contributors &amp; Idea Factories
 
 [**Keith Hoerling**](https://github.com/khoerling)
 
 [**John Beppu**](https://github.com/beppu)
+
+[**Matt Elder**](https://github.com/dreamcodez)
 
 [**D. Seleno**](https://github.com/onelesd)
 
