@@ -49,7 +49,7 @@ module.exports =
       koa-locals @app, {env, @port, @changeset, @vendorset} # init locals
 
       @app # attach middlewares
-        ..keys = ['iAsNHei275_#@$#%^&'] # cookie session secrets
+        ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
         ..use middleware.error-handler    # 404 & 50x handler
@@ -84,6 +84,6 @@ module.exports =
     stop: (cb = (->)) ->
       console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
       # cleanup & quit listening
-      @primus.destroy!
-      @app.server.close cb
-      db.close!
+      <~ @app.server.close
+      <~ @primus.destroy
+      db.close cb
