@@ -4,22 +4,20 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
+  co
   fs
   http
-  lodash
   'pretty-error': PrettyError
 
   koa
   \levelup
   'level-sublevel/legacy': sublevel
-  \koa-jade
   \koa-level
   \koa-locals
   \koa-logger
   \koa-livereload
   'koa-helmet': helmet
   'koa-generic-session': sess
-  'koa-static-cache': koa-static
 
   primus: Primus
   \substream
@@ -46,34 +44,24 @@ module.exports =
     start: (cb = (->)) ->
       console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
 
-      @app = koa!
+      @app = koa! # boot!
 
       koa-locals @app, {env, @port, @changeset, @vendorset} # init locals
 
-      @app
-        ..keys = ['iAsNHei275_#@$#%^&'] # secrets
+      @app # attach middlewares
+        ..keys = ['iAsNHei275_#@$#%^&'] # cookie session secrets
         ..on \error (err) ->
-          console.error(pe.render err)  # error handler
-        ..use middleware.error-handler  # 404 & 50x handler
-        ..use middleware.config-locals  # load env-sensitive config into locals
-        ..use middleware.rate-limit     # rate limiting for all requests (override in config.json)
-        ..use helmet.defaults!          # solid secure base
-        ..use koa-static './public' {   # static assets handler -- XXX slated for moving to separate process
-          buffer: env is \production
-          cache-control: if env is \production then 'public, max-age=86400' else 'no-store, no-cache, must-revalidate'
-        }
+          console.error(pe.render err)    # error handler
+        ..use middleware.error-handler    # 404 & 50x handler
+        ..use middleware.config-locals    # load env-sensitive config into locals
+        ..use middleware.rate-limit       # rate limiting for all requests (override in config.json)
+        ..use helmet.defaults!            # solid secure base
+        ..use middleware.static-assets    # static assets handler
         ..use middleware.app-cache        # offline support
         ..use sess store:koa-level db:sdb # session support
-        ..use koa-jade.middleware {       # use minimalistic jade layout (escape-hatch from react)
-          view-path: \shared/views
-          pretty:    env isnt \production
-          no-cache:  env isnt \production
-          helper-path: [_: lodash]
-          -compile-debug
-          -debug
-        }
-        ..use middleware.etags          # auto etag every page for caching
-        ..use pages                     # apply pages
+        ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
+        ..use middleware.etags            # auto etag every page for caching
+        ..use pages                       # apply pages
 
       # config environment
       if env isnt \test then @app.use koa-logger!
