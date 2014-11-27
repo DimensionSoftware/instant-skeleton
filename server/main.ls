@@ -1,14 +1,20 @@
 
 require! {
+  dotenv
   shelljs
 }
 
-# XXX the goal of main.ls is to encapsulate instances of App
+# supervise instances of App
+# - TODO supervise more than a single instance
 
 # init
 # ---------
-starting = false # keep track of app state
-instance = void
+supervisor =
+  starting: false # already starting new instance?
+  instance: void  # singleton (for now)
+
+dotenv.load! # load local environment vars from .env
+
 
 # main
 # ---------
@@ -22,13 +28,13 @@ process.on \message (msg) ->
   switch msg
     | \shutdown => # force after 2s
       cl 'Closing all connections: '
-      instance.stop -> cl \done.
+      supervisor.instance.stop -> cl \done.
       set-timeout (-> cl \killed.; process.exit 0), 2000ms
 
 
 function restart
   start = ->
-    starting := true
+    supervisor.starting = true
     App  = require \./App
     args = [
       process.argv.2 or (parse-int process.env.NODE_PORT) or 3000 # port
@@ -36,12 +42,12 @@ function restart
     ]
 
     # start!
-    instance := new App ...args
-      ..start -> starting := false
+    supervisor.instance := new App ...args
+      ..start -> supervisor.starting = false
 
-  if starting then return console.warn 'Still restarting...' # guard
-  if instance # stop running app first
-    instance.stop start
+  if supervisor.starting then return console.warn 'Still restarting...' # guard
+  if supervisor.instance # stop running app first
+    supervisor.instance.stop start
   else
     start!
 
