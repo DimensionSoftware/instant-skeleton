@@ -10,7 +10,9 @@ dev  = env is \dev
 
 
 module.exports = {
-  +advertise
+  +advertise        # dimension banner
+  +static-assets    # disable to run in a separate process
+
   offline: prod
   hello-page: !prod # disable in production
 }

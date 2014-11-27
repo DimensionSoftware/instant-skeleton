@@ -2,8 +2,12 @@
 require! {
   fs
   url
+  lodash
   replacestream
   'geoip-lite': geo
+
+  \koa-jade
+  'koa-static-cache': koa-static
   'koa-better-ratelimit': limit
 
   react: {create-element, DOM}:React
@@ -73,6 +77,37 @@ export config-locals = (next) ->*
   yield next
 
 
+# static asset server
+static-fn = void
+export static-assets = (next) ->* # apply our config
+  if features.static-assets
+    unless static-fn then static-fn := koa-static './public' { # lazy singleton
+      buffer: @locals.env is \production
+      cache-control:
+        if @locals.env is \production
+          'public, max-age=86400'
+        else
+          'no-store, no-cache, must-revalidate'
+    }
+    yield (static-fn.bind @) next
+  else
+    yield next
+
+
+# jade templates
+jade-fn = void
+export jade = (next) ->*
+  unless jade-fn then jade-fn := koa-jade.middleware {
+    view-path: \shared/views
+    pretty:    @locals.env isnt \production
+    no-cache:  @locals.env isnt \production
+    helper-path: [_: lodash]
+    -compile-debug
+    -debug
+  }
+  yield (jade-fn.bind @) next
+
+
 # rate limiting
 rate-fn = void
 export rate-limit = (next) ->* # apply our config
@@ -111,3 +146,6 @@ export react-or-json = (next) ->*
   if @query[\_surf] then surf! else switch @type # explicit or content negotiation
     | \application/json => surf!
     | otherwise         => yield react
+
+
+# vim:fdm=indent
