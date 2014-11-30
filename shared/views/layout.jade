@@ -39,7 +39,7 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     link(href="#{cacheUrls[0]}/images/apple-touch-icon-72x72.png", sizes="72x72", rel='apple-touch-icon')
     link(href="#{cacheUrls[0]}/images/apple-touch-icon-114x114.png", sizes="114x114", rel='apple-touch-icon')
 
-    link(href="#{cacheUrls[1]}/master.css?#{changeset}", rel='stylesheet', type='text/css')
+    link(href="#{cacheUrls[1]}/builds/site.css?#{changeset}", rel='stylesheet', type='text/css')
 
     //- XXX no <scripts> in <head>
   body
