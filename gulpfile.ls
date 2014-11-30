@@ -3,7 +3,6 @@ require! {
   del
   gulp
   \gulp-jade
-  \gulp-livereload
   \gulp-livescript
   \gulp-nodemon
   \gulp-shell
