@@ -1,20 +1,19 @@
 
 require! {
   del
+  nib
   gulp
   \gulp-jade
   \gulp-livescript
   \gulp-nodemon
   \gulp-shell
-  \gulp-shell
-  \gulp-stylus
   \gulp-util
   \gulp-watch
   \gulp-webpack
   \webpack
-  nib
 
   './server/App': App
+  'extract-text-webpack-plugin': ExtractText
 }
 
 config = require './package.json'
@@ -29,29 +28,17 @@ gulp.task \build:primus (cb) ->
   app # save primus from koa config
     ..primus.save './public/vendor/primus.js'
     ..stop cb
-gulp.task \build:stylus ->
-  gulp.src \./client/stylus/master.styl
-    .pipe gulp-stylus {use: nib!, +compress}
-    .pipe gulp.dest \./public
-gulp.task \build:react ->
-  gulp.src './shared/react/*.ls'
-    .pipe gulp-livescript {+bare, -header} # strip
-    .pipe gulp.dest './build/shared/react'
-gulp.task \build:js ->
-  gulp.src './{client,shared,server}/*.ls'
-    .pipe gulp-livescript {+bare, -header} # strip
-    .pipe gulp.dest './build'
-gulp.task \build <[build:react build:js build:stylus]>
 
 # asset optimization
 # ---------
-gulp.task \pack <[build ]> ->
+gulp.task \pack [] ->
   # main app bundle
   plugins =
     * new webpack.DefinePlugin { 'process.env': {NODE_ENV: env} } # for react
     * new webpack.optimize.DedupePlugin
+    * new ExtractText \site.css {+all-chunks}
   if env is \production then plugins = plugins ++ new webpack.optimize.UglifyJsPlugin
-  gulp.src './{client,shared}'
+  gulp.src ['./{client,shared}', './client/stylus']
     .pipe gulp-webpack {
       plugins
       dev-tool: \source-map
@@ -59,9 +46,11 @@ gulp.task \pack <[build ]> ->
       module:
         loaders:
           * test: /\.jade$/, loader: \jade-loader?self
-          * test: /\.json$/, loader: \json
-          * test: /\.ls$/,   loader: \livescript
-      entry: './build/client/layout.js'
+          * test: /\.ls$/,   loader: \livescript-loader
+          * test: /\.styl$/, loader: (ExtractText.extract \stylus-loader, \css-loader!stylus-loader)
+      stylus:
+        use: [nib!]
+      entry: './client/layout.ls'
       node:
         fs: \empty
     }
@@ -72,14 +61,11 @@ gulp.task \watch ->
   gulp.watch './shared/views/*.jade' [\pack]
   gulp.watch './shared/react/*.ls' [\pack]
   gulp.watch './{client,shared,server}/*.ls' [\pack]
-  gulp.watch './client/stylus/*.styl' [\build:stylus]
-  gulp-livereload.listen!
+  #gulp.watch './client/stylus/*.styl' [\build:stylus]
 
 # cleanup
 # ---------
 gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
-gulp.task \clean (cb) ->
-  del <[./build/**]> cb
 
 # env tasks
 # ---------
