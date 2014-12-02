@@ -6,7 +6,7 @@ if typeof env is \undefined
 
 prod = env is \production
 test = env is \test
-dev  = env is \dev
+dev  = env is \development
 
 
 module.exports = {
