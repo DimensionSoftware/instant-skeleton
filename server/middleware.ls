@@ -17,12 +17,11 @@ require! {
   \../shared/helpers
 }
 
-cwd     = process.cwd!
-config  =
-  try
-    require "#cwd/config.json"
-  catch
-    throw Error "Bad config.json: #e"
+env    = process.env.NODE_ENV or \development
+cwd    = process.cwd!
+pkg    = require "#cwd/package.json"
+config = pkg.config
+
 html404 = fs.read-file-sync "#cwd/public/404.html" .to-string!
 html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
 
@@ -60,12 +59,12 @@ export app-cache = (next) ->*
   else yield next
 
 
-# localize config.json for env
+# localize package.json config for env
+merge = {}
+merge{name,title,url,cache-urls,meta-keywords} = config # pick these
+merge <<< config[env]     # merge in current env's config
+merge.features = features         # merge in features
 export config-locals = (next) ->*
-  merge = {}
-  merge{name,title,url,cache-urls,meta-keywords} = config # pick these
-  merge <<< config[@locals.env]     # merge in current env's config
-  merge.features = features         # merge in features
   [@locals[k] = v for k,v of merge] # ...and localize!
 
   if @locals.port isnt 80 # add port to urls

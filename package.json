@@ -3,12 +3,6 @@
   "version": "0.0.1",
   "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
   "main": "build/server/main.js",
-  "config": {
-    "blanket": {
-      "pattern": "![node_modules] build/**.js",
-      "data-cover-never": "node_modules"
-    }
-  },
   "engines": {
     "node": ">= 0.11.14"
   },
@@ -20,9 +14,6 @@
     "unit": "mocha -R nyan --harmony",
     "coverage": "mocha -r blanket -R html-cov --harmony > build/coverage.html && open build/coverage.html",
     "clean": "node --harmony `which gulp` clean"
-  },
-  "browser": {
-    "fs": false
   },
   "repository": {
     "type": "git",
@@ -54,6 +45,49 @@
     "url": "https://github.com/DimensionSoftware/instant-skeleton/issues"
   },
   "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
+
+  "config": {
+    "title": "Instant Skeleton | by DimensionSoftware.com",
+    "url": "http://dimensionsoftware.com",
+    "subdomain": "develop.com",
+    "cacheUrls": [
+      "//cache.develop.com",
+      "//cache2.develop.com",
+      "//cache3.develop.com",
+      "//cache4.develop.com",
+      "//cache5.develop.com"
+    ],
+    "development": {
+      "limits": {
+        "max": 0,
+        "whiteList": ["::ffff:127.0.0.1"]
+      }
+    },
+    "blanket": {
+      "pattern": [
+        "build/server/main.js"
+      ],
+      "data-cover-never": "node_modules"
+    },
+    "test": {
+    },
+    "production": {
+      "cacheUrls": [
+        "//muscache.dimensionsoftware.com",
+        "//muscache2.dimensionsoftware.com",
+        "//muscache3.dimensionsoftware.com",
+        "//muscache4.dimensionsoftware.com",
+        "//muscache5.dimensionsoftware.com"
+      ],
+      "limits": {
+        "whiteList": [],
+        "blackList": [],
+        "duration": 1800000,
+        "max": 800
+      }
+    }
+  },
+
   "dependencies": {
     "LiveScript": "^1.3.1",
     "accounting": "^0.4.1",
