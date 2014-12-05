@@ -30,10 +30,12 @@ require! {
   \../shared/features
 }
 
-env = process.env.NODE_ENV or \development
-pe  = new PrettyError!
+pe = new PrettyError!
 
-db  = sublevel(levelup './shared/db')
+env  = process.env.NODE_ENV or \development
+prod = env is \production
+
+db  = level-sublevel(level './shared/db' {encoding:\json})
 sdb = db.sublevel \session
 
 ### App's purpose is to abstract instantiation from starting & stopping
@@ -46,7 +48,7 @@ module.exports =
 
       @app = koa! # boot!
 
-      koa-locals @app, {env, @port, @changeset, @vendorset} # init locals
+      koa-locals @app, {env, @port, @changeset} # init locals
 
       @app # attach middlewares
         ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
@@ -65,25 +67,25 @@ module.exports =
 
       # config environment
       if env isnt \test then @app.use koa-logger!
-      if env isnt \production then @app.use koa-livereload!
 
       # listen
       @app.server = http.create-server @app.callback!
+      unless env is \test then @app.server.listen @port, cb
 
-      # services
+      # init real-time
       @primus = new Primus @app.server, transformer: \engine.io
         ..use \substream substream
         ..use \emitter primus-emitter
         ..remove \primus.js
-      services.init @primus, @changeset
 
-      unless env is \test then @app.server.listen @port, cb
+      # boot real-time, streaming services
+      services.init @primus, @changeset, sdb
 
       @app
 
     stop: (cb = (->)) ->
       console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
       # cleanup & quit listening
-      <~ @app.server.close
       <~ @primus.destroy
+      <~ @app.server.close
       db.close cb
