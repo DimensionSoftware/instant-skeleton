@@ -36,15 +36,16 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
 
         $ vim shared/features.ls
 
-## Environment Variables
-* `NODE_ENV`  -- development, production or test
+## Environment &amp; "npm config" Variables
+* `NODE_ENV`  -- "development", "production" or "test"
 * `NODE_PORT` -- port to listen on
+* `SUBDOMAIN` -- subdomain of site
 
-[Load local environment variables with a .env file](https://github.com/motdotla/dotenv)
+[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json). [Load your own with a .env file](https://github.com/motdotla/dotenv)!
 
 ## References
 
-Backend
+SERVER
 
 * **Gulp** -- http://gulpjs.com
     * **livereload** -- https://github.com/vohof/gulp-livereload
@@ -53,13 +54,13 @@ Backend
 * **Koa** -- http://koajs.com
     * **geoip lite** -- https://github.com/bluesmoon/node-geoip
     * **helmet** -- https://github.com/venables/koa-helmet
-    * **level** -- https://github.com/purposeindustries/koa-level
+    * **level sessions** -- https://github.com/purposeindustries/koa-level
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
 * **PM2** -- https://github.com/Unitech/pm2
-* **Dotenv** -- https://github.com/motdotla/dotenv
+* **DotEnv** -- https://github.com/motdotla/dotenv
 
-Shared
+SHARED
 
 * **LiveScript** -- https://livescript.net
     * **prelude.ls** -- http://preludels.com
@@ -69,14 +70,14 @@ Shared
     * **engine.io** -- https://github.com/Automattic/engine.io
     * **substream** -- https://github.com/primus/substream
 
-Frontend
+CLIENT
 
 * **Famo.us** -- https://famo.us
 * **Stylus + NIB** -- https://learnboost.github.io/stylus
 
 ## Principles
 
-How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise stack is fast, functional and streaming in realtime.
+How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.
 
 With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
 first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
@@ -117,10 +118,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 * Famo.us+react
 * Selenium tests
 * Feathers-like services
-* Beautiful documentation and better literate .ls
 * Coverage working with LiveScript
 * Implement TODO example app inside skeleton
-* Require client-side vendor/ (moment, accounting, etc...)
+* More beautiful documentation &amp; better literate .ls
 * Bootstrap data-layer -- bookshelf or https://www.youtube.com/watch?v=41oDDTRWjIQ
 
 &nbsp;
