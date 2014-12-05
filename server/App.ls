@@ -4,19 +4,19 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
-  co
   fs
   http
   'pretty-error': PrettyError
 
   koa
-  \levelup
-  'level-sublevel/legacy': sublevel
   \koa-level
   \koa-locals
   \koa-logger
-  \koa-livereload
   'koa-helmet': helmet
+
+  'level-sublevel'
+  'level-party': level
+
   'koa-generic-session': sess
 
   primus: Primus
