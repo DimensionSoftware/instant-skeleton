@@ -41,7 +41,7 @@ Building your SEO-friendly, realtime application is simple: add **Pages** <small
 * `NODE_PORT` -- port to listen on
 * `SUBDOMAIN` -- subdomain of site
 
-[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json). [Load your own with a .env file](https://github.com/motdotla/dotenv)!
+[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L48-L91) and [customize with a .env file](https://github.com/motdotla/dotenv)!
 
 ## References
 
