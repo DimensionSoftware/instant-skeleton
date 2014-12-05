@@ -45,10 +45,10 @@
     "url": "https://github.com/DimensionSoftware/instant-skeleton/issues"
   },
   "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
-
   "config": {
+    "node_port": 8080,
+    "dev_port": 8079,
     "title": "Instant Skeleton | by DimensionSoftware.com",
-    "url": "http://dimensionsoftware.com",
     "subdomain": "develop.com",
     "cacheUrls": [
       "//cache.develop.com",
@@ -60,24 +60,20 @@
     "development": {
       "limits": {
         "max": 0,
-        "whiteList": ["::ffff:127.0.0.1"]
+        "whiteList": [
+          "::ffff:127.0.0.1"
+        ]
       }
     },
-    "blanket": {
-      "pattern": [
-        "build/server/main.js"
-      ],
-      "data-cover-never": "node_modules"
-    },
-    "test": {
-    },
+    "test": {},
     "production": {
+      "subdomain": "dimensionsoftware.com",
       "cacheUrls": [
-        "//muscache.dimensionsoftware.com",
-        "//muscache2.dimensionsoftware.com",
-        "//muscache3.dimensionsoftware.com",
-        "//muscache4.dimensionsoftware.com",
-        "//muscache5.dimensionsoftware.com"
+        "//cache.dimensionsoftware.com",
+        "//cache2.dimensionsoftware.com",
+        "//cache3.dimensionsoftware.com",
+        "//cache4.dimensionsoftware.com",
+        "//cache5.dimensionsoftware.com"
       ],
       "limits": {
         "whiteList": [],
@@ -85,9 +81,14 @@
         "duration": 1800000,
         "max": 800
       }
+    },
+    "blanket": {
+      "pattern": [
+        "build/server/main.js"
+      ],
+      "data-cover-never": "node_modules"
     }
   },
-
   "dependencies": {
     "LiveScript": "^1.3.1",
     "accounting": "^0.4.1",

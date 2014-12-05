@@ -62,8 +62,8 @@ export app-cache = (next) ->*
 # localize package.json config for env
 merge = {}
 merge{name,title,url,cache-urls,meta-keywords} = config # pick these
-merge <<< config[env]     # merge in current env's config
-merge.features = features         # merge in features
+merge <<< config[env]                                   # merge in current env's config
+merge.features = features                               # merge in features
 export config-locals = (next) ->*
   [@locals[k] = v for k,v of merge] # ...and localize!
 
