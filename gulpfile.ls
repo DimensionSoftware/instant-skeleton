@@ -78,21 +78,19 @@ gulp.task \watch ->
 gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
 gulp.task \clean (cb) -> del ['./build/*', './public/builds/*'], cb
 
+
 # env tasks
 # ---------
 gulp.task \development <[build:server watch ]> ->
-  gulp-nodemon {script:config.main, ignore:<[cookbook logs ./node_modules/** ./build/**]>, node-args:'--harmony'}
+  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client]>, node-args:'--harmony'}
     .once \start ->
       <- set-timeout _, 1250ms # wait a bit longer for server to fully boot
       open "http://#subdomain:#dev-port/webpack-dev-server/"
-    .on \restart ->
-      compiler.run (err, stats) ->
-        #if err then throw new gutil.PluginError "webpack:build-dev: #err"
-        if err then console.error \ERROR:, err
 gulp.task \production (gulp-shell.task 'pm2 start processes.json')
 
 
 # main
+# ----
 default-tasks = <[build:server build:primus build:client ]>
   ..push env
 gulp.task \default default-tasks
