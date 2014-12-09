@@ -115,6 +115,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 **We appreciate your enthusiasm; this code is not yet ready for prime-time!**
 
+* fork repos needing package.json tweaks
 * Famo.us+react
 * Selenium tests
 * Feathers-like services
