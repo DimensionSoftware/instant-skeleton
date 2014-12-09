@@ -7,3 +7,4 @@ public/vendor/builds
 public/master.css
 public/vendor/primus.js
 shared/db
+node_modules
