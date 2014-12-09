@@ -11,7 +11,6 @@ require! {
   \gulp-shell
   \gulp-util
   \gulp-watch
-  \gulp-webpack
   \webpack
 
   './server/App': App
@@ -29,10 +28,9 @@ const dev-port  = process.env.npm_package_config_dev_port
 const subdomain = process.env.npm_package_config_subdomain
 
 const prod = env is \production
-const dev  = env is \development
-const test = env is \test
 
 const compiler = webpack wp-config # use code caching
+
 
 # build transformations
 # ---------------------
@@ -43,34 +41,37 @@ gulp.task \build:primus (cb) ->
     ..primus.save './public/vendor/primus.js'
     ..stop cb
 
-gulp.task \build:server [] ->
+gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header} # strip
     .pipe gulp.dest './build'
 
-dev-server = void
 gulp.task \build:client (cb) -> # build client app bundle
-  (gulp-webpack  wp-config, webpack).pipe gulp.dest './public/builds'
+  compiler.run (err, stats) ->
+    if err then throw new gutil.PluginError "webpack-dev-server: #err"
+    cb!
 
-  if dev # boot webpack live-reload server!
-    unless dev-server
-      dev-server := new WebpackDevServer compiler, {
-        +hot
-        -quiet
-        -no-info
-        watch-delay: 300ms
-        stats: { +colors }
-        public-path: "http://#subdomain:#dev-port/assets"
-        content-base: "http://#subdomain:#port"
-      }
-      dev-server.listen dev-port, subdomain
-    cb!
-  else
-    cb!
+
+# watching
+# --------
+gulp.task \webpack:dev-server (cb) ->
+  return cb! # guard
+  const dev-server = new WebpackDevServer compiler, {
+    +hot
+    -quiet
+    -no-info
+    watch-delay: 100ms
+    stats: { +colors }
+    public-path: "http://#subdomain:#dev-port/" #"#__dirname/public/builds/"
+    content-base: "http://#subdomain:#port"
+  }
+  dev-server.listen dev-port, subdomain, (err) ->
+    if err then throw new gutil.PluginError "webpack-dev-server: #err"
+    cb! # XXX keep server listening
 
 gulp.task \watch ->
   gulp.watch ['./server/**/*.ls', './shared/**/*.ls'] [\build:server]
-  gulp.watch ['./shared/views/*.jade', './client/**/*.ls', './client/stylus/*.styl'] [\build:client]
+  #gulp.watch ['./shared/**/*.ls', './client/**/*'] [\build:client]
 
 
 # cleanup
@@ -81,7 +82,7 @@ gulp.task \clean (cb) -> del ['./build/*', './public/builds/*'], cb
 
 # env tasks
 # ---------
-gulp.task \development <[build:server watch ]> ->
+gulp.task \development <[watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client]>, node-args:'--harmony'}
     .once \start ->
       <- set-timeout _, 1250ms # wait a bit longer for server to fully boot
