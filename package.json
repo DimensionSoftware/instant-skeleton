@@ -110,6 +110,7 @@
     "gulp-shell": "^0.2.10",
     "gulp-spawn": "^0.3.0",
     "gulp-stylus": "^1.3.3",
+    "gulp-util": "^3.0.1",
     "gulp-watch": "^1.2.1",
     "gulp-webpack": "^0.4.1",
     "jade": "^1.7.0",
