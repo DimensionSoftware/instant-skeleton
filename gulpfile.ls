@@ -1,7 +1,6 @@
 
 require! {
   gulp
-  gutil
   dotenv
   \del
   \open
@@ -48,7 +47,7 @@ gulp.task \build:server ->
 
 gulp.task \build:client (cb) -> # build client app bundle
   compiler.run (err, stats) ->
-    if err then throw new gutil.PluginError "webpack-dev-server: #err"
+    if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
     cb!
 
 
@@ -66,7 +65,7 @@ gulp.task \webpack:dev-server (cb) ->
     content-base: "http://#subdomain:#port"
   }
   dev-server.listen dev-port, subdomain, (err) ->
-    if err then throw new gutil.PluginError "webpack-dev-server: #err"
+    if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
     cb! # XXX keep server listening
 
 gulp.task \watch ->
