@@ -1,6 +1,8 @@
 require! {
   \LiveScript
   events: EventEmitter
+
+  \./App
 }
 
 global <<< require \prelude-ls
@@ -16,6 +18,7 @@ global.shared = require '../shared/helpers'
 global.__ = require \lodash
 global.debounce = __.debounce
 global.events = new EventEmitter
+global.App = App
 
 global.reload = (m) ->
   paths = require.resolve m
