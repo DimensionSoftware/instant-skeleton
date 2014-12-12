@@ -1,4 +1,8 @@
 |<!DOCTYPE html>
+- var production = env === 'production'
+- var subdomain  = process.env.npm_package_config_subdomain || 'develop.com'
+- var dev_port   = process.env.npm_package_config_dev_port  || 8081
+
 if features.dimension
   <!--
   | https://
@@ -48,10 +52,15 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       != body
 
     //- last, use head.js to boot app quickly
-    if env === 'production'
+    if production
       script(src="//cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js")
     else
       script(src="#{cacheUrls[2]}/vendor/head.min.js")
     script.
-      head.load(["#{cacheUrls[2]}/vendor/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
+      if production
+        //- use cdn
+        head.load(["#{cacheUrls[2]}/vendor/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
+      else
+        //- use livereload dev port
+        head.load(["#{cacheUrls[2]}/vendor/primus.js", "//#{subdomain}:#{dev_port}/builds/#{changeset}.js"]);
       window.locals=!{delete(locals.body) && JSON.stringify(locals)};

@@ -57,7 +57,7 @@ module.exports =
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals    # load env-sensitive config into locals
         ..use middleware.rate-limit       # rate limiting for all requests (override in config.json)
-        ..use helmet.defaults!            # solid secure base
+        #..use helmet.defaults xframe:prod # solid secure base
         ..use middleware.static-assets    # static assets handler
         ..use middleware.app-cache        # offline support
         ..use sess store:koa-level db:sdb # session support

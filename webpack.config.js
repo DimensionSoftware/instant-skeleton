@@ -1,19 +1,29 @@
-var nib = require('nib');
-var path = require('path');
 
-var webpack     = require('webpack');
-var ExtractText = require('extract-text-webpack-plugin');
+var nib         = require('nib')
+  , path        = require('path')
+  , webpack     = require('webpack')
+  , ExtractText = require('extract-text-webpack-plugin');
 
-var env  = process.env.NODE_ENV || 'development'
-var prod = env === 'production'
+var env       = process.env.NODE_ENV || 'development'
+  , prod      = env === 'production'
+  , subdomain = process.env.npm_package_config_subdomain || 'develop.com'
+  , dev_port  = process.env.npm_package_config_dev_port  || 8081;
 
-var entry = ['./client/layout.ls']
+
+var entry = ['./client/layout']
 if (!prod) // add code hot-swapping
-  entry.push('webpack/hot/dev-server'
-  , 'webpack-dev-server/client?http://'
-    + process.env.npm_package_config_subdomain
-    + ':'
-    + process.env.npm_package_config_dev_port)
+  entry.unshift
+    ( 'webpack/hot/only-dev-server'
+    , 'webpack-dev-server/client?http://'
+      + subdomain
+      + ':'
+      + dev_port
+    )
+
+//var entry =
+// { server: './server/main.ls'
+// , client: ['./client/layout.ls']
+// }
 
 var plugins =
   [ new webpack.DefinePlugin({ 'process.env':{NODE_ENV:env} }) // for react
@@ -28,13 +38,13 @@ else
 
 module.exports =
   { cache: !prod
-  , debug: !prod
-  , devtool: 'source-map'
+  , context:  __dirname
+  , debug:    !prod
+  , devtool:  'source-map'
   , optimize: prod
-  , entry: entry
-  , plugins: plugins
-  , resolve:
-    { extensions: ['', '.ls', '.js', '.styl'] }
+  , entry:    entry
+  , plugins:  plugins
+  , resolve:  { extensions: ['', '.ls', '.js', '.styl'] }
   , module:
     { loaders:
       [ { test: /\.jade$/, loader: 'jade-loader?self' }
@@ -43,11 +53,15 @@ module.exports =
       ]
     }
   , stylus: { use: [nib()] }
-  , node:
-    { fs: 'empty' }
+  , node:   { fs: 'empty' }
   , output:
-    { path: path.join(__dirname, 'public/builds/')
-    , fileName: "[name].js"
+    { path:       path.join(__dirname, 'public/builds')
+    , filename:   "[name].[hash].js"
+    , publicPath: 'http://'
+      + subdomain
+      + ':'
+      + dev_port
+      + '/'
     , chunkFilename: "[hash]/js/[id].js"
     }
   }
