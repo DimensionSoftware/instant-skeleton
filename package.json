@@ -47,7 +47,7 @@
   "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
   "config": {
     "node_port": 8080,
-    "dev_port": 8079,
+    "dev_port": 8081,
     "title": "Instant Skeleton | by DimensionSoftware.com",
     "subdomain": "develop.com",
     "cacheUrls": [
@@ -126,10 +126,10 @@
     "koa-router": "^3.4.0",
     "koa-static-cache": "^1.2.0",
     "level-party": "DimensionSoftware/level-party",
-    "react-router-component": "STRML/react-router-component#d08e25754a",
     "level-sublevel": "^6.3.15",
     "leveldown": "^1.0.0",
     "levelup": "DimensionSoftware/node-levelup",
+    "livescript-loader": "^0.1.2",
     "lodash": "^2.4.1",
     "moment": "^2.8.3",
     "multilevel": "^6.0.1",
@@ -143,6 +143,7 @@
     "primus-emitter": "^3.0.3",
     "react": "^0.12.1",
     "react-responsive": "0.0.1",
+    "react-router-component": "STRML/react-router-component#d08e25754a",
     "redis": "^0.12.1",
     "replacestream": "^0.3.0",
     "shelljs": "^0.3.0",

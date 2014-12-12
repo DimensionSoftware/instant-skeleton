@@ -53,20 +53,21 @@ gulp.task \build:client (cb) -> # build client app bundle
 
 # watching
 # --------
-gulp.task \webpack:dev-server (cb) ->
-  return cb! # guard
+gulp.task \webpack:dev-server [\build:client] (cb) ->
+  #return cb! # to skip
   const dev-server = new WebpackDevServer compiler, {
     +hot
     -quiet
     -no-info
     watch-delay: 100ms
-    stats: { +colors }
-    public-path: "http://#subdomain:#dev-port/" #"#__dirname/public/builds/"
+    public-path: "http://#subdomain:#dev-port/"
     content-base: "http://#subdomain:#port"
+    headers:
+      Access-Control-Allow-Origin: \*
   }
   dev-server.listen dev-port, subdomain, (err) ->
     if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
-    cb! # XXX keep server listening
+    cb!
 
 gulp.task \watch ->
   gulp.watch ['./server/**/*.ls', './shared/**/*.ls'] [\build:server]
@@ -76,7 +77,7 @@ gulp.task \watch ->
 # cleanup
 # -------
 gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
-gulp.task \clean (cb) -> del ['./build/*', './public/builds/*'], cb
+gulp.task \clean (cb) -> del ['./build/*', './public/builds/*'] cb
 
 
 # env tasks
