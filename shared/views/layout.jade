@@ -51,16 +51,12 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     block body
       != body
 
-    //- last, use head.js to boot app quickly
+    //- boot app bundle
     if production
-      script(src="//cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js")
+      //- use cdn
+      script(src="#{cacheUrls[4]}/builds/#{changeset}.js")
     else
-      script(src="#{cacheUrls[2]}/vendor/head.min.js")
+      script(src="//#{subdomain}:#{port}/builds/#{changeset}.js")
+
     script.
-      if production
-        //- use cdn
-        head.load(["#{cacheUrls[2]}/vendor/primus.js", "#{cacheUrls[4]}/builds/#{changeset}.js"]);
-      else
-        //- use livereload dev port
-        head.load(["#{cacheUrls[2]}/vendor/primus.js", "//#{subdomain}:#{dev_port}/builds/#{changeset}.js"]);
       window.locals=!{delete(locals.body) && JSON.stringify(locals)};

@@ -1,5 +1,10 @@
 
-$ = window.$ = require \jquery
+require! {
+  \multilevel
+  \./stylus/master
+  \../shared/features
+  '../public/vendor/primus.js': Primus
+}
 
 
 window.storage = {} <<< # to better use local storage
@@ -19,14 +24,10 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 
 # main
 # ---------
-<- head.ready # browser world, stage 2
-
 # configure primus
 primus = window.primus = Primus.connect!
   ..on \open ->
-    # pass spark-id as data on every AJAX request
     window.spark-id <- primus.id
-    $.ajax-setup data: { spark-id }
 
     # alert user of a stale page?
     if locals.env is \production and window.closed-duration-i
