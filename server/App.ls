@@ -43,8 +43,10 @@ module.exports =
   class App
     (@port=\ephemeral, @changeset=\latest, @vendorset=\latest) ->
 
+    build: -> [name, build] = @changeset.split \.; build or \latest
+
     start: (cb = (->)) ->
-      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
+      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@build![to 7].join ''}"
 
       @app = koa! # boot!
 
@@ -84,7 +86,7 @@ module.exports =
       @app
 
     stop: (cb = (->)) ->
-      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 7].join ''}"
+      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@build![to 7].join ''}"
       # cleanup & quit listening
       <~ @primus.destroy
       <~ @app.server.close
