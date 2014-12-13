@@ -1,8 +1,12 @@
 
 ### For flipping on/off features
 
-if typeof env is \undefined
-  env = window?locals?env or process.env?NODE_ENV or \production
+env =
+  if typeof window isnt \undefined
+    window.locals?env # client
+  else
+    process.env?NODE_ENV
+
 
 prod = env is \production
 test = env is \test
