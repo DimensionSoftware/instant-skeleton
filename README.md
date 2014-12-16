@@ -127,7 +127,5 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 &nbsp;
 
 <center>
-<small>
-[![Fine Software by Dimension](https://dimensionsoftware.com/images/dimension_full_logo.png)](https://dimensionsoftware.com)
-</small>
+[![Fresh Software by Dimension](https://dimensionsoftware.com/images/software_by.png)](https://dimensionsoftware.com)
 </center>

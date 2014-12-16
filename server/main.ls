@@ -37,8 +37,8 @@ function restart
     supervisor.starting = true
     App  = require \./App
     args = [
-      process.argv.2 or parse-int process.env.npm_package_config_node_port
-      get-latest-webpack 'public/builds'                          # changeset
+      parse-int (process.argv.2 or process.env.npm_package_config_node_port)
+      get-latest-webpack 'public/builds' # changeset
     ]
 
     # start!
