@@ -3,9 +3,9 @@ require! {
   \multilevel
   \./stylus/master
   \../shared/features
-  '../public/vendor/primus.js': Primus
 }
 
+const Primus = try require \../public/vendor/primus.js catch {}
 
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
