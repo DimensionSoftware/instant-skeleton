@@ -10,7 +10,6 @@ global <<< require \prelude-ls
 global.cl = console.log
 global.cw = console.warn
 global.React = require \react/addons
-global.async = require \async
 global.Promise = require \bluebird
 global.moment = require \moment
 global.accounting = require \accounting

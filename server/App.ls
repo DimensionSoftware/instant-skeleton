@@ -72,7 +72,7 @@ module.exports =
 
       # listen
       @app.server = http.create-server @app.callback!
-      unless env is \test then @app.server.listen @port, cb
+      unless @port is \ephemeral then @app.server.listen @port, cb
 
       # init real-time
       @primus = new Primus @app.server, transformer: \engine.io

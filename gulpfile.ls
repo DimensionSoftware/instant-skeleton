@@ -34,7 +34,7 @@ const compiler = webpack wp-config # use code caching
 # build transformations
 # ---------------------
 gulp.task \build:primus (cb) ->
-  app = new App 31337
+  const app = new App 31337
   <- app.start
   app # save primus client from koa config
     ..primus.save './public/vendor/primus.js'
