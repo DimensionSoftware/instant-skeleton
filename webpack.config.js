@@ -10,20 +10,17 @@ var env       = process.env.NODE_ENV || 'development'
   , dev_port  = process.env.npm_package_config_dev_port  || 8081;
 
 
-var entry = ['./client/layout']
-if (!prod) // add code hot-swapping
-  entry.unshift
-    ( 'webpack/hot/only-dev-server'
-    , 'webpack-dev-server/client?http://'
-      + subdomain
-      + ':'
-      + dev_port
-    )
-
-//var entry =
-// { server: './server/main.ls'
-// , client: ['./client/layout.ls']
-// }
+var entry = { client: ['./client/layout'] }
+if (!prod) // add code hot-swapping to all entry points
+  for (var k in entry)
+    entry[k].unshift
+      ( 'webpack/hot/dev-server'
+      , 'webpack/hot/only-dev-server'
+      , 'webpack-dev-server/client?http://'
+        + subdomain
+        + ':'
+        + dev_port
+      )
 
 var plugins =
   [ new webpack.DefinePlugin({ 'process.env':{NODE_ENV:env} }) // for react
@@ -61,7 +58,6 @@ module.exports =
       + subdomain
       + ':'
       + dev_port
-      + '/'
-    , chunkFilename: "[hash]/js/[id].js"
+      + '/webpack-dev-server/'
     }
   }
