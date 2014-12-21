@@ -15,7 +15,6 @@ if (!prod) // add code hot-swapping to all entry points
   for (var k in entry)
     entry[k].unshift
       ( 'webpack/hot/dev-server'
-      , 'webpack/hot/only-dev-server'
       , 'webpack-dev-server/client?http://'
         + subdomain
         + ':'
@@ -46,18 +45,18 @@ module.exports =
     { loaders:
       [ { test: /\.jade$/, loader: 'jade-loader?self' }
       , { test: /\.ls$/,   loader: 'livescript-loader' }
-      , { test: /\.styl$/, loader: ExtractText.extract('stylus-loader', 'css-loader!stylus-loader') }
+      , { test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') }
       ]
     }
   , stylus: { use: [nib()] }
   , node:   { fs: 'empty' }
   , output:
     { path:       path.join(__dirname, 'public/builds')
-    , filename:   "[name].[hash].js"
+    , filename:   "[name].js"
     , publicPath: 'http://'
       + subdomain
       + ':'
       + dev_port
-      + '/webpack-dev-server/'
+      + '/builds/'
     }
   }

@@ -119,17 +119,22 @@ export rate-limit = (next) ->* # apply our config
   yield (rate-fn.bind @) next
 
 
-# geoip
 export geoip = (next) ->*
   @locals.geo = geo.lookup @ip
   yield next
 
 
-# etags
 export etags = (next) ->*
   yield next                  # wait for body
   if @locals.body?to-string!  # ...and digest if exists on way up
     @etag = helpers.digest that
+
+
+export webpack = (next) ->*
+  if @locals.env isnt \production # webpackdev headers
+    @set \Access-Control-Allow-Origin "http://#{config.subdomain}:#{config.node_port}"
+    @set \Access-Control-Allow-Headers \X-Requested-With
+  yield next
 
 
 # react

@@ -12,10 +12,10 @@ require! {
   \gulp-watch
   \webpack
 
-  './server/App': App
-
   './package.json': config
   './webpack.config.js': wp-config
+
+  './server/App': App
   'webpack-dev-server': WebpackDevServer
 }
 
@@ -45,39 +45,37 @@ gulp.task \build:server ->
     .pipe gulp-livescript {+bare, -header} # strip
     .pipe gulp.dest './build'
 
-gulp.task \build:client (cb) -> # build client app bundle
-  compiler.run (err, stats) ->
-    if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
-    cb!
+gulp.task \build:client run-compiler # build client app bundle
 
 
 # watching
 # --------
-gulp.task \webpack:dev-server [\build:client] (cb) ->
+gulp.task \webpack:dev-server (cb) ->
   #return cb! # to skip
   const dev-server = new WebpackDevServer compiler, {
-    +hot
-    -quiet
-    -no-info
-    watch-delay: 100ms
-    public-path: "http://#subdomain:#dev-port/"
+    quiet: prod
+    #+hot
+    #+debug
+    #+inline
+    devtool: \sourcemap
+    #+no-info
+    #watch-delay:  100ms
+    public-path:  "http://#subdomain:#dev-port/builds/"
     content-base: "http://#subdomain:#port"
-    headers:
-      Access-Control-Allow-Origin: \*
   }
   dev-server.listen dev-port, subdomain, (err) ->
     if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
     cb!
 
 gulp.task \watch ->
-  gulp.watch ['./server/**/*.ls', './shared/**/*.ls'] [\build:server]
-  #gulp.watch ['./shared/**/*.ls', './client/**/*'] [\build:client]
+  gulp.watch ['./server/**/*.ls' './shared/**/*.ls'] [\build:server]
+  gulp.watch ['./shared/**/*.ls' './client/**/*'] [\build:client]
 
 
 # cleanup
 # -------
 gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
-gulp.task \clean (cb) -> del ['./build/*', './public/builds/*'] cb
+gulp.task \clean (cb) -> del ['./build/*' './public/builds/*'] cb
 
 
 # env tasks
@@ -86,7 +84,10 @@ gulp.task \development <[watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client]>, node-args:'--harmony'}
     .once \start ->
       <- set-timeout _, 1250ms # wait a bit longer for server to fully boot
-      open "http://#subdomain:#dev-port/webpack-dev-server/"
+      open "http://#subdomain:#port"
+    .on \restart ->
+      <- set-timeout _, 1500ms # FIXME faster server restart
+      <- run-compiler
 gulp.task \production (gulp-shell.task 'pm2 start processes.json')
 
 
@@ -96,5 +97,10 @@ default-tasks = <[build:server build:primus build:client ]>
   ..push env
 gulp.task \default default-tasks
 
+
+function run-compiler cb
+  (err, stats) <- compiler.run
+  if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
+  cb!
 
 # vim:fdm=marker

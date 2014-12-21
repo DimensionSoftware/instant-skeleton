@@ -56,10 +56,11 @@ module.exports =
         ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
+        #..use helmet.defaults!            # solid secure base
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals    # load env-sensitive config into locals
+        ..use middleware.webpack          # for webpack in develop
         ..use middleware.rate-limit       # rate limiting for all requests (override in config.json)
-        #..use helmet.defaults xframe:prod # solid secure base
         ..use middleware.static-assets    # static assets handler
         ..use middleware.app-cache        # offline support
         ..use sess store:koa-level db:sdb # session support
