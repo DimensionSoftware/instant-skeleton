@@ -51,15 +51,11 @@ gulp.task \build:client run-compiler # build client app bundle
 # watching
 # --------
 gulp.task \webpack:dev-server (cb) ->
-  #return cb! # to skip
   const dev-server = new WebpackDevServer compiler, {
+    #+hot # TODO
     quiet: prod
-    #+hot
-    #+debug
-    #+inline
+    debug: !prod
     devtool: \sourcemap
-    #+no-info
-    #watch-delay:  100ms
     public-path:  "http://#subdomain:#dev-port/builds/"
     content-base: "http://#subdomain:#port"
   }
@@ -83,10 +79,10 @@ gulp.task \clean (cb) -> del ['./build/*' './public/builds/*'] cb
 gulp.task \development <[watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client]>, node-args:'--harmony'}
     .once \start ->
-      <- set-timeout _, 1250ms # wait a bit longer for server to fully boot
+      <- boot-delay-fn
       open "http://#subdomain:#port"
     .on \restart ->
-      <- set-timeout _, 1500ms # FIXME faster server restart
+      <- boot-delay-fn
       <- run-compiler
 gulp.task \production (gulp-shell.task 'pm2 start processes.json')
 
@@ -97,6 +93,9 @@ default-tasks = <[build:server build:primus build:client ]>
   ..push env
 gulp.task \default default-tasks
 
+
+function boot-delay-fn fn
+  set-timeout fn, 1500ms # TODO replace with child-to-parent msg
 
 function run-compiler cb
   (err, stats) <- compiler.run
