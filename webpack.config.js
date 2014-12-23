@@ -10,19 +10,20 @@ var env       = process.env.NODE_ENV || 'development'
   , dev_port  = process.env.npm_package_config_dev_port  || 8081;
 
 
-var entry = { client: ['./client/layout'] }
-if (!prod) // add code hot-swapping to all entry points
-  for (var k in entry)
-    entry[k].unshift
-      ( 'webpack/hot/dev-server'
-      , 'webpack-dev-server/client?http://'
-        + subdomain
-        + ':'
-        + dev_port
-      )
+var entry =
+  { client:
+    ['./client/layout'
+    // TODO add hot-reload
+    //, 'webpack/hot/dev-server'
+    //, 'webpack-dev-server/client?http://'
+    //  + subdomain
+    //  + ':'
+    //  + dev_port
+    ]
+  }
 
 var plugins =
-  [ new webpack.DefinePlugin({ 'process.env':{NODE_ENV:env} }) // for react
+  [ new webpack.DefinePlugin({ 'process.env':{NODE_ENV:env} }) // shrinks react in production
   , new webpack.optimize.DedupePlugin()
   , new ExtractText('site.css', {allChunks:true})
   ]

@@ -60,7 +60,7 @@ module.exports =
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals    # load env-sensitive config into locals
         ..use middleware.webpack          # for webpack in develop
-        ..use middleware.rate-limit       # rate limiting for all requests (override in config.json)
+        ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.static-assets    # static assets handler
         ..use middleware.app-cache        # offline support
         ..use sess store:koa-level db:sdb # session support

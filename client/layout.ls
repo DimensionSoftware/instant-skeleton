@@ -5,7 +5,7 @@ require! {
   \../shared/features
 }
 
-const Primus = try require \../public/vendor/primus.js catch {}
+const Primus = try require \../public/vendor/primus catch {}
 
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
