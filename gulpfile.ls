@@ -65,7 +65,6 @@ gulp.task \webpack:dev-server (cb) ->
 
 gulp.task \watch ->
   gulp.watch ['./server/**/*.ls' './shared/**/*.ls'] [\build:server]
-  gulp.watch ['./shared/**/*.ls' './client/**/*'] [\build:client]
 
 
 # cleanup
@@ -84,12 +83,12 @@ gulp.task \development <[watch webpack:dev-server ]> ->
     .on \restart ->
       <- boot-delay-fn
       <- run-compiler
-gulp.task \production (gulp-shell.task 'pm2 start processes.json')
+gulp.task \production <[build:client ]> (gulp-shell.task 'pm2 start processes.json')
 
 
 # main
 # ----
-default-tasks = <[build:server build:primus build:client ]>
+default-tasks = <[build:server build:primus ]>
   ..push env
 gulp.task \default default-tasks
 
