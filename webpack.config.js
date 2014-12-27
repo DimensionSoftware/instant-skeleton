@@ -45,7 +45,8 @@ module.exports =
   , module:
     { loaders:
       [ { test: /\.jade$/, loader: 'jade-loader?self' }
-      , { test: /\.ls$/,   loader: 'livescript-loader' }
+      , { test: /\.ls$/,   loader: 'livescript-loader?const=true' }
+      , { test: /\.json$/, loader: 'json-loader' }
       , { test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') }
       ]
     }

@@ -5,7 +5,7 @@ require! {
   \../shared/features
 }
 
-const Primus = try require \../public/vendor/primus catch {}
+Primus = try require \../public/vendor/primus catch {}
 
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
@@ -32,7 +32,6 @@ primus = window.primus = Primus.connect!
     # alert user of a stale page?
     if locals.env is \production and window.closed-duration-i
       clear-interval that
-      that = void
       if window.closed-duration > 3s
         notify 'Reload' {body:'A newer version of this page is ready!'}
 

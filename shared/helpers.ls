@@ -11,26 +11,28 @@ require! {
 # @param  {Number}   delay              milliseconds to wait for inactivity before running final-fn
 # @return {Function}                    a function that will collapse and summarize bursts
 export burst = (initial-fn, combiner-fn, final-fn, delay) ->
-  ax           = []
-  accumulating = false
-  wait         = null
+  state = {
+    ax: []
+    wait: void
+    -accumulating
+  }
   finish = ->
     initial-value = initial-fn!
     #console.log \finished, { initial-value, ax }
-    final = fold combiner-fn, initial-value, ax
+    final = fold combiner-fn, initial-value, state.ax
     #console.log \final, final
     final-fn(final)
-    ax           := []
-    accumulating := false
-    wait         := null
+    state.ax           := []
+    state.accumulating := false
+    state.wait         := null
 
   (...args) ->
-    if not accumulating
-      accumulating := true
+    if not state.accumulating
+      state.accumulating := true
     else
-      clear-timeout(wait) if wait
-    wait := set-timeout finish, delay
-    ax.push args
+      clear-timeout state.wait if state.wait
+    state.wait := set-timeout finish, delay
+    state.ax.push args
 
 # Don't run next unless condition-fn returns true.
 #
