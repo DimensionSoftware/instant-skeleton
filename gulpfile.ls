@@ -50,7 +50,7 @@ gulp.task \build:client run-compiler # build client app bundle
 
 # watching
 # --------
-gulp.task \webpack:dev-server (cb) ->
+gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
   const dev-server = new WebpackDevServer compiler, {
     #+hot # TODO
     quiet: prod
@@ -75,7 +75,7 @@ gulp.task \clean (cb) -> del ['./build/*' './public/builds/*'] cb
 
 # env tasks
 # ---------
-gulp.task \development <[watch webpack:dev-server ]> ->
+gulp.task \development <[build:server watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client]>, node-args:'--harmony'}
     .once \start ->
       <- boot-delay-fn
