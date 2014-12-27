@@ -5,8 +5,6 @@ require! {
   \../shared/features
 }
 
-Primus = try require \../public/vendor/primus catch {}
-
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
   get: (k)    -> try local-storage.get-item k |> JSON.parse

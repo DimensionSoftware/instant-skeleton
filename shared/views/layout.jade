@@ -55,10 +55,11 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       != body
 
     //- boot app bundle (using cdn in production)
+    script(src="#{cacheUrls[2]}/vendor/primus.js?#{changeset}")
     if production
-      script(src="#{cacheUrls[4]}/builds/client.js?#{changeset}")
+      script(src="#{cacheUrls[3]}/builds/client.js?#{changeset}")
     else
-      script(src="//#{subdomain}:#{dev_port}/builds/client.js")
+      script(src="//#{subdomain}:#{dev_port}/builds/client.js?#{changeset}")
       script(src="//#{subdomain}:#{dev_port}/webpack-dev-server.js")
 
     script.
