@@ -65,7 +65,7 @@ merge{name,title,url,cache-urls,meta-keywords} = config # pick these
 merge <<< config[env]                                   # merge in current env's config
 merge.features = features                               # merge in features
 export config-locals = (next) ->*
-  [@locals[k] = v for k,v of merge] # ...and localize!
+  [@locals[k] = v for let k,v of merge] # ...and localize!
 
   if @locals.port isnt 80 # add port to urls
     for k,v of merge when k.to-lower-case!match \url
@@ -76,11 +76,16 @@ export config-locals = (next) ->*
   yield next
 
 
+state = { # these middlewares are singletons
+  static-fn: void
+  jade-fn:   void
+  rate-fn:   void
+}
+
 # static asset server
-static-fn = void
 export static-assets = (next) ->* # apply our config
   if features.static-assets
-    unless static-fn then static-fn := koa-static './public' { # lazy singleton
+    unless state.static-fn then state.static-fn := koa-static './public' { # lazy singleton
       buffer: @locals.env is \production
       cache-control:
         if @locals.env is \production
@@ -88,15 +93,14 @@ export static-assets = (next) ->* # apply our config
         else
           'no-store, no-cache, must-revalidate'
     }
-    yield (static-fn.bind @) next
+    yield (state.static-fn.bind @) next
   else
     yield next
 
 
 # jade templates
-jade-fn = void
 export jade = (next) ->*
-  unless jade-fn then jade-fn := koa-jade.middleware {
+  unless state.jade-fn then state.jade-fn := koa-jade.middleware {
     view-path: \shared/views
     pretty:    @locals.env isnt \production
     no-cache:  @locals.env isnt \production
@@ -104,19 +108,18 @@ export jade = (next) ->*
     -compile-debug
     -debug
   }
-  yield (jade-fn.bind @) next
+  yield (state.jade-fn.bind @) next
 
 
 # rate limiting
-rate-fn = void
 export rate-limit = (next) ->* # apply our config
-  unless rate-fn then rate-fn := limit { # lazy singleton
+  unless state.rate-fn then state.rate-fn := limit { # lazy singleton
     max:@locals.limits?max or 500
     duration:@locals.limits?duration or (1000 * 60 * 60 * 1)
     white-list:@locals.limits?white-list or []
     black-list:@locals.limits?black-list or []
   }
-  yield (rate-fn.bind @) next
+  yield (state.rate-fn.bind @) next
 
 
 export geoip = (next) ->*

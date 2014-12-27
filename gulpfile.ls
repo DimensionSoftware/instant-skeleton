@@ -42,7 +42,7 @@ gulp.task \build:primus (cb) ->
 
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
-    .pipe gulp-livescript {+bare, -header} # strip
+    .pipe gulp-livescript {+bare, -header, const:true} # strip
     .pipe gulp.dest './build'
 
 gulp.task \build:client run-compiler # build client app bundle
