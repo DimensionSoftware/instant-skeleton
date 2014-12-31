@@ -33,6 +33,11 @@ primus = window.primus = Primus.connect!
       if window.closed-duration > 3s
         notify 'Reload' {body:'A newer version of this page is ready!'}
 
+    # stream session updates from server
+    session = primus.channel \session
+      ..on \data (data) ->
+        window.session = JSON.parse data
+
   ..on \close ->
     # count seconds disconnected
     if locals.env is \production
@@ -44,11 +49,6 @@ primus = window.primus = Primus.connect!
     if locals.env is \production
       if c isnt locals.changeset
         notify 'Reload' {body:'A newer version has launched!'}
-
-# configure multilevel
-db = multilevel.client!
-#primus.pipe db.create-rpc-stream!
-#  ..pipe primus
 
 
 if features.dimension # front!
