@@ -69,6 +69,9 @@ SHARED
 * **Primus** -- https://github.com/primus/primus
     * **engine.io** -- https://github.com/Automattic/engine.io
     * **substream** -- https://github.com/primus/substream
+* **LevelDB** -- https://github.com/google/leveldb
+    * **multilevel** -- https://github.com/juliangruber/multilevel
+    * **sublevel** -- https://github.com/dominictarr/level-sublevel
 
 CLIENT
 
@@ -77,7 +80,9 @@ CLIENT
 
 ## Principles
 
-How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.
+How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This
+no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  Zero external service
+dependencies make deploying a cinch; persistence is on-disk: [LevelDB](https://github.com/google/leveldb).
 
 With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
 first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
@@ -92,7 +97,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
        + We &hearts; [NPM](http://npmjs.org).
        + Instant Skeleton is tiny, fast &amp; secure.
-       + We are functional [LiveScript](http://livescript.net): write less code with fewer bugs.
+       + We are streaming functional [LiveScript](http://livescript.net): write less code with fewer bugs.
        + Isomorphic Web Components leveraging [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
 
 
@@ -104,7 +109,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 [**Matt Elder**](https://github.com/dreamcodez)
 
-[**D. Seleno**](https://github.com/onelesd)
+[**Dave Seleno**](https://github.com/onelesd)
 
 [**Mark Huge**](https://github.com/markhuge)
 
@@ -115,8 +120,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 **We appreciate your enthusiasm; this code is not yet ready for prime-time!**
 
-* fork repos needing package.json tweaks
-* Famo.us+react
+* [Famo.us+react](https://github.com/Famous/famous-react/issues)
 * Selenium tests
 * Feathers-like services
 * Coverage working with LiveScript

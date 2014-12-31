@@ -14,6 +14,7 @@ module.exports = koa-router app
 
 # <PAGES>
 app.get r(\HomePage), (next) ->*
+  @session.foo = \bar
   yield mw.react-or-json
   yield next
 

@@ -1,9 +1,11 @@
 
 require! {
+  co
   fs
   url
   lodash
   replacestream
+  keygrip: Keygrip
   'geoip-lite': geo
 
   \koa-jade
@@ -154,5 +156,32 @@ export react-or-json = (next) ->*
     | \application/json => surf!
     | otherwise         => yield react
 
+
+# primus-koa-leveldb session
+export primus-koa-session = (store, keys) ->
+  (req, res, next) ->
+    req.key = "koa:sess:#{primus-koa-session-helper req, \koa.sid, keys}"
+    co(store.get req.key).then (session) ->
+      req.session = session
+      next!
+
+function primus-koa-session-helper req, name, keys
+  # function used by Cookies
+  # https://github.com/expressjs/cookies
+  cache = {}
+  get-pattern = (name) ->
+    if cache[name] then return that
+    cache[name] = new RegExp "(?:^|;) *#{name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")}=([^;]*)"
+
+  # match name (session) cookie
+  n-match = req.headers.cookie.match(get-pattern name)
+  n-val   = n-match?1
+  unless keys then return n-val # unsigned
+
+  # verify signed cookies with keygrip
+  s-match = req.headers.cookie.match(get-pattern "#name.sig")
+  k = new Keygrip keys
+  if k.index("#name=#n-val", s-match?1) < 0 then return void
+  n-val
 
 # vim:fdm=indent
