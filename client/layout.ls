@@ -37,7 +37,7 @@ primus = window.primus = Primus.connect!
     # stream session updates from server
     session = primus.channel \session
       ..on \data (data) ->
-        window.session = JSON.parse data
+        window.session = if typeof! data is \Object then data else JSON.parse data
 
   ..on \close ->
     # count seconds disconnected

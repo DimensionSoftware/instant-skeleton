@@ -10,14 +10,15 @@ require! {
   primus.on \connection (spark) ~>
     spark.send \CHANGESET app.changeset
 
-    # stream level db user session
+    # stream level db user sessions
     session = primus.channel \session
       ..on \connection (spark) ~>
-        sdb-stream = app.sdb.create-live-stream!
-        sdb-stream.pipe session, {-end}
-        sdb-stream.on \data (data) ->
-          if data.key is spark.request.key
-            session.write (JSON.parse data.value)
+        s-stream = app.sdb.create-live-stream!
+          ..pipe session, {-end} # pipe session updates
+          ..on \data (data) ->
+            # send updated sessions to client
+            if data.key is spark.request.key and v = data.value # XXX string & object?
+              session.write (if typeof! v is \Object  then v else JSON.parse v)
 
         spark.on \data (data) ->
           console.log \GOT data
