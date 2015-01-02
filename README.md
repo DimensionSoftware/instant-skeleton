@@ -82,7 +82,7 @@ CLIENT
 
 How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This
 no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  Zero external service
-dependencies make deploying a cinch; persistence is on-disk: [LevelDB](https://github.com/google/leveldb).
+dependencies make deploying a cinch.  Persistence is [LevelDB](https://github.com/google/leveldb).
 
 With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
 first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
@@ -121,12 +121,11 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 **We appreciate your enthusiasm; this code is not yet ready for prime-time!**
 
 * [Famo.us+react](https://github.com/Famous/famous-react/issues)
-* Selenium tests
 * Feathers-like services
+* Selenium and more tests
 * Coverage working with LiveScript
-* Implement TODO example app inside skeleton
+* Fork and implement TODO example
 * More beautiful documentation &amp; better literate .ls
-* Bootstrap data-layer -- bookshelf or https://www.youtube.com/watch?v=41oDDTRWjIQ
 
 &nbsp;
 

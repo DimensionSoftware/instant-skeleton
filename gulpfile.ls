@@ -94,7 +94,7 @@ gulp.task \default default-tasks
 
 
 function boot-delay-fn fn
-  set-timeout fn, 1500ms # TODO replace with child-to-parent msg
+  set-timeout fn, 1700ms # TODO replace with child-to-parent msg
 
 function run-compiler cb
   (err, stats) <- compiler.run
