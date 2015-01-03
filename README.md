@@ -68,10 +68,12 @@ SHARED
     * **react router component** -- https://github.com/STRML/react-router-component
 * **Primus** -- https://github.com/primus/primus
     * **engine.io** -- https://github.com/Automattic/engine.io
-    * **substream** -- https://github.com/primus/substream
+    * **multiplex** -- https://github.com/cayasso/primus-multiplex
 * **LevelDB** -- https://github.com/google/leveldb
-    * **multilevel** -- https://github.com/juliangruber/multilevel
+    * **party** -- https://github.com/substack/level-party
     * **sublevel** -- https://github.com/dominictarr/level-sublevel
+    * **livestream** -- https://github.com/dominictarr/level-live-stream
+    * **level-geospatial** -- https://www.npmjs.com/package/level-geospatial
 
 CLIENT
 
