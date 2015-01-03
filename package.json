@@ -121,7 +121,7 @@
     "react": "^0.12.2",
     "react-responsive": "0.0.1",
     "react-router-component": "STRML/react-router-component#d08e25754a",
-    "replacestream": "^1.0.2",
+    "replacestream": "^1.0.2"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
