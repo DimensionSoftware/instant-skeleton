@@ -112,7 +112,6 @@
     "level-sublevel": "^6.4.0",
     "leveldown": "^1.0.0",
     "levelup": "DimensionSoftware/node-levelup",
-    "lodash": "^2.4.1",
     "pm2": "^0.12.3",
     "prelude-ls": "^1.1.1",
     "pretty-error": "^1.1.1",
