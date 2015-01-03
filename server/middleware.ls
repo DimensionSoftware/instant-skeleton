@@ -3,7 +3,6 @@ require! {
   co
   fs
   url
-  lodash
   replacestream
   keygrip: Keygrip
   'geoip-lite': geo
@@ -106,7 +105,6 @@ export jade = (next) ->*
     view-path: \shared/views
     pretty:    @locals.env isnt \production
     no-cache:  @locals.env isnt \production
-    helper-path: [_: lodash]
     -compile-debug
     -debug
   }
