@@ -73,7 +73,6 @@ SHARED
     * **party** -- https://github.com/substack/level-party
     * **sublevel** -- https://github.com/dominictarr/level-sublevel
     * **livestream** -- https://github.com/dominictarr/level-live-stream
-    * **level-geospatial** -- https://www.npmjs.com/package/level-geospatial
 
 CLIENT
 
