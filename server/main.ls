@@ -38,7 +38,7 @@ function restart
     App  = require \./App
     args = [
       parse-int (process.argv.2 or process.env.npm_package_config_node_port)
-      get-latest-webpack 'public/builds' # changeset
+      process.env.CHANGESET
     ]
 
     # start!
@@ -50,8 +50,3 @@ function restart
     supervisor.instance.stop start
   else
     start!
-
-
-function get-latest-webpack dest
-  {code, output} = shelljs.exec "ls -t #dest|head -1" {+silent} # use latest webpack hash
-  output.trim!replace /\.js$/ '' # strip extension

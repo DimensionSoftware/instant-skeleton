@@ -99,6 +99,7 @@ function boot-delay-fn fn
 function run-compiler cb
   (err, stats) <- compiler.run
   if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
+  process.env.CHANGESET = stats.hash
   cb!
 
 # vim:fdm=marker
