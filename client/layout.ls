@@ -1,6 +1,5 @@
 
 require! {
-  \multilevel
   \./stylus/master
   \../shared/features
 }
