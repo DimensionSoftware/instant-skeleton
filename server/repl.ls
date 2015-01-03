@@ -10,9 +10,6 @@ global <<< require \prelude-ls
 global.cl = console.log
 global.cw = console.warn
 global.React = require \react/addons
-global.Promise = require \bluebird
-global.moment = require \moment
-global.accounting = require \accounting
 global.shared = require '../shared/helpers'
 global.__ = require \lodash
 global.debounce = __.debounce
