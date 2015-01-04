@@ -10,7 +10,6 @@ require! {
 
   koa
   \koa-level
-  \koa-locals
   \koa-logger
   'koa-helmet': helmet
 
@@ -30,14 +29,12 @@ require! {
   \../shared/features
 }
 
-pe = new PrettyError!
-
+pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
 prod = env is \production
 
-db  = level-sublevel(level './shared/db' {encoding:\json})
-sdb = db.sublevel \session
-
+db      = level-sublevel(level './shared/db' {encoding:\json})
+sdb     = db.sublevel \session
 store   = koa-level {db:sdb}
 session = koa-session {store}
 
@@ -49,20 +46,13 @@ module.exports =
     start: (cb = (->)) ->
       console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
 
-      @app = koa! # boot!
-
-      [@app.changeset, @app.sdb] = [@changeset, sdb] # stash
-
-      koa-locals @app, {env, @port, @changeset} # init locals
-
-      @app # attach middlewares
+      @app = koa! # attach middlewares
         ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
         ..use helmet.defaults!            # solid secure base
         ..use middleware.error-handler    # 404 & 50x handler
-        ..use middleware.config-locals    # load env-sensitive config into locals
-        ..use middleware.webpack          # for webpack in develop
+        ..use middleware.config-locals @  # load env-sensitive config into locals
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.static-assets    # static assets handler
         ..use middleware.app-cache        # offline support
