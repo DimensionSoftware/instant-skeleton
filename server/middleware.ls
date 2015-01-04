@@ -8,6 +8,7 @@ require! {
   'geoip-lite': geo
 
   \koa-jade
+  \koa-locals
   'koa-static-cache': koa-static
   'koa-better-ratelimit': limit
 
@@ -65,16 +66,18 @@ merge = {}
 merge{name,title,url,cache-urls,meta-keywords} = config # pick these
 merge <<< config[env]                                   # merge in current env's config
 merge.features = features                               # merge in features
-export config-locals = (next) ->*
-  [@locals[k] = v for let k,v of merge] # ...and localize!
+export config-locals = (App) ->
+  koa-locals App.app, {env, App.port, App.changeset}    # init koa locals support
+  (next) ->*
+    [@locals[k] = v for let k,v of merge]               # ...and localize our config
 
-  if @locals.port isnt 80 # add port to urls
-    for k,v of merge when k.to-lower-case!match \url
-      @locals[k] = if typeof! v is \Array
-        v |> map (~> "#it:#{@locals.port}")
-      else
-        "#v:#{@locals.port}"
-  yield next
+    if @locals.port isnt 80 # add port to urls
+      for k,v of merge when k.to-lower-case!match \url
+        @locals[k] = if typeof! v is \Array
+          v |> map (~> "#it:#{@locals.port}")
+        else
+          "#v:#{@locals.port}"
+    yield next
 
 
 state = { # these middlewares are singletons
