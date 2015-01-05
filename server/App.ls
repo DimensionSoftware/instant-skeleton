@@ -60,28 +60,29 @@ module.exports =
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
         ..use pages                       # apply pages
+        ..use services.router             # apply realtime services
 
       # config environment
       if env isnt \test then @app.use koa-logger!
 
       # boot http & websocket servers
-      @app.server = http.create-server @app.callback!
-      @primus = new Primus @app.server, transformer: \engine.io, parser: \JSON
+      @server = http.create-server @app.callback!
+      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
         ..before (middleware.primus-koa-session store, @app.keys)
         ..use \multiplex primus-multiplex
         ..use \emitter primus-emitter
         ..remove \primus.js
 
-      services.init @app, @primus
+      # init realtime services
+      services.init sdb, @primus
 
       # listen
-      unless @port is \ephemeral then @app.server.listen @port, cb
-
+      unless @port is \ephemeral then @server.listen @port, cb
       @app
 
     stop: (cb = (->)) ->
       console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & quit listening
       <~ @primus.destroy
-      <~ @app.server.close
+      <~ @server.close
       db.close cb
