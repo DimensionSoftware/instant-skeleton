@@ -61,7 +61,7 @@ gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
     public-path:  "http://#subdomain:#dev-port/builds/"
     content-base: "http://#subdomain:#port"
   }
-  dev-server.listen dev-port, subdomain, (err) ->
+  dev-server.listen dev-port, (err) ->
     if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
     cb!
 
