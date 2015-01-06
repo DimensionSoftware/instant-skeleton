@@ -1,5 +1,6 @@
 
 require! {
+  fs
   gulp
   dotenv
   \del
@@ -34,7 +35,8 @@ const compiler = webpack wp-config # use code caching
 # build transformations
 # ---------------------
 gulp.task \build:primus (cb) ->
-  const app = new App 31337
+  const app = new App port
+  <- fs.mkdir \./public/vendor
   <- app.start
   app # save primus client from koa config
     ..primus.save './public/vendor/primus.js'
