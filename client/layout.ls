@@ -2,6 +2,7 @@
 require! {
   \./stylus/master
   \../shared/features
+  immutable: window.Immutable
 }
 
 dimension!
@@ -24,20 +25,6 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 # ---------
 # configure primus
 primus = window.primus = Primus.connect!
-  ..on \open ->
-    window.spark-id <- primus.id
-
-    # alert user of a stale page?
-    if locals.env is \production and window.closed-duration-i
-      clear-interval that
-      if window.closed-duration > 3s
-        notify 'Reload' {body:'A newer version of this page is ready!'}
-
-    # stream session updates from server
-    session = primus.channel \session
-      ..on \data (data) ->
-        window.session = if typeof! data is \Object then data else JSON.parse data
-
   ..on \close ->
     # count seconds disconnected
     if locals.env is \production
@@ -49,6 +36,23 @@ primus = window.primus = Primus.connect!
     if locals.env is \production
       if c isnt locals.changeset
         notify 'Reload' {body:'A newer version has launched!'}
+
+  ..on \open ->
+    # alert user of a stale page?
+    if locals.env is \production and window.closed-duration-i
+      clear-interval that
+      if window.closed-duration > 3s
+        notify 'Reload' {body:'A newer version of this page is ready!'}
+
+    # stream session updates from server
+    session = primus.channel \session
+      ..on \data (data) ->
+        window.session = window.Immutable.Map(if typeof! data is \Object then data else JSON.parse data)
+
+    # stream session updates to server
+    window.set-session = (new-session) ->
+      window.session = new-session
+      session.write new-session.toJS!
 
 
 function dimension

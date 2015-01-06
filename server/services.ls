@@ -4,6 +4,8 @@ require! {
   \level-live-stream
 }
 
+# TODO services are a work-in-progress
+
 app = koa!
 
 @router = (next) ->*
@@ -19,19 +21,19 @@ app = koa!
 
     # stream level db user sessions
     session = primus.channel \session
+
+      # send sessions to client
       ..on \connection (spark) ~>
         s-stream = sdb.create-live-stream!
-          ..pipe session, {-end} # pipe session updates
+          ..pipe session, {-end} # pipe updates
           ..on \data (data) ->
-            # send updated sessions to client
-            if data.key is spark.request.key and v = data.value # XXX string & object?
-              session.write (if typeof! v is \Object then v else JSON.parse v)
+            if data.key is spark.request.key and v = data.value
+              session.write (try JSON.parse v catch {})
 
+        # save sessions from client
         spark.on \data (data) ->
-          # TODO save session
-          if data.key is spark.request.key and v = data.value
-            @session = v
-            console.log \saved-session v
+          @session = data
+          sdb.put spark.request.key, JSON.stringify data
 
 
 ## TODO flesh out TODO service
