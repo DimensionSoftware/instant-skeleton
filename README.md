@@ -66,6 +66,7 @@ SHARED
     * **prelude.ls** -- http://preludels.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
     * **react router component** -- https://github.com/STRML/react-router-component
+    * **immutable.js** -- https://github.com/facebook/immutable-js
 * **Primus** -- https://github.com/primus/primus
     * **engine.io** -- https://github.com/Automattic/engine.io
     * **multiplex** -- https://github.com/cayasso/primus-multiplex
