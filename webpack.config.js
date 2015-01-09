@@ -23,8 +23,7 @@ var entry =
   }
 
 var plugins =
-  [ new webpack.DefinePlugin({ 'process.env':{NODE_ENV:env} }) // shrinks react in production
-  , new webpack.optimize.DedupePlugin()
+  [ new webpack.optimize.DedupePlugin()
   , new ExtractText('site.css', {allChunks:true})
   ]
 if (prod) // production plugins
