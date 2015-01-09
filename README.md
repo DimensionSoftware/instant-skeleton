@@ -67,6 +67,7 @@ SHARED
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
     * **react router component** -- https://github.com/STRML/react-router-component
     * **immutable.js** -- https://github.com/facebook/immutable-js
+    * **omniscient** -- https://omniscientjs.github.io/
 * **Primus** -- https://github.com/primus/primus
     * **engine.io** -- https://github.com/Automattic/engine.io
     * **multiplex** -- https://github.com/cayasso/primus-multiplex
@@ -101,6 +102,13 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + Instant Skeleton is tiny, fast &amp; secure.
        + We are streaming functional [LiveScript](http://livescript.net): write less code with fewer bugs.
        + Isomorphic Web Components leveraging [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
+
+2. How easy is this to debug &amp; reason about?
+
+       + All variables are const
+       + Immutable.JS persistent data structures
+       + --harmony generators provide useful stack traces
+       + Check out our [perf](https://github.com/DimensionSoftware/instant-skeleton/tree/perf) branch for runtime profiling
 
 
 ## Contributors &amp; Idea Factories
