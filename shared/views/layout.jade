@@ -54,6 +54,9 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     block body
       != body
 
+    script.
+      window.locals=!{delete(locals.body) && JSON.stringify(locals)};
+
     //- boot app bundle (using cdn in production)
     script(src="#{cacheUrls[2]}/vendor/primus.js?#{changeset}")
     if production
@@ -61,6 +64,3 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     else
       script(src="//#{subdomain}:#{dev_port}/builds/client.js?#{changeset}")
       script(src="//#{subdomain}:#{dev_port}/webpack-dev-server.js")
-
-    script.
-      window.locals=!{delete(locals.body) && JSON.stringify(locals)};
