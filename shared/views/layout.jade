@@ -50,7 +50,7 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       link(href="//#{subdomain}:#{dev_port}/builds/site.css", rel='stylesheet', type='text/css')
 
   body
-    //- render page soon as possible in production
+    //- server-side render in production (SEO)
     if production
       block body
         != body
