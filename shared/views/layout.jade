@@ -50,9 +50,10 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       link(href="//#{subdomain}:#{dev_port}/builds/site.css", rel='stylesheet', type='text/css')
 
   body
-    //- render page soon as possible
-    block body
-      != body
+    //- render page soon as possible in production
+    if production
+      block body
+        != body
 
     script.
       window.locals=!{delete(locals.body) && JSON.stringify(locals)};
@@ -63,4 +64,3 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       script(src="#{cacheUrls[3]}/builds/client.js?#{changeset}")
     else
       script(src="//#{subdomain}:#{dev_port}/builds/client.js?#{changeset}")
-      script(src="//#{subdomain}:#{dev_port}/webpack-dev-server.js")

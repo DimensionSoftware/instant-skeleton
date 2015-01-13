@@ -11,16 +11,7 @@ var env       = process.env.NODE_ENV || 'development'
 
 
 var entry =
-  { client:
-    ['./client/layout'
-    // TODO add hot-reload
-    //, 'webpack/hot/dev-server'
-    //, 'webpack-dev-server/client?http://'
-    //  + subdomain
-    //  + ':'
-    //  + dev_port
-    ]
-  }
+  { client: ['./client/layout' ] }
 
 var plugins =
   [ new webpack.optimize.DedupePlugin()
@@ -30,6 +21,14 @@ if (prod) // production plugins
   plugins.push(new webpack.optimize.UglifyJsPlugin())
 else
   plugins.push(new webpack.HotModuleReplacementPlugin())
+  // add hot-reload
+  entry.client.push
+    ('webpack/hot/dev-server'
+    , 'webpack-dev-server/client?http://'
+      + subdomain
+      + ':'
+      + dev_port
+    )
 
 
 module.exports =
@@ -44,7 +43,7 @@ module.exports =
   , module:
     { loaders:
       [ { test: /\.jade$/, loader: 'jade-loader?self' }
-      , { test: /\.ls$/,   loader: 'livescript-loader?const=true' }
+      , { test: /\.ls$/,   loaders: ['react-hot', 'livescript-loader?const=true'] }
       , { test: /\.json$/, loader: 'json-loader' }
       , { test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') }
       ]

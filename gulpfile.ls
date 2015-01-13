@@ -54,7 +54,7 @@ gulp.task \build:client run-compiler # build client app bundle
 # --------
 gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
   const dev-server = new WebpackDevServer compiler, {
-    #+hot # TODO
+    hot: !prod
     quiet: prod
     debug: !prod
     devtool: \sourcemap
@@ -78,13 +78,10 @@ gulp.task \clean (cb) -> del ['./build/*' './public/builds/*'] cb
 # env tasks
 # ---------
 gulp.task \development <[build:server watch webpack:dev-server ]> ->
-  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client]>, node-args:'--harmony'}
+  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client shared/react]>, node-args:'--harmony'}
     .once \start ->
       <- boot-delay-fn
       open "http://#subdomain:#port"
-    .on \restart ->
-      <- boot-delay-fn
-      <- run-compiler
 gulp.task \production <[build:client ]> (gulp-shell.task 'pm2 start processes.json')
 
 
