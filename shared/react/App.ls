@@ -17,7 +17,7 @@ module.exports = React.create-class {
 
   location: (route) ->
     name = route.0
-    Location { key: name, ref: name, path: route.1, handler: pages[name], async-state: @props.locals }
+    Location { key: name, ref: name, path: route.1, handler: pages[name].init, async-state: @props.locals }
 
   render: ->
     locations-for-routes = routes.list

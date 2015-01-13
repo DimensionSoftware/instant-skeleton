@@ -13,6 +13,11 @@ app = koa!
 module.exports = koa-router app
 
 # <PAGES>
+app.get r(\Welcome), (next) ->*
+  @session.last-page = \Welcome
+  yield mw.react-or-json
+  yield next
+
 app.get r(\HomePage), (next) ->*
   @session.last-page = \HomePage
   yield mw.react-or-json
