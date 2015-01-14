@@ -1,7 +1,6 @@
 export list = [
   # <ROUTES>
-  [ \HomePage,    '/' ],
-  [ \Welcome,    '/welcome' ]
+  [ \HomePage,    '/' ]
 
   # route examples:
   #[ \PromoPage,            '/clients/:Client_id/promos' ]
