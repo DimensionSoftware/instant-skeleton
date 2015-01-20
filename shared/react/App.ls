@@ -16,7 +16,7 @@ module.exports = component ({cursor}:props) ->
 
   location = (route) ->
     name = route.0
-    Location { key: name, ref: name, path: route.1, handler: pages[name], async-state:cursor }
+    Location { key: name, ref: name, path: route.1, handler: pages[name], props:cursor }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
