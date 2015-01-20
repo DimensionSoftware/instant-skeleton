@@ -3,6 +3,7 @@ require! {
   co
   fs
   url
+  immstruct
   replacestream
   keygrip: Keygrip
   'geoip-lite': geo
@@ -147,7 +148,8 @@ export webpack = (next) ->*
 export react = (next) ->* # set body to react tree
   locals = {} <<< @locals
   path   = url.parse (@url or '/') .pathname
-  @locals.body = React.render-to-string(create-element App, {path, locals})
+  state  = immstruct {path, locals}
+  @locals.body = React.render-to-string (App state.cursor!)
   yield @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
