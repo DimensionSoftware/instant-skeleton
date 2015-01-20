@@ -15,21 +15,9 @@ export list = [
 # @param  {String} ...args    varargs for each path variable of route
 # @return {String}            path
 export r = (name, ...args) ->
-  route = list |> find -> it.0 is name
+  route = for r in list when r.0 is name then r
   if not route
     throw new Error("Route '#name' not found.")
-  fold ((m, i) -> m.replace /:(\w+)/, i), route.1, args
-
-# Given a route name, route.list index and parameters, return a URL path.
-#
-# @param  {String} name       route name
-# @param  {String} n          index in route matches
-# @param  {String} ...args    varargs for each path variable of route
-# @return {String}            path
-export rn = (name, n, ...args) ->
-  route = (list |> filter -> it.0 is name)[n]
-  if not route
-    throw new Error("Route '#name' not found.")
-  fold ((m, i) -> m.replace /:(\w+)/, i), route.1, args
+  args.reduce ((m, i) -> m.replace /:(\w+)/, i), route.0.1, args
 
 # vim:fdm=indent
