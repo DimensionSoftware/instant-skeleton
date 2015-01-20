@@ -110,9 +110,10 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + --harmony generators provide useful stack traces
        + Check out our [perf](https://github.com/DimensionSoftware/instant-skeleton/tree/perf) branch for runtime profiling
 
-3. How fast is development?
+3. How rapid is development?
 
-       + Instant live reloading
+       + Instant "hot" live loads
+       + Undo &amp; Redo for FREE
        + Zero browser plugins required
        + Application state is preserved across reloads
 

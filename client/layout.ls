@@ -2,6 +2,7 @@
 require! {
   react: {create-element}:React
   immutable: window.Immutable
+  immstruct
   \../shared/react/App
   \../shared/features
   \./stylus/master
@@ -25,9 +26,16 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 
 # main
 # ---------
-# configure react
-app = create-element App, { path: window.location.pathname, locals: window.locals }
-window.app = React.render app, (document.get-elements-by-tag-name \body .0)
+# configure react on client
+[locals, path] = [window.locals, window.location.pathname]
+state  = immstruct {path, locals}
+body   = document.get-elements-by-tag-name \body .0
+
+render = (cur, old) ->
+  if cur then state.current.merge-deep cur # update app state
+  React.render App(state.cursor!), body    # render app to body
+state.on \next-animation-frame render      # update on animation frames (avoids browser janks)
+render!
 
 # configure primus
 primus = window.primus = Primus.connect!
