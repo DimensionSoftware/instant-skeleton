@@ -125,6 +125,12 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
             $ vim shared/features.ls
 
+5. How can I add my own data store?
+
+       + Simple!  Hook it into your Page:
+
+            $ vim server/pages.ls
+
 
 ## Contributors &amp; Idea Factories
 

@@ -14,6 +14,7 @@ module.exports = koa-router app
 
 # <PAGES>
 app.get r(\HomePage), (next) ->*
+  @locals.greeting   = 'Hello World!' # default
   @session.last-page = \HomePage
   yield mw.react-or-json
   yield next
