@@ -1,12 +1,11 @@
-export list = [
-  # <ROUTES>
-  [ \HomePage,    '/' ]
 
-  # route examples:
+export list = [
+  [ \HomePage,    '/' ] # HomePage route name loads shared/react/HomePage.ls
+
+  # more route examples:
   #[ \PromoPage,            '/clients/:Client_id/promos' ]
   #[ \PromoPage,            '/clients/:Client_id/promos/page/:n' ]
   #[ \PromoEditorPage,      '/clients/:Client_id/promos/:Promo_id' ]
-  # </ROUTES>
 ]
 
 
