@@ -6,16 +6,16 @@ require! {
 }
 
 
-module.exports = component ({async-state}:props) ->
-  [key, value] = [\env, async-state.get-in [\locals \env]]
+module.exports = component ({props}) ->
+  [key, value] = [\env, props.get-in [\locals \env]]
   on-change    = (e) ->
-    t = async-state.update-in [\locals key], -> e.current-target.value
+    t = props.update-in [\locals key], -> e.current-target.value
 
   div class-name: \HomePage,
     h1 void value
     label void \Greeting: [
       input {key, value, on-change}
     ]
-    button {on-click:(-> async-state.update-in [\locals key], -> \CLICK)}, \Swap
-    h2 void 'All Props:'
-    code void (JSON.stringify async-state.toJS!)
+    button {on-click:(-> props.update-in [\locals key], -> \CLICK)}, \Swap
+    h2 void 'App State:'
+    code void (JSON.stringify props.toJS!)
