@@ -7,15 +7,17 @@ require! {
 
 
 module.exports = component ({props}) ->
-  [key, value] = [\env, props.get-in [\locals \env]]
-  on-change    = (e) ->
-    t = props.update-in [\locals key], -> e.current-target.value
+  key       = \greeting
+  update    = (val) -> props.update-in [\locals, key], -> val
+  value     = props.get-in [\locals key]
+  on-change = (e) ->
+    update e.current-target.value
 
   div class-name: \HomePage,
     h1 void value
     label void \Greeting: [
       input {key, value, on-change}
     ]
-    button {on-click:(-> props.update-in [\locals key], -> \CLICK)}, \Swap
-    h2 void 'App State:'
+    button {on-click:(-> update \CLICK)}, \Swap
+    h2 void 'React App State:'
     code void (JSON.stringify props.toJS!)
