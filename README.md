@@ -19,22 +19,24 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
     $ cd instant-skeleton
     $ npm install && npm test && npm start
 
-## Overview
+## Create Your First Page
 
-Building your SEO-friendly, realtime application is simple: add **Pages** <small>(declarative, isomorphic bits of React)</small> and **Services** <small>(RESTful & Realtime API endpoints)</small>.
+Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
+React into a single, routable concept that makes your on-screen productivity incredible: **Pages**
 
-* Add a new **Page**
+>  Pages are declarative, isomorphic bits of React + Omniscient + Immutable.JS
+
+1. Add a Route
 
         $ vim shared/routes.ls
+
+2. Add a Page Handler for the Route
+
         $ vim server/pages.ls
 
-* Add a new **Service**
+3. Add a React + Omniscient Component for the Page
 
-        $ vim server/services.ls
-
-* Enable and Disable **Features** <small>with zero impact for unused features</small>
-
-        $ vim shared/features.ls
+        $ vim shared/react/[ROUTE-NAME].ls
 
 ## Environment &amp; "npm config" Variables
 * `NODE_ENV`  -- "development", "production" or "test"
@@ -117,6 +119,13 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + Zero browser plugins required
        + Application state is preserved across reloads
 
+4. How can I enable and disable features?
+
+       + Zero impact for unused features
+
+            $ vim shared/features.ls
+
+
 ## Contributors &amp; Idea Factories
 
 [**Keith Hoerling**](https://github.com/khoerling)
@@ -134,9 +143,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 ## TODO
 
-**We appreciate your enthusiasm; this code is not yet ready for prime-time!**
-
-* [Famo.us+react](https://github.com/Famous/famous-react/issues)
+* [Famo.us+React](https://github.com/Famous/famous-react/issues)
 * Feathers-like services
 * Selenium and more tests
 * Coverage working with LiveScript
