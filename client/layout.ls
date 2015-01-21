@@ -34,6 +34,7 @@ body   = document.get-elements-by-tag-name \body .0
 window.cursor = cursor = state.cursor!
 window.render = render = (cur, old) ->
   React.render App(window.cursor = state.cursor!), body # render app to body
+render!
 state.on \next-animation-frame render # update on animation frames (avoids browser janks)
 
 # configure primus
