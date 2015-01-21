@@ -145,16 +145,15 @@ export webpack = (next) ->*
 
 
 # react
+path = (u) ~> url.parse (@url or u or '/') .pathname
 export react = (next) ->* # set body to react tree
-  locals = {} <<< @locals
-  path   = url.parse (@url or '/') .pathname
-  state  = immstruct {path, locals}
+  state = immstruct {path:path!, @locals}
   @locals.body = React.render-to-string (App state.cursor!)
   yield @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
 export react-or-json = (next) ->*
-  surf = ~> @body = {} <<< @locals
+  surf = ~> @body = {path:(path @url), @locals}
   if @query[\_surf] then surf! else switch @type # explicit or content negotiation
     | \application/json => surf!
     | otherwise         => yield react
