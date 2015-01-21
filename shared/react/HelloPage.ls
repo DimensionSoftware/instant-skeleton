@@ -10,8 +10,12 @@ require! {
 
 
 module.exports = component [Mixin, mixins.InitialStateAsync, NavigatableMixin], ({props}) ->
+  geo = ->
+    if props.get-in <[locals geo]>
+      "#{that.get \city}, #{that.get \region} (#{that.get \country})"
+
   div class-name: \HelloPage,
-    h1 void "Hello From #{(props.get-in [\locals \geo]) or \Earth}"
+    h1 void "Hello From #{geo! or \Earth}"
     Link {href:r(\HomePage)}, 'Go to HomePage'
     h2 void 'React App State:'
     code void (JSON.stringify props.toJS!)
