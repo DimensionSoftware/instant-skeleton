@@ -31,11 +31,10 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 state  = immstruct {path, locals}
 body   = document.get-elements-by-tag-name \body .0
 
-render = (cur, old) ->
-  if cur then state.current.merge-deep cur # update app state
-  React.render App(state.cursor!), body    # render app to body
-state.on \next-animation-frame render      # update on animation frames (avoids browser janks)
-render!
+window.cursor = cursor = state.cursor!
+window.render = render = (cur, old) ->
+  React.render App(window.cursor = state.cursor!), body # render app to body
+state.on \next-animation-frame render # update on animation frames (avoids browser janks)
 
 # configure primus
 primus = window.primus = Primus.connect!

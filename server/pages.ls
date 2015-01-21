@@ -19,10 +19,9 @@ app.get r(\HomePage), (next) ->*
   yield mw.react-or-json
   yield next
 
-if features.hello-page # example rendering only jade (no react)
-  app.get '/hello' mw.geoip, (next) ->*
-    @session.last-page = \hello
-    @locals.body = "Hello #{@ip or \World} from #{@locals.geo?country or \Earth}!"
-    yield @render \layout @locals
+if features.hello-page
+  app.get r(\HelloPage), mw.geoip, (next) ->*
+    @session.last-page = \HelloPage
+    yield mw.react-or-json
     yield next
 # </PAGES>
