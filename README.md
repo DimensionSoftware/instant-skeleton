@@ -22,19 +22,19 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 ## Create Your First Page
 
 Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
-React into a single, routable concept that makes your on-screen productivity incredible: **Pages**
+React.JS into a single, routable concept that makes your on-screen productivity incredible: **Pages**
 
->  Pages are declarative, isomorphic bits of React + Omniscient + Immutable.JS
+>  **Page**: declarative, isomorphic bits of React + Omniscient + Immutable.JS
 
 1. Add a Route
 
         $ vim shared/routes.ls
 
-2. Add a Page Handler for the Route
+2. Add a **Page** Handler for the Route
 
         $ vim server/pages.ls
 
-3. Add a React + Omniscient Component for the Page
+3. Add a Component for the **Page**
 
         $ vim shared/react/[ROUTE-NAME].ls
 
@@ -127,7 +127,13 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 5. How can I add my own data store?
 
-       + Simple!  Hook it into your Page:
+       + Simple!  Hook it into your **Page** handler:
+
+            $ vim server/pages.ls
+
+6. How easy is session management?
+
+       + Session updates are automagically streamed in realtime with LevelDB.
 
             $ vim server/pages.ls
 
