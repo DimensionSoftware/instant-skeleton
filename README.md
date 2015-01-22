@@ -1,5 +1,5 @@
 <center>
-[![Instant Skeleton](https://raw.githubusercontent.com/dimensionsoftware/instant-skeleton/gh-pages/assets/skull_keys.png)](https://dimensionsoftware.com)
+[![Instant Skeleton](https://dimensionsoftware.com/images/skull_keys.png)](https://dimensionsoftware.com)
 
 Instant-Skeleton
 ================
