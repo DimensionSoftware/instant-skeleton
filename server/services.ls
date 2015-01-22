@@ -26,9 +26,10 @@ app = koa!
       ..on \connection (spark) ~>
         s-stream = sdb.create-live-stream!
           ..pipe session, {-end} # pipe updates
-          ..on \data (data) ->
+          ..on \data (data) ~>
             if data.key is spark.request.key and v = data.value
-              session.write (try JSON.parse v catch {})
+              unless @session === v
+                session.write(if typeof! v is \Object then v else JSON.parse v)
 
         # save sessions from client
         spark.on \data (data) ->
