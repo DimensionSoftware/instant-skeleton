@@ -17,56 +17,19 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "README.md",
         "targetPath": "index",
         "pageTitle": "index",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Instant-Skeleton",
-            "slug": "instant-skeleton",
-            "isFileHeader": true
-          },
-          "depth": 1,
-          "children": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Quick Start",
-                "slug": "quick-start"
-              },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "Environment Variables",
-                "slug": "environment-variables"
-              },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "References",
-                "slug": "references"
-              },
-              "depth": 2
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 2,
-                "title": "TODO",
-                "slug": "todo"
-              },
-              "depth": 2
-            }
-          ]
-        },
-        "title": "Instant-Skeleton"
+        "title": "index"
       },
       "depth": 1,
       "outline": [
         {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Build Bigger with Less",
+            "slug": "build-bigger-with-less"
+          },
+          "depth": 2
+        }, {
           "type": "heading",
           "data": {
             "level": 2,
@@ -78,8 +41,16 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "heading",
           "data": {
             "level": 2,
-            "title": "Environment Variables",
-            "slug": "environment-variables"
+            "title": "Create Your First Page",
+            "slug": "create-your-first-page"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Environment &amp; &quot;npm config&quot; Variables",
+            "slug": "environment-amp-quotnpm-configquot-variables"
           },
           "depth": 2
         }, {
@@ -88,6 +59,30 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "level": 2,
             "title": "References",
             "slug": "references"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Principles",
+            "slug": "principles"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "FAQ",
+            "slug": "faq"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Contributors &amp; Idea Factories",
+            "slug": "contributors-amp-idea-factories"
           },
           "depth": 2
         }, {
@@ -266,6 +261,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           },
           "depth": 2,
           "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".ls", "Slakefile"],
+              "pygmentsLexer": "livescript",
+              "multiLineComment": ["/*", "*", "*/"],
+              "singleLineComment": ["#"],
+              "ignorePrefix": "}",
+              "foldPrefix": "^",
+              "name": "LiveScript"
+            },
+            "sourcePath": "/Users/keith/projects/instant-skeleton/server/services.ls",
+            "projectPath": "server/services.ls",
+            "targetPath": "server/services",
+            "pageTitle": "server/services",
+            "title": "services"
+          },
+          "depth": 2,
+          "outline": []
         }
       ]
     }, {
@@ -277,6 +292,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
       "depth": 1,
       "children": [
         {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".ls", "Slakefile"],
+              "pygmentsLexer": "livescript",
+              "multiLineComment": ["/*", "*", "*/"],
+              "singleLineComment": ["#"],
+              "ignorePrefix": "}",
+              "foldPrefix": "^",
+              "name": "LiveScript"
+            },
+            "sourcePath": "/Users/keith/projects/instant-skeleton/shared/features.ls",
+            "projectPath": "shared/features.ls",
+            "targetPath": "shared/features",
+            "pageTitle": "shared/features",
+            "title": "features"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
           "type": "file",
           "data": {
             "language": {

@@ -1,29 +1,154 @@
-<!DOCTYPE html><html lang="en"><head><title>index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="index"><meta name="groc-project-path" content="README.md"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/README.md">README.md</a></div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><h1 id="instant-skeleton">Instant-Skeleton</h1>
-<p>Best opinionated realtime framework to lift heavy functionality lightening quick with node.js</p>
-<p><strong>PROTIP</strong>  <a href="http://dimensionsoftware.github.io/instant-skeleton">Be sure to peruse our fancy documentation</a></p>
+<!DOCTYPE html><html lang="en"><head><title>index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="index"><meta name="groc-project-path" content="README.md"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/README.md">README.md</a></div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><center>
+<a href="https://dimensionsoftware.com"><img src="https://raw.githubusercontent.com/dimensionsoftware/instant-skeleton/gh-pages/assets/skull_keys.png" alt="Instant Skeleton"></a>
+
+Instant-Skeleton
+================
+<a href="https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join
+Chat.svg" alt="Gitter"></a> <a href="https://dimensionsoftware.com"><img src="http://img.shields.io/badge/HTML-5-blue.svg?style=flat" alt="Dimension Software"></a>
+</center>
+
+<h2 id="build-bigger-with-less">Build Bigger with Less</h2>
+<p>Best <em>opinionated</em> realtime framework to lift heavy functionality lightening quick with Node.JS</p>
+<p><strong>PROTIP</strong> <a href="http://dimensionsoftware.github.io/instant-skeleton">Be sure to peruse our fancy documentation</a></p>
 <h2 id="quick-start">Quick Start</h2>
-<pre><code>$ npm install &amp;&amp; npm start</code></pre>
-<h2 id="environment-variables">Environment Variables</h2>
+<pre><code>$ git clone git@github.com:DimensionSoftware/instant-skeleton.git
+$ cd instant-skeleton
+$ npm install &amp;&amp; npm test &amp;&amp; npm start</code></pre>
+<h2 id="create-your-first-page">Create Your First Page</h2>
+<p>Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
+React.JS into a single, routable concept that makes your on-screen productivity incredible: <strong>Pages</strong></p>
+<blockquote>
+<p> <strong>Page</strong>: declarative, isomorphic bits of React + Omniscient + Immutable.JS</p>
+</blockquote>
+<ol>
+<li><p>Add a Route</p>
+<pre><code> $ vim shared/routes.ls</code></pre>
+</li>
+<li><p>Add a <strong>Page</strong> Handler for the Route</p>
+<pre><code> $ vim server/pages.ls</code></pre>
+</li>
+<li><p>Add a Component for the <strong>Page</strong></p>
+<pre><code> $ vim shared/react/[ROUTE-NAME].ls</code></pre>
+</li>
+</ol>
+<h2 id="environment-amp-quotnpm-configquot-variables">Environment &amp; &quot;npm config&quot; Variables</h2>
 <ul>
-<li><code>NODE_ENV</code>  -- development, production or test</li>
+<li><code>NODE_ENV</code>  -- &quot;development&quot;, &quot;production&quot; or &quot;test&quot;</li>
 <li><code>NODE_PORT</code> -- port to listen on</li>
+<li><code>SUBDOMAIN</code> -- subdomain of site</li>
 </ul>
+<p><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L48-L91">See all configurable variables in package.json</a> and <a href="https://github.com/motdotla/dotenv">customize with a .env file</a>!</p>
 <h2 id="references">References</h2>
+<p>SERVER</p>
 <ul>
-<li><strong>Gulp</strong> -- <a href="http://gulpjs.com">http://gulpjs.com</a></li>
-<li><strong>LiveScript</strong> -- <a href="http://livescript.net">http://livescript.net</a><ul>
-<li><strong>Prelude.ls</strong> -- <a href="http://preludels.com">http://preludels.com</a></li>
+<li><strong>Gulp</strong> -- <a href="http://gulpjs.com">http://gulpjs.com</a><ul>
+<li><strong>nodemon</strong> --  <a href="https://github.com/JacksonGariety/gulp-nodemon">https://github.com/JacksonGariety/gulp-nodemon</a></li>
+<li><strong>webpack</strong> -- <a href="https://github.com/shama/gulp-webpack">https://github.com/shama/gulp-webpack</a></li>
 </ul>
 </li>
-<li><strong>Koa</strong> -- <a href="http://koajs.com">http://koajs.com</a></li>
-<li><strong>React</strong> -- <a href="http://facebook.github.io/react/docs/getting-started.html">http://facebook.github.io/react/docs/getting-started.html</a></li>
-<li><strong>PM2</strong> -- <a href="https://github.com/Unitech/pm2">https://github.com/Unitech/pm2</a></li>
+<li><strong>Koa</strong> -- <a href="http://koajs.com">http://koajs.com</a><ul>
+<li><strong>geoip lite</strong> -- <a href="https://github.com/bluesmoon/node-geoip">https://github.com/bluesmoon/node-geoip</a></li>
+<li><strong>helmet</strong> -- <a href="https://github.com/venables/koa-helmet">https://github.com/venables/koa-helmet</a></li>
+<li><strong>level sessions</strong> -- <a href="https://github.com/purposeindustries/koa-level">https://github.com/purposeindustries/koa-level</a></li>
+<li><strong>rate limit</strong> -- <a href="https://github.com/tunnckoCore/koa-better-ratelimit">https://github.com/tunnckoCore/koa-better-ratelimit</a></li>
+<li><strong>static cache</strong> -- <a href="https://github.com/koajs/static-cache">https://github.com/koajs/static-cache</a></li>
 </ul>
+</li>
+<li><strong>PM2</strong> -- <a href="https://github.com/Unitech/pm2">https://github.com/Unitech/pm2</a></li>
+<li><strong>DotEnv</strong> -- <a href="https://github.com/motdotla/dotenv">https://github.com/motdotla/dotenv</a></li>
+</ul>
+<p>SHARED</p>
+<ul>
+<li><strong>LiveScript</strong> -- <a href="https://livescript.net">https://livescript.net</a><ul>
+<li><strong>prelude.ls</strong> -- <a href="http://preludels.com">http://preludels.com</a></li>
+</ul>
+</li>
+<li><strong>React</strong> -- <a href="http://facebook.github.io/react/docs/getting-started.html">http://facebook.github.io/react/docs/getting-started.html</a><ul>
+<li><strong>react router component</strong> -- <a href="https://github.com/STRML/react-router-component">https://github.com/STRML/react-router-component</a></li>
+<li><strong>immutable.js</strong> -- <a href="https://github.com/facebook/immutable-js">https://github.com/facebook/immutable-js</a></li>
+<li><strong>omniscient</strong> -- <a href="https://omniscientjs.github.io/">https://omniscientjs.github.io/</a></li>
+<li><strong>hot-loader</strong> -- <a href="http://gaearon.github.io/react-hot-loader/">http://gaearon.github.io/react-hot-loader/</a></li>
+</ul>
+</li>
+<li><strong>Primus</strong> -- <a href="https://github.com/primus/primus">https://github.com/primus/primus</a><ul>
+<li><strong>engine.io</strong> -- <a href="https://github.com/Automattic/engine.io">https://github.com/Automattic/engine.io</a></li>
+<li><strong>multiplex</strong> -- <a href="https://github.com/cayasso/primus-multiplex">https://github.com/cayasso/primus-multiplex</a></li>
+</ul>
+</li>
+<li><strong>LevelDB</strong> -- <a href="https://github.com/google/leveldb">https://github.com/google/leveldb</a><ul>
+<li><strong>party</strong> -- <a href="https://github.com/substack/level-party">https://github.com/substack/level-party</a></li>
+<li><strong>sublevel</strong> -- <a href="https://github.com/dominictarr/level-sublevel">https://github.com/dominictarr/level-sublevel</a></li>
+<li><strong>livestream</strong> -- <a href="https://github.com/dominictarr/level-live-stream">https://github.com/dominictarr/level-live-stream</a></li>
+</ul>
+</li>
+</ul>
+<p>CLIENT</p>
+<ul>
+<li><strong>Famo.us</strong> -- <a href="https://famo.us">https://famo.us</a></li>
+<li><strong>Stylus + NIB</strong> -- <a href="https://learnboost.github.io/stylus">https://learnboost.github.io/stylus</a></li>
+</ul>
+<h2 id="principles">Principles</h2>
+<p>How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This
+no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  Zero external service
+dependencies make deploying a cinch.  Persistence is <a href="https://github.com/google/leveldb">LevelDB</a>.</p>
+<p>With technologies like <a href="https://famou.us">Famo.us</a> and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
+first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.</p>
+<p>From nothing, you have potential to build greatness; only-- with Instant Skeleton, you start way ahead with the best
+curated tools for lifting heavy, realtime functionality into the browser with insane productivity.  Unlock the
+potential of HTML5 and Node.JS.  <a href="https://github.com/DimensionSoftware/instant-skeleton/fork">Start hacking now!</a></p>
+<h2 id="faq">FAQ</h2>
+<ol>
+<li><p>How is this different from Meteor.JS?</p>
+<pre><code>+ We &amp;hearts; [NPM](http://npmjs.org).
++ Instant Skeleton is tiny, fast &amp;amp; secure.
++ We are streaming functional [LiveScript](http://livescript.net): write less code with fewer bugs.
++ Isomorphic Web Components leveraging [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.</code></pre>
+</li>
+<li><p>How easy is this to debug &amp; reason about?</p>
+<pre><code>+ All variables are const
++ Immutable.JS persistent data structures
++ --harmony generators provide useful stack traces
++ Check out our [perf](https://github.com/DimensionSoftware/instant-skeleton/tree/perf) branch for runtime profiling</code></pre>
+</li>
+<li><p>How rapid is development?</p>
+<pre><code>+ Instant &quot;hot&quot; live loads
++ Undo &amp;amp; Redo for FREE
++ Zero browser plugins required
++ Application state is preserved across reloads</code></pre>
+</li>
+<li><p>How can I enable and disable features?</p>
+<pre><code>+ Zero impact for unused features
+
+     $ vim shared/features.ls</code></pre>
+</li>
+<li><p>How can I add my own data store?</p>
+<pre><code>+ Simple!  Hook it into your **Page** handler:
+
+     $ vim server/pages.ls</code></pre>
+</li>
+<li><p>How easy is session management?</p>
+<pre><code>+ Session updates are automagically streamed in realtime with LevelDB.
+
+     $ vim server/pages.ls</code></pre>
+</li>
+</ol>
+<h2 id="contributors-amp-idea-factories">Contributors &amp; Idea Factories</h2>
+<p><a href="https://github.com/khoerling"><strong>Keith Hoerling</strong></a></p>
+<p><a href="https://github.com/beppu"><strong>John Beppu</strong></a></p>
+<p><a href="https://github.com/dreamcodez"><strong>Matt Elder</strong></a></p>
+<p><a href="https://github.com/onelesd"><strong>Dave Seleno</strong></a></p>
+<p><a href="https://github.com/markhuge"><strong>Mark Huge</strong></a></p>
+<p><a href="https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors">According to GitHub</a> . <a href="https://github.com/DimensionSoftware/instant-skeleton/fork">Become a Contributor</a> .  <a href="https://github.com/DimensionSoftware/instant-skeleton/fork">Pull request friendly!</a></p>
 <h2 id="todo">TODO</h2>
 <ul>
-<li>Famo.us</li>
-<li>Selenium tests</li>
-<li>Wire up react + react router</li>
-<li>Websockets + feathers-like services</li>
-<li>Bootstrap data-layer -- bookshelf or <a href="https://www.youtube.com/watch?v=41oDDTRWjIQ">https://www.youtube.com/watch?v=41oDDTRWjIQ</a></li>
-</ul></div></div></div></div></body></html>
+<li><a href="https://github.com/Famous/famous-react/issues">Famo.us+React</a></li>
+<li>Feathers-like services</li>
+<li>Selenium and more tests</li>
+<li>Coverage working with LiveScript</li>
+<li>Fork and implement TODO example</li>
+<li>More beautiful documentation &amp; better literate .ls</li>
+</ul>
+<p>&nbsp;</p>
+<center>
+<a href="https://dimensionsoftware.com"><img src="https://dimensionsoftware.com/images/software_by.png" alt="Fresh Software by Dimension"></a>
+</center></div></div></div></div></body></html>

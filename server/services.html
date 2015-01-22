@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><title>server/services</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/services"><meta name="groc-project-path" content="server/services.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/server/services.ls">server/services.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-built_in">require</span>! {
+  <span class="hljs-string">\koa</span>
+  <span class="hljs-string">\level-live-stream</span>
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO services are a work-in-progress</p></div></div><div class="code"><div class="wrapper">app = koa!
+
+<span class="hljs-property">@router</span> = <span class="hljs-function"><span class="hljs-params">(next)</span> -&gt;*</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO realtime service router
+expose each service over &#39;service&#39; channel</p></div></div><div class="code"><div class="wrapper">  yield next
+
+<span class="hljs-property">@init</span> = <span class="hljs-function"><span class="hljs-params">(sdb, primus)</span> -&gt;</span>
+  level-live-stream.install sdb
+
+  primus.<span class="hljs-literal">on</span> <span class="hljs-string">\connection</span> <span class="hljs-function"><span class="hljs-params">(spark)</span> -&gt;</span>
+    spark.send <span class="hljs-string">\CHANGESET</span> app.changeset</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>stream level db user sessions</p></div></div><div class="code"><div class="wrapper">    session = primus.channel <span class="hljs-string">\session</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>send sessions to client</p></div></div><div class="code"><div class="wrapper">      ..<span class="hljs-literal">on</span> <span class="hljs-string">\connection</span> <span class="hljs-function"><span class="hljs-params">(spark)</span> ~&gt;</span>
+        s-stream = sdb.create-live-stream!
+          ..pipe session, {-end} <span class="hljs-comment"># pipe updates</span>
+          ..<span class="hljs-literal">on</span> <span class="hljs-string">\data</span> <span class="hljs-function"><span class="hljs-params">(data)</span> ~&gt;</span>
+            <span class="hljs-keyword">if</span> data.key <span class="hljs-keyword">is</span> spark.request.key <span class="hljs-keyword">and</span> v = data.value
+              <span class="hljs-keyword">unless</span> <span class="hljs-property">@session</span> === v
+                session.write(<span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span>! v <span class="hljs-keyword">is</span> <span class="hljs-string">\Object</span> <span class="hljs-keyword">then</span> v <span class="hljs-keyword">else</span> JSON.parse v)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>save sessions from client</p></div></div><div class="code"><div class="wrapper">        spark.<span class="hljs-literal">on</span> <span class="hljs-string">\data</span> <span class="hljs-function"><span class="hljs-params">(data)</span> -&gt;</span>
+          <span class="hljs-property">@session</span> = data
+          sdb.put spark.request.key, JSON.stringify data
+
+
+<span class="hljs-comment">## TODO flesh out TODO service</span>
+<span class="hljs-property">@session</span> =
+  <span class="hljs-attribute">find</span>: <span class="hljs-function"><span class="hljs-params">(params, cb)</span> -&gt;</span>
+  <span class="hljs-attribute">get</span>: <span class="hljs-function"><span class="hljs-params">(id, params, cb)</span> -&gt;</span>
+  <span class="hljs-attribute">create</span>: <span class="hljs-function"><span class="hljs-params">(data, params, cb)</span> -&gt;</span>
+  <span class="hljs-attribute">update</span>: <span class="hljs-function"><span class="hljs-params">(id, data, params, cb)</span> -&gt;</span>
+  <span class="hljs-attribute">patch</span>: <span class="hljs-function"><span class="hljs-params">(id, data, params, cb)</span> -&gt;</span>
+  <span class="hljs-attribute">remove</span>: <span class="hljs-function"><span class="hljs-params">(id, params, cb)</span> -&gt;</span>
+  <span class="hljs-attribute">setup</span>: <span class="hljs-function"><span class="hljs-params">(app, path)</span> -&gt;</span></div></div></div></div></body></html>

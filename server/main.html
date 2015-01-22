@@ -1,36 +1,39 @@
 <!DOCTYPE html><html lang="en"><head><title>server/main</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/main"><meta name="groc-project-path" content="server/main.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/server/main.ls">server/main.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-built_in">require</span>! {
+  dotenv
   shelljs
-}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>XXX the goal of main.ls is to encapsulate instances of App</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="init">init</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper">starting = <span class="hljs-literal">false</span>
-instance = <span class="hljs-literal">void</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="main">main</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-built_in">console</span>.log <span class="hljs-string">"\n[1;37m,.._________[0;m"</span>
-restart!
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>supervise instances of App</p>
+<ul>
+<li>TODO supervise more than a single instance</li>
+</ul></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="init">init</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper">supervisor =
+  <span class="hljs-attribute">starting</span>: <span class="hljs-literal">false</span> <span class="hljs-comment"># already starting new instance?</span>
+  <span class="hljs-attribute">instance</span>: <span class="hljs-literal">void</span>  <span class="hljs-comment"># singleton (for now)</span>
+
+dotenv.load! <span class="hljs-comment"># load local environment vars from .env</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><h2 id="main">main</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-built_in">console</span>.log <span class="hljs-string">"\n[1;37m,.._________[0;m"</span>
+restart! <span class="hljs-comment"># initial b00t-up!</span>
+
 process.<span class="hljs-literal">on</span> <span class="hljs-string">\SIGHUP</span> <span class="hljs-function">-&gt;</span> restart!
+
 process.<span class="hljs-literal">on</span> <span class="hljs-string">\message</span> <span class="hljs-function"><span class="hljs-params">(msg)</span> -&gt;</span>
   cl = <span class="hljs-built_in">console</span>.log
   <span class="hljs-keyword">switch</span> msg
     | <span class="hljs-string">\shutdown</span> =&gt; <span class="hljs-comment"># force after 2s</span>
       cl <span class="hljs-string">'Closing all connections: '</span>
-      instance.stop<span class="hljs-function"> -&gt;</span> cl <span class="hljs-string">\done.</span>
+      supervisor.instance.stop<span class="hljs-function"> -&gt;</span> cl <span class="hljs-string">\done.</span>
       set-timeout (<span class="hljs-function">-&gt;</span> cl <span class="hljs-string">\killed.;</span> process.exit <span class="hljs-number">0</span>), <span class="hljs-number">2000ms</span>
 
 
 <span class="hljs-keyword">function</span> restart
   <span class="hljs-function"><span class="hljs-title">start</span> = -&gt;</span>
-    starting := <span class="hljs-literal">true</span>
+    supervisor.starting = <span class="hljs-literal">true</span>
     App  = <span class="hljs-built_in">require</span> <span class="hljs-string">\./App</span>
     args = [
-      process.argv.<span class="hljs-number">2</span> <span class="hljs-keyword">or</span> (parse-int process.env.NODE_PORT) <span class="hljs-keyword">or</span> <span class="hljs-number">3000</span> <span class="hljs-comment"># port</span>
-      get-latest-webpack <span class="hljs-string">'public/builds'</span>                          <span class="hljs-comment"># changeset</span>
-      get-latest-webpack <span class="hljs-string">'public/vendor'</span>                          <span class="hljs-comment"># vendorset</span>
-    ]</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>start!</p></div></div><div class="code"><div class="wrapper">    instance := <span class="hljs-keyword">new</span> App ...args
-      ..start<span class="hljs-function"> -&gt;</span> starting := <span class="hljs-literal">false</span>
+      parse-int (process.argv.<span class="hljs-number">2</span> <span class="hljs-keyword">or</span> process.env.npm_package_config_node_port)
+      process.env.CHANGESET
+    ]</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>start!</p></div></div><div class="code"><div class="wrapper">    supervisor.instance := <span class="hljs-keyword">new</span> App ...args
+      ..start<span class="hljs-function"> -&gt;</span> supervisor.starting = <span class="hljs-literal">false</span>
 
-  <span class="hljs-keyword">if</span> starting <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.warn <span class="hljs-string">'Still restarting...'</span> <span class="hljs-comment"># guard</span>
-  <span class="hljs-keyword">if</span> instance
-    instance.stop start
+  <span class="hljs-keyword">if</span> supervisor.starting <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.warn <span class="hljs-string">'Still restarting...'</span> <span class="hljs-comment"># guard</span>
+  <span class="hljs-keyword">if</span> supervisor.instance <span class="hljs-comment"># stop running app first</span>
+    supervisor.instance.stop start
   <span class="hljs-keyword">else</span>
-    start!
-
-
-<span class="hljs-keyword">function</span> get-latest-webpack dest
-  {code, output} = shelljs.exec <span class="hljs-string">"ls -t <span class="hljs-subst">#dest</span>|head -1"</span> {+silent} <span class="hljs-comment"># use latest webpack hash</span>
-  output.trim!replace <span class="hljs-pi">/\.js$/</span> <span class="hljs-string">''</span> <span class="hljs-comment"># strip extension</span></div></div></div></div></body></html>
+    start!</div></div></div></div></body></html>

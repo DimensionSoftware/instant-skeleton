@@ -1,9 +1,11 @@
-<!DOCTYPE html><html lang="en"><head><title>shared/routes</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="shared/routes"><meta name="groc-project-path" content="shared/routes.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/shared/routes.ls">shared/routes.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> list = [
-  [ <span class="hljs-string">\Homepage,</span>             <span class="hljs-string">'/'</span> ]
-  [ <span class="hljs-string">\Hello,</span>                <span class="hljs-string">'/hello'</span> ]</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>route examples:</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-comment">#[ \PromoPage,            '/clients/:Client_id/promos' ]</span>
-  <span class="hljs-comment">#[ \PromoPage,            '/clients/:Client_id/promos/page/:n' ]</span>
-  <span class="hljs-comment">#[ \PromoEditorPage,      '/clients/:Client_id/promos/:Promo_id' ]</span>
-]</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Given a route name and parameters, return a URL path.  (Based on Camping&#39;s R function)</p>
+<!DOCTYPE html><html lang="en"><head><title>shared/routes</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="shared/routes"><meta name="groc-project-path" content="shared/routes.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/shared/routes.ls">shared/routes.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> list =
+  * [ <span class="hljs-string">\HomePage,</span>    <span class="hljs-string">'/'</span> ]      <span class="hljs-comment"># loads shared/react/HomePage.ls</span>
+  * [ <span class="hljs-string">\HelloPage,</span>   <span class="hljs-string">'/hello'</span> ]</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>more route examples:</p>
+<ul>
+<li>[ \PromoPage,            &#39;/clients/:Client_id/promos&#39; ]</li>
+<li>[ \PromoPage,            &#39;/clients/:Client_id/promos/page/:n&#39; ]</li>
+<li>[ \PromoEditorPage,      &#39;/clients/:Client_id/promos/:Promo_id&#39; ]</li>
+</ul></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Given a route name and parameters, return a URL path.  (Based on Camping&#39;s R function)</p>
 <p>Parameters:</p>
 <ul>
 <li><p><strong>name must be a String.</strong><br/>(route name)</p>
@@ -12,25 +14,9 @@
 </ul>
 </li>
 </ul>
-<p><strong>Returns a String</strong><br/>(path)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">r</span> = <span class="hljs-params">(name, ...args)</span> -&gt;</span>
-  route = list |&gt; find<span class="hljs-function"> -&gt;</span> <span class="hljs-literal">it</span>.<span class="hljs-number">0</span> <span class="hljs-keyword">is</span> name
+<p><strong>Returns a String</strong><br/>(path)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">R</span> = <span class="hljs-params">(name, ...args)</span> -&gt;</span>
+  route = <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> list <span class="hljs-keyword">when</span> r.<span class="hljs-number">0</span> <span class="hljs-keyword">is</span> name <span class="hljs-keyword">then</span> r
   <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> route
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Route '<span class="hljs-subst">#name</span>' not found."</span>)
-  fold <span class="hljs-function"><span class="hljs-params">((m, i) -&gt; m.replace <span class="hljs-pi">/:(\w+)/</span>, i)</span>, <span class="hljs-title">route</span>.1, <span class="hljs-title">args</span>
-</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Given a route name, route.list index and parameters, return a URL path.</p>
-<p>Parameters:</p>
-<ul>
-<li><p><strong>name must be a String.</strong><br/>(route name)</p>
-</li>
-<li><p><strong>n must be a String.</strong><br/>(index in route matches)</p>
-<ul>
-<li><strong>...args must be a String.</strong><br/>(varargs for each path variable of route)</li>
-</ul>
-</li>
-</ul>
-<p><strong>Returns a String</strong><br/>(path)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-title">rn</span> = <span class="hljs-params">(name, n, ...args)</span> -&gt;</span>
-  route = (list |&gt; filter<span class="hljs-function"> -&gt;</span> <span class="hljs-literal">it</span>.<span class="hljs-number">0</span> <span class="hljs-keyword">is</span> name)[n]
-  <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> route
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"Route '<span class="hljs-subst">#name</span>' not found."</span>)
-  fold <span class="hljs-function"><span class="hljs-params">((m, i) -&gt; m.replace <span class="hljs-pi">/:(\w+)/</span>, i)</span>, <span class="hljs-title">route</span>.1, <span class="hljs-title">args</span>
+  args.reduce <span class="hljs-function"><span class="hljs-params">((m, i) -&gt; m.replace <span class="hljs-pi">/:(\w+)/</span>, i)</span>, <span class="hljs-title">route</span>.0.1, <span class="hljs-title">args</span>
 </span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>vim:fdm=indent</p></div></div></div></div></body></html>

@@ -3,15 +3,22 @@
   <span class="hljs-string">\koa-router</span>
 
   <span class="hljs-string">'./middleware'</span>: mw
+
+  <span class="hljs-string">'../shared/features'</span>
+  <span class="hljs-string">'../shared/routes'</span>: {R}
 }
 
 app = koa!
-<span class="hljs-built_in">module</span>.exports = koa-router app</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><page routes></div></div><div class="code"><div class="wrapper">app.get <span class="hljs-string">'/hello'</span> <span class="hljs-function"><span class="hljs-params">(next)</span> -&gt;*</span>
-  <span class="hljs-property">@locals</span>.body = <span class="hljs-string">"Hello <span class="hljs-subst">#{<span class="hljs-property">@ip</span> <span class="hljs-keyword">or</span> <span class="hljs-string">\World}!"</span>
-  yield <span class="hljs-property">@render</span> <span class="hljs-string">\layout</span> <span class="hljs-property">@locals</span>
+<span class="hljs-built_in">module</span>.exports = koa-router app</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><PAGES></div></div><div class="code"><div class="wrapper">app.get R<span class="hljs-function"><span class="hljs-params">(<span class="hljs-string">\HomePage),</span> (next) -&gt;*
+  <span class="hljs-property">@locals</span>.greeting   = <span class="hljs-string">'Hello World!'</span> # <span class="hljs-keyword">default</span>
+  <span class="hljs-property">@session</span>.last-page = <span class="hljs-property">@session</span>.<span class="hljs-literal">on</span>-page
+  <span class="hljs-property">@session</span>.<span class="hljs-literal">on</span>-page   = <span class="hljs-string">\HomePage</span>
+  yield mw.react-<span class="hljs-keyword">or</span>-json
   yield next
 
-app.get <span class="hljs-string">'/'</span> (next) -&gt;*
-  yield mw.react-<span class="hljs-keyword">or</span>-json
-  yield <span class="hljs-property">@render</span> <span class="hljs-string">\layout</span> <span class="hljs-property">@locals</span>
-  yield next</span></span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p></page routes></p></div></div></div></div></body></html>
+<span class="hljs-keyword">if</span> features.hello-page
+  app.get R(<span class="hljs-string">\HelloPage),</span> mw.geoip, (next) -&gt;*
+    <span class="hljs-property">@session</span>.last-page = <span class="hljs-property">@session</span>.<span class="hljs-literal">on</span>-page
+    <span class="hljs-property">@session</span>.<span class="hljs-literal">on</span>-page   = <span class="hljs-string">\HelloPage</span>
+    yield mw.react-<span class="hljs-keyword">or</span>-json
+    yield next</span></span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p></PAGES></p></div></div></div></div></body></html>

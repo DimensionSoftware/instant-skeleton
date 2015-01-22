@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="en"><head><title>shared/features</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="shared/features"><meta name="groc-project-path" content="shared/features.ls"><meta name="groc-github-url" content="https://github.com/DimensionSoftware/instant-skeleton"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/DimensionSoftware/instant-skeleton/blob/master/shared/features.ls">shared/features.ls</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-comment">### For flipping on/off features</span>
+
+env =
+  <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span> <span class="hljs-keyword">isnt</span> <span class="hljs-string">\undefined</span>
+    <span class="hljs-built_in">window</span>.locals?env <span class="hljs-comment"># client</span>
+  <span class="hljs-keyword">else</span>
+    process.env?NODE_ENV
+
+
+prod = env <span class="hljs-keyword">is</span> <span class="hljs-string">\production</span>
+test = env <span class="hljs-keyword">is</span> <span class="hljs-string">\test</span>
+dev  = env <span class="hljs-keyword">is</span> <span class="hljs-string">\development</span>
+
+
+<span class="hljs-built_in">module</span>.exports = {
+  +dimension        <span class="hljs-comment"># dimension banner</span>
+  +static-assets    <span class="hljs-comment"># disable to run in a separate process</span>
+
+  <span class="hljs-attribute">offline</span>: prod
+  <span class="hljs-attribute">hello-page</span>: !prod <span class="hljs-comment"># disable in production</span>
+}</div></div></div></div></body></html>
