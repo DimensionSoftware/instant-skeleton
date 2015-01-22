@@ -26,16 +26,8 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 
 # main
 # ---------
-# configure react on client
-[locals, path] = [window.locals, window.location.pathname]
-state  = immstruct {path, locals}
-body   = document.get-elements-by-tag-name \body .0
-
-window.cursor = cursor = state.cursor!
-window.render = render = (cur, old) ->
-  React.render App(window.cursor = state.cursor!), body # render app to body
-render!
-state.on \next-animation-frame render # update on animation frames (avoids browser janks)
+# b00t react!
+window.app = init-react! # expose app cursor
 
 # configure primus
 primus = window.primus = Primus.connect!
@@ -61,13 +53,29 @@ primus = window.primus = Primus.connect!
     # stream session updates from server
     session = primus.channel \session
       ..on \data (data) ->
+        console.log \data
         window.session = window.Immutable.Map(if typeof! data is \Object then data else JSON.parse data)
 
     # stream session updates to server
     window.set-session = (new-session) ->
+      console.log \set-session
       window.session = new-session
       session.write new-session.toJS!
 
+
+function init-react
+  [locals, path] = [window.locals, window.location.pathname]
+  state  = immstruct {path, locals}
+  body   = document.get-elements-by-tag-name \body .0
+  cursor = state.cursor! # expose immutable data structure
+  render = (cur, old) ->
+    React.render App(cursor = state.cursor!), body # render app to body
+
+  # update on animation frames (avoids browser janks)
+  state.on \next-animation-frame render
+  render!
+
+  cursor
 
 function dimension
   if features.dimension # front!
