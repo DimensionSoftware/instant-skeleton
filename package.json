@@ -4,7 +4,7 @@
   "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
   "main": "build/server/main.js",
   "engines": {
-    "node": ">= 0.11.14"
+    "node": ">= 0.11.15"
   },
   "scripts": {
     "test": "NODE_ENV=test npm run unit",
@@ -97,7 +97,6 @@
     "engine.io": "^1.5.1",
     "famous": "^0.3.4",
     "geoip-lite": "^1.1.5",
-    "gulp-webpack": "^1.1.2",
     "immstruct": "^1.3.0",
     "immutable": "^3.6.2",
     "keygrip": "^1.0.1",
