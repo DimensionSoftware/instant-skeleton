@@ -12,6 +12,7 @@ module.exports = component middleware, ({props}) ->
 
   div class-name: \HelloPage,
     h1 void "Hello From #{geo! or \Earth}"
+    div void "Last visited #{props.get-in [\session, \lastPage] or ''}"
     Link {href:R(\HomePage)}, 'Go to HomePage'
     h2 void 'React App State:'
     code void (JSON.stringify props.toJS!)
