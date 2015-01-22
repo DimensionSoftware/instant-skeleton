@@ -6,21 +6,21 @@ require! {
   './middleware': mw
 
   '../shared/features'
-  '../shared/routes': {r, rn}
+  '../shared/routes': {R}
 }
 
 app = koa!
 module.exports = koa-router app
 
 # <PAGES>
-app.get r(\HomePage), (next) ->*
+app.get R(\HomePage), (next) ->*
   @locals.greeting   = 'Hello World!' # default
   @session.last-page = \HomePage
   yield mw.react-or-json
   yield next
 
 if features.hello-page
-  app.get r(\HelloPage), mw.geoip, (next) ->*
+  app.get R(\HelloPage), mw.geoip, (next) ->*
     @session.last-page = \HelloPage
     yield mw.react-or-json
     yield next

@@ -1,15 +1,11 @@
 
-require! {
-  omniscient: component
-  react: {DOM:{div,button,h1,h2,label,input,code}}:React
-  'react-router-component': {NavigatableMixin,Link}:ReactRouter
-  'react-async': {Mixin}
-  '../routes': {r}
-  \./mixins
-}
+# destructure only what's needed
+{DOM:{div,button,h1,h2,label,input,code}} = React
+{NavigatableMixin,Link} = Router
 
 
-module.exports = component [Mixin, mixins.InitialStateAsync, NavigatableMixin], ({props}) ->
+# HomePage
+module.exports = component middleware, ({props}) ->
   key       = \greeting
   update    = (val) -> props.update-in [\locals, key], -> val
   value     = props.get-in [\locals key]
@@ -23,6 +19,6 @@ module.exports = component [Mixin, mixins.InitialStateAsync, NavigatableMixin], 
     ]
     button {on-click:(-> update \CLICK)}, \Swap
     div void
-      Link {href:r(\HelloPage)}, 'Go to HelloPage'
+      Link {href:R(\HelloPage)}, 'Go to HelloPage'
     h2 void 'React App State:'
     code void (JSON.stringify props.toJS!)

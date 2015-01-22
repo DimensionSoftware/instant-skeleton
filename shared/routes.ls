@@ -14,7 +14,7 @@ export list =
 # @param  {String} name       route name
 # @param  {String} ...args    varargs for each path variable of route
 # @return {String}            path
-export r = (name, ...args) ->
+export R = (name, ...args) ->
   route = for r in list when r.0 is name then r
   if not route
     throw new Error("Route '#name' not found.")
