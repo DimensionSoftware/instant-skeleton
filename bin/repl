@@ -1,0 +1,3 @@
+#!/bin/sh
+node_modules/.bin/lsc -r ./server/repl.ls -n '--harmony'
+

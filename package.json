@@ -1,0 +1,164 @@
+{
+  "name": "instant-skeleton",
+  "version": "0.0.1",
+  "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
+  "main": "build/server/main.js",
+  "engines": {
+    "node": ">= 0.11.14"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test npm run unit",
+    "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
+    "start": "node --harmony `which gulp`",
+    "stop": "node --harmony `which gulp` stop",
+    "unit": "mocha -R nyan --harmony",
+    "coverage": "mocha -r blanket -R html-cov --harmony > build/coverage.html && open build/coverage.html",
+    "clean": "node --harmony `which gulp` clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DimensionSoftware/instant-skeleton.git"
+  },
+  "keywords": [
+    "Dimension",
+    "Software",
+    "Instant",
+    "Skeleton",
+    "Best",
+    "Most",
+    "Opinionated",
+    "Realtime",
+    "Framework",
+    "Lift",
+    "Heavy",
+    "Functionality",
+    "Lightening",
+    "Quick",
+    "Node.JS",
+    "Meteor",
+    "Derby",
+    "JS"
+  ],
+  "author": "Dimension Software <hello@dimensionsoftware.com> (https://dimensionsoftware.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DimensionSoftware/instant-skeleton/issues"
+  },
+  "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
+  "config": {
+    "node_port": 8080,
+    "dev_port": 8081,
+    "url": "https://develop.com",
+    "title": "Instant Skeleton | by DimensionSoftware.com",
+    "subdomain": "develop.com",
+    "cacheUrls": [
+      "//cache.develop.com",
+      "//cache2.develop.com",
+      "//cache3.develop.com",
+      "//cache4.develop.com",
+      "//cache5.develop.com"
+    ],
+    "development": {
+      "limits": {
+        "max": 0,
+        "whiteList": [
+          "::ffff:127.0.0.1"
+        ]
+      }
+    },
+    "test": {},
+    "production": {
+      "subdomain": "dimensionsoftware.com",
+      "cacheUrls": [
+        "//cache.dimensionsoftware.com",
+        "//cache2.dimensionsoftware.com",
+        "//cache3.dimensionsoftware.com",
+        "//cache4.dimensionsoftware.com",
+        "//cache5.dimensionsoftware.com"
+      ],
+      "limits": {
+        "whiteList": [],
+        "blackList": [],
+        "duration": 1800000,
+        "max": 800
+      }
+    },
+    "blanket": {
+      "pattern": [
+        "build/server/main.js"
+      ],
+      "data-cover-never": "node_modules"
+    }
+  },
+  "dependencies": {
+    "LiveScript": "^1.3.1",
+    "co": "^4.1.0",
+    "dotenv": "^0.4.0",
+    "engine.io": "^1.5.1",
+    "famous": "^0.3.4",
+    "geoip-lite": "^1.1.5",
+    "gulp-webpack": "^1.1.2",
+    "immstruct": "^1.3.0",
+    "immutable": "^3.6.2",
+    "keygrip": "^1.0.1",
+    "koa": "^0.15.0",
+    "koa-better-ratelimit": "^2.1.2",
+    "koa-generic-session": "^1.6.0",
+    "koa-helmet": "0.0.2",
+    "koa-jade": "^0.3.1",
+    "koa-level": "^1.0.0",
+    "koa-locals": "^0.3.0",
+    "koa-logger": "^1.2.2",
+    "koa-router": "^3.8.0",
+    "koa-static-cache": "^3.0.1",
+    "level-live-stream": "^1.4.9",
+    "level-party": "DimensionSoftware/level-party",
+    "level-sublevel": "^6.4.2",
+    "leveldown": "^1.0.1",
+    "levelup": "DimensionSoftware/node-levelup",
+    "omniscient": "^2.1.0",
+    "pm2": "^0.12.3",
+    "prelude-ls": "^1.1.1",
+    "pretty-error": "^1.1.1",
+    "primus": "^2.4.12",
+    "primus-emitter": "^3.0.3",
+    "primus-multiplex": "^3.1.0",
+    "react": "^0.12.2",
+    "react-async": "^2.0.1",
+    "react-responsive": "0.0.1",
+    "react-router-component": "STRML/react-router-component#d08e25754a",
+    "replacestream": "^2.0.0",
+    "superagent": "^0.21.0"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "chai": "^1.10.0",
+    "css-loader": "^0.9.1",
+    "del": "^1.1.1",
+    "extract-text-webpack-plugin": "^0.3.8",
+    "gulp": "^3.8.10",
+    "gulp-jade": "^0.11.0",
+    "gulp-livescript": "^2.3.0",
+    "gulp-nodemon": "^1.0.5",
+    "gulp-shell": "^0.2.11",
+    "gulp-spawn": "^0.3.0",
+    "gulp-stylus": "^2.0.0",
+    "gulp-util": "^3.0.2",
+    "gulp-watch": "^4.0.1",
+    "gulp-webpack": "^1.1.2",
+    "json-loader": "^0.5.1",
+    "livescript-loader": "DimensionSoftware/livescript-loader",
+    "mocha": "^2.1.0",
+    "nan": "^1.5.1",
+    "nib": "^1.1.0",
+    "open": "0.0.5",
+    "react-hot-loader": "^1.1.1",
+    "shelljs": "^0.3.0",
+    "sinon": "^1.12.2",
+    "stylus": "^0.49.3",
+    "stylus-loader": "^0.5.0",
+    "supertest": "^0.15.0",
+    "webpack": "^1.5.3",
+    "webpack-dev-server": "^1.7.0"
+  }
+}
