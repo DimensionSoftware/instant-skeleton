@@ -13,6 +13,7 @@ export InitialStateAsync =
       .query window.location.search
       .query { +_surf }
       .end (res) ->
-        window.cursor.update \locals, -> immutable.fromJS res.body.locals
-        window.cursor.update \path, -> res.body.path
+        # update page & local cursor (state)
+        window.app.update \locals, -> immutable.fromJS res.body.locals
+        window.app.update \path,   -> res.body.path
         cb void res.body
