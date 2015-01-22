@@ -18,6 +18,7 @@ module.exports = component middleware, ({props}) ->
       input {key, value, on-change}
     ]
     button {on-click:(-> update \CLICK)}, \Swap
+    div void "Last visited #{props.get-in [\session, \lastPage] or ''}"
     div void
       Link {href:R(\HelloPage)}, 'Go to HelloPage'
     h2 void 'React App State:'
