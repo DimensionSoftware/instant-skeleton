@@ -68,7 +68,7 @@ module.exports =
 
       # boot http & websocket servers
       @server = http.create-server @app.callback!
-      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
+      @primus = new Primus @server, transformer: \engine.io
         ..before (middleware.primus-koa-session store, @app.keys)
         ..use \multiplex primus-multiplex
         ..use \emitter primus-emitter
