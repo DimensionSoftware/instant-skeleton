@@ -7,6 +7,7 @@
     "node": ">= 0.11.15"
   },
   "scripts": {
+    "pretest": "node --harmony `which gulp` build:test",
     "test": "NODE_ENV=test npm run unit",
     "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
     "start": "node --harmony `which gulp`",
