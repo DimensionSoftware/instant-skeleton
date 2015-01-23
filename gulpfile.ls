@@ -42,6 +42,8 @@ gulp.task \build:primus (cb) ->
     ..primus.save './public/vendor/primus.js'
     ..stop cb
 
+gulp.task \build:test <[build:server]> -> process.exit!
+
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header, const:true} # strip
