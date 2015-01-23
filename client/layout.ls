@@ -27,7 +27,7 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 # main
 # ---------
 # b00t react!
-window.app = app = init-react! # expose app cursor
+init-react! # expose app cursor
 
 # configure primus
 primus = window.primus = Primus.connect!
