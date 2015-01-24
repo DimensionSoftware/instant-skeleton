@@ -67,7 +67,7 @@ gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
     if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
     cb!
 
-gulp.task \watch ->
+gulp.task \watch -> # changes needing server restart
   gulp.watch ['./server/**/*.ls' './shared/**/*.ls'] [\build:server]
 
 
