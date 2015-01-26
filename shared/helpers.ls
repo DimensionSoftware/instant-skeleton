@@ -44,19 +44,6 @@ export prereq = (condition-fn, next) ->
     if condition-fn ...args
       next ...args
 
-# A v8-friendly way to catch exceptions.
-# https://github.com/petkaantonov/bluebird/wiki/Optimization-killers
-#
-# @param  {Function} fn                 a function that might throw an exception.
-# @param  {Object}   ctx                the value of `this` for fn
-# @param  {Array}    args               arguments for fn
-# @return {Object}                      the return value of fn or an exception
-export try-catch = (fn, ctx, args) ->
-  try
-    fn.apply ctx, args
-  catch e
-    e
-
 export digest = (body) ->
   crypto.create-hash \md5 .update body .digest \hex
 
