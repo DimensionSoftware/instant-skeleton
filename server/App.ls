@@ -23,7 +23,7 @@ require! {
   \primus-multiplex
 
   \./pages
-  \./services
+  \./resources
   \./middleware
 
   \../shared/features
@@ -61,7 +61,7 @@ module.exports =
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
         ..use pages                       # apply pages
-        ..use services.router             # apply realtime services
+        ..use resources.router            # apply realtime services
 
       # config environment
       if env isnt \test then @app.use koa-logger!
@@ -74,8 +74,8 @@ module.exports =
         ..use \emitter primus-emitter
         ..remove \primus.js
 
-      # init realtime services
-      services.init sdb, @primus
+      # init realtime resources
+      resources.init sdb, @primus
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb

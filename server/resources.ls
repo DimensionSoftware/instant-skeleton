@@ -4,7 +4,7 @@ require! {
   \level-live-stream
 }
 
-# TODO services are a work-in-progress
+# TODO resources are a work-in-progress
 
 app = koa!
 
@@ -38,12 +38,3 @@ app = koa!
         sdb.put spark.request.key, JSON.stringify data # FIXME huh?
 
 
-## TODO flesh out TODO service
-@session =
-  find: (params, cb) ->
-  get: (id, params, cb) ->
-  create: (data, params, cb) ->
-  update: (id, data, params, cb) ->
-  patch: (id, data, params, cb) ->
-  remove: (id, params, cb) ->
-  setup: (app, path) ->
