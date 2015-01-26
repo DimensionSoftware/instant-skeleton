@@ -24,7 +24,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
 React.JS into a single, routable concept that makes your on-screen productivity incredible:
 
->  | **Page** | &nbsp; *declarative, isomorphic bits of React + Omniscient + Immutable.JS*
+>  | ***Page*** | &nbsp; *declarative, isomorphic bits of React + Omniscient + Immutable.JS*
 
 1. Add a Page Route
 
@@ -81,13 +81,14 @@ SHARED
 CLIENT
 
 * **Famo.us** -- https://famo.us
-* **Stylus + NIB** -- https://learnboost.github.io/stylus
+* **Stylus** -- https://learnboost.github.io/stylus
+    * **nib** -- https://github.com/tj/nib
 
 ## Principles
 
 How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This
 no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  Zero external service
-dependencies make deploying a cinch.  Persistence is [LevelDB](https://github.com/google/leveldb).
+dependencies make deploying a cinch.  Persistence is [LevelDB](https://github.com/google/leveldb).  The rest is up to you!
 
 With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
 first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
@@ -107,17 +108,16 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 2. How easy is this to debug &amp; reason about?
 
-       + Variables are const
-       + Immutable.JS persistent data structures
-       + --harmony generators provide useful stack traces
+       + Variables are **const**ants
+       + [Immutable.JS](https://github.com/facebook/immutable-js) persistent data structures
+       + [ES6](http://tc39wiki.calculist.org/es6/), useful stack traces &amp; source maps
        + Check out our [perf](https://github.com/DimensionSoftware/instant-skeleton/tree/perf) branch for runtime profiling
 
 3. How rapid is development?
 
-       + Instant "hot" live loads
-       + Undo &amp; Redo for FREE
-       + Zero browser plugins required
-       + Application state is preserved across reloads
+       + [Instant "hot" live loads](https://www.youtube.com/watch?v=pw4fKkyPPg8)
+       + Undo &amp; Redo for [FREE](https://github.com/omniscientjs/immstruct)
+       + Source maps
 
 4. How can I enable and disable features?
 
@@ -127,15 +127,17 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 5. How can I add my own data store?
 
-       + Simple!  Hook it into your Page handler:
+       + Simply require &amp; hook it into your Page handler:
 
             $ vim server/pages.ls
 
 6. How easy is session management?
 
-       + Session updates are automagically streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
+       + Session updates are streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
 
             $ vim server/pages.ls
+            $ vim client/layout.ls
+            $ vim shared/react/HomePage.ls
 
 
 ## Contributors &amp; Idea Factories
@@ -156,7 +158,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 ## TODO
 
 * [Famo.us+React](https://github.com/Famous/famous-react/issues)
-* Feathers-like services
+* [Realtime Resources](https://github.com/cayasso/primus-resource)
 * Selenium and more tests
 * Coverage working with LiveScript
 * Fork and implement TODO example
