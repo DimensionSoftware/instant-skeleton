@@ -55,24 +55,34 @@ primus = window.primus = Primus.connect!
 # stream session updates from server
 session = primus.channel \session
   ..on \data (data) ->
-    cur = Immutable.fromJS (if typeof! data is \Object then data else JSON.parse data)
-    unless cur.toJS! === (app.get \session)
-      window.app.update \session -> cur
+    cur = if typeof! data is \Object then data else JSON.parse data # force Object
+    if cur then app.update \session, -> Immutable.fromJS cur
+  ..on \open ->
+    window.sync-session = (key, value) ->
+      app = window.app
+      cur = if typeof! key is \Object # merge key as obj
+        app.merge-deep key
+      else
+        app.update-in [\session, key], -> value
+      owned = cur.update-in [\session, \spark-id], -> window.spark-id # add update's owner
+      session.write (owned.get \session .toJS!)
+  ..on \close -> # cleanup
+    delete window.sync-session
 
 
 function init-react
   [locals, path] = [window.locals, window.location.pathname]
-  state  = immstruct {path, locals, session:{updated:0}}
-  body   = document.get-elements-by-tag-name \body .0
-  cursor = state.cursor! # expose immutable data structure
-  render = (cur, old) ->
-    React.render App(window.app = state.cursor!), body # render app to body
+  state = immstruct {path, locals, session:{updated:0}}
+  body  = document.get-elements-by-tag-name \body .0
 
   # update on animation frames (avoids browser janks)
+  render = (cur, old) ->
+    React.render App(window.app = state.cursor!), body # render app to body
   state.on \next-animation-frame render
   render!
 
-  cursor
+  state.cursor! # expose immutable data structure
+
 
 if features.dimension # front!
   console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"
