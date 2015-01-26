@@ -1,25 +1,34 @@
 
 # destructure only what's needed
-{DOM:{div,button,h1,h2,label,input,code}} = React
+{DOM:{small,div,button,h1,h2,label,input,code}} = React
 {NavigatableMixin,Link} = Router
 
 
 # HomePage
 module.exports = component middleware, ({props}) ->
   key       = \greeting
-  update    = (val) -> props.update-in [\locals, key], -> val
-  value     = props.get-in [\locals key]
+  path      = [\locals, key]
+  update    = (val) -> props.update-in path, -> val
+  value     = props.get-in path
   on-change = (e) ->
     update e.current-target.value
 
   div class-name: \HomePage,
+    # allow greeting to be set
     h1 void value
     label void \Greeting: [
       input {key, value, on-change}
     ]
-    button {on-click:(-> update \CLICK)}, \Swap
+
+    # sync greeting across sessions
+    button {title:'Open multiple browsers to test', on-click:(-> sync-session key, props.get-in path)} 'Sync to Session'
+
+    # navigation sync'd across sessions
     div void "Last visited #{props.get-in [\session, \lastPage] or ''}"
     div void
       Link {href:R(\HelloPage)}, 'Go to HelloPage'
-    h2 void 'React App State:'
-    code void (JSON.stringify props.toJS!)
+
+    # print entire app structure
+    h2 void 'React App Structure:'
+    small void
+      code void (JSON.stringify props.toJS!)
