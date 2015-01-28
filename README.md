@@ -72,7 +72,9 @@ SHARED
     * **hot-loader** -- http://gaearon.github.io/react-hot-loader/
 * **Primus** -- https://github.com/primus/primus
     * **engine.io** -- https://github.com/Automattic/engine.io
+    * **emitter** -- https://github.com/cayasso/primus-emitter
     * **multiplex** -- https://github.com/cayasso/primus-multiplex
+    * **resource** -- https://github.com/cayasso/primus-resource
 * **LevelDB** -- https://github.com/google/leveldb
     * **party** -- https://github.com/substack/level-party
     * **sublevel** -- https://github.com/dominictarr/level-sublevel
@@ -119,17 +121,16 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + Undo &amp; Redo for [FREE](https://github.com/omniscientjs/immstruct)
        + Source maps
 
-4. How can I enable and disable features?
-
-       + Zero impact for unused features
+4. How can I enable and disable features with zero impact for those unused?
 
             $ vim shared/features.ls
 
 5. How can I add my own data store?
 
-       + Simply require &amp; hook it into your Page handler:
+       + Simply require &amp; hook it into your Page handler or Resource:
 
             $ vim server/pages.ls
+            $ vim server/resources.ls
 
 6. How easy is session management?
 
@@ -158,7 +159,6 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 ## TODO
 
 * [Famo.us+React](https://github.com/Famous/famous-react/issues)
-* [Realtime Resources](https://github.com/cayasso/primus-resource)
 * Selenium and more tests
 * Coverage working with LiveScript
 * Fork and implement TODO example
