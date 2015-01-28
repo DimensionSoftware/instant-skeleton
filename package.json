@@ -123,6 +123,7 @@
     "primus": "^2.4.12",
     "primus-emitter": "^3.0.3",
     "primus-multiplex": "^3.1.0",
+    "primus-resource": "^2.0.6",
     "react": "^0.12.2",
     "react-async": "^2.0.1",
     "react-responsive": "0.0.2",

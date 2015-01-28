@@ -21,6 +21,7 @@ require! {
   primus: Primus
   \primus-emitter
   \primus-multiplex
+  \primus-resource
 
   \./pages
   \./resources
@@ -71,6 +72,7 @@ module.exports =
         ..before (middleware.primus-koa-session store, @app.keys)
         ..use \multiplex primus-multiplex
         ..use \emitter primus-emitter
+        ..use \resource primus-resource
         ..remove \primus.js
 
       # init realtime resources

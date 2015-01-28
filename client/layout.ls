@@ -52,6 +52,12 @@ function init-primus
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
 
+  # example "foo" resource
+  foo = primus.resource \foo
+    ..on \ready ->
+      foo.command \test (res) ->
+        console.log \res: res
+
   # stream session updates from server
   session = primus.channel \session
     ..on \data (data) ->

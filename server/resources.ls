@@ -4,18 +4,17 @@ require! {
   \level-live-stream
 }
 
-# TODO resources are a work-in-progress
-
-app = koa!
-
-
 @init = (sdb, primus) ->
-  level-live-stream.install sdb
-
   primus.on \connection (spark) ->
-    spark.send \CHANGESET app.changeset
+    spark.send \CHANGESET process.env.CHANGESET
+
+  # example "foo" resource
+  foo = primus.resource \foo
+    ..oncommand = (spark, command, cb) ->
+      cb "got command #command"
 
   # stream level db user sessions
+  level-live-stream.install sdb
   session = primus.channel \session
     ..on \connection (spark) ->
       # -> send sessions to client
