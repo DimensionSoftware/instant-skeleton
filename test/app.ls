@@ -12,7 +12,7 @@ server = void
 
 # TODO better coverage
 describe 'Can we boot the app?' ->
-  @timeout 5000ms
+  @timeout 8000ms
   before (done) ->
     app.start ->
       server := app.server # set app instance
