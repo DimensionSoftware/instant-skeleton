@@ -14,6 +14,7 @@ require! {
   'koa-helmet': helmet
 
   'level-sublevel'
+  \level-live-stream
   'level-party': level
 
   'koa-generic-session': koa-session
@@ -36,7 +37,7 @@ prod = env is \production
 
 db      = level-sublevel(level './shared/db' {encoding:\json})
 sdb     = db.sublevel \session
-ldb     = db.sublevel \live
+pdb     = db.sublevel \public
 store   = koa-level {db:sdb}
 session = koa-session {store}
 
@@ -77,7 +78,9 @@ module.exports =
         ..remove \primus.js
 
       # init realtime resources
-      resources.init ldb, sdb, @primus
+      resources.init sdb, @primus
+      # init live streams
+      live-stream @primus, pdb, \public
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
@@ -89,3 +92,21 @@ module.exports =
       <~ @primus.destroy
       <~ @server.close
       db.close cb
+
+
+function live-stream primus, db, name, key-compare-fn
+  level-live-stream.install db
+  channel = primus.channel name
+    ..on \connection (spark) ->
+      # -> send live updates to client
+      s-stream = db.create-live-stream!
+        ..pipe channel # pipe updates
+        ..on \data (data) ->
+          v = if typeof! data.value is \Object then data.value else JSON.parse data.value # FIXME huh?
+          now = new Date!get-time!
+          v.updated = now
+          spark.write v
+
+      # <- save live updates from client
+      spark.on \data (data) ->
+        db.put name, JSON.stringify data # FIXME huh?

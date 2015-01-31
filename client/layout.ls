@@ -59,6 +59,7 @@ function init-primus
       foo.command \test (res) ->
         console.log \res: res
 
+  # TODO refactor into init-live-stream
   # stream session updates from server
   session = primus.channel \session
     ..on \data (data) ->
@@ -76,21 +77,28 @@ function init-primus
     ..on \close -> # cleanup
       delete window.sync-session
 
-  # stream live updates from server
-  live = primus.channel \live
+  init-live-stream \public
+
+
+# create realtime "live" data streams w/ leveldb
+function init-live-stream name
+  ch = primus.channel name
     ..on \data (data) ->
+      # stream updates from server
       cur = if typeof! data is \Object then data else JSON.parse data # force Object
-      if cur then app.update \live, -> Immutable.fromJS cur
+      if cur then app.update name, -> Immutable.fromJS cur
     ..on \open ->
-      window.sync-live = (key, value) ->
+      # fn to stream updates to server
+      window["#{name}Sync"] = (key, value) ->
         app = window.app
         cur = if typeof! key is \Object
           app.merge-deep key
         else
-          app.update-in [\live, key], -> value
-        owned = cur.update-in [\live, \spark-id], -> window.spark-id # add update's owner
-        live.write (owned.get \live .toJS!)
+          app.update-in [name, key], -> value
+        owned = cur.update-in [name, \spark-id], -> window.spark-id # add update's owner
+        ch.write (owned.get name .toJS!)
     ..on \close ->
+      # cleanup
       delete window.sync-live
 
 function init-react
