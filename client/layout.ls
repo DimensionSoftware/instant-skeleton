@@ -25,9 +25,20 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 
 # main
 # ----
-# b00t react!
 init-react!  # expose app cursor
 init-primus! # setup realtime
+
+# setup realtime streams w/ leveldb
+init-live-stream \public
+init-live-stream \session
+
+# TODO move into client/resources/*
+# example "foo" resource
+foo = primus.resource \foo
+  ..on \ready ->
+    foo.command \test (res) ->
+      console.log \res: res
+
 
 
 function init-primus
@@ -52,37 +63,9 @@ function init-primus
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
 
-  # TODO move into client/resources/*
-  # example "foo" resource
-  foo = primus.resource \foo
-    ..on \ready ->
-      foo.command \test (res) ->
-        console.log \res: res
-
-  # TODO refactor into init-live-stream
-  # stream session updates from server
-  session = primus.channel \session
-    ..on \data (data) ->
-      cur = if typeof! data is \Object then data else JSON.parse data # force Object
-      if cur then app.update \session, -> Immutable.fromJS cur
-    ..on \open ->
-      window.sync-session = (key, value) ->
-        app = window.app
-        cur = if typeof! key is \Object # merge key as obj
-          app.merge-deep key
-        else
-          app.update-in [\session, key], -> value
-        owned = cur.update-in [\session, \spark-id], -> window.spark-id # add update's owner
-        session.write (owned.get \session .toJS!)
-    ..on \close -> # cleanup
-      delete window.sync-session
-
-  init-live-stream \public
-
-
 # create realtime "live" data streams w/ leveldb
 function init-live-stream name
-  ch = primus.channel name
+  ch = window.primus.channel name
     ..on \data (data) ->
       # stream updates from server
       cur = if typeof! data is \Object then data else JSON.parse data # force Object

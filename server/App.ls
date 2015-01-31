@@ -81,6 +81,7 @@ module.exports =
       resources.init sdb, @primus
       # init live streams
       live-stream @primus, pdb, \public
+      live-stream @primus, sdb, \session, (key, spark) -> key is spark.request.key
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
@@ -99,13 +100,18 @@ function live-stream primus, db, name, key-compare-fn
   channel = primus.channel name
     ..on \connection (spark) ->
       # -> send live updates to client
+      send = ->
+        now = new Date!get-time!
+        it.updated = now
+        spark.write it
       s-stream = db.create-live-stream!
         ..pipe channel # pipe updates
         ..on \data (data) ->
           v = if typeof! data.value is \Object then data.value else JSON.parse data.value # FIXME huh?
-          now = new Date!get-time!
-          v.updated = now
-          spark.write v
+          if key-compare-fn and key-compare-fn data.key, spark
+            send v
+          else
+            send v
 
       # <- save live updates from client
       spark.on \data (data) ->
