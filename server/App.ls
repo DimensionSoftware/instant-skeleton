@@ -36,6 +36,7 @@ prod = env is \production
 
 db      = level-sublevel(level './shared/db' {encoding:\json})
 sdb     = db.sublevel \session
+ldb     = db.sublevel \live
 store   = koa-level {db:sdb}
 session = koa-session {store}
 
@@ -76,7 +77,7 @@ module.exports =
         ..remove \primus.js
 
       # init realtime resources
-      resources.init sdb, @primus
+      resources.init ldb, sdb, @primus
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb

@@ -52,6 +52,7 @@ function init-primus
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
 
+  # TODO move into client/resources/*
   # example "foo" resource
   foo = primus.resource \foo
     ..on \ready ->
@@ -74,6 +75,23 @@ function init-primus
         session.write (owned.get \session .toJS!)
     ..on \close -> # cleanup
       delete window.sync-session
+
+  # stream live updates from server
+  live = primus.channel \live
+    ..on \data (data) ->
+      cur = if typeof! data is \Object then data else JSON.parse data # force Object
+      if cur then app.update \live, -> Immutable.fromJS cur
+    ..on \open ->
+      window.sync-live = (key, value) ->
+        app = window.app
+        cur = if typeof! key is \Object
+          app.merge-deep key
+        else
+          app.update-in [\live, key], -> value
+        owned = cur.update-in [\live, \spark-id], -> window.spark-id # add update's owner
+        live.write (owned.get \live .toJS!)
+    ..on \close ->
+      delete window.sync-live
 
 function init-react
   [locals, path] = [window.locals, window.location.pathname]
