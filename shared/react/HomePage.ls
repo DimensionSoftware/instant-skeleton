@@ -21,7 +21,7 @@ module.exports = component middleware, ({props}) ->
     ]
 
     # sync greeting across sessions
-    button {title:'Open multiple browsers to test', on-click:(-> sync-session key, props.get-in path)} 'Sync to Session'
+    button {title:'Open multiple browsers to test', on-click:(-> session-sync key, props.get-in path)} 'Sync to Session'
 
     # navigation sync'd across sessions
     div void "Last visited #{props.get-in [\session, \lastPage] or ''}"
