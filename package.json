@@ -144,7 +144,7 @@
     "gulp-shell": "^0.2.11",
     "gulp-spawn": "^0.3.0",
     "gulp-stylus": "^2.0.0",
-    "gulp-util": "^3.0.2",
+    "gulp-util": "^3.0.3",
     "gulp-watch": "^4.1.0",
     "gulp-webpack": "^1.2.0",
     "json-loader": "^0.5.1",
