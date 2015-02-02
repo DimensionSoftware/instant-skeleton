@@ -1,7 +1,11 @@
 
+require! {
+  './Footer'
+}
+
 # destructure only what's needed
 {NavigatableMixin,Link} = Router
-{DOM:{div,h1,h2,code}} = React
+{DOM:{div,h1,h4,footer,strong,code}} = React
 
 
 # HelloPage
@@ -12,7 +16,9 @@ module.exports = component middleware, ({props}) ->
 
   div class-name: \HelloPage,
     h1 void "Hello From #{geo! or \Earth}"
-    div void "Last visited #{props.get-in [\session, \lastPage] or ''}"
-    Link {href:R(\HomePage)}, 'Go to HomePage'
-    h2 void 'React App State:'
-    code void (JSON.stringify props.toJS!)
+    div void 'Last visited ' [
+      strong void "#{props.get-in [\session, \lastPage] or ''}"
+    ]
+    Link {href:R(\HomePage)}, 'HomePage →'
+
+    Footer {props}
