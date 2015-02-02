@@ -1,8 +1,18 @@
-@import 'reset.styl'
 
 vendors = webkit moz official
+
+// variables
+textColor  = #222
+themeColor = #2ec5e1
+themeAlpha = rgba(themeColor, .3)
+
+grid = 1em
 
 // for iui mobile
 *
   -webkit-tap-highlight-color rgba(0,0,0,0)
   -webkit-touch-callout none
+
+
+@import 'reset.styl'
+@import 'typography.styl'
