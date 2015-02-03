@@ -1,6 +1,7 @@
 
 require! {
-  './Footer'
+  \./Footer
+  \./LastVisited
 }
 
 # destructure only what's needed
@@ -17,6 +18,7 @@ module.exports = component middleware, ({props}) ->
   div class-name: \HelloPage,
     h1 void "Hello #{props.get-in [\session, \greetings] or \World}, From #{geo! or \Earth}!"
     Link {href:R(\HomePage)}, 'HomePage →'
-    div void [ small void "Last visited #{props.get-in [\session, \lastPage]}" ]
 
+    # navigation sync'd across sessions
+    LastVisited {props}
     Footer {props}
