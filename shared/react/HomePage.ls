@@ -18,10 +18,11 @@ module.exports = component middleware, ({props}) ->
 
   div class-name: \HomePage,
     # allow greetings to be set
-    h1 void value
+    h1 void (value or 'Hello! What\'s Your Name?')
     hr void
     form {on-submit:-> false} [
-      label void \Greetings [
+      label void [
+        strong void \Greetings
         input {key, value, on-change, +auto-focus, type:\text, placeholder:'Your Name'}
       ]
       # sync greetings across sessions
@@ -29,10 +30,8 @@ module.exports = component middleware, ({props}) ->
     ]
 
     # navigation sync'd across sessions
-    div void 'Last visited ' [
-      strong void "#{props.get-in [\session, \lastPage] or ''}"
-    ]
     div void
       Link {href:R(\HelloPage)}, "HelloPage →"
+    div void [ small void "Last visited #{props.get-in [\session, \lastPage]}" ]
 
     Footer {props}

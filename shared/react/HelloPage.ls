@@ -5,7 +5,7 @@ require! {
 
 # destructure only what's needed
 {NavigatableMixin,Link} = Router
-{DOM:{div,h1,h4,footer,strong,code}} = React
+{DOM:{div,h1,h4,footer,small,code}} = React
 
 
 # HelloPage
@@ -15,10 +15,8 @@ module.exports = component middleware, ({props}) ->
       "#{that.get \city}, #{that.get \region} (#{that.get \country})"
 
   div class-name: \HelloPage,
-    h1 void "Hello From #{geo! or \Earth}"
-    div void 'Last visited ' [
-      strong void "#{props.get-in [\session, \lastPage] or ''}"
-    ]
+    h1 void "Hello #{props.get-in [\session, \greetings] or \World}, From #{geo! or \Earth}!"
     Link {href:R(\HomePage)}, 'HomePage →'
+    div void [ small void "Last visited #{props.get-in [\session, \lastPage]}" ]
 
     Footer {props}
