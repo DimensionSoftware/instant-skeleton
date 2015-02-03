@@ -8,6 +8,8 @@ require! {
   \./stylus/master
 }
 
+body = document.get-elements-by-tag-name \body .0 # cache
+
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
   get: (k)    -> try local-storage.get-item k |> JSON.parse
@@ -30,7 +32,9 @@ init-primus! # setup realtime
 
 # setup realtime streams w/ leveldb
 init-live-stream \public
-init-live-stream \session
+init-live-stream \session -> # trigger ui loaded after session applies
+  if body.class-name.index-of \loaded isnt -1
+    body.class-name += ' loaded'
 
 # TODO move into client/resources/*
 # example "foo" resource
@@ -64,7 +68,7 @@ function init-primus
       window.spark-id <- primus.id # easy identify primus connection
 
 # create realtime "live" data streams w/ leveldb
-function init-live-stream name
+function init-live-stream name, cb
   ch = window.primus.channel name
     ..on \data (data) ->
       # stream updates from server
@@ -80,6 +84,7 @@ function init-live-stream name
           app.update-in [name, key], -> value
         owned = cur.update-in [name, \spark-id], -> window.spark-id # add update's owner
         ch.write (owned.get name .toJS!)
+      if cb then cb! # ready
     ..on \close ->
       # cleanup
       delete window.sync-live
@@ -87,7 +92,6 @@ function init-live-stream name
 function init-react
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct {path, locals, session:{updated:0}}
-  body  = document.get-elements-by-tag-name \body .0
 
   # update on animation frames (avoids browser janks)
   render = (cur, old) ->
