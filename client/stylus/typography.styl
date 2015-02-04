@@ -3,23 +3,33 @@ body
   font-family 'Helvetica Neue', 'Helvetica', 'Arial'
   line-height 1.5em
   padding 1em
-  color #222
-  background #fafafa
+  color textColor
+  background #f9f9f9
   font-size 1.2em
+  opacity 0
+  &.loaded
+    opacity 1
+    transition opacity .4s ease-in .1s
 
 a
   position relative
   display inline-block
   color themeColor
   text-decoration none
+  transition border-bottom .01s ease-in
+  border-bottom 1px solid transparent
   &:hover, &:visited
     color darken(themeColor, 20%)
   &:hover
     transform scale(1.02)
+    transition none
+    border-bottom 1px solid themeColor
 
 h1, h2, h3, h4, h5, h6
   margin-top (grid/3)
   margin-bottom (grid/2)
+  line-height 1.1em
+  text-transform capitalize
 h1
   font-size 2.3em
 h2
@@ -35,69 +45,4 @@ h5
 
 code
   line-height 1.1em
-
-input[type="password"], select, textarea, input[type="text"]
-  overflow hidden
-  text-overflow ellipsis
-  border-radius 3px
-  outline none
-  margin-left .25em
-  margin-right .25em
-  padding 10px
-  vertical-align middle
-  font-size 1.25em
-  color lighten(textColor, 20%)
-  background-image linear-gradient(top, themeAlpha 0, themeColor 5px)
-  border 1px solid lighten(textColor, 95%)
-  border-bottom 1px solid lighten(textColor, 85%)
-  vertical-align middle
-  outline none
-  transform scale(1)
-  transition-duration .3s
-  transition-property transform
-  transition color .1s ease-out, border .2s ease-out .15s
-  &:hover
-    position relative
-    z-index 1
-    color textColor
-    border-bottom 1px solid themeColor
-    transition all 0s
-  &:focus
-    color darken(textColor, 20%)
-    position relative
-    z-index 10
-    transform scale(1.02)
-    transition all 0s
-    border-radius 4px
-    background-color #fff
-    border-bottom 1px solid themeColor
-    transition color .5s ease-out, border .05s ease-out
-
-.button, input[type="button"], input[type="submit"], button
-  transition box-shadow .2s ease-in .05s, border .2s ease-in .05s, color .2s ease-in .05s, text-shadow .2s ease-in .05s
-  outline none
-  white-space nowrap
-  position relative
-  vertical-align middle
-  letter-spacing 1px
-  background-color themeColor
-  border 1px solid lighten(textColor, 80%)
-  border-top 1px solid darken(themeColor, 20%)
-  border-left 1px solid darken(themeColor, 20%)
-  border-right 1px solid darken(themeColor, 20%)
-  border-bottom-color darken(themeColor, 30%)
-  color #fff
-  font-size 1.25em
-  font-weight 500
-  padding 10px 15px
-  text-align center
-  border-radius 3px
-
-footer
-  position fixed
-  left 0
-  right 0
-  bottom 0
-  padding 1.5em
   font-size .9em
-  background-color lighten(textColor, 95%)
