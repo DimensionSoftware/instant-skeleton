@@ -15,7 +15,8 @@ module.exports = component middleware, ({props}) ->
   update    = (val) -> props.update-in path, -> val
   value     = props.get-in path
   on-change = (e) ->
-    update e.current-target.value
+    v = e.current-target.value
+    unless v?0 is ' ' then update v # disallow space first char
 
   div class-name: \HomePage,
     # allow greetings to be set
