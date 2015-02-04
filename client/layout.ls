@@ -6,6 +6,7 @@ require! {
   \../shared/react/App
   \../shared/features
   \./stylus/master
+  \./resources
 }
 
 body = document.get-elements-by-tag-name \body .0 # cache
@@ -36,13 +37,6 @@ init-live-stream \session -> # trigger ui loaded after session applies
   if body.class-name.index-of \loaded isnt -1
     body.class-name += ' loaded'
 
-# TODO move into client/resources/*
-# example "foo" resource
-foo = primus.resource \foo
-  ..on \ready ->
-    foo.command \test (res) ->
-      console.log \res: res
-
 
 
 function init-primus
@@ -66,6 +60,9 @@ function init-primus
         if window.closed-duration > 3s
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
+
+  resources.init primus # init primus-resources
+
 
 # create realtime "live" data streams w/ leveldb
 function init-live-stream name, cb
