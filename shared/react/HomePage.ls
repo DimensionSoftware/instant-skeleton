@@ -24,7 +24,7 @@ module.exports = component middleware, ({props}) ->
     form {on-submit:-> false} [
       label void [
         strong void \Greetings
-        input {key, value, on-change, +auto-focus, type:\text, placeholder:'Your Name'}
+        input {ref:\focus, key, value, on-change, +auto-focus, type:\text, placeholder:'Your Name'}
       ]
       # sync greetings across sessions
       button {title:'Open multiple browsers to test', on-click:(-> session-sync key, props.get-in path)} \Save
