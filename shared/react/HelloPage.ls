@@ -6,7 +6,7 @@ require! {
 
 # destructure only what's needed
 {NavigatableMixin,Link} = Router
-{DOM:{div,h1,h4,footer,small,code}} = React
+{DOM:{div,hr,h1,footer,small,code}} = React
 
 
 # HelloPage
@@ -17,6 +17,7 @@ module.exports = component middleware, ({props}) ->
 
   div class-name: \HelloPage,
     h1 void "Hello #{props.get-in [\session, \greetings] or \World}, From #{geo! or \Earth}!"
+    hr void
     Link {href:R(\HomePage)}, 'HomePage →'
 
     # navigation sync'd across sessions
