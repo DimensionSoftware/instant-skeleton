@@ -58,7 +58,6 @@ SERVER
     * **level sessions** -- https://github.com/purposeindustries/koa-level
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
-* **PM2** -- https://github.com/Unitech/pm2
 * **DotEnv** -- https://github.com/motdotla/dotenv
 
 SHARED
