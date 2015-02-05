@@ -8,9 +8,9 @@ require! {
   'react-async': {Mixin}
   \./mixins
 }
-middleware = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus] # common Page middleware
+common-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus] # common Page mixins
 
-global <<< {R, React, Router, middleware, component} # statics for ease-of-use in Pages
+global <<< {R, React, Router, common-mixins, component} # statics for ease-of-use in Pages
 
 
 # Dynamically load components referenced in routes.list.

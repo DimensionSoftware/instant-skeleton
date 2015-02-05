@@ -5,5 +5,5 @@
 
 
 # Footer
-module.exports = component middleware, ({props}) ->
+module.exports = component common-mixins, ({props}) ->
   div void [ small void "Last visited #{props.get-in [\session, \lastPage]}" ]

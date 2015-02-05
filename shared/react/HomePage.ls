@@ -9,7 +9,7 @@ require! {
 {NavigatableMixin,Link} = Router
 
 # HomePage
-module.exports = component middleware, ({props}) ->
+module.exports = component common-mixins, ({props}) ->
   key       = \greetings
   path      = [\session, key]
   update    = (val) -> props.update-in path, -> val
