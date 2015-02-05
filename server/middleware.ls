@@ -3,6 +3,7 @@ require! {
   co
   fs
   url
+  crypto
   immstruct
   replacestream
   keygrip: Keygrip
@@ -17,7 +18,6 @@ require! {
 
   \../shared/features
   \../shared/react/App
-  \../shared/helpers
 }
 
 env    = process.env.NODE_ENV or \development
@@ -134,7 +134,7 @@ export geoip = (next) ->*
 export etags = (next) ->*
   yield next                  # wait for body
   if @locals.body?to-string!  # ...and digest if exists on way up
-    @etag = helpers.digest that
+    @etag = digest that
 
 
 export webpack = (next) ->*
@@ -187,5 +187,8 @@ function primus-koa-session-helper req, name, keys
   k = new Keygrip keys
   if k.index("#name=#n-val", s-match?1) < 0 then return void
   n-val
+
+function digest body
+  crypto.create-hash \md5 .update body .digest \hex
 
 # vim:fdm=indent
