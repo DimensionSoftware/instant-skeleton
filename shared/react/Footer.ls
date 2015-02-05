@@ -5,7 +5,7 @@
 
 
 # Footer
-module.exports = component middleware, ({props}) ->
+module.exports = component common-mixins, ({props}) ->
   footer void [
     # print entire app structure
     h4 void 'React App State'

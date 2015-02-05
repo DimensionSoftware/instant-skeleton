@@ -10,7 +10,7 @@ require! {
 
 
 # HelloPage
-module.exports = component middleware, ({props}) ->
+module.exports = component common-mixins, ({props}) ->
   geo = ->
     if props.get-in <[locals geo]>
       "#{that.get \city}, #{that.get \region} (#{that.get \country})"
