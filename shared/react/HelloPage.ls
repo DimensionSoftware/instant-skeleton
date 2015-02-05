@@ -1,11 +1,12 @@
 
 require! {
   \./Footer
+  \./Navigation
   \./LastVisited
 }
 
 # destructure only what's needed
-{NavigatableMixin,Link} = Router
+{Link} = Router
 {DOM:{div,hr,h1,footer,small,code}} = React
 
 
@@ -18,8 +19,7 @@ module.exports = component common-mixins, ({props}) ->
   div class-name: \HelloPage,
     h1 void "Hello #{props.get-in [\session, \greetings] or \World}, From #{geo! or \Earth}!"
     hr void
-    Link {href:R(\HomePage)}, 'HomePage →'
 
-    # navigation sync'd across sessions
-    LastVisited {props}
+    Navigation {props}
+    LastVisited {props} # sync'd across sessions
     Footer {props}

@@ -1,12 +1,13 @@
 
 require! {
   \./Footer
+  \./Navigation
   \./LastVisited
 }
 
 # destructure only what's needed
 {DOM:{small,strong,div,hr,form,button,h1,h2,label,input,code}} = React
-{NavigatableMixin,Link} = Router
+{Link} = Router
 
 # HomePage
 module.exports = component common-mixins, ({props}) ->
@@ -31,8 +32,6 @@ module.exports = component common-mixins, ({props}) ->
       button {title:'Open multiple browsers to test', on-click:(-> session-sync key, props.get-in path)} \Save
     ]
 
-    # navigation sync'd across sessions
-    div void
-      Link {href:R(\HelloPage)}, "HelloPage →"
-    LastVisited {props}
+    Navigation {props}
+    LastVisited {props} # sync'd across sessions
     Footer {props}
