@@ -42,8 +42,7 @@ module.exports =
   , resolve:  { extensions: ['', '.ls', '.js', '.styl'] }
   , module:
     { loaders:
-      [ { test: /\.jade$/, loader: 'jade-loader?self' }
-      , { test: /\.ls$/,   loaders: ['react-hot', 'livescript-loader?const=true'] }
+      [ { test: /\.ls$/,   loaders: ['react-hot', 'livescript-loader?const=true'] }
       , { test: /\.json$/, loader: 'json-loader' }
       , { test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') }
       ]
