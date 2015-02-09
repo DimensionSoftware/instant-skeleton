@@ -4,7 +4,7 @@
   "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
   "main": "build/server/main.js",
   "engines": {
-    "node": ">= 0.11.15"
+    "node": ">= 0.11.16"
   },
   "scripts": {
     "pretest": "node --harmony `which gulp` build:test",
