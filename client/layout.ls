@@ -61,11 +61,10 @@ function init-primus
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
 
-  resources.init primus # init primus-resources
+  resources primus # init primus-resources
 
-
-# create realtime "live" data streams w/ leveldb
 function init-live-stream name, cb
+  # create realtime "live" data streams w/ leveldb
   ch = window.primus.channel name
     ..on \data (data) ->
       # stream updates from server
