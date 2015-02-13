@@ -56,8 +56,7 @@
       "//cache.develop.com",
       "//cache2.develop.com",
       "//cache3.develop.com",
-      "//cache4.develop.com",
-      "//cache5.develop.com"
+      "//cache4.develop.com"
     ],
     "development": {
       "limits": {
@@ -74,8 +73,7 @@
         "//cache.dimensionsoftware.com",
         "//cache2.dimensionsoftware.com",
         "//cache3.dimensionsoftware.com",
-        "//cache4.dimensionsoftware.com",
-        "//cache5.dimensionsoftware.com"
+        "//cache4.dimensionsoftware.com"
       ],
       "limits": {
         "whiteList": [],
