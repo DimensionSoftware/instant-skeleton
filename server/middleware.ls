@@ -147,7 +147,7 @@ export webpack = (next) ->*
 # react
 export react = (next) ->* # set body to react tree
   path  = url.parse (@url or '/') .pathname
-  state = immstruct {path, @locals}
+  state = immstruct {path, @locals, @session}
   @locals.body = React.render-to-string (App state.cursor!)
   yield @render \layout @locals
 
