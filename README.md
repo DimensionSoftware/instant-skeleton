@@ -140,6 +140,15 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
             $ vim shared/react/HomePage.ls
 
 
+7. What is "develop.com" and why am I seeing a blank page?
+
+       Update your /etc/hosts file to include the developing &amp; cache domains:
+
+            $ echo "127.0.0.1 develop.com cache2.develop.com cache3.develop.com cache4.develop.com" >> /etc/hosts
+
+       Prefer to specify your own domains for development?  Simply update the package.json.
+
+
 ## Contributors &amp; Idea Factories
 
 [**Keith Hoerling**](https://github.com/khoerling)
