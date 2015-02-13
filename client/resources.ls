@@ -1,6 +1,6 @@
 
 
-@init = (primus) ->
+module.exports = (primus) ->
 
   # example "foo" resource
   foo = primus.resource \foo
