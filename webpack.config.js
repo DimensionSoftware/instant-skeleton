@@ -43,7 +43,6 @@ module.exports =
   , module:
     { loaders:
       [ { test: /\.ls$/,   loaders: ['react-hot', 'livescript-loader?const=true'] }
-      , { test: /\.json$/, loader: 'json-loader' }
       , { test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') }
       ]
     }
