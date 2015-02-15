@@ -35,7 +35,7 @@ pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
 prod = env is \production
 
-db      = level-sublevel(level './shared/db' {encoding:\json})
+db      = level-sublevel(level './shared/db' {value-encoding:\json})
 sdb     = db.sublevel \session
 pdb     = db.sublevel \public
 store   = koa-level {db:sdb}
