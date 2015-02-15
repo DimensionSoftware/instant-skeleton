@@ -7,7 +7,6 @@ require! {
   immstruct
   replacestream
   keygrip: Keygrip
-  'geoip-lite': geo
 
   \koa-jade
   \koa-locals
@@ -124,11 +123,6 @@ export rate-limit = (next) ->* # apply our config
     black-list:@locals.limits?black-list or []
   }
   yield (state.rate-fn.bind @) next
-
-
-export geoip = (next) ->*
-  @locals.geo = geo.lookup @ip
-  yield next
 
 
 export etags = (next) ->*

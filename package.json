@@ -95,7 +95,6 @@
     "dotenv": "^0.5.1",
     "engine.io": "^1.5.1",
     "famous": "^0.3.5",
-    "geoip-lite": "^1.1.5",
     "immstruct": "^1.4.0",
     "immutable": "^3.6.2",
     "keygrip": "^1.0.1",
