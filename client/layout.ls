@@ -33,10 +33,7 @@ init-primus! # setup realtime
 
 # setup realtime streams w/ leveldb
 init-live-stream \public
-init-live-stream \session -> # trigger ui loaded after session applies
-  if body.class-name.index-of \loaded isnt -1
-    body.class-name += ' loaded'
-
+init-live-stream \session -> add-class body, \loaded # trigger ui loaded after session applies
 
 
 function init-primus
@@ -63,9 +60,10 @@ function init-primus
 
   resources primus # init primus-resources
 
-function init-live-stream name, cb
+function init-live-stream name, cb=(->)
   # create realtime "live" data streams w/ leveldb
   ch = window.primus.channel name
+    ..once \data cb # ready
     ..on \data (data) ->
       # stream updates from server
       cur = if typeof! data is \Object then data else JSON.parse data # force Object
@@ -97,6 +95,9 @@ function init-react
 
   state.cursor! # expose immutable data structure
 
+function add-class elem, class-name
+  if body.class-name.index-of class-name isnt -1
+    body.class-name += " #class-name"
 
 if features.dimension # front!
   console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"
