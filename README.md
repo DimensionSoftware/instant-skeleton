@@ -53,7 +53,6 @@ SERVER
     * **nodemon** --  https://github.com/JacksonGariety/gulp-nodemon
     * **webpack** -- https://github.com/shama/gulp-webpack
 * **Koa** -- http://koajs.com
-    * **geoip lite** -- https://github.com/bluesmoon/node-geoip
     * **helmet** -- https://github.com/venables/koa-helmet
     * **level sessions** -- https://github.com/purposeindustries/koa-level
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
