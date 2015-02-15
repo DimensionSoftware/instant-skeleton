@@ -78,14 +78,13 @@ function init-live-stream name, cb=(->)
           app.update-in [name, key], -> value
         owned = cur.update-in [name, \spark-id], -> window.spark-id # add update's owner
         ch.write (owned.get name .toJS!)
-      if cb then cb! # ready
     ..on \close ->
       # cleanup
-      delete window.sync-live
+      delete window["#{name}Sync"]
 
 function init-react
   [locals, path] = [window.locals, window.location.pathname]
-  state = immstruct {path, locals, session:{updated:0}}
+  state = immstruct {path, locals, public:{}, session:{}} # default app state
 
   # update on animation frames (avoids browser janks)
   render = (cur, old) ->
