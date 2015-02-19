@@ -18,11 +18,9 @@ export initial-state-async =
         window.app.update \path   -> res.body.path
         cb void res.body
 
-export focus =
+export focus-input =
   component-did-mount: ->
     if @refs.focus
       that.getDOMNode!
         ..focus!
         ..select!
-      that.on-click = -> console.log \click
-

@@ -4,9 +4,7 @@ require! {
 }
 
 # destructure only what's needed
-{DOM:{div,small}} = React
-{Link} = Router
-
+{div,small} = DOM
 
 # Footer
 module.exports = component common-mixins, ({props}) ->

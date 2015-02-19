@@ -1,8 +1,6 @@
 
-
 # destructure only what's needed
-{DOM:{div,small}} = React
-
+{div,small} = DOM
 
 # Footer
 module.exports = component common-mixins, ({props}) ->

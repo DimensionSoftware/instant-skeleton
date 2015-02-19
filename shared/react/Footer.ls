@@ -1,13 +1,21 @@
 
 # destructure only what's needed
-{DOM:{footer,h4,code}} = React
-{NavigatableMixin,Link} = Router
+{div,footer,h4,code} = DOM
 
+require! {
+  \./Navigation
+  \./LastVisited
+}
 
 # Footer
 module.exports = component common-mixins, ({props}) ->
-  footer void [
-    # print entire app structure
-    h4 void 'React App State'
-    code void (JSON.stringify props.toJS!)
+  div void [
+    Navigation {props}
+    LastVisited {props} # sync'd across sessions
+
+    footer void [
+      # print entire app structure
+      h4 void 'React App State'
+      code void (JSON.stringify props.toJS!)
+    ]
   ]
