@@ -62,7 +62,6 @@ SERVER
 SHARED
 
 * **LiveScript** -- https://livescript.net
-    * **prelude.ls** -- http://preludels.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
     * **react router component** -- https://github.com/STRML/react-router-component
     * **immutable.js** -- https://github.com/facebook/immutable-js
@@ -119,7 +118,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + Undo &amp; Redo for [FREE](https://github.com/omniscientjs/immstruct)
        + Source maps
 
-4. How can I enable and disable features with zero impact for those unused?
+4. How can I enable &amp; disable features with zero impact for those unused?
 
             $ vim shared/features.ls
 
@@ -141,11 +140,19 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 7. What is "develop.com" and why am I seeing a blank page?
 
-       Update your /etc/hosts file to include the developing &amp; cache domains:
+       + Prefer to specify your own domains for local development?  Simply update the package.json; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
 
             $ echo "127.0.0.1 develop.com cache2.develop.com cache3.develop.com cache4.develop.com" >> /etc/hosts
 
-       Prefer to specify your own domains for development?  Simply update the package.json.
+8. What about cacheability?
+
+       + Since etags &amp; proper cache-control headers are automagically set on every Page, and sessions stream in
+         real-time on page load, all pages are completely cacheable!  The idea is to persist personalization in user sessions.
+
+9. Does this work with io.js?
+
+       Absolutely!
+
 
 
 ## Contributors &amp; Idea Factories
