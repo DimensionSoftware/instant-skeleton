@@ -29,14 +29,16 @@ pages = routes.list.reduce ((namespace, route) ->
   namespace), {}
 
 
-module.exports = component ({cursor}:props) ->
+module.exports = component (props) ->
   location = (route) ->
     name = route.0
-    Location { key: name, ref: name, path: route.1, handler: pages[name], props:cursor }
+    Location { key:name, ref:name, path:route.1, handler:pages[name], props }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
     .map    (-> location it)
-  Locations { path: cursor.get \path } [
+
+  # render page
+  Locations { path: props.get \path } [
     ...locations-for-routes
   ]
