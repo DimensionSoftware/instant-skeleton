@@ -14,13 +14,6 @@ common-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.foc
 global <<< {R, React, Router, common-mixins, component, Immutable}
 global.DOM = React.DOM
 global.Link = Router.Link
-global.default-in = (props, path, key, value) ->
-  test = props.get-in path
-  if test
-    test.set key, Immutable.fromJS value
-  else # create
-    props.update-in path, -> Immutable.fromJS {"#key":value}
-      .get-in path
 
 
 # Dynamically load components referenced in routes.list.
