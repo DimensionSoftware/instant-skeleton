@@ -1,11 +1,11 @@
 
 # Checkbox
-module.exports = component common-mixins, ({props,path,ref,placeholder,label}) ->
+module.exports = component common-mixins, ({props,ref,placeholder,label}) ->
   on-change = ->
-    props.update-in path, -> !props.get-in path
+    props.update -> not props.deref!
 
   # got a label?
-  el = DOM.input {ref, value:(props.get-in path), type:\checkbox, checked:(props.get-in path), on-change}
+  el = DOM.input {ref, value:props.deref!, type:\checkbox, checked:props.deref!, on-change}
   if label
     DOM.label void [ el, DOM.span void " #label" ]
   else
