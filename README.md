@@ -24,7 +24,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
 React.JS into a single, routable concept that makes your on-screen productivity incredible:
 
->  | ***Page*** | &nbsp; *declarative, isomorphic bits of React + Omniscient + Immutable.JS*
+>  | ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [Immutable.JS](https://github.com/facebook/immutable-js)*
 
 1. Add a Page Route
 
