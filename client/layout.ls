@@ -70,13 +70,9 @@ function init-live-stream name, cb=(->)
       if cur then app.update name, -> Immutable.fromJS cur
     ..on \open ->
       # fn to stream updates to server
-      window["#{name}Sync"] = (key, value) ->
+      window["sync#{capitalize name}"] = ->
         app = window.app
-        cur = if typeof! key is \Object
-          app.merge-deep key
-        else
-          app.update-in [name, key], -> value
-        owned = cur.update-in [name, \spark-id], -> window.spark-id # add update's owner
+        owned = app.update-in [name, \spark-id], -> window.spark-id # add update's owner
         ch.write (owned.get name .toJS!)
     ..on \close ->
       # cleanup
@@ -93,6 +89,9 @@ function init-react
   render!
 
   state.cursor! # expose immutable data structure
+
+function capitalize s
+  (s.char-at 0 .to-upper-case!) + s.slice 1
 
 function add-class elem, class-name
   if body.class-name.index-of class-name isnt -1

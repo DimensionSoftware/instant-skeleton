@@ -20,9 +20,9 @@ module.exports = component common-mixins, ({props}) ->
     form {on-submit:-> false} [
       label void [
         strong void \Greetings
-        Input {props, path, ref:\focus, placeholder:'Your Name'}
+        Input {props:(props.cursor path), ref:\focus, placeholder:'Your Name'}
         # sync greetings across sessions
-        button {title:'Open multiple browsers to test', on-click:(-> session-sync key, props.get-in path)} \Save
+        button {title:'Open multiple browsers to test', on-click:(-> sync-session! )} \Save
       ]
     ]
     Footer {props}
