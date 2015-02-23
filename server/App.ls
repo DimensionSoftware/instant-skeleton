@@ -115,4 +115,5 @@ function live-stream primus, db, name, key-compare-fn
 
       # <- save live updates from client
       spark.on \data (data) ->
+        # TODO check permissions from request.key (eg. deleting from public)
         db.put name, JSON.stringify data # FIXME huh?

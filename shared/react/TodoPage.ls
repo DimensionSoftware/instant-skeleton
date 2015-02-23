@@ -10,13 +10,23 @@ require! {
   \./Footer
 }
 
-todo-list = component ({props}) ->
+todo-list = component ({props, on-delete}) ->
   ol void [
+    # FIXME hack until "for x from y!" es6 iterators
+    # https://github.com/gkz/LiveScript/issues/667
     if l = props?toJS!
-      for k in Object.keys l
+      for let k in Object.keys l
         li void [
           Check {props:(props.cursor [k, \completed])}
           Input {props:(props.cursor [k, \title])}
+          div {
+            title: \Delete
+            class-name: \delete,
+            on-click: ->
+              if confirm 'Permanently delete?'
+                props.delete k
+                if on-delete then on-delete!
+          }, \x
         ]
   ]
 
@@ -39,6 +49,7 @@ module.exports = component common-mixins, ({props}) ->
         ..set-in paths.title, ''                                          # reset ui
       if path is paths.public-todo then sync-public! else sync-session!   # save
 
+
   div class-name: \TodoPage, [
     h1 void "#{if greeting then "#greeting\'s " else 'My '}TODO"
     form {on-submit:-> it.prevent-default!} [
@@ -48,10 +59,13 @@ module.exports = component common-mixins, ({props}) ->
         Check {props:is-public, label:'is public?'}
       ]
     ]
-    hr void
-    todo-list {props:(props.cursor paths.session-todo)} # render session todos
+
+    # render my session todos
+    todo-list {props:(props.cursor paths.session-todo), on-delete:-> sync-session!}
+
+    # render public todos
     h2 void 'Everyone\'s TODO'
-    todo-list {props:(props.cursor paths.public-todo)}  # render public todos
+    todo-list {props:(props.cursor paths.public-todo), on-delete:-> sync-public!}
     Footer {props}
   ]
 
