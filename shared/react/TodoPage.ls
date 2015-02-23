@@ -1,6 +1,6 @@
 
 # destructure only what's needed
-{hr,input,form,ol,li,div,button,h1,h2,small,label} = DOM
+{input,form,ol,li,div,button,h1,h2,small,label} = DOM
 
 require! {
   co
@@ -53,11 +53,11 @@ module.exports = component common-mixins, ({props}) ->
   div class-name: \TodoPage, [
     h1 void "#{if greeting then "#greeting\'s " else 'My '}TODO"
     form {on-submit:-> it.prevent-default!} [
-      Input {props:(props.cursor paths.title), placeholder:'Add an Item ...'}
-      button {on-click} \Save
+      Input {ref:\focus, props:(props.cursor paths.title), placeholder:'Add an Item ...', class-name:\indent}
       small void [
-        Check {props:is-public, label:'is public?'}
+        Check {props:is-public, label:'Public', title:'Seen by Everyone'}
       ]
+      button {on-click} \Save
     ]
 
     # render my session todos
