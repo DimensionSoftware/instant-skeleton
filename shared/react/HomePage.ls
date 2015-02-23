@@ -5,12 +5,11 @@
 require! {
   \./Input
   \./Footer
-  '../routes': {R}
 }
 
 # HomePage
-  key    = \greetings
 module.exports = component page-mixins, ({props}) ->
+  key    = \name
   path   = [\session, key]
   value  = props.get-in path
 
@@ -19,7 +18,7 @@ module.exports = component page-mixins, ({props}) ->
     @navigate R(\TodoPage)
 
   div class-name: \HomePage,
-    # allow greetings to be set
+    # allow name to be set
     h1 void if value then "#key #value!" else 'Hello! What\'s Your Name?'
     hr void
     form {on-submit:-> false} [
