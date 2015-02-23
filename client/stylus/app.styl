@@ -7,10 +7,11 @@ onTop        = 11
 body
   margin-bottom (footerHeight + grid)
 
-h1, h2, h3
+h1, h2
   margin-left grid
   font-family 'courier new', 'courier'
   letter-spacing -2px
+
 h2, h3
   margin-top grid * 2.5
 
@@ -67,8 +68,19 @@ h2, h3
         width 100%
         &:hover, &:focus
           border-bottom 1px solid lighten(themeColor, 60%)
-          + .delete
+          ~ .delete
             display block
+      .name
+        position absolute
+        font-size .8em
+        color lighten(textColor, 30%)
+        text-transform capitalize
+        z-index onTop
+        top grid / 2
+        right grid * 7
+        max-width grid * 6
+        overflow hidden
+        text-overflow ellipsis
       .delete
         position absolute
         display none
@@ -86,6 +98,13 @@ h2, h3
         text-decoration line-through
         background transparent
         border-bottom-color transparent
+    .actions
+      font-size .8em
+      margin grid 0 0 (grid * 5)
+      a
+        margin-right grid
+        &.active
+          text-transform uppercase
 
   footer
     margin-top (grid * 2)
@@ -93,32 +112,6 @@ h2, h3
     .last-visited
       position fixed
       bottom grid
-      right grid
-      color lighten(textColor, 40%)
-    .app-state
-      position fixed
-      text-align left
-      left 0
-      right 0
-      bottom 0
-      font-size .9em
-      overflow none
-      overflow-y scroll
-      max-height footerHeight
-      transition all .3s ease-out .15s
-      z-index onTop
-      &:hover
-        box-shadow 0 -1px 27px -7px themeColor
-        background-color #fff
-        max-height 500px
-        transition max-height .05s ease-out .3s
-      small
-        color lightText
-      h4
-        cursor pointer
-        margin grid 0 grid 0
-        text-align center
-      code
-        background-color lighten(textColor, 95%)
-        overflow-y scroll
-        line-height .5em
+      right grid * 2
+      color lighten(textColor, 50%)
+      background bodyColor
