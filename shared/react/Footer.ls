@@ -8,7 +8,7 @@ require! {
 }
 
 # Footer
-module.exports = component common-mixins, ({props}) ->
+module.exports = component ({props}) ->
   footer void [
     Navigation {props}
     LastVisited {props} # sync'd across sessions

@@ -7,7 +7,7 @@ require! {
 {div,small} = DOM
 
 # Footer
-module.exports = component common-mixins, ({props}) ->
+module.exports = component ({props}) ->
   # show all routes besides current
   path = props.get \path
   div class-name: \Navigation, [

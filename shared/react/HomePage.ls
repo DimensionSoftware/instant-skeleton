@@ -9,8 +9,8 @@ require! {
 }
 
 # HomePage
-module.exports = component common-mixins, ({props}) ->
   key    = \greetings
+module.exports = component page-mixins, ({props}) ->
   path   = [\session, key]
   value  = props.get-in path
 
