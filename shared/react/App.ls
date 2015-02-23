@@ -1,6 +1,6 @@
 
 require! {
-  react: {create-element}:React
+  'react/addons': {create-element,{class-set:cx}:addons}:React
   omniscient: component
   immutable: Immutable
   'react-router-component': {Location,Locations,Pages,Page,NotFound,Link,NavigatableMixin}:Router
@@ -11,7 +11,7 @@ require! {
 page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input] # common Page mixins
 
 # statics for ease-of-use DSL in Pages
-global <<< {R, React, Router, page-mixins, component, Immutable}
+global <<< {R, React, cx, Router, page-mixins, component, Immutable}
 global.DOM = React.DOM
 global.Link = Router.Link
 
