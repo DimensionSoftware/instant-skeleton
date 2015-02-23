@@ -4,15 +4,16 @@ body
   line-height 1.5em
   padding 1em
   color textColor
-  background #f9f9f9
+  background bodyColor
   font-size 1.2em
   opacity 0
   &.loaded
     opacity 1
-    transition opacity .2s ease-in
+    transition opacity .15s ease-in
 
 a
   position relative
+  cursor pointer
   display inline-block
   color themeColor
   text-decoration none
@@ -27,7 +28,7 @@ a
 
 h1, h2, h3, h4, h5, h6
   margin-top (grid/3)
-  margin-bottom (grid/2)
+  margin-bottom (grid/4)
   line-height 1.1em
   text-transform capitalize
 h1
