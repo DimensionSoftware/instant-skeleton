@@ -1,6 +1,6 @@
 
 # Input
-module.exports = component common-mixins, ({props,ref,placeholder,title,class-name}) ->
+module.exports = component ({props,ref,placeholder,title,class-name}) ->
   auto-focus = ref is \focus
   on-change  = ->
     v = it.current-target.value

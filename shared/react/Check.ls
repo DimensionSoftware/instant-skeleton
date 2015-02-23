@@ -1,6 +1,6 @@
 
 # Checkbox
-module.exports = component common-mixins, ({props,ref,placeholder,label,title,class-name}) ->
+module.exports = component ({props,ref,placeholder,label,title,class-name}) ->
   on-change = ->
     props.update -> not props.deref!
 
