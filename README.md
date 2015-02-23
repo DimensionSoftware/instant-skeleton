@@ -158,15 +158,10 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 ## Contributors &amp; Idea Factories
 
 [**Keith Hoerling**](https://github.com/khoerling)
-
 [**John Beppu**](https://github.com/beppu)
-
 [**Matt Elder**](https://github.com/dreamcodez)
-
 [**Dave Seleno**](https://github.com/onelesd)
-
 [**Mark Huge**](https://github.com/markhuge)
-
 
 [According to GitHub](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors) . [Become a Contributor](https://github.com/DimensionSoftware/instant-skeleton/fork) .  [Pull request friendly!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
@@ -177,6 +172,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 * Coverage working with LiveScript
 * Fork and implement TODO example
 * More beautiful documentation &amp; better literate .ls
+* FIX: whitelist to ipv6 match
 
 &nbsp;
 
