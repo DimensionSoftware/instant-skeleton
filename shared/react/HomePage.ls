@@ -19,12 +19,10 @@ module.exports = component page-mixins, ({props}) ->
 
   div class-name: \HomePage,
     # allow name to be set
-    h1 void if value then "#key #value!" else 'Hello! What\'s Your Name?'
+    h1 void if value then "Greetings #value!" else 'Hello! What\'s Your Name?'
     hr void
     form {on-submit:-> false} [
-      label void [
-        Input {props:(props.cursor path), ref:\focus, placeholder:'Your Name'}
-        button {title:'Open multiple browsers to test', on-click} \Save
-      ]
+      Input {props:(props.cursor path), ref:\focus, placeholder:'Your Name'}
+      button {title:'Open multiple browsers to test', on-click} \Save
     ]
     Footer {props}
