@@ -1,19 +1,32 @@
 
 footerHeight = 40px
 lightText    = lighten(textColor, 25%)
-leading      = grid/2
 onTop        = 11
 
 body
   margin-bottom (footerHeight + grid)
 
 h1, h2
-  margin-left grid
-  font-family 'courier new', 'courier'
-  letter-spacing -2px
+  font-family Consolas,Monaco,'Andale Mono',monospace
 
 h2, h3
   margin-top grid * 2.5
+
+.TodoPage
+  h1, h2
+    margin-left (grid * 7) - 1
+  header
+    background-color backgroundColor
+    position fixed
+    z-index onTop + 1
+    top 0
+    left 4px
+    right grid * 2
+    box-shadow 0 10px 40px -5px backgroundColor
+    padding grid 0 0 (grid * 5)
+    overflow hidden
+    input[type='text']
+      text-indent grid * 2.5
 
 .HomePage, .TodoPage
   overflow hidden
@@ -21,9 +34,7 @@ h2, h3
     position relative
     input[type='text']
       width 100%
-      &.indent
-        text-indent (grid * 4) - 1
-        font-style italic
+      border-bottom-width 1px
     button
       position absolute
       z-index onTop
@@ -37,6 +48,8 @@ h2, h3
       color lightText
       z-index onTop
   ol
+    background backgroundColor
+    margin-top grid * 4
     position relative
     overflow hidden
     // two red lines simulating 8x11 paper
@@ -63,21 +76,23 @@ h2, h3
       input[type='text']
         padding 5px 9px
         font-size 1em
-        text-indent grid * 4
+        text-indent grid * 6
         border-bottom 1px solid lighten(textColor, 95%)
         width 100%
         &:hover, &:focus
-          border-bottom 1px solid lighten(themeColor, 60%)
+          border-bottom 1px solid lighten(themeColor, 75%)
           ~ .delete
             display block
       .name
         position absolute
-        font-size .8em
+        height 2em
+        font-size .7em
+        font-weight 200
         color lighten(textColor, 30%)
         text-transform capitalize
         z-index onTop
-        top grid / 2
-        right grid * 7
+        top 2px
+        right grid * 4
         max-width grid * 6
         overflow hidden
         text-overflow ellipsis
@@ -86,6 +101,7 @@ h2, h3
         display none
         cursor pointer
         right grid
+        font-weight bold
         top 0
         color themeColor
         z-index onTop
@@ -96,11 +112,10 @@ h2, h3
       // checked "completed" style
       input:checked + input
         text-decoration line-through
-        background transparent
         border-bottom-color transparent
     .actions
       font-size .8em
-      margin grid 0 0 (grid * 5)
+      margin grid 0 0 (grid * 7)
       a
         margin-right grid
         &.active
@@ -111,7 +126,10 @@ h2, h3
     text-align center
     .last-visited
       position fixed
+      z-index onTop
       bottom grid
       right grid * 2
+      padding 0 3px
       color lighten(textColor, 50%)
       background bodyColor
+      border-radius 3px
