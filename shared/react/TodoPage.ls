@@ -1,6 +1,6 @@
 
 # destructure only what's needed
-{a,input,form,ol,li,div,button,h1,h2,small,label} = DOM
+{header,a,input,form,ol,li,div,button,h1,h2,small,label} = DOM
 
 require! {
   co
@@ -14,10 +14,12 @@ require! {
 module.exports = component page-mixins, ({props}) ->
 
   # TodoList
-  todo-list = component ({props, on-delete, on-change, show-name}) ->
-    visible = (props.get \visible) or \all
+  todo-list = component ({name, prefs, props, on-delete, on-change, show-name}) ->
     cn      = -> cx {active:visible is it}
-    show    = (active) -> props.update \visible -> active
+    visible = (prefs.get \visible) or \all
+    show    = (active) ->
+      prefs.update \visible -> active
+      sync-session!
 
     # FIXME hack until "for x from y!" es6 iterators
     # https://github.com/gkz/LiveScript/issues/667
@@ -28,8 +30,9 @@ module.exports = component page-mixins, ({props}) ->
         | \active    => !c
         | \completed => c
 
+    # todo list
     ol void [
-      # todo list
+      h2 void name
       for let k in list
         li void [
           Check {props:(props.cursor [k, \completed]), on-change}
@@ -62,28 +65,29 @@ module.exports = component page-mixins, ({props}) ->
   is-public = props.cursor paths.is-public
 
   div class-name: \TodoPage, [
-    h1 void "#{if name then name else 'My TODO'}"
-    form {on-submit:-> it.prevent-default!} [
-      Input {ref:\focus, props:(props.cursor paths.title), placeholder:'Add an Item ...', class-name:\indent}
-      small void [ Check {props:is-public, label:'Public', title:'Seen by Everyone'} ]
-      button {on-click:-> # save session or public
-        if title = props.get-in paths.title
-          path = if is-public.deref! then paths.public-todo else paths.session-todo
-          date = new Date!get-time!
-          todo = {title, -completed, name, date}
-          props
-            ..cursor path .set uuid.v4!, Immutable.fromJS todo              # add
-            ..set-in paths.title, ''                                        # reset ui
-          if path is paths.public-todo then sync-public! else sync-session! # save
-      }, \Save
+    #h1 void "#{if name then name else 'My TODO'}"
+    header void [
+      form {on-submit:-> it.prevent-default!} [
+        Input {ref:\focus, props:(props.cursor paths.title), placeholder:'Add an Item ...'}
+        small void [ Check {props:is-public, label:'Public', title:'Seen by Everyone'} ]
+        button {on-click:-> # save session or public
+          if title = props.get-in paths.title
+            path = if is-public.deref! then paths.public-todo else paths.session-todo
+            date = new Date!get-time!
+            todo = {title, -completed, name, date}
+            props
+              ..cursor path .set uuid.v4!, Immutable.fromJS todo              # add
+              ..set-in paths.title, ''                                        # reset ui
+            if path is paths.public-todo then sync-public! else sync-session! # save
+        }, \Save
+      ]
     ]
 
     # render my session todos
-    todo-list {props:(props.cursor paths.session-todo), on-delete:(-> sync-session!), on-change:(-> sync-session!)}
+    todo-list {name:"#{if name then name else 'My TODO'}", prefs:(props.cursor [\session, \todos, \my-visible]), props:(props.cursor paths.session-todo), on-delete:(-> sync-session!), on-change:(-> sync-session!)}
 
     # render public todos
-    h2 void \Public
-    todo-list {props:(props.cursor paths.public-todo), +show-name, on-delete:(-> sync-public!), on-change:(-> sync-public!)}
+    todo-list {name:\Public, prefs:(props.cursor [\session, \todos, \public-visible]), props:(props.cursor paths.public-todo), +show-name, on-delete:(-> sync-public!), on-change:(-> sync-public!)}
 
     Footer {props}
   ]
