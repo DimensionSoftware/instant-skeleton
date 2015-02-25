@@ -122,14 +122,24 @@ h2, h3
           text-transform uppercase
 
   footer
-    margin-top (grid * 2)
     text-align center
-    .last-visited
+    margin-top grid * 6
+    > a
+      border none
+
+    .navigation
       position fixed
       z-index onTop
       bottom grid
-      right grid * 2
-      padding 0 3px
+      right grid * 1.5
+      text-align right
+      padding 0 5px
+      border 1px solid darken(bodyColor, 5%)
       color lighten(textColor, 50%)
-      background bodyColor
+      background rgba(bodyColor, .85)
       border-radius 3px
+      font-size .85em
+    .last-visited
+      font-size .9em
+      a
+        font-size @font-size
