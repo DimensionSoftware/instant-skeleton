@@ -1,15 +1,14 @@
 
 # destructure only what's needed
-{div,footer,h3,code} = DOM
+{img,a,div,footer,h3,code} = DOM
 
-require! {
-  \./Navigation
-  \./LastVisited
-}
+require! \./Navigation
 
 # Footer
 module.exports = component ({props}) ->
   footer void [
-    Navigation {props}
-    LastVisited {props} # sync'd across sessions
+    a {href:'https://dimensionsoftware.com', target:'_blank'} [
+      img {src:'https://dimensionsoftware.com/images/software_by.png'}
+    ]
+    Navigation {props} # sync'd across sessions
   ]
