@@ -1,6 +1,6 @@
 
 # destructure only what's needed
-{header,a,input,form,ol,li,div,button,h1,h2,small,label} = DOM
+{header,a,input,form,ol,li,div,button,h2,small,label} = DOM
 
 require! {
   co
@@ -33,20 +33,23 @@ module.exports = component page-mixins, ({props}) ->
     # todo list
     ol void [
       h2 void name
-      for let k in list
-        li void [
-          Check {props:(props.cursor [k, \completed]), on-change}
-          Input {props:(props.cursor [k, \title])}
-          if show-name then div {class-name:\name} (props.get-in [k, \name])
-          div {
-            title: \Delete
-            class-name: \delete,
-            on-click: ->
-              if confirm 'Permanently delete?'
-                props.delete k
-                if on-delete then on-delete!
-          }, \x
-        ]
+      if list.length
+        for let key in list
+          li {key} [
+            Check {props:(props.cursor [key, \completed]), on-change}
+            Input {props:(props.cursor [key, \title])}
+            div {
+              title: \Delete
+              class-name: \delete,
+              on-click: ->
+                if confirm 'Permanently delete?'
+                  props.delete key
+                  if on-delete then on-delete!
+            }, \x
+          ]
+      else
+        li void [ div void '(empty)' ]
+
       # filters
       div {class-name:\actions} [
         a {on-click:(-> show \all), class-name:(cn \all)} \All
@@ -56,8 +59,8 @@ module.exports = component page-mixins, ({props}) ->
     ]
 
   paths = {
-    title: [\locals, \current-title]
-    is-public: [\session, \is-public]
+    title:        [\locals, \current-title]
+    is-public:    [\session, \is-public]
     public-todo:  [\public, \todos]
     session-todo: [\session, \todos]
   }
@@ -65,10 +68,11 @@ module.exports = component page-mixins, ({props}) ->
   is-public = props.cursor paths.is-public
 
   div class-name: \TodoPage, [
-    #h1 void "#{if name then name else 'My TODO'}"
     header void [
       form {on-submit:-> it.prevent-default!} [
-        Input {ref:\focus, props:(props.cursor paths.title), placeholder:'Add an Item ...'}
+        div {class-name:\clip} [
+          Input {key:\focus, ref:\focus, props:(props.cursor paths.title), placeholder:'Add an Item ...'}
+        ]
         small void [ Check {props:is-public, label:'Public', title:'Seen by Everyone'} ]
         button {on-click:-> # save session or public
           if title = props.get-in paths.title
@@ -84,10 +88,22 @@ module.exports = component page-mixins, ({props}) ->
     ]
 
     # render my session todos
-    todo-list {name:"#{if name then name else 'My TODO'}", prefs:(props.cursor [\session, \todos, \my-visible]), props:(props.cursor paths.session-todo), on-delete:(-> sync-session!), on-change:(-> sync-session!)}
+    todo-list {
+      name:      "#{if name then name else 'My TODO'}"
+      prefs:     props.cursor [\session, \todos, \my-visible]
+      props:     props.cursor paths.session-todo
+      on-delete: (-> sync-session!)
+      on-change: (-> sync-session!)
+    }
 
     # render public todos
-    todo-list {name:\Public, prefs:(props.cursor [\session, \todos, \public-visible]), props:(props.cursor paths.public-todo), +show-name, on-delete:(-> sync-public!), on-change:(-> sync-public!)}
+    todo-list {
+      +show-name
+      name:      \Public,
+      prefs:     props.cursor [\session, \todos, \public-visible]
+      props:     props.cursor paths.public-todo
+      on-delete: (-> sync-public!), on-change:(-> sync-public!)
+    }
 
     Footer {props}
   ]

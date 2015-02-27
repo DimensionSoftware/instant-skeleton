@@ -18,6 +18,12 @@ export initial-state-async =
         window.app.update \path   -> res.body.path
         cb void res.body
 
+export focus-edit =
+  component-did-update: ->
+    e = @getDOMNode!
+      ..focus!
+      ..set-selection-range e.value.length, e.value.length
+
 export focus-input =
   component-did-mount: ->
     if @refs.focus
