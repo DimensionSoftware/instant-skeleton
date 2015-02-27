@@ -2,9 +2,18 @@
 footerHeight = 40px
 lightText    = lighten(textColor, 25%)
 onTop        = 11
+maxWidth     = 1200px
 
 body
-  margin-bottom (footerHeight + grid)
+  &:before
+    content ''
+    position fixed
+    z-index -1
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-image linear-gradient(#ffffff, #f8f8f8)
 
 h1, h2
   font-family Consolas,Monaco,'Andale Mono',monospace
@@ -12,21 +21,35 @@ h1, h2
 h2, h3
   margin-top grid * 2.5
 
+.HomePage
+  max-width 800px
+  margin 30px auto 0 auto
+  h1
+    text-align center
+
 .TodoPage
+  max-width maxWidth
+  margin grid auto 0 auto
+  padding grid * 2
+  position relative
   h1, h2
     margin-left (grid * 7) - 1
   header
     background-color backgroundColor
     position fixed
+    left grid * 4
+    right grid * 4
     z-index onTop + 1
     top 0
-    left 4px
-    right grid * 2
-    box-shadow 0 10px 40px -5px backgroundColor
-    padding grid 0 0 (grid * 5)
-    overflow hidden
-    input[type='text']
-      text-indent grid * 2.5
+    margin grid * 3 auto 0 auto
+    max-width maxWidth
+    padding 0
+    box-shadow 0 0 8px -2px themeColor, 0 10px 40px -5px backgroundColor, 0 -40px 70px 12px backgroundColor
+    .clip
+      overflow hidden
+      input[type='text']
+        max-width maxWidth - 50px
+        text-indent grid * 5.3
 
 .HomePage, .TodoPage
   overflow hidden
@@ -34,7 +57,7 @@ h2, h3
     position relative
     input[type='text']
       width 100%
-      border-bottom-width 1px
+      border-bottom-width 2px
     button
       position absolute
       z-index onTop
@@ -42,16 +65,21 @@ h2, h3
       top 0
     small
       position absolute
-      top grid
-      right 105px
+      bottom grid * 1.5
+      right 115px
       font-size .85em
-      color lightText
+      color darken(themeColor, 30%)
       z-index onTop
   ol
     background backgroundColor
     margin-top grid * 4
     position relative
     overflow hidden
+    borderColor = #eee
+    border 1px solid borderColor
+    border-top 1px solid lighten(borderColor, 10%)
+    border-bottom 2px solid darken(borderColor, 5%)
+    box-shadow 0 2px 20px -1px borderColor
     // two red lines simulating 8x11 paper
     &:after
       position absolute
@@ -68,6 +96,8 @@ h2, h3
       position relative
       display block
       max-width 100%
+      > div
+        margin-left grid * 7
       input[type='checkbox']
         position absolute
         left grid
@@ -79,8 +109,12 @@ h2, h3
         text-indent grid * 6
         border-bottom 1px solid lighten(textColor, 95%)
         width 100%
-        &:hover, &:focus
+        &:hover
           border-bottom 1px solid lighten(themeColor, 75%)
+          ~ .delete
+            display block
+        &:focus
+          border-bottom 1px solid lighten(themeColor, 20%)
           ~ .delete
             display block
       .name
@@ -115,9 +149,9 @@ h2, h3
         border-bottom-color transparent
     .actions
       font-size .8em
-      margin grid 0 0 (grid * 7)
+      margin (grid * 1.5) 0 0 (grid * 7)
       a
-        margin-right grid
+        margin-right grid * 2
         &.active
           text-transform uppercase
 
