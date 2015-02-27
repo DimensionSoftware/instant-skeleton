@@ -170,7 +170,6 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 * [Famo.us+React](https://github.com/Famous/famous-react/issues)
 * Selenium and more tests
 * Coverage working with LiveScript
-* Fork and implement TODO example
 * More beautiful documentation &amp; better literate .ls
 * FIX: whitelist to ipv6 match
 
