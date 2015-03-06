@@ -5,7 +5,6 @@ require! {
   dotenv
   \del
   \open
-  \gulp-jade
   \gulp-livescript
   \gulp-nodemon
   \gulp-shell

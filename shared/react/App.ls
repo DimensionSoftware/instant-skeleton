@@ -1,16 +1,19 @@
 
 require! {
-  immstruct
-  react: {create-element}:React
+  'react/addons': {create-element,{class-set:cx}:addons}:React
   omniscient: component
+  immutable: Immutable
   'react-router-component': {Location,Locations,Pages,Page,NotFound,Link,NavigatableMixin}:Router
   '../routes': {R}:routes
   'react-async': {Mixin}
   \./mixins
 }
-middleware = [Mixin, mixins.initial-state-async, NavigatableMixin] # common Page middleware
+page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input] # common Page mixins
 
-global <<< {R, React, Router, middleware, component} # statics for ease-of-use in Pages
+# statics for ease-of-use DSL in Pages
+global <<< {R, React, cx, Router, page-mixins, component, Immutable}
+global.DOM = React.DOM
+global.Link = Router.Link
 
 
 # Dynamically load components referenced in routes.list.
@@ -19,14 +22,16 @@ pages = routes.list.reduce ((namespace, route) ->
   namespace), {}
 
 
-module.exports = component ({cursor}:props) ->
+module.exports = component (props) ->
   location = (route) ->
     name = route.0
-    Location { key: name, ref: name, path: route.1, handler: pages[name], props:cursor }
+    Location { key:name, ref:name, path:route.1, handler:pages[name], props }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
     .map    (-> location it)
-  Locations { path: cursor.get \path } [
+
+  # render page
+  Locations { path: props.get \path } [
     ...locations-for-routes
   ]

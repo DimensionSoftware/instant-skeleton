@@ -14,9 +14,9 @@ dev  = env is \development
 
 
 module.exports = {
+  +todo-example
   +dimension        # dimension banner
   +static-assets    # disable to run in a separate process
 
-  offline: prod
-  hello-page: !prod # disable in production
+  offline: prod     # enable in production
 }

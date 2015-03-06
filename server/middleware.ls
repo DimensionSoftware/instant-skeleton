@@ -3,10 +3,10 @@ require! {
   co
   fs
   url
+  crypto
   immstruct
   replacestream
   keygrip: Keygrip
-  'geoip-lite': geo
 
   \koa-jade
   \koa-locals
@@ -17,7 +17,6 @@ require! {
 
   \../shared/features
   \../shared/react/App
-  \../shared/helpers
 }
 
 env    = process.env.NODE_ENV or \development
@@ -126,15 +125,10 @@ export rate-limit = (next) ->* # apply our config
   yield (state.rate-fn.bind @) next
 
 
-export geoip = (next) ->*
-  @locals.geo = geo.lookup @ip
-  yield next
-
-
 export etags = (next) ->*
   yield next                  # wait for body
   if @locals.body?to-string!  # ...and digest if exists on way up
-    @etag = helpers.digest that
+    @etag = digest that
 
 
 export webpack = (next) ->*
@@ -147,7 +141,7 @@ export webpack = (next) ->*
 # react
 export react = (next) ->* # set body to react tree
   path  = url.parse (@url or '/') .pathname
-  state = immstruct {path, @locals}
+  state = immstruct {path, @locals, @session}
   @locals.body = React.render-to-string (App state.cursor!)
   yield @render \layout @locals
 
@@ -187,5 +181,8 @@ function primus-koa-session-helper req, name, keys
   k = new Keygrip keys
   if k.index("#name=#n-val", s-match?1) < 0 then return void
   n-val
+
+function digest body
+  crypto.create-hash \md5 .update body .digest \hex
 
 # vim:fdm=indent

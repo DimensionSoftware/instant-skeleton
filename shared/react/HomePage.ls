@@ -1,34 +1,28 @@
 
 # destructure only what's needed
-{DOM:{small,div,button,h1,h2,label,input,code}} = React
-{NavigatableMixin,Link} = Router
+{strong,div,hr,form,button,h1,label,input} = DOM
 
+require! {
+  \./Input
+  \./Footer
+}
 
 # HomePage
-module.exports = component middleware, ({props}) ->
-  key       = \greeting
-  path      = [\locals, key]
-  update    = (val) -> props.update-in path, -> val
-  value     = props.get-in path
-  on-change = (e) ->
-    update e.current-target.value
+module.exports = component page-mixins, ({props}) ->
+  key    = \name
+  path   = [\session, key]
+  value  = props.get-in path
+
+  on-click = ~>
+    sync-session! # sync across sessions
+    @navigate R(\TodoPage)
 
   div class-name: \HomePage,
-    # allow greeting to be set
-    h1 void value
-    label void \Greeting: [
-      input {key, value, on-change}
+    # allow name to be set
+    h1 void if value then "Greetings #value!" else 'Hello! What\'s Your Name?'
+    hr void
+    form {on-submit:-> false} [
+      Input {props:(props.cursor path), ref:\focus, placeholder:'Your Name'}
+      button {title:'Open multiple browsers to test', on-click} \Save
     ]
-
-    # sync greeting across sessions
-    button {title:'Open multiple browsers to test', on-click:(-> sync-session key, props.get-in path)} 'Sync to Session'
-
-    # navigation sync'd across sessions
-    div void "Last visited #{props.get-in [\session, \lastPage] or ''}"
-    div void
-      Link {href:R(\HelloPage)}, 'Go to HelloPage'
-
-    # print entire app structure
-    h2 void 'React App Structure:'
-    small void
-      code void (JSON.stringify props.toJS!)
+    Footer {props}

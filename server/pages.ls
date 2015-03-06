@@ -14,16 +14,15 @@ module.exports = koa-router app
 
 # <PAGES>
 app.get R(\HomePage), (next) ->*
-  @locals.greeting   = 'Hello World!' # default
   @session.last-page = @session.on-page
   @session.on-page   = \HomePage
   yield mw.react-or-json
   yield next
 
-if features.hello-page
-  app.get R(\HelloPage), mw.geoip, (next) ->*
+if features.todo-example
+  app.get R(\TodoPage), (next) ->*
     @session.last-page = @session.on-page
-    @session.on-page   = \HelloPage
+    @session.on-page   = \TodoPage
     yield mw.react-or-json
     yield next
 # </PAGES>

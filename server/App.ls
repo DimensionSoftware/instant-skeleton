@@ -14,6 +14,7 @@ require! {
   'koa-helmet': helmet
 
   'level-sublevel'
+  \level-live-stream
   'level-party': level
 
   'koa-generic-session': koa-session
@@ -21,6 +22,7 @@ require! {
   primus: Primus
   \primus-emitter
   \primus-multiplex
+  \primus-resource
 
   \./pages
   \./resources
@@ -33,8 +35,9 @@ pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
 prod = env is \production
 
-db      = level-sublevel(level './shared/db' {encoding:\json})
+db      = level-sublevel(level './shared/db' {value-encoding:\json})
 sdb     = db.sublevel \session
+pdb     = db.sublevel \public
 store   = koa-level {db:sdb}
 session = koa-session {store}
 
@@ -71,10 +74,14 @@ module.exports =
         ..before (middleware.primus-koa-session store, @app.keys)
         ..use \multiplex primus-multiplex
         ..use \emitter primus-emitter
+        ..use \resource primus-resource
         ..remove \primus.js
 
       # init realtime resources
       resources.init sdb, @primus
+      # init live streams
+      live-stream @primus, pdb, \public
+      live-stream @primus, sdb, \session, (key, spark) -> key is spark.request.key
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
@@ -86,3 +93,27 @@ module.exports =
       <~ @primus.destroy
       <~ @server.close
       db.close cb
+
+
+function live-stream primus, db, name, key-compare-fn
+  level-live-stream.install db
+  channel = primus.channel name
+    ..on \connection (spark) ->
+      # -> send live updates to client
+      send = ->
+        now = new Date!get-time!
+        it.updated = now
+        spark.write it
+      s-stream = db.create-live-stream!
+        ..pipe channel # pipe updates
+        ..on \data (data) ->
+          v = if typeof! data.value is \Object then data.value else JSON.parse data.value # FIXME huh?
+          if key-compare-fn and key-compare-fn data.key, spark
+            send v
+          else
+            send v
+
+      # <- save live updates from client
+      spark.on \data (data) ->
+        # TODO check permissions from request.key (eg. deleting from public)
+        db.put name, JSON.stringify data # FIXME huh?

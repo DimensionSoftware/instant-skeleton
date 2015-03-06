@@ -1,0 +1,49 @@
+
+body
+  font-family 'Helvetica Neue', 'Helvetica', 'Arial'
+  line-height 1.5em
+  padding 1em
+  color textColor
+  background bodyColor
+  font-size 1.2em
+  opacity 0
+  &.loaded
+    opacity 1
+    transition opacity .15s ease-in
+
+a
+  position relative
+  cursor pointer
+  display inline-block
+  color themeColor
+  text-decoration none
+  transition border-bottom .01s ease-in
+  border-bottom 1px solid transparent
+  &:hover, &:visited
+    color darken(themeColor, 20%)
+  &:hover
+    transform scale(1.02)
+    transition none
+    border-bottom 1px solid themeColor
+
+h1, h2, h3, h4, h5, h6
+  margin-top (grid/3)
+  margin-bottom (grid/4)
+  line-height 1.1em
+  text-transform capitalize
+h1
+  font-size 2.3em
+h2
+  font-size 1.7em
+h3
+  font-size 1.2em
+h4
+  font-size 1em
+h4
+  font-size .9em
+h5
+  font-size .7em
+
+code
+  line-height 1.1em
+  font-size .9em

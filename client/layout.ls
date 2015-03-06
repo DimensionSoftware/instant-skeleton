@@ -6,7 +6,10 @@ require! {
   \../shared/react/App
   \../shared/features
   \./stylus/master
+  \./resources
 }
+
+body = document.get-elements-by-tag-name \body .0 # cache
 
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
@@ -25,9 +28,12 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
 
 # main
 # ----
-# b00t react!
 init-react!  # expose app cursor
 init-primus! # setup realtime
+
+# setup realtime streams w/ leveldb
+init-live-stream \public
+init-live-stream \session -> add-class body, \loaded # trigger ui loaded after session applies
 
 
 function init-primus
@@ -52,27 +58,29 @@ function init-primus
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
 
-  # stream session updates from server
-  session = primus.channel \session
+  resources primus # init primus-resources
+
+function init-live-stream name, cb=(->)
+  # create realtime "live" data streams w/ leveldb
+  ch = window.primus.channel name
+    ..once \data cb # ready
     ..on \data (data) ->
+      # stream updates from server
       cur = if typeof! data is \Object then data else JSON.parse data # force Object
-      if cur then app.update \session, -> Immutable.fromJS cur
+      if cur then app.update name, -> Immutable.fromJS cur
     ..on \open ->
-      window.sync-session = (key, value) ->
+      # fn to stream updates to server
+      window["sync#{capitalize name}"] = ->
         app = window.app
-        cur = if typeof! key is \Object # merge key as obj
-          app.merge-deep key
-        else
-          app.update-in [\session, key], -> value
-        owned = cur.update-in [\session, \spark-id], -> window.spark-id # add update's owner
-        session.write (owned.get \session .toJS!)
-    ..on \close -> # cleanup
-      delete window.sync-session
+        owned = app.update-in [name, \spark-id], -> window.spark-id # add update's owner
+        ch.write (owned.get name .toJS!)
+    ..on \close ->
+      # cleanup
+      delete window["#{name}Sync"]
 
 function init-react
   [locals, path] = [window.locals, window.location.pathname]
-  state = immstruct {path, locals, session:{updated:0}}
-  body  = document.get-elements-by-tag-name \body .0
+  state = immstruct {path, locals, public:{}, session:{}} # default app state
 
   # update on animation frames (avoids browser janks)
   render = (cur, old) ->
@@ -82,6 +90,12 @@ function init-react
 
   state.cursor! # expose immutable data structure
 
+function capitalize s
+  (s.char-at 0 .to-upper-case!) + s.slice 1
+
+function add-class elem, class-name
+  if body.class-name.index-of class-name isnt -1
+    body.class-name += " #class-name"
 
 if features.dimension # front!
   console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"

@@ -1,0 +1,179 @@
+
+footerHeight = 40px
+lightText    = lighten(textColor, 25%)
+onTop        = 11
+maxWidth     = 1200px
+
+body
+  &:before
+    content ''
+    position fixed
+    z-index -1
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-image linear-gradient(#ffffff, #f8f8f8)
+
+h1, h2
+  font-family Consolas,Monaco,'Andale Mono',monospace
+
+h2, h3
+  margin-top grid * 2.5
+
+.HomePage
+  max-width 800px
+  margin 30px auto 0 auto
+  h1
+    text-align center
+
+.TodoPage
+  max-width maxWidth
+  margin grid auto 0 auto
+  padding grid * 2
+  position relative
+  h1, h2
+    margin-left (grid * 7) - 1
+  header
+    background-color backgroundColor
+    position fixed
+    left grid * 4
+    right grid * 4
+    z-index onTop + 1
+    top 0
+    margin grid * 3 auto 0 auto
+    max-width maxWidth
+    padding 0
+    box-shadow 0 0 8px -2px themeColor, 0 10px 40px -5px backgroundColor, 0 -40px 70px 12px backgroundColor
+    .clip
+      overflow hidden
+      input[type='text']
+        max-width maxWidth - 50px
+        text-indent grid * 5.3
+
+.HomePage, .TodoPage
+  overflow hidden
+  form
+    position relative
+    input[type='text']
+      width 100%
+      border-bottom-width 2px
+    button
+      position absolute
+      z-index onTop
+      right 0
+      top 0
+    small
+      position absolute
+      bottom grid * 1.5
+      right 115px
+      font-size .85em
+      color darken(themeColor, 30%)
+      z-index onTop
+  ol
+    background backgroundColor
+    margin-top grid * 4
+    position relative
+    overflow hidden
+    borderColor = #eee
+    border 1px solid borderColor
+    border-top 1px solid lighten(borderColor, 10%)
+    border-bottom 2px solid darken(borderColor, 5%)
+    box-shadow 0 2px 20px -1px borderColor
+    // two red lines simulating 8x11 paper
+    &:after
+      position absolute
+      z-index onTop
+      opacity .25
+      top 0
+      left grid * 3.5
+      content ''
+      width 3px
+      height 100%
+      border-left 1px solid red
+      border-right 1px solid red
+    li
+      position relative
+      display block
+      max-width 100%
+      > div
+        margin-left grid * 7
+      input[type='checkbox']
+        position absolute
+        left grid
+        top grid
+        z-index onTop
+      input[type='text']
+        padding 5px 9px
+        font-size 1em
+        text-indent grid * 6
+        border-bottom 1px solid lighten(textColor, 95%)
+        width 100%
+        &:hover
+          border-bottom 1px solid lighten(themeColor, 75%)
+          ~ .delete
+            display block
+        &:focus
+          border-bottom 1px solid lighten(themeColor, 20%)
+          ~ .delete
+            display block
+      .name
+        position absolute
+        height 2em
+        font-size .7em
+        font-weight 200
+        color lighten(textColor, 30%)
+        text-transform capitalize
+        z-index onTop
+        top 2px
+        right grid * 4
+        max-width grid * 6
+        overflow hidden
+        text-overflow ellipsis
+      .delete
+        position absolute
+        display none
+        cursor pointer
+        right grid
+        font-weight bold
+        top 0
+        color themeColor
+        z-index onTop
+        transform scale(1)
+        &:hover
+          display block
+          transform scale(1.4)
+      // checked "completed" style
+      input:checked + input
+        text-decoration line-through
+        border-bottom-color transparent
+    .actions
+      font-size .8em
+      margin (grid * 1.5) 0 0 (grid * 7)
+      a
+        margin-right grid * 2
+        &.active
+          text-transform uppercase
+
+  footer
+    text-align center
+    margin-top grid * 6
+    > a
+      border none
+
+    .navigation
+      position fixed
+      z-index onTop
+      bottom grid
+      right grid * 1.5
+      text-align right
+      padding 0 5px
+      border 1px solid darken(bodyColor, 5%)
+      color lighten(textColor, 50%)
+      background rgba(bodyColor, .85)
+      border-radius 3px
+      font-size .85em
+    .last-visited
+      font-size .9em
+      a
+        font-size @font-size

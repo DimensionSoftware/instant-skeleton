@@ -1,7 +1,8 @@
 
 export list =
-  * [ \HomePage,    '/' ]      # loads shared/react/HomePage.ls
-  * [ \HelloPage,   '/hello' ]
+  # loads shared/react/HomePage.ls
+  * [ \HomePage,  '/' ]
+  * [ \TodoPage,  '/todo' ]
 
   # more route examples:
   # * [ \PromoPage,            '/clients/:Client_id/promos' ]

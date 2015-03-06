@@ -24,7 +24,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
 React.JS into a single, routable concept that makes your on-screen productivity incredible:
 
->  | ***Page*** | &nbsp; *declarative, isomorphic bits of React + Omniscient + Immutable.JS*
+>  | ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [Immutable.JS](https://github.com/facebook/immutable-js)*
 
 1. Add a Page Route
 
@@ -53,18 +53,15 @@ SERVER
     * **nodemon** --  https://github.com/JacksonGariety/gulp-nodemon
     * **webpack** -- https://github.com/shama/gulp-webpack
 * **Koa** -- http://koajs.com
-    * **geoip lite** -- https://github.com/bluesmoon/node-geoip
     * **helmet** -- https://github.com/venables/koa-helmet
     * **level sessions** -- https://github.com/purposeindustries/koa-level
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
-* **PM2** -- https://github.com/Unitech/pm2
 * **DotEnv** -- https://github.com/motdotla/dotenv
 
 SHARED
 
 * **LiveScript** -- https://livescript.net
-    * **prelude.ls** -- http://preludels.com
 * **React** -- http://facebook.github.io/react/docs/getting-started.html
     * **react router component** -- https://github.com/STRML/react-router-component
     * **immutable.js** -- https://github.com/facebook/immutable-js
@@ -72,7 +69,9 @@ SHARED
     * **hot-loader** -- http://gaearon.github.io/react-hot-loader/
 * **Primus** -- https://github.com/primus/primus
     * **engine.io** -- https://github.com/Automattic/engine.io
+    * **emitter** -- https://github.com/cayasso/primus-emitter
     * **multiplex** -- https://github.com/cayasso/primus-multiplex
+    * **resource** -- https://github.com/cayasso/primus-resource
 * **LevelDB** -- https://github.com/google/leveldb
     * **party** -- https://github.com/substack/level-party
     * **sublevel** -- https://github.com/dominictarr/level-sublevel
@@ -119,17 +118,16 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        + Undo &amp; Redo for [FREE](https://github.com/omniscientjs/immstruct)
        + Source maps
 
-4. How can I enable and disable features?
-
-       + Zero impact for unused features
+4. How can I enable &amp; disable features with zero impact for those unused?
 
             $ vim shared/features.ls
 
 5. How can I add my own data store?
 
-       + Simply require &amp; hook it into your Page handler:
+       + Simply require &amp; hook it into your Page handler or Resource:
 
             $ vim server/pages.ls
+            $ vim server/resources.ls
 
 6. How easy is session management?
 
@@ -140,29 +138,40 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
             $ vim shared/react/HomePage.ls
 
 
+7. What is "develop.com" and why am I seeing a blank page?
+
+       + Prefer to specify your own domains for local development?  Simply update the package.json; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
+
+            $ echo "127.0.0.1 develop.com cache2.develop.com cache3.develop.com cache4.develop.com" >> /etc/hosts
+
+8. What about cacheability?
+
+       + Since etags &amp; proper cache-control headers are automagically set on every Page, and sessions stream in
+         real-time on page load, all pages are completely cacheable!  The idea is to persist personalization in user sessions.
+
+9. Does this work with io.js?
+
+       Absolutely!
+
+
+
 ## Contributors &amp; Idea Factories
 
 [**Keith Hoerling**](https://github.com/khoerling)
-
 [**John Beppu**](https://github.com/beppu)
-
 [**Matt Elder**](https://github.com/dreamcodez)
-
 [**Dave Seleno**](https://github.com/onelesd)
-
 [**Mark Huge**](https://github.com/markhuge)
-
 
 [According to GitHub](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors) . [Become a Contributor](https://github.com/DimensionSoftware/instant-skeleton/fork) .  [Pull request friendly!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
 ## TODO
 
 * [Famo.us+React](https://github.com/Famous/famous-react/issues)
-* [Realtime Resources](https://github.com/cayasso/primus-resource)
 * Selenium and more tests
 * Coverage working with LiveScript
-* Fork and implement TODO example
 * More beautiful documentation &amp; better literate .ls
+* FIX: whitelist to ipv6 match
 
 &nbsp;
 
