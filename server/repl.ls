@@ -11,7 +11,6 @@ global.cl = console.log
 global.cw = console.warn
 global.React = require \react/addons
 global.shared = require '../shared/helpers'
-global.debounce = __.debounce
 global.events = new EventEmitter
 global.App = App
 
