@@ -10,7 +10,6 @@ global <<< require \prelude-ls
 global.cl = console.log
 global.cw = console.warn
 global.React = require \react/addons
-global.shared = require '../shared/helpers'
 global.events = new EventEmitter
 global.App = App
 
