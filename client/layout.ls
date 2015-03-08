@@ -25,6 +25,14 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
     <- Notification.request-permission
     show!
 
+window.class = (elem, class-name, action=\add) -> # add & remove class names
+  if action is \add # add
+    if (body.class-name.index-of class-name) is -1
+      body.class-name += " #class-name"
+  else # remove
+    if (body.class-name.index-of class-name) > -1
+      body.class-name = body.class-name.replace class-name, ''
+
 
 # main
 # ----
@@ -33,8 +41,7 @@ init-primus! # setup realtime
 
 # setup realtime streams w/ leveldb
 init-live-stream \public
-init-live-stream \session -> add-class body, \loaded # trigger ui loaded after session applies
-
+init-live-stream \session -> window.class body, \loaded # trigger ui loaded after session applies
 
 function init-primus
   primus = window.primus = Primus.connect!
@@ -83,7 +90,7 @@ function init-react
   state = immstruct {path, locals, public:{}, session:{}} # default app state
 
   # update on animation frames (avoids browser janks)
-  render = (cur, old) ->
+  render = ->
     React.render App(window.app = state.cursor!), body # render app to body
   state.on \next-animation-frame render
   render!
@@ -92,10 +99,6 @@ function init-react
 
 function capitalize s
   (s.char-at 0 .to-upper-case!) + s.slice 1
-
-function add-class elem, class-name
-  if body.class-name.index-of class-name isnt -1
-    body.class-name += " #class-name"
 
 if features.dimension # front!
   console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"
