@@ -30,3 +30,12 @@ export focus-input =
       that.getDOMNode!
         ..focus!
         ..select!
+
+scrolled = ->
+  body = document.get-elements-by-tag-name \body .0 # cache
+  window.class body, \scrolled (if window.page-y-offset > 3px then \add else \remove)
+export scroll =
+  component-did-mount: ->
+    window.add-event-listener \scroll scrolled, false
+  component-will-unmount: ->
+    window.remove-event-listener \scroll, scrolled, false
