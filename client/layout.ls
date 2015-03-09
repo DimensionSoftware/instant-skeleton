@@ -42,7 +42,7 @@ init-react!  # expose app cursor
 init-primus! # setup realtime
 
 # setup realtime streams w/ leveldb
-init-live-stream \public
+init-live-stream \everyone
 init-live-stream \session -> window.class body, \loaded # trigger ui loaded after session applies
 
 function init-primus
@@ -93,7 +93,7 @@ function init-react
     path,
     locals,
     session:{}
-    public:{},
+    everyone:{},
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
