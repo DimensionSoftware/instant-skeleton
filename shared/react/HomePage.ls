@@ -8,10 +8,8 @@ require! {
 }
 
 # HomePage
-module.exports = component page-mixins, ({props}) ->
-  key    = \name
-  path   = [\session, key]
-  value  = props.get-in path
+module.exports = component \HomePage page-mixins, ({{path,locals,session,everyone}:props}) ->
+  value = session.get \name
 
   on-click = ~>
     sync-session! # sync across sessions
@@ -22,7 +20,7 @@ module.exports = component page-mixins, ({props}) ->
     h1 void if value then "Greetings #value!" else 'Hello! What\'s Your Name?'
     hr void
     form {on-submit:-> false} [
-      Input {props:(props.cursor path), ref:\focus, placeholder:'Your Name'}
+      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name'}
       button {title:'Open multiple browsers to test', on-click} \Save
     ]
-    Footer {props}
+    Footer {path, last-page:(session.get \lastPage)}

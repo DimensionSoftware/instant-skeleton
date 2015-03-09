@@ -11,6 +11,8 @@ require! {
 
 body = document.get-elements-by-tag-name \body .0 # cache
 
+# statics
+# -------
 window.storage = {} <<< # to better use local storage
   del: (k)    -> local-storage.remove-item k
   get: (k)    -> try local-storage.get-item k |> JSON.parse
@@ -87,15 +89,18 @@ function init-live-stream name, cb=(->)
 
 function init-react
   [locals, path] = [window.locals, window.location.pathname]
-  state = immstruct {path, locals, public:{}, session:{}} # default app state
-
-  # update on animation frames (avoids browser janks)
-  render = ->
-    React.render App(window.app = state.cursor!), body # render app to body
+  state = immstruct { # default
+    path,
+    locals,
+    session:{}
+    public:{},
+  }
+  render = -> # update on animation frames (avoids browser janks)
+    window.app = cur = state.cursor!
+    React.render App(cur), body # render app to body
+    cur
   state.on \next-animation-frame render
   render!
-
-  state.cursor! # expose immutable data structure
 
 function capitalize s
   (s.char-at 0 .to-upper-case!) + s.slice 1
