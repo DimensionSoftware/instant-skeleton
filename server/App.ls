@@ -37,7 +37,7 @@ prod = env is \production
 
 db      = level-sublevel(level './shared/db' {value-encoding:\json})
 sdb     = db.sublevel \session
-pdb     = db.sublevel \public
+edb     = db.sublevel \everyone
 store   = koa-level {db:sdb}
 session = koa-session {store}
 
@@ -80,8 +80,8 @@ module.exports =
       # init realtime resources
       resources.init sdb, @primus
       # init live streams
-      live-stream @primus, pdb, \public
       live-stream @primus, sdb, \session, (key, spark) -> key is spark.request.key
+      live-stream @primus, edb, \everyone
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb

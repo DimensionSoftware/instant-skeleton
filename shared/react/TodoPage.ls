@@ -13,7 +13,7 @@ require! {
 
 # TodoPage
 module.exports = component \TodoPage page-mixins ++ mixins.scroll, ({{path,locals,session,everyone}:props}) ->
-  [name, is-public] = [(session.get \name), (session.cursor \is-public)]
+  [name, is-everyone] = [(session.get \name), (session.cursor \is-everyone)]
 
   div class-name: \TodoPage, [
     header void [
@@ -21,14 +21,14 @@ module.exports = component \TodoPage page-mixins ++ mixins.scroll, ({{path,local
         div {class-name:\clip} [
           Input (locals.cursor \current-title), {key:\focus, ref:\focus, placeholder:'Add an Item ...'}
         ]
-        small void [ Check is-public, {label:'Public', title:'Seen by Everyone'} ]
-        button {on-click:-> # save session or public
+        small void [ Check is-everyone, {label:'Public', title:'Seen by Everyone'} ]
+        button {on-click:-> # save session or everyone
           if title = locals.get \current-title
             date = new Date!get-time!
             todo = {title, -completed, name, date}
-            if is-public.deref!
+            if is-everyone.deref!
               everyone.cursor \todos .set uuid.v4!, Immutable.fromJS todo # add
-              sync-public!
+              sync-everyone!
             else
               session.cursor \todos .set uuid.v4!, Immutable.fromJS todo # add
               sync-session!
@@ -47,14 +47,14 @@ module.exports = component \TodoPage page-mixins ++ mixins.scroll, ({{path,local
       on-change: (-> sync-session!)
     }
 
-    # render public todos
+    # render everyone's todos
     TodoList { # props
       todos: (everyone.cursor \todos),
       visible: (everyone.cursor \visible)
     }, { # statics
       +show-name
       name:      \Public,
-      on-delete: (-> sync-public!), on-change:(-> sync-public!)
+      on-delete: (-> sync-everyone!), on-change:(-> sync-everyone!)
     }
 
     Footer {path, last-page:(session.get \lastPage)}
