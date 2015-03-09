@@ -1,6 +1,6 @@
 
 # Checkbox
-module.exports = component ({props,ref,placeholder,label,title,class-name,on-change}) ->
+module.exports = component \Check (props, {ref,placeholder,label,title,class-name,on-change}) ->
   do-change = ->
     props.update -> not props.deref!
     if on-change then on-change!
