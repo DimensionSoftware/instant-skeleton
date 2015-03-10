@@ -23,8 +23,8 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
       | \completed => c
   save-edit = (e, key) ->
     todos.update-in [key, \title], ->
-      e.current-target.value
       on-change!
+      e.current-target.value
 
   # todo list
   ol void [
