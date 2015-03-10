@@ -17,12 +17,12 @@ module.exports = component \TodoPage page-mixins, ({{path,locals,session,everyon
 
   div class-name: \TodoPage, [
     header void [
-      form {on-submit:-> it.prevent-default!} [
+      form {on-submit:~> it.prevent-default!} [
         div {class-name:\clip} [
           Input (locals.cursor \current-title), {key:\focus, ref:\focus, placeholder:'Add an Item ...'}
         ]
         small void [ Check is-everyone, {label:'Public', title:'Seen by Everyone'} ]
-        button {on-click:-> # save session or everyone
+        button {on-click:~> # save session or everyone
           if title = locals.get \current-title
             date = new Date!get-time!
             todo = {title, -completed, name, date}
