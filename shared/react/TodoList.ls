@@ -21,6 +21,10 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
       | \all       => true
       | \active    => !c
       | \completed => c
+  save-edit = (e, key) ->
+    todos.update-in [key, \title], ->
+      e.current-target.value
+      on-change!
 
   # todo list
   ol void [
@@ -33,7 +37,13 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
         [key, value] = [that.0, that.1]
         li {key} [
           Check (todos.cursor [key, \completed]), {on-change}
-          Input (todos.cursor [key, \title])
+          Input (todos.cursor [key, \title]), {
+            # save edits
+            on-blur:->
+              save-edit e, key
+            on-key-up: (e) ->
+              if e.key-code is 13 then save-edit e, key
+          }
           div {
             title: \Delete
             class-name: \delete,
