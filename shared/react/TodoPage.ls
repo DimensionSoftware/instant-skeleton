@@ -12,7 +12,7 @@ require! {
 }
 
 # TodoPage
-module.exports = component \TodoPage page-mixins ++ mixins.scroll, ({{path,locals,session,everyone}:props}) ->
+module.exports = component \TodoPage page-mixins, ({{path,locals,session,everyone}:props}) ->
   [name, is-everyone] = [(session.get \name), (session.cursor \is-everyone)]
 
   div class-name: \TodoPage, [

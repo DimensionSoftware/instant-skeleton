@@ -8,7 +8,7 @@ require! {
   'react-async': {Mixin}
   \./mixins
 }
-page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input] # common Page mixins
+page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroll] # common Page mixins
 
 # statics for ease-of-use DSL in Pages
 global <<< {R, React, cx, Router, page-mixins, component, Immutable}

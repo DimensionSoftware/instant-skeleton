@@ -17,6 +17,7 @@ export initial-state-async =
         window.app.update \locals -> immutable.fromJS res.body.locals
         window.app.update \path   -> res.body.path
         cb void res.body
+        window.scroll-to 0 0 # reset scroll position
         scrolled!
 
 export focus-edit =
@@ -32,11 +33,12 @@ export focus-input =
         ..focus!
         ..select!
 
-scrolled = ->
-  body = document.get-elements-by-tag-name \body .0 # cache
-  window.class body, \scrolled (if window.page-y-offset > 3px then \add else \remove)
 export scroll =
   component-did-mount: ->
     window.add-event-listener \scroll scrolled, false
   component-will-unmount: ->
     window.remove-event-listener \scroll, scrolled, false
+
+function scrolled
+  body = document.get-elements-by-tag-name \body .0 # cache
+  window.class body, \scrolled (if window.page-y-offset > 3px then \add else \remove)

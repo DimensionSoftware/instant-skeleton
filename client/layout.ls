@@ -33,7 +33,7 @@ window.class = (elem, class-name, action=\add) -> # add & remove class names
       body.class-name += " #class-name"
   else # remove
     if (body.class-name.index-of class-name) > -1
-      body.class-name = body.class-name.replace class-name, ''
+      body.class-name = body.class-name.replace " #class-name", ''
 
 
 # main
