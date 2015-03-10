@@ -17,6 +17,7 @@ export initial-state-async =
         window.app.update \locals -> immutable.fromJS res.body.locals
         window.app.update \path   -> res.body.path
         cb void res.body
+        scrolled!
 
 export focus-edit =
   component-did-update: ->
