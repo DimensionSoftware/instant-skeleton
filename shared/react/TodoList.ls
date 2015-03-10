@@ -34,25 +34,23 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
       # https://github.com/gkz/LiveScript/issues/667
       h = list.entries!
       while h.next!value
-        [key, value] = [that.0, that.1]
-        li {key} [
-          Check (todos.cursor [key, \completed]), {on-change}
-          Input (todos.cursor [key, \title]), {
-            # save edits
-            on-blur:->
-              save-edit e, key
-            on-key-up: (e) ->
-              if e.key-code is 13 then save-edit e, key
-          }
-          div {
-            title: \Delete
-            class-name: \delete,
-            on-click: ->
-              if confirm 'Permanently delete?'
-                todos.delete key
-                if on-delete then on-delete!
-          }, \x
-        ]
+        let key = that.0
+          li {key} [
+            Check (todos.cursor [key, \completed]), {on-change}
+            Input (todos.cursor [key, \title]), { # save edits
+              on-blur:   -> save-edit it, key
+              on-key-up: -> if it.key-code is 13 then save-edit it, key
+            }
+            div {
+              title: \Delete
+              class-name: \delete,
+              on-click: ->
+                console.log key
+                if confirm 'Permanently delete?'
+                  todos.delete key
+                  if on-delete then on-delete!
+            }, \x
+          ]
     else
       li void [ div void '(empty)' ]
 
