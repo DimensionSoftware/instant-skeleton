@@ -2,7 +2,6 @@
 # Checkbox
 module.exports = component \Check (props, {label,title,on-change}:statics) ->
   do-change = ->
-    console.log \here
     props.update -> not props.deref!
     if on-change then on-change!
 
