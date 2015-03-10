@@ -10,6 +10,7 @@ module.exports = component \Input (props, s={}) ->
   DOM.input {
     auto-focus
     on-change
+    on-focus: -> if auto-focus then it.current-target.select! # select, too!
     key:         s.key
     ref:         s.ref
     value:       props.deref!
