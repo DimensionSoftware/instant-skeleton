@@ -1,8 +1,14 @@
 
+@import 'animations.styl'
+
+
+// theme variables
 footerHeight = 40px
 lightText    = lighten(textColor, 25%)
 onTop        = 11
 maxWidth     = 1200px
+
+bounce = cubic-bezier(0,1.72,0,.75)
 
 body
   &:before
@@ -13,13 +19,36 @@ body
     right 0
     bottom 0
     left 0
-    background-image linear-gradient(#ffffff, #f8f8f8)
+    background-image linear-gradient(#ffffff 80%, #eeeeee)
+  &.scrolled
+    &:after
+      content ''
+      position fixed
+      top 0
+      right 0
+      left 0
+      box-shadow 0 0 15px 10px #fff
+    header
+      transform translateY(-(grid * 2.5))
+      transition none
+    form
+      .clip
+        input[type='text']
+          opacity .1!important
+          &:hover, &:focus
+            opacity 1!important
+      &:hover
+        input[type='text']
+          opacity 1!important
 
 hr
-  border-top-color rgba(textColor, .02)
+  border-top-color rgba(textColor, .015)
+  margin grid * 3 auto
+  width 40%
 
 h1, h2
   font-family Consolas,Monaco,'Andale Mono',monospace
+  letter-spacing -1px
 
 h2, h3
   margin-top grid * 2.5
@@ -33,26 +62,36 @@ h2, h3
 .TodoPage
   max-width maxWidth
   margin grid auto 0 auto
-  padding grid * 2
+  padding grid * 4
   position relative
   h1, h2
+    position relative
+    z-index onTop
     margin-left (grid * 7) - 1
   header
-    background-color backgroundColor
     position fixed
     left grid * 4
     right grid * 4
     z-index onTop + 1
     top 0
-    margin grid * 3 auto 0 auto
+    margin grid * 2 auto 0 auto
     max-width maxWidth
-    padding 0
-    box-shadow 0 0 8px -2px themeColor, 0 10px 40px -5px backgroundColor, 0 -40px 70px 12px backgroundColor
-    .clip
-      overflow hidden
-      input[type='text']
-        max-width maxWidth - 50px
-        text-indent grid * 5.3
+    transition transform .2s ease-out
+    form
+      margin 0 0 0 85px
+      .clip
+        overflow hidden
+        input[type='text']
+          opacity 1
+          height 29px
+          border-top none
+          max-width maxWidth - 50px
+          text-indent grid
+          border-bottom-color darken(themeColor, 15%)
+          transition opacity .15s ease-in
+          &:hover, &:focus
+            border-bottom-color themeColor
+            transition none
 
 .HomePage, .TodoPage
   overflow hidden
@@ -82,7 +121,7 @@ h2, h3
     border 1px solid borderColor
     border-top 1px solid lighten(borderColor, 10%)
     border-bottom 2px solid darken(borderColor, 5%)
-    box-shadow 0 2px 20px -1px borderColor
+    box-shadow 0 2px 20px -1px borderColor, 0 30px 37px -35px darken(borderColor, 5%)
     // two red lines simulating 8x11 paper
     &:after
       position absolute
@@ -99,6 +138,7 @@ h2, h3
       position relative
       display block
       max-width 100%
+      animation openSpace 250ms bounce forwards, fallInX 250ms bounce both
       > div
         margin-left grid * 7
       input[type='checkbox']
@@ -137,15 +177,18 @@ h2, h3
         position absolute
         display none
         cursor pointer
-        right grid
+        right grid * 3
         font-weight bold
+        font-size 1.3em
         top 0
         color themeColor
         z-index onTop
         transform scale(1)
+        transition all .15s ease-out
         &:hover
           display block
           transform scale(1.4)
+          transition none
       // checked "completed" style
       input:checked + input
         text-decoration line-through
@@ -170,10 +213,10 @@ h2, h3
       bottom grid
       right grid * 1.5
       text-align right
-      padding 0 5px
+      padding 2px 15px
       border 1px solid darken(bodyColor, 5%)
       color lighten(textColor, 50%)
-      background rgba(bodyColor, .85)
+      background rgba(#fff, .85)
       border-radius 3px
       font-size .85em
     .last-visited
