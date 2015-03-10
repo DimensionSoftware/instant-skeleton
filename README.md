@@ -24,7 +24,7 @@ Best _opinionated_ realtime framework to lift heavy functionality lightening qui
 Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
 React.JS into a single, routable concept that makes your on-screen productivity incredible:
 
->  | ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [Immutable.JS](https://github.com/facebook/immutable-js)*
+>  ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [Immutable.JS](https://github.com/facebook/immutable-js)*
 
 1. Add a Page Route
 
@@ -98,79 +98,86 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 ## FAQ
 
-1. How is this different from Meteor.JS?
+1. What is "develop.com" and why am I seeing a blank page?
+
+       Prefer to specify your own domains for local development?  Simply update the package.json; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
+
+            ```sh
+            echo "127.0.0.1 develop.com cache2.develop.com cache3.develop.com cache4.develop.com" >> /etc/hosts
+            ```
+
+2. How is this different from Meteor.JS?
 
        + We &hearts; [NPM](http://npmjs.org).
        + Instant Skeleton is tiny, fast &amp; secure.
        + We are streaming functional [LiveScript](http://livescript.net): write less code with fewer bugs.
        + Isomorphic Web Components leveraging [React](http://facebook.github.io/react/docs/getting-started.html) for data-binding.
 
-2. How easy is this to debug &amp; reason about?
+3. How easy is this to debug &amp; reason about?
 
        + Variables are **const**ants
        + [Immutable.JS](https://github.com/facebook/immutable-js) persistent data structures
        + [ES6](http://tc39wiki.calculist.org/es6/), useful stack traces &amp; source maps
        + Check out our [perf](https://github.com/DimensionSoftware/instant-skeleton/tree/perf) branch for runtime profiling
 
-3. How rapid is development?
+4. How rapid is development?
 
        + [Instant "hot" live loads](https://www.youtube.com/watch?v=pw4fKkyPPg8)
        + Undo &amp; Redo for [FREE](https://github.com/omniscientjs/immstruct)
        + Source maps
 
-4. How can I enable &amp; disable features with zero impact for those unused?
+5. How can I enable &amp; disable features with zero impact for those unused?
 
-            $ vim shared/features.ls
+       We've implemented the famous TODO example for you to demonstrate glueing functionality together.  Don't need it anymore?  Disable it--simple:
 
-5. How can I add my own data store?
+       ```sh
+       vim shared/features.ls
+       ```
 
-       + Simply require &amp; hook it into your Page handler or Resource:
+6. How can I add my own data store?
 
-            $ vim server/pages.ls
-            $ vim server/resources.ls
+       Simply require &amp; hook it into your Page handler or Resource:
 
-6. How easy is session management?
+       ```sh
+       vim server/pages.ls
+       vim server/resources.ls
+       ```
 
-       + Session updates are streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
+7. How easy is session management?
 
-            $ vim server/pages.ls
-            $ vim client/layout.ls
-            $ vim shared/react/HomePage.ls
+       Session updates are streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
 
-
-7. What is "develop.com" and why am I seeing a blank page?
-
-       + Prefer to specify your own domains for local development?  Simply update the package.json; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
-
-            $ echo "127.0.0.1 develop.com cache2.develop.com cache3.develop.com cache4.develop.com" >> /etc/hosts
+       ```sh
+       vim server/pages.ls
+       vim client/layout.ls
+       vim shared/react/HomePage.ls
+       ```
 
 8. What about cacheability?
 
-       + Since etags &amp; proper cache-control headers are automagically set on every Page, and sessions stream in
-         real-time on page load, all pages are completely cacheable!  The idea is to persist personalization in user sessions.
+       Since etags &amp; proper cache-control headers are automagically set on every Page, and sessions stream in real-time on page load, all pages are completely cacheable!  The idea is to persist personalization in user sessions.
 
 9. Does this work with io.js?
 
        Absolutely!
 
 
-
 ## Contributors &amp; Idea Factories
 
-[**Keith Hoerling**](https://github.com/khoerling)
-[**John Beppu**](https://github.com/beppu)
-[**Matt Elder**](https://github.com/dreamcodez)
-[**Dave Seleno**](https://github.com/onelesd)
+[**Keith Hoerling**](https://github.com/khoerling) . 
+[**John Beppu**](https://github.com/beppu) . 
+[**Matt Elder**](https://github.com/dreamcodez) . 
+[**Dave Seleno**](https://github.com/onelesd) . 
 [**Mark Huge**](https://github.com/markhuge)
 
 [According to GitHub](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors) . [Become a Contributor](https://github.com/DimensionSoftware/instant-skeleton/fork) .  [Pull request friendly!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
 ## TODO
 
-* [Famo.us+React](https://github.com/Famous/famous-react/issues)
-* Selenium and more tests
-* Coverage working with LiveScript
-* More beautiful documentation &amp; better literate .ls
+* ADD: [Famo.us+React](https://github.com/Famous/famous-react/issues)
+* ADD: more beautiful documentation
+* ADD: Selenium and more tests
+* ADD: Coverage working with LiveScript
 * FIX: whitelist to ipv6 match
 
 &nbsp;
