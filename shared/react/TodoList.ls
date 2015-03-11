@@ -1,6 +1,6 @@
 
 # destructure only what's needed
-{a,ol,li,div,h2} = DOM
+{a,ol,li,span,div,h2} = DOM
 
 require! {
   \./Input
@@ -35,12 +35,14 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
       h = list.entries!
       while h.next!value
         let key = that.0
+          title = todos.get-in [key, \name]
           li {key} [
             Check (todos.cursor [key, \completed]), {on-change}
             Input (todos.cursor [key, \title]), { # save edits
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
             }
+            if show-name then span {title} title
             div {
               title: \Delete
               class-name: \delete,
