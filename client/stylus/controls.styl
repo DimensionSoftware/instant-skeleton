@@ -20,6 +20,7 @@ input[type="password"], select, textarea, input[type="text"]
   font-size 1.25em
   color lighten(textColor, 20%)
   border 1px solid lighten(textColor, 95%)
+  background-image linear-gradient(to top, #fff, #fcfcfc 3px)
   border-bottom 2px solid lighten(textColor, 85%)
   vertical-align middle
   outline none
@@ -30,6 +31,8 @@ input[type="password"], select, textarea, input[type="text"]
   &:hover, &:focus
     position relative
     border-bottom-color themeColor
+    background-image none
+    background-color #fff
   &:hover
     z-index 1
     color textColor
@@ -56,10 +59,10 @@ input[type="password"], select, textarea, input[type="text"]
   background-image linear-gradient(to bottom, themeColor 93%, darken(themeColor, 10%) 10px)
   text-shadow 0 1px 0 lighten(textColor, 25%)
   border 1px solid lighten(textColor, 80%)
-  border-top 1px solid darken(themeColor, 20%)
+  border-top 1px solid darken(themeColor, 8%)
   border-left 1px solid darken(themeColor, 20%)
   border-right 2px solid darken(themeColor, 20%)
-  border-bottom 2px solid darken(themeColor, 30%)
+  border-bottom 2px solid darken(themeColor, 40%)
   color themeTextColor
   font-size 1.25em
   font-weight 500
@@ -67,12 +70,13 @@ input[type="password"], select, textarea, input[type="text"]
   text-align center
   border-radius 3px
   transition all .4s ease-out .1s
+  transform scale(1.012)
   &:hover
     border-top-color themeColor
     border-bottom-color darken(themeColor, 40%)
     border-right-color darken(themeColor, 30%)
     text-shadow 0 1px 1px darken(textColor, 50%)
-    transform scale(1.018) translateY(-1px)
+    transform scale(1.019) translateY(-1px)
     transition none
     &:before
       opacity .7
@@ -82,7 +86,7 @@ input[type="password"], select, textarea, input[type="text"]
     border-bottom none
     box-shadow 1px 1px 1px darken(themeColor, 30%) inset!important
     text-shadow 0 1px 0 rgba(textColor, .3)
-    transform translateY(1px)
+    transform translateY(1px) scale(1)
     opacity .9
     &:before
       opacity .3

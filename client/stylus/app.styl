@@ -51,7 +51,7 @@ h1, h2
   letter-spacing -1px
 
 h2, h3
-  margin-top grid * 2.5
+  margin-top grid * 4
 
 .HomePage
   max-width 800px
@@ -65,8 +65,6 @@ h2, h3
   padding grid * 4
   position relative
   h1, h2
-    position relative
-    z-index onTop
     margin-left (grid * 7) - 1
   header
     position fixed
@@ -86,6 +84,7 @@ h2, h3
           height 29px
           border-top none
           max-width maxWidth - 50px
+          background-image linear-gradient(to top, #fff, tint(themeColor, 98%) 3px)
           text-indent grid
           border-bottom-color darken(themeColor, 15%)
           transition opacity .15s ease-in
@@ -119,6 +118,7 @@ h2, h3
     overflow hidden
     borderColor = #eee
     border 1px solid borderColor
+    border-right 1px solid darken(borderColor, 12%)
     border-top 1px solid lighten(borderColor, 10%)
     border-bottom 2px solid darken(borderColor, 5%)
     box-shadow 0 2px 20px -1px borderColor, 0 30px 37px -35px darken(borderColor, 5%)
@@ -154,6 +154,8 @@ h2, h3
         width 100%
         &:hover
           border-bottom 1px solid lighten(themeColor, 75%)
+          border-right 1px solid themeColor
+          box-shadow -1px 0 3px -2px themeColor
           ~ .delete
             display block
         &:focus
@@ -216,7 +218,7 @@ h2, h3
       padding 2px 15px
       border 1px solid darken(bodyColor, 5%)
       color lighten(textColor, 50%)
-      background rgba(#fff, .85)
+      background rgba(#fff, .2)
       border-radius 3px
       font-size .85em
     .last-visited
