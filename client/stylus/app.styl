@@ -29,7 +29,7 @@ body
       left 0
       box-shadow 0 0 15px 10px #fff
     header
-      transform translateY(-(grid * 2.5))
+      transform translateY(-(grid * 1.5))
       transition none
     form
       .clip
@@ -59,10 +59,10 @@ h2, h3
   h1
     text-align center
 
-.TodoPage
+.PublicPage, .MyTodoPage
   max-width maxWidth
   margin grid auto 0 auto
-  padding grid * 4
+  padding (grid * 5) (grid * 4)
   position relative
   h1, h2
     margin-left (grid * 7) - 1
@@ -72,7 +72,7 @@ h2, h3
     right grid * 4
     z-index onTop + 1
     top 0
-    margin grid * 2 auto 0 auto
+    margin grid auto 0 auto
     max-width maxWidth
     transition transform .2s ease-out
     form
@@ -92,7 +92,7 @@ h2, h3
             border-bottom-color themeColor
             transition none
 
-.HomePage, .TodoPage
+.HomePage, .MyTodoPage, .PublicPage
   overflow hidden
   form
     position relative
@@ -114,14 +114,15 @@ h2, h3
   ol
     background backgroundColor
     margin-top grid * 4
+    margin-bottom (grid / 2)
     position relative
     overflow hidden
     borderColor = #eee
     border 1px solid borderColor
     border-right 1px solid darken(borderColor, 12%)
     border-top 1px solid lighten(borderColor, 10%)
-    border-bottom 2px solid darken(borderColor, 5%)
-    box-shadow 0 2px 20px -1px borderColor, 0 30px 37px -35px darken(borderColor, 5%)
+    border-bottom 2px solid darken(borderColor, 7%)
+    box-shadow 0 2px 2px -1px tint(themeColor, 60%), 0 2px 20px -1px borderColor, 0 30px 37px -35px darken(borderColor, 5%)
     // two red lines simulating 8x11 paper
     &:after
       position absolute
@@ -147,7 +148,7 @@ h2, h3
         right grid * 6.5
         font-weight 200
         font-size .85em
-        z-index 1
+        z-index onTop
         max-width 150px
         overflow ellipsis
       input[type='checkbox']
@@ -173,14 +174,14 @@ h2, h3
             display block
       .name
         position absolute
+        top 0
         height 2em
         font-size .7em
         font-weight 200
         color lighten(textColor, 30%)
         text-transform capitalize
         z-index onTop
-        top 2px
-        right grid * 4
+        right grid * 3
         max-width grid * 6
         overflow hidden
         text-overflow ellipsis
@@ -188,10 +189,10 @@ h2, h3
         position absolute
         display none
         cursor pointer
-        right grid * 3
+        right grid * 2
         font-weight bold
         font-size 1.3em
-        top 0
+        top 1px
         color themeColor
         z-index onTop
         transform scale(1)
@@ -211,10 +212,15 @@ h2, h3
         margin-right grid * 2
         &.active
           text-transform uppercase
-
+  > a
+    font-size .8em
+    font-weight 200
+    text-transform capitalize
+    float right
+    margin-right (grid / 2)
   footer
     text-align center
-    margin-top grid * 6
+    margin-top grid * 5
     > a
       border none
 
@@ -225,11 +231,12 @@ h2, h3
       right grid * 1.5
       text-align right
       padding 2px 15px
-      border 1px solid darken(bodyColor, 5%)
       color lighten(textColor, 50%)
-      background rgba(#fff, .2)
+      background rgba(#fff, .5)
       border-radius 3px
-      font-size .85em
+      font-size .75em
+      > small
+        text-transform capitalize
     .last-visited
       font-size .9em
       a
