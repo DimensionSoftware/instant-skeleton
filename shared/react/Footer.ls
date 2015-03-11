@@ -5,10 +5,10 @@
 require! \./Navigation
 
 # Footer
-module.exports = component \Footer ({path, last-page}:props) ->
+module.exports = component \Footer ({name, path, last-page}:props) ->
   footer void [
     a {href:'https://dimensionsoftware.com', target:'_blank'} [
       img {src:'https://dimensionsoftware.com/images/software_by.png'}
     ]
-    Navigation {path, last-page} # sync'd across sessions
+    Navigation {name, path, last-page} # sync'd across sessions
   ]
