@@ -2,7 +2,8 @@
 export list =
   # loads shared/react/HomePage.ls
   * [ \HomePage,  '/' ]
-  * [ \TodoPage,  '/todo' ]
+  * [ \MyTodoPage,  '/todo' ]
+  * [ \PublicPage,  '/public' ]
 
   # more route examples:
   # * [ \PromoPage,            '/clients/:Client_id/promos' ]
@@ -19,6 +20,6 @@ export R = (name, ...args) ->
   route = for r in list when r.0 is name then r
   if not route
     throw new Error("Route '#name' not found.")
-  args.reduce ((m, i) -> m.replace /:(\w+)/, i), route.0.1, args
+  args.reduce ((m, i) -> m.replace /:(\w+)/, i), route.0?1, args
 
 # vim:fdm=indent

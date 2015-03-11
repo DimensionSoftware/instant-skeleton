@@ -20,9 +20,14 @@ app.get R(\HomePage), (next) ->*
   yield next
 
 if features.todo-example
-  app.get R(\TodoPage), (next) ->*
+  app.get R(\MyTodoPage), (next) ->*
     @session.last-page = @session.on-page
-    @session.on-page   = \TodoPage
+    @session.on-page   = \MyTodoPage
+    yield mw.react-or-json
+    yield next
+  app.get R(\PublicPage), (next) ->*
+    @session.last-page = @session.on-page
+    @session.on-page   = \PublicPage
     yield mw.react-or-json
     yield next
 # </PAGES>
