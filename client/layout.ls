@@ -27,8 +27,8 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
     <- Notification.request-permission
     show!
 
-window.class = (elem, class-name, action=\add) -> # add & remove class names
-  if action is \add # add
+window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
+  if add # add
     if (body.class-name.index-of class-name) is -1
       body.class-name += " #class-name"
   else # remove
@@ -43,7 +43,7 @@ init-primus! # setup realtime
 
 # setup realtime streams w/ leveldb
 init-live-stream \everyone
-init-live-stream \session -> window.class body, \loaded # trigger ui loaded after session applies
+init-live-stream \session -> window.toggle-class body, \loaded # trigger ui loaded after session applies
 
 function init-primus
   primus = window.primus = Primus.connect!
