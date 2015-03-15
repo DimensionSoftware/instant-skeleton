@@ -14,7 +14,7 @@ module.exports = component \PublicPage page-mixins, ({{path,locals,session,every
   name = (session.get \name) or \Anonymous
 
   DOM.div class-name: \PublicPage, [
-    Header (locals.cursor \current-title), {after-save:(-> sync-everyone!), save-cursor:(everyone.cursor \todos)}
+    Header {title-cur:(locals.cursor \current-title), name}, {after-save:(-> sync-everyone!), save-cursor:(everyone.cursor \todos)}
 
     # render everyone's todos
     TodoList { # props
