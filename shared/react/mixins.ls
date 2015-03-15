@@ -39,6 +39,11 @@ export scroll =
   component-will-unmount: ->
     window.remove-event-listener \scroll, scrolled, false
 
+state = { last-offset: 0px }
 function scrolled
-  body = document.get-elements-by-tag-name \body .0 # cache
-  window.class body, \scrolled (if window.page-y-offset > 3px then \add else \remove)
+  body   = document.get-elements-by-tag-name \body .0 # cache
+  offset = window.page-y-offset
+  window.toggle-class body, \scrolled (offset > 3px)
+  window.toggle-class body, \down     (state.last-offset < offset)
+  window.toggle-class body, \up       (state.last-offset > offset)
+  state.last-offset := offset
