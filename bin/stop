@@ -1,0 +1,10 @@
+#!/bin/sh
+
+pid='app.pid' # pid file name
+
+if [ -e "$pid" ]; then
+  kill `cat $pid`
+  rm $pid
+else
+  echo 'Yo-- your app is not running; try "npm start"'
+fi
