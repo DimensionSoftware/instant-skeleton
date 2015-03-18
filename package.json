@@ -11,8 +11,8 @@
     "pretest": "node --harmony `which gulp` build:test",
     "test": "NODE_ENV=test npm run unit",
     "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
-    "start": "node --harmony `which gulp`",
-    "stop": "node --harmony `which gulp` stop",
+    "start": "bin/start",
+    "stop":  "bin/stop",
     "unit": "mocha -R nyan --harmony --compilers ls:LiveScript",
     "coverage": "mocha -r blanket -R html-cov --harmony --compilers ls:LiveScript > build/coverage.html && open build/coverage.html",
     "clean": "node --harmony `which gulp` clean"

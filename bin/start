@@ -1,0 +1,19 @@
+#!/bin/sh
+
+pid='app.pid' # pid file name
+
+if [ $NODE_ENV == 'production' ]; then
+  # compile
+  for f in `find . -name \*.ls -print`
+  do
+    node_modules/.bin/lsc -c -o build/`dirname $f` $f
+  done
+
+  # run!
+  node --harmony build/server/main.js &
+  echo $! > "$pid"
+
+else
+  # defer to gulp
+  node --harmony `which gulp`
+fi
