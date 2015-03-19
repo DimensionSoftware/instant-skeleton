@@ -3,12 +3,13 @@
 
 
 // theme variables
-footerHeight = 40px
 lightText    = lighten(textColor, 25%)
 onTop        = 11
 maxWidth     = 1200px
 
 bounce = cubic-bezier(0,1.72,0,.75)
+
+headerBackground=tint(themeColor, 96%)
 
 body
   &:before
@@ -20,26 +21,50 @@ body
     bottom 0
     left 0
     background-image linear-gradient(#ffffff 80%, #eeeeee)
-  &.scrolled.down
+  &.scrolled
     &:after
       content ''
       position fixed
       top 0
       right 0
       left 0
-      box-shadow 0 0 15px 10px #fff
-    header
-      transform translateY(-(grid * 1.5))
-      transition none
-    form
-      .clip
-        input[type='text']
-          opacity .1!important
-          &:hover, &:focus
-            opacity 1!important
-      &:hover
-        input[type='text']
-          opacity 1!important
+      box-shadow 0 0 12px 8px rgba(themeColor, .1)
+    .PublicPage, .MyTodoPage
+      header
+        form
+          button
+            padding-top 8px
+            padding-bottom @padding-top
+            font-size 1.1em
+            height 47px
+          .clip
+            > input[type='text']
+              padding-top 8px
+              padding-bottom @padding-top
+              background-image linear-gradient(to top, #fff, rgba(headerBackground, .85) 3px)
+              border-left 1px solid lighten(themeColor, 40%)
+              border-top 1px solid lighten(themeColor, 70%)
+              &:hover, &:focus
+                background-color headerBackground
+  &.scrolled.down
+    .PublicPage, .MyTodoPage
+      header
+        transform translateY(-(grid * 1.5))
+        transition none
+        form
+          button
+            opacity 0
+          .clip
+            > input[type='text']
+              opacity 0
+              &:hover, &:focus
+                opacity 1
+          &:hover
+            > input[type='text']
+              opacity 1
+              background headerBackground
+            button
+              opacity 1
 
 hr
   border-top-color rgba(textColor, .015)
@@ -61,8 +86,8 @@ h2, h3
 
 .PublicPage, .MyTodoPage
   max-width maxWidth
-  margin grid auto 0 auto
-  padding (grid * 5) (grid * 4)
+  margin 0 auto 0 auto
+  padding (grid * 4) (grid * 4)
   position relative
   h1, h2
     margin-left (grid * 7) - 1
@@ -71,25 +96,28 @@ h2, h3
     left grid * 4
     right grid * 4
     z-index onTop + 1
-    top 0
-    margin grid auto 0 auto
+    top grid * 4.6
+    margin 0 auto 0 auto
     max-width maxWidth
     transition transform .2s ease-out
     form
-      margin 0 0 0 85px
+      margin 0 0 0 100px
       .clip
         overflow hidden
+        border-right 1px solid themeColor
         input[type='text']
+          background transparent
+          background-image linear-gradient(to top, #fff, rgba(headerBackground, .65) 3px)
+          padding-left grid
           opacity 1
           height 29px
-          border-top none
+          text-indent 0
           max-width maxWidth - 50px
-          background-image linear-gradient(to top, #fff, tint(themeColor, 98%) 3px)
-          text-indent grid
           border-bottom-color darken(themeColor, 15%)
           transition opacity .15s ease-in
           &:hover, &:focus
             border-bottom-color themeColor
+            background-image linear-gradient(to top, #fff, rgba(headerBackground, .85) 3px)
             transition none
 
 .HomePage, .MyTodoPage, .PublicPage
@@ -144,7 +172,10 @@ h2, h3
         margin-left grid * 7
       span
         position absolute
-        top 4px
+        top 2px
+        background #fff
+        padding 2px 6px
+        border-radius 2px
         right grid * 6.5
         font-weight 200
         font-size .85em
@@ -213,12 +244,13 @@ h2, h3
         &.active
           text-transform uppercase
   > a
+    position absolute
+    bottom 161px
+    right 61px
     font-size .8em
-    font-weight 200
     text-transform capitalize
-    float right
-    margin-right (grid / 2)
   footer
+    height 69px
     text-align center
     margin-top grid * 5
     > a
