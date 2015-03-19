@@ -1,0 +1,26 @@
+
+@media all and (max-width: 768px)
+  body
+    font-size .95em
+    padding 0
+    margin 0
+    .HelloPage, .PublicPage, .MyTodoPage
+      padding-left 0
+      padding-right @padding-left
+      header
+        left 0
+        right 0
+        top (grid * 1.1)
+        form
+          margin 0 0 0 (grid * 5.8)
+          .clip
+            input[type='text']
+              height 22px
+        button
+          padding-left grid
+          padding-right grid
+      ol
+        padding 0
+      .actions
+        a
+          display block
