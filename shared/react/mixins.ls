@@ -35,7 +35,7 @@ export focus-input =
 
 export scroll =
   component-did-mount: ->
-    window.add-event-listener \scroll scrolled, false
+    window.add-event-listener \scroll, scrolled, false
   component-will-unmount: ->
     window.remove-event-listener \scroll, scrolled, false
 
