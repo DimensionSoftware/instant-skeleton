@@ -50,6 +50,7 @@ export app-cache = (next) ->*
       @set \pragma \no-cache
       @set \cache-control \no-cache
       @type = \text/cache-manifest
+      # TODO read once at boot time
       @body = fs.create-read-stream 'public/manifest.appcache'
         .pipe replacestream \%changeset%  @locals.changeset # use changeset to blow cache
         .pipe replacestream \%cacheUrls%  @locals.cache-urls.0
