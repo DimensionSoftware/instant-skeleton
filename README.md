@@ -9,7 +9,7 @@ Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge
 
 Build Bigger with Less
 ----------------------
-Best _opinionated_ realtime framework to lift heavy functionality lightening quick with Node.JS
+Best realtime framework to lift heavy functionality lightening quick with Node.JS
 
 **PROTIP** [Be sure to peruse our fancy documentation](http://dimensionsoftware.github.io/instant-skeleton)
 
@@ -128,7 +128,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 5. How can I enable &amp; disable features with zero impact for those unused?
 
-       We've implemented the famous TODO example for you to demonstrate glueing functionality together.  Don't need it anymore?  Disable it--simple:
+       We've implemented the famous TODO example for you to demonstrate building high-level functionality.  Don't need it anymore?  Disable it--simple:
 
        ```sh
        vim shared/features.ls
@@ -145,7 +145,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 7. How easy is session management?
 
-       Session updates are streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
+       Sessions are streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
 
        ```sh
        vim server/pages.ls
@@ -155,12 +155,24 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 8. What about cacheability?
 
-       Since etags &amp; proper cache-control headers are automagically set on every Page, and sessions stream in real-time on page load, all pages are completely cacheable!  The idea is to persist personalization in user sessions.
+       All Pages are completely cacheable!  Etags &amp; proper cache-control headers are automagically set on every Page and sessions stream in real-time on Page load.  The idea is to persist personalization in user sessions.
 
-9. Does this work with io.js?
 
-       Absolutely!
+9. Production deployment?  We got you covered!
 
+       Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  [We recommend
+       Upstart](https://blog.jalada.co.uk/simple-upstart-script-to-keep-a-node-process-alive/) to keep your process
+       alive.  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.
+
+10. Does this work with io.js?
+
+       Absolutely.
+
+
+## Hire Us!
+
+Really digging our software architecture?  Say Hello and let us know:
+[**Dimension Software**](mailto:keith@dimensionsoftware.com)
 
 ## Contributors &amp; Idea Factories
 
@@ -177,7 +189,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 * ADD: [Famo.us+React](https://github.com/Famous/famous-react/issues)
 * ADD: more beautiful documentation
 * ADD: Selenium and more tests
-* ADD: Coverage working with LiveScript
+* ADD: Coverage.js working with LiveScript
+* ADD: sortable todos
+* ADD: sum todos in Navigation
 * FIX: whitelist to ipv6 match
 
 &nbsp;
