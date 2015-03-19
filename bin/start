@@ -3,11 +3,14 @@
 pid='app.pid' # pid file name
 
 if [ $NODE_ENV == 'production' ]; then
-  # compile
+  # compile server app
   for f in `find . -name \*.ls -print`
   do
     node_modules/.bin/lsc -c -o build/`dirname $f` $f
   done
+
+  # compile client app & css
+  webpack
 
   # run!
   node --harmony build/server/main.js &
