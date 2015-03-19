@@ -12,7 +12,7 @@ export initial-state-async =
       .set \Accept \application/json
       .query window.location.search
       .query { +_surf }
-      .end (res) ->
+      .end (err, res) ->
         # update page & local cursor (state)
         window.app.update \locals -> immutable.fromJS res.body.locals
         window.app.update \path   -> res.body.path
