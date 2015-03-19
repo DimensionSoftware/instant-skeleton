@@ -3,7 +3,6 @@ require! {
   fs
   gulp
   dotenv
-  \del
   \open
   \gulp-livescript
   \gulp-nodemon
@@ -70,20 +69,14 @@ gulp.task \watch -> # changes needing server restart
   gulp.watch ['./server/**/*.ls' './shared/**/*.ls'] [\build:server]
 
 
-# cleanup
-# -------
-gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
-gulp.task \clean (cb) -> del ['./build/*' './public/builds/*'] cb
-
-
 # env tasks
 # ---------
-gulp.task \development <[build:server watch webpack:dev-server ]> ->
+gulp.task \development <[watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client shared/react]>, node-args:'--harmony'}
     .once \start ->
       <- boot-delay-fn
       open "http://#subdomain:#port"
-gulp.task \production <[build:client ]> (gulp-shell.task 'pm2 start processes.json')
+gulp.task \production <[build:client ]> (gulp-shell.task 'bin/start')
 
 
 # main

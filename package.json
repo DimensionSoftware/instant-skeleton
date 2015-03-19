@@ -127,13 +127,17 @@
     "react-router-component": "^0.24.1",
     "replacestream": "^2.0.0",
     "superagent": "^0.21.0",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "nib": "~1.1.0",
+    "livescript-loader": "^0.1.3",
+    "css-loader": "^0.9.1",
+    "stylus": "^0.49.0",
+    "stylus-loader": "shama/stylus-loader",
+    "webpack": "^1.7.2"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
     "chai": "^2.1.1",
-    "css-loader": "^0.9.1",
-    "del": "^1.1.1",
     "extract-text-webpack-plugin": "^0.3.8",
     "gulp": "^3.8.11",
     "gulp-livescript": "^2.3.0",
@@ -143,17 +147,12 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^4.1.1",
     "gulp-webpack": "^1.3.0",
-    "livescript-loader": "^0.1.3",
     "mocha": "^2.2.1",
-    "nib": "~1.1.0",
     "open": "0.0.5",
     "react-hot-loader": "^1.2.1",
     "shelljs": "^0.3.0",
     "sinon": "^1.13.0",
-    "stylus": "^0.49.0",
-    "stylus-loader": "shama/stylus-loader",
     "supertest": "^0.15.0",
-    "webpack": "^1.7.2",
     "webpack-dev-server": "^1.7.0"
   }
 }
