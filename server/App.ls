@@ -58,8 +58,8 @@ module.exports =
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals @  # load env-sensitive config into locals
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
-        ..use middleware.static-assets    # static assets handler
         ..use middleware.app-cache        # offline support
+        ..use middleware.static-assets    # static assets handler
         ..use session                     # leveldb session support
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
