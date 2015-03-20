@@ -32,6 +32,7 @@ body
     .PublicPage, .MyTodoPage
       header
         form
+          margin 0 0 0 100px
           button
             padding-top 8px
             padding-bottom @padding-top
@@ -87,7 +88,7 @@ h2, h3
 .PublicPage, .MyTodoPage
   max-width maxWidth
   margin 0 auto 0 auto
-  padding (grid * 4) (grid * 4)
+  padding (grid * 4) (grid * 1.3)
   position relative
   h1, h2
     margin-left (grid * 7) - 1
@@ -101,7 +102,7 @@ h2, h3
     max-width maxWidth
     transition transform .2s ease-out
     form
-      margin 0 0 0 100px
+      margin 0 65px 0 100px
       .clip
         overflow hidden
         border-right 1px solid themeColor
@@ -245,12 +246,12 @@ h2, h3
           text-transform uppercase
   > a
     position absolute
-    bottom 161px
-    right 61px
+    margin-top -35px
+    right 31px
     font-size .8em
     text-transform capitalize
   footer
-    height 69px
+    min-height 69px
     text-align center
     margin-top grid * 5
     > a
@@ -264,7 +265,7 @@ h2, h3
       text-align right
       padding 2px 15px
       color lighten(textColor, 50%)
-      background rgba(#fff, .5)
+      background rgba(#fff, .7)
       border-radius 3px
       font-size .75em
       > small
