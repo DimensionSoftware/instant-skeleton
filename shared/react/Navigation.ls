@@ -6,23 +6,25 @@ require! {
 # destructure only what's needed
 {div,small} = DOM
 
-# Footer
-module.exports = component ({props}) ->
+module.exports = component \Navigation ({name, path, last-page}:props) ->
   # show all routes besides current
-  [path, last-page] = [(props.get \path), (props.get-in [\session, \lastPage])]
   div class-name: \navigation, [
+    small void name
     routes.list
-      .filter (-> it.1 isnt path)
+      .filter (-> it?1 isnt path)
       .map (route) ->
         div void [
-          Link {href:R(route.0)}, "#{route.0.replace /Page$/ ''} →"
+          Link {href:R(route.0)}, "#{page-title route.0} →"
         ]
     if last-page
       div {class-name:\last-visited} [
         # render last visited (sync'd across all sessions)
         small void 'Last visited '
-        Link {href:R(last-page)} last-page
+        Link {href:R(last-page)} page-title(last-page)
       ]
     else
       div!
   ]
+
+function page-title
+  it.replace /Page$/ ''

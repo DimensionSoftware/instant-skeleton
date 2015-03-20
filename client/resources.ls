@@ -6,4 +6,4 @@ module.exports = (primus) ->
   foo = primus.resource \foo
     ..on \ready ->
       foo.command \test (res) ->
-        console.log \res: res
+        console?log \test-resource: res

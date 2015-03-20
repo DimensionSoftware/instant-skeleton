@@ -3,7 +3,6 @@ require! {
   fs
   gulp
   dotenv
-  \del
   \open
   \gulp-livescript
   \gulp-nodemon
@@ -31,18 +30,6 @@ const prod = env is \production
 const compiler = webpack wp-config # use code caching
 
 
-# build transformations
-# ---------------------
-gulp.task \build:primus (cb) ->
-  const app = new App port
-  <- fs.mkdir \./public/vendor
-  <- app.start
-  app # save primus client from koa config
-    ..primus.save './public/vendor/primus.js'
-    ..stop cb
-
-gulp.task \build:test <[build:server]> -> process.exit!
-
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header, const:true} # strip
@@ -53,10 +40,10 @@ gulp.task \build:client run-compiler # build client app bundle
 
 # watching
 # --------
-gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
+gulp.task \webpack:dev-server <[build:client]> (cb) ->
   const dev-server = new WebpackDevServer compiler, {
+    +quiet
     hot: !prod
-    quiet: prod
     debug: !prod
     devtool: \sourcemap
     public-path:  "http://#subdomain:#dev-port/builds/"
@@ -70,25 +57,19 @@ gulp.task \watch -> # changes needing server restart
   gulp.watch ['./server/**/*.ls' './shared/**/*.ls'] [\build:server]
 
 
-# cleanup
-# -------
-gulp.task \stop (gulp-shell.task 'pm2 stop processes.json')
-gulp.task \clean (cb) -> del ['./build/*' './public/builds/*'] cb
-
-
 # env tasks
 # ---------
-gulp.task \development <[build:server watch webpack:dev-server ]> ->
-  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client shared/react]>, node-args:'--harmony'}
+gulp.task \development <[watch webpack:dev-server ]> ->
+  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules bin build client shared/react test]>, node-args:'--harmony'}
     .once \start ->
       <- boot-delay-fn
       open "http://#subdomain:#port"
-gulp.task \production <[build:client ]> (gulp-shell.task 'pm2 start processes.json')
+gulp.task \production <[build:client ]> (gulp-shell.task 'bin/start')
 
 
 # main
 # ----
-default-tasks = <[build:server build:primus ]>
+default-tasks = <[build:server ]>
   ..push env
 gulp.task \default default-tasks
 

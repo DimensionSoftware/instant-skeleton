@@ -8,21 +8,19 @@ require! {
 }
 
 # HomePage
-module.exports = component page-mixins, ({props}) ->
-  key    = \name
-  path   = [\session, key]
-  value  = props.get-in path
+module.exports = component \HomePage page-mixins, ({{path,locals,session,everyone}:props}) ->
+  name = session.get \name
 
   on-click = ~>
     sync-session! # sync across sessions
-    @navigate R(\TodoPage)
+    @navigate R(\MyTodoPage)
 
   div class-name: \HomePage,
     # allow name to be set
-    h1 void if value then "Greetings #value!" else 'Hello! What\'s Your Name?'
+    h1 void if name then "Greetings #name!" else 'Hello! What\'s Your Name?'
     hr void
     form {on-submit:-> false} [
-      Input {props:(props.cursor path), ref:\focus, placeholder:'Your Name'}
+      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name'}
       button {title:'Open multiple browsers to test', on-click} \Save
     ]
-    Footer {props}
+    Footer {name, path, last-page:(session.get \lastPage)}

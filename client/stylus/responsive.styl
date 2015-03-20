@@ -1,0 +1,49 @@
+
+@media all and (max-width: 320px)
+  body
+    zoom .85
+
+@media all and (max-width: 768px)
+  body
+    font-size .95em
+    padding 0
+    margin 0
+    &.scrolled
+      .PublicPage, .MyTodoPage
+        header
+          form
+            button
+              height 41px
+
+    .PublicPage, .MyTodoPage
+      padding-left 0
+      padding-right @padding-left
+      header
+        left 0
+        right 0
+        top (grid * 1.1)
+        form
+          margin 0 grid 0 (grid * 5.8)
+          .clip
+            input[type='text']
+              height 22px
+        button
+          padding-left grid
+          padding-right grid
+      ol
+        padding 0
+      .actions
+        a
+          display block
+      footer
+        .navigation
+          position relative
+          text-align center
+          margin (grid * 2) auto 0 auto
+          max-width 100px
+
+    .HomePage
+      form
+        margin-left grid * 4
+        margin-right @margin-left
+        overflow hidden

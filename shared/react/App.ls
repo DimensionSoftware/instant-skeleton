@@ -8,7 +8,7 @@ require! {
   'react-async': {Mixin}
   \./mixins
 }
-page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input] # common Page mixins
+page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroll] # common Page mixins
 
 # statics for ease-of-use DSL in Pages
 global <<< {R, React, cx, Router, page-mixins, component, Immutable}
@@ -22,10 +22,16 @@ pages = routes.list.reduce ((namespace, route) ->
   namespace), {}
 
 
-module.exports = component (props) ->
+module.exports = component \App (props) ->
   location = (route) ->
     name = route.0
-    Location { key:name, ref:name, path:route.1, handler:pages[name], props }
+    page-props = { # export page cursors
+      path: props.get \path
+      locals: props.cursor \locals
+      session: props.cursor \session
+      everyone: props.cursor \everyone
+    }
+    Location { key:name, ref:name, path:route.1, handler:pages[name], props:page-props }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
