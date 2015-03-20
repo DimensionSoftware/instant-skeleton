@@ -30,18 +30,6 @@ const prod = env is \production
 const compiler = webpack wp-config # use code caching
 
 
-# build transformations
-# ---------------------
-gulp.task \build:primus (cb) ->
-  const app = new App port
-  <- fs.mkdir \./public/vendor
-  <- app.start
-  app # save primus client from koa config
-    ..primus.save './public/vendor/primus.js'
-    ..stop cb
-
-gulp.task \build:test <[build:server]> -> process.exit!
-
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header, const:true} # strip
@@ -52,10 +40,10 @@ gulp.task \build:client run-compiler # build client app bundle
 
 # watching
 # --------
-gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
+gulp.task \webpack:dev-server <[build:client]> (cb) ->
   const dev-server = new WebpackDevServer compiler, {
+    +quiet
     hot: !prod
-    quiet: prod
     debug: !prod
     devtool: \sourcemap
     public-path:  "http://#subdomain:#dev-port/builds/"
@@ -81,7 +69,7 @@ gulp.task \production <[build:client ]> (gulp-shell.task 'bin/start')
 
 # main
 # ----
-default-tasks = <[build:server build:primus ]>
+default-tasks = <[build:server ]>
   ..push env
 gulp.task \default default-tasks
 
