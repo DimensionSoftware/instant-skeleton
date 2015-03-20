@@ -2,7 +2,7 @@
 
 pid='app.pid' # pid file name
 
-if [ $NODE_ENV == 'production' ]; then
+if [ "$NODE_ENV" = 'production' ]; then
   # compile server app
   for f in `find . -name \*.ls -print`
   do
