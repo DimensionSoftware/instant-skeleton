@@ -72,7 +72,7 @@ gulp.task \watch -> # changes needing server restart
 # env tasks
 # ---------
 gulp.task \development <[watch webpack:dev-server ]> ->
-  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules client shared/react]>, node-args:'--harmony'}
+  gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules bin build client shared/react test]>, node-args:'--harmony'}
     .once \start ->
       <- boot-delay-fn
       open "http://#subdomain:#port"
