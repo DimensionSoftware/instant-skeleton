@@ -44,7 +44,7 @@ session = koa-session {store}
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
   class App
-    (@port=\ephemeral, @changeset=\latest) ->
+    (@port=8080, @changeset=\latest) ->
 
     start: (cb = (->)) ->
       console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
