@@ -30,6 +30,8 @@ const prod = env is \production
 const compiler = webpack wp-config # use code caching
 
 
+gulp.task \build:test <[build:server]> -> process.exit!
+
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header, const:true} # strip
