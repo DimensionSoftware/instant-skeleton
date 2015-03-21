@@ -4,7 +4,7 @@ CACHE MANIFEST
 # Explicitly cached 'master entries'.
 CACHE:
 /
-%cacheUrls1%/site.css?%changeset%
+%cacheUrls1%/builds/site.css?%changeset%
 %cacheUrls2%/vendor/primus.js?%changeset%
 %cacheUrls3%/builds/client.js?%changeset%
 %cacheUrls%/images/favicon.ico
