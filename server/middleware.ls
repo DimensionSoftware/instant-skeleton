@@ -125,6 +125,14 @@ export rate-limit = (next) ->* # apply our config
   }
   yield (state.rate-fn.bind @) next
 
+# for upstream balancers, proxies & caches
+export health-probe = (next) ->*
+  if @path is '/probe'
+    @set \pragma \no-cache
+    @set \cache-control \no-cache
+    @body = \OK
+  else
+    yield next
 
 export etags = (next) ->*
   yield next                  # wait for body

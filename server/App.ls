@@ -57,6 +57,7 @@ module.exports =
         ..use middleware.webpack
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals @  # load env-sensitive config into locals
+        ..use middleware.health-probe     # for upstream balancers, proxies & caches 
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.app-cache        # offline support
         ..use middleware.static-assets    # static assets handler
