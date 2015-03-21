@@ -103,7 +103,13 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        Prefer to specify your own domains for local development?  Simply update the package.json; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
 
        ```sh
-       echo "127.0.0.1 develop.com cache2.develop.com cache3.develop.com cache4.develop.com" >> /etc/hosts
+       read -r -d '' DEVHOSTS <<'EOF'
+       127.0.0.1 develop.com
+       127.0.0.1 cache2.develop.com
+       127.0.0.1 cache3.develop.com
+       127.0.0.1 cache4.develop.com
+       EOF
+       echo $DEVHOSTS >> /etc/hosts
        ```
 
 2. **How is this different from Meteor.JS?**
@@ -128,7 +134,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 5. **How can I enable &amp; disable features with zero impact for those unused?**
 
-       We've implemented [The Famous TODO Example](https://todo.powerbulletin.com) for you to demonstrate building high-level functionality.  Don't need it anymore?  Disable it--easy:
+       We've implemented [The Famous TODO Example](https://todo.powerbulletin.com) for you to demonstrate building high-level functionality with Instant Skeleton.  Don't need it anymore?  Disable it--easy:
 
        ```sh
        vim shared/features.ls
