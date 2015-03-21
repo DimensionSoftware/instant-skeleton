@@ -72,12 +72,13 @@ export config-locals = (App) ->
   (next) ->*
     [@locals[k] = v for let k,v of merge]               # ...and localize our config
 
-    if @locals.port isnt 80 # add port to urls
-      for k,v of merge when k.to-lower-case!match \url
-        @locals[k] = if typeof! v is \Array
-          v |> map (~> "#it:#{@locals.port}")
-        else
-          "#v:#{@locals.port}"
+    unless @locals.env is \production
+      if @locals.port isnt 80 # add port to urls
+        for k,v of merge when k.to-lower-case!match \url
+          @locals[k] = if typeof! v is \Array
+            v |> map (~> "#it:#{@locals.port}")
+          else
+            "#v:#{@locals.port}"
     yield next
 
 
