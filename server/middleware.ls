@@ -120,7 +120,7 @@ export jade = (next) ->*
 export rate-limit = (next) ->* # apply our config
   unless state.rate-fn then state.rate-fn := limit { # lazy singleton
     max:@locals.limits?max or 500
-    duration:@locals.limits?duration or (1000 * 60 * 60 * 1)
+    duration:@locals.limits?duration or (1000 * 60 * 5) # 5mins.
     white-list:@locals.limits?white-list or []
     black-list:@locals.limits?black-list or []
   }
