@@ -1,4 +1,5 @@
 app.pid
+app.log
 doc
 build
 logs

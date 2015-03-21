@@ -23,7 +23,7 @@ if [ "$NODE_ENV" = 'production' ]; then
   fi
 
   # run!
-  node --harmony build/server/main.js &
+  node --harmony build/server/main.js 2>&1 >app.log &
   echo $! > "$pid"
 
 else
