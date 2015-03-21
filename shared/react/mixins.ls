@@ -13,6 +13,7 @@ export initial-state-async =
       .query window.location.search
       .query { +_surf }
       .end (err, res) ->
+        return unless res.body and res.body.locals # guard
         # update page & local cursor (state)
         window.app.update \locals -> immutable.fromJS res.body.locals
         window.app.update \path   -> res.body.path
