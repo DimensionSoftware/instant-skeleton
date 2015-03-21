@@ -6,5 +6,5 @@ if [ -e "$pid" ]; then
   kill `cat $pid`
   rm $pid
 else
-  echo 'Yo-- your app is not running; try "npm start"'
+  echo 'App is not running.'
 fi

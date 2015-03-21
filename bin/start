@@ -1,16 +1,25 @@
-#!/bin/sh
+#!/bin/bash
 
 pid='app.pid' # pid file name
 
 if [ "$NODE_ENV" = 'production' ]; then
   # compile server app
+  # TODO use webpack
+  echo -n 'Compiling app server '
   for f in `find . -name \*.ls -print`
   do
     node_modules/.bin/lsc -c -o build/`dirname $f` $f
+    echo -n '.'
   done
+  echo '| done.'
 
   # compile client app & css
   webpack
+
+  # "graceful" stop?
+  if [ -e "$pid" ]; then
+    npm stop
+  fi
 
   # run!
   node --harmony build/server/main.js &
