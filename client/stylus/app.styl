@@ -32,7 +32,7 @@ body
     .PublicPage, .MyTodoPage
       header
         form
-          margin 0 0 0 100px
+          margin 0 0 0 93px
           button
             padding-top 8px
             padding-bottom @padding-top
@@ -42,7 +42,7 @@ body
             > input[type='text']
               padding-top 8px
               padding-bottom @padding-top
-              background-image linear-gradient(to top, #fff, rgba(headerBackground, .85) 3px)
+              background-image linear-gradient(to top, tint(themeColor, 70%), rgba(headerBackground, .85) 6px)
               border-left 1px solid lighten(themeColor, 40%)
               border-top 1px solid lighten(themeColor, 70%)
               &:hover, &:focus
@@ -79,6 +79,9 @@ h1, h2
 h2, h3
   margin-top grid * 4
 
+.Page > div
+  animation focusIn .11s ease-in
+
 .HomePage
   max-width 800px
   margin 30px auto 0 auto
@@ -102,23 +105,23 @@ h2, h3
     max-width maxWidth
     transition transform .2s ease-out
     form
-      margin 0 65px 0 100px
+      margin 0 65px 0 93px
       .clip
         overflow hidden
         border-right 1px solid themeColor
         input[type='text']
+          font-style italic
           background transparent
-          background-image linear-gradient(to top, #fff, rgba(headerBackground, .65) 3px)
-          padding-left grid
+          background-image linear-gradient(to top, tint(themeColor, 80%), rgba(headerBackground, .85) 6px)
           opacity 1
           height 29px
           text-indent 0
           max-width maxWidth - 50px
-          border-bottom-color darken(themeColor, 15%)
+          border-bottom-color darken(themeColor, 18%)
           transition opacity .15s ease-in
           &:hover, &:focus
             border-bottom-color themeColor
-            background-image linear-gradient(to top, #fff, rgba(headerBackground, .85) 3px)
+            background-image linear-gradient(to top, tint(themeColor, 75%), rgba(headerBackground, .95) 6px)
             transition none
 
 .HomePage, .MyTodoPage, .PublicPage
@@ -168,7 +171,8 @@ h2, h3
       position relative
       display block
       max-width 100%
-      animation openSpace 250ms bounce forwards, fallInX 250ms bounce both
+      animation openSpace .25s bounce forwards, fallInX .35s bounce both
+      animation-delay .13s
       > div
         margin-left grid * 7
       span
@@ -246,8 +250,8 @@ h2, h3
           text-transform uppercase
   > a
     position absolute
-    margin-top -35px
-    right 31px
+    margin-top -36px
+    right (grid * 8.5)
     font-size .8em
     text-transform capitalize
   footer

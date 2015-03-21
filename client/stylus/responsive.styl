@@ -1,7 +1,7 @@
 
 @media all and (max-width: 320px)
   body
-    zoom .85
+    zoom .88
 
 @media all and (max-width: 768px)
   body
@@ -12,6 +12,7 @@
       .PublicPage, .MyTodoPage
         header
           form
+            margin (grid / 2) grid 0 (grid * 5.4)
             button
               height 41px
 
@@ -32,14 +33,19 @@
           padding-right grid
       ol
         padding 0
+        li
+          span
+            right (grid * 2)
+        + a
+          right grid * 1.5
       .actions
-        a
-          display block
+        margin (grid * 1.5) 0 (grid / 2) (grid * 7)
       footer
+        margin-top (grid * 4)
         .navigation
+          text-align left
           position relative
-          text-align center
-          margin (grid * 2) auto 0 auto
+          margin 0 0 (grid * 4) (grid * 7)
           max-width 100px
 
     .HomePage

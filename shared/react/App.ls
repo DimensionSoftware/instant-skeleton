@@ -38,6 +38,6 @@ module.exports = component \App (props) ->
     .map    (-> location it)
 
   # render page
-  Locations { path: props.get \path } [
+  Locations { class-name:\Page, path: props.get \path } [
     ...locations-for-routes
   ]
