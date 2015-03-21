@@ -122,7 +122,7 @@
     "primus-multiplex": "^3.1.0",
     "primus-resource": "^2.0.6",
     "react": "^0.12.2",
-    "react-async": "^2.0.1",
+    "react-async": "~2.0.1",
     "react-responsive": "0.0.5",
     "react-router-component": "^0.24.2",
     "replacestream": "^2.0.0",
@@ -133,12 +133,13 @@
     "css-loader": "^0.9.1",
     "stylus": "^0.50.0",
     "stylus-loader": "shama/stylus-loader",
+    "extract-text-webpack-plugin": "^0.3.8",
+    "shelljs": "^0.4.0",
     "webpack": "^1.7.3"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
     "chai": "^2.1.2",
-    "extract-text-webpack-plugin": "^0.3.8",
     "gulp": "^3.8.11",
     "gulp-livescript": "^2.3.0",
     "gulp-nodemon": "^2.0.2",
@@ -150,7 +151,6 @@
     "mocha": "^2.2.1",
     "open": "0.0.5",
     "react-hot-loader": "^1.2.3",
-    "shelljs": "^0.4.0",
     "sinon": "^1.14.1",
     "supertest": "^0.15.0",
     "webpack-dev-server": "^1.7.0"
