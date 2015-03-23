@@ -21,7 +21,7 @@ require! {
 dotenv.load!
 
 const env       = process.env.NODE_ENV or \development
-const port      = parse-int process.env.npm_package_config_node_port
+const port      = parse-int (process.env.NODE_PORT or process.env.npm_package_config_node_port)
 const dev-port  = process.env.npm_package_config_dev_port
 const subdomain = process.env.npm_package_config_subdomain
 
