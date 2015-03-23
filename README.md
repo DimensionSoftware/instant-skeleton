@@ -100,16 +100,17 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 1. **What is "develop.com" and why am I seeing a blank page?**
 
-       Prefer to specify your own domains for local development?  Simply [specify a DOMAIN in your .env](https://github.com/motdotla/dotenv) or export the variable in your environment; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
+       Prefer to specify your own domain for local development and deployment?  Simply [specify that SUBDOMAIN in a .env file](https://github.com/motdotla/dotenv) or export the SUBDOMAIN environment variable; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
 
        ```sh
-       read -r -d '' DEVHOSTS <<'EOF'
+       read -r -d '' MYSUBDOMAINS <<'EOF'
        127.0.0.1 develop.com
+       127.0.0.1 cache.develop.com
        127.0.0.1 cache2.develop.com
        127.0.0.1 cache3.develop.com
        127.0.0.1 cache4.develop.com
        EOF
-       echo $DEVHOSTS >> /etc/hosts
+       echo $MYSUBDOMAINS >> /etc/hosts
        ```
 
 2. **How is this different from Meteor.JS?**
