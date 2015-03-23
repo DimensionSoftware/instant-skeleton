@@ -100,7 +100,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 1. **What is "develop.com" and why am I seeing a blank page?**
 
-       Prefer to specify your own domains for local development?  Simply update the package.json; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
+       Prefer to specify your own domains for local development?  Simply [specify a DOMAIN in your .env](https://github.com/motdotla/dotenv) or export the variable in your environment; otherwise, append your /etc/hosts to include the develop &amp; cache domains:
 
        ```sh
        read -r -d '' DEVHOSTS <<'EOF'

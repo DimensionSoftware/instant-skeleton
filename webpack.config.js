@@ -6,7 +6,7 @@ var nib         = require('nib')
 
 var env       = process.env.NODE_ENV || 'development'
   , prod      = env === 'production'
-  , subdomain = process.env.npm_package_config_subdomain || 'develop.com'
+  , subdomain = process.env.SUBDOMAIN || process.env.npm_package_config_subdomain || 'develop.com'
   , dev_port  = process.env.npm_package_config_dev_port  || 8081;
 
 var entry =

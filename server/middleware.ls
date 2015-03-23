@@ -64,7 +64,7 @@ export app-cache = (next) ->*
 
 # localize package.json config for env
 merge = {}
-merge{name,title,url,cache-urls,meta-keywords} = config # pick these
+merge{name,title,url,meta-keywords} = config # pick these
 merge <<< config[env]                                   # merge in current env's config
 merge.features = features                               # merge in features
 export config-locals = (App) ->
@@ -72,9 +72,12 @@ export config-locals = (App) ->
   (next) ->*
     [@locals[k] = v for let k,v of merge]               # ...and localize our config
 
+    @locals.cache-urls = # create cache-urls from subdomain
+      ["//cache#{if i is 1 then '' else i}.#{process.env.SUBDOMAIN or config.subdomain}" for i in [1 to 4]]
+
     unless @locals.env is \production
       if @locals.port isnt 80 # add port to urls
-        for k,v of merge when k.to-lower-case!match \url
+        for k,v of @locals when k.to-lower-case!match \url
           @locals[k] = if typeof! v is \Array
             v |> map (~> "#it:#{@locals.port}")
           else

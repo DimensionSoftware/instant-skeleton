@@ -53,12 +53,6 @@
     "url": "https://develop.com",
     "title": "Instant Skeleton | by DimensionSoftware.com",
     "subdomain": "develop.com",
-    "cacheUrls": [
-      "//cache.develop.com",
-      "//cache2.develop.com",
-      "//cache3.develop.com",
-      "//cache4.develop.com"
-    ],
     "development": {
       "limits": {
         "max": 0,
@@ -70,12 +64,6 @@
     "test": {},
     "production": {
       "subdomain": "dimensionsoftware.com",
-      "cacheUrls": [
-        "//cache.dimensionsoftware.com",
-        "//cache2.dimensionsoftware.com",
-        "//cache3.dimensionsoftware.com",
-        "//cache4.dimensionsoftware.com"
-      ],
       "limits": {
         "whiteList": [],
         "blackList": [],
