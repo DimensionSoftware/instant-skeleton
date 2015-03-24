@@ -21,14 +21,9 @@ export initial-state-async =
         window.scroll-to 0 0 # reset scroll position
         scrolled!
 
-export focus-edit =
-  component-did-update: ->
-    e = @getDOMNode!
-      ..focus!
-      ..set-selection-range e.value.length, e.value.length
-
 export focus-input =
   component-did-mount: ->
+    <~ set-timeout _, 150ms # yield for smoothness
     if @refs.focus
       that.getDOMNode!
         ..focus!
