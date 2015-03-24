@@ -180,9 +180,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        Absolutely.
 
 
-## Hire Us!
+## [Hire Us!](mailto:keith@dimensionsoftware.com)
 
-Really digging our software architecture?  Say Hello and let us know:
+Really digging our [software architecture](https://dimensionsoftware.com)?  Say Hello and let us know:
 [**keith@dimensionsoftware.com**](mailto:keith@dimensionsoftware.com)
 
 ## Contributors &amp; Idea Factories
