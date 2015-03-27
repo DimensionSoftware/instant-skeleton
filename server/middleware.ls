@@ -64,7 +64,7 @@ export app-cache = (next) ->*
 
 # localize package.json config for env
 merge = {}
-merge{name,title,meta-keywords,domain} = config # pick these
+merge{name,title,meta-keywords,cache_url,domain} = config # pick these
 merge <<< config[env]                                   # merge in current env's config
 merge.features = features                               # merge in features
 export config-locals = (App) ->
@@ -72,10 +72,11 @@ export config-locals = (App) ->
   (next) ->*
     [@locals[k] = v for let k,v of merge]               # ...and localize our config
 
-    domain = process.env.DOMAIN or merge.domain
+    domain    = process.env.DOMAIN or merge.domain
+    cache-url = process.env.CACHE_URL or merge.cache_url
     @locals.cache-urls = # create cache-urls from domain
       for i in [1 to 4]
-        config.cache-url
+        cache-url
           .replace '%domain', domain
           .replace '%n', if i is 1 then '' else i
 

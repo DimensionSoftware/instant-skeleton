@@ -42,6 +42,7 @@ React.JS into a single, routable concept that makes your on-screen productivity 
 * `NODE_ENV`  -- "development", "production" or "test"
 * `NODE_PORT` -- port to listen on
 * `DOMAIN`    -- domain of site
+* `CACHE_URL` -- format for cache urls, eg: "//cache%n.%domain"
 
 [See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L50-L91) and [customize with a .env file](https://github.com/motdotla/dotenv)!
 

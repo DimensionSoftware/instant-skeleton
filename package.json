@@ -52,7 +52,7 @@
     "dev_port": 8081,
     "title": "Instant Skeleton | by DimensionSoftware.com",
     "domain": "develop.com",
-    "cacheUrl": "//cache%n.%domain",
+    "cache_url": "//cache%n.%domain",
     "development": {
       "limits": {
         "max": 0,
