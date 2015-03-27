@@ -1,20 +1,22 @@
 
 @media all and (max-width: 320px)
   body
-    zoom .88
+    zoom .9
 
 @media all and (max-width: 768px)
   body
-    font-size .95em
+    font-size .8em
     padding 0
     margin 0
+    h1
+      font-size 1.8em
+    img
+      transform scale(.65)
     &.scrolled
       .PublicPage, .MyTodoPage
         header
           form
             margin (grid / 2) grid 0 (grid * 5.4)
-            button
-              height 41px
 
     .PublicPage, .MyTodoPage
       padding-left 0
@@ -28,9 +30,10 @@
           .clip
             input[type='text']
               height 22px
-        button
-          padding-left grid
-          padding-right grid
+          button
+            height 33px
+            padding-left grid
+            padding-right grid
       ol
         padding 0
         li

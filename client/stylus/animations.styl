@@ -1,15 +1,23 @@
 
+@keyframes fadeIn
+  0%
+    opacity .5
+  100%
+    opacity 1
+
 @keyframes openSpace
   to
     max-height 50px
 
 @keyframes focusIn
   0%
-    -o-filter blur(20px)
-    -ms-filter blur(20px)
-    -moz-filter blur(20px)
-    -webkit-filter blur(20px)
+    opacity .3
+    -o-filter blur(1px)
+    -ms-filter blur(1px)
+    -moz-filter blur(1px)
+    -webkit-filter blur(1px)
   100%
+    opacity 1
     -o-filter blur(0)
     -ms-filter blur(0)
     -moz-filter blur(0)
