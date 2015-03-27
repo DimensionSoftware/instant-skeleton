@@ -44,7 +44,7 @@ module.exports =
   , context:  __dirname
   , debug:    !prod
   , quiet:    prod
-  , devtool:  'source-map'
+  , devtool:  prod ? false : 'source-map'
   , optimize: prod
   , entry:    entry
   , plugins:  plugins
