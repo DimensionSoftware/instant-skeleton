@@ -173,7 +173,8 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 10. **What about iOS/Droid &amp; and mobile devices?**
 
-       Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/)!
+       Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and
+       [NW.js](http://nwjs.io/)!  [React Native](https://github.com/facebook/react-native) support is on the horizon.
 
 11. **Does this work with io.js?**
 
