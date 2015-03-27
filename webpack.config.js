@@ -6,7 +6,7 @@ var nib         = require('nib')
 
 var env       = process.env.NODE_ENV || 'development'
   , prod      = env === 'production'
-  , subdomain = process.env.SUBDOMAIN || process.env.npm_package_config_subdomain || 'develop.com'
+  , domain    = process.env.DOMAIN || process.env.npm_package_config_domain || 'develop.com'
   , dev_port  = process.env.npm_package_config_dev_port  || 8081;
 
 var entry =
@@ -31,7 +31,7 @@ if (prod) { // production settings
   entry.client.push
     ('webpack/hot/dev-server'
     , 'webpack-dev-server/client?http://'
-      + subdomain
+      + domain
       + ':'
       + dev_port
     )
@@ -56,7 +56,7 @@ module.exports =
     { path:       path.join(__dirname, 'public/builds')
     , filename:   "[name].js"
     , publicPath: 'http://'
-      + subdomain
+      + domain
       + ':'
       + dev_port
       + '/builds/'

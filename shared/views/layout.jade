@@ -1,7 +1,7 @@
 |<!DOCTYPE html>
 - var production = env === 'production'
-- var subdomain  = process.env.npm_package_config_subdomain || 'develop.com'
-- var dev_port   = process.env.npm_package_config_dev_port  || 8081
+- var domain   = process.env.npm_package_config_domain || 'develop.com'
+- var dev_port = process.env.npm_package_config_dev_port  || 8081
 
 if features.dimension
   <!--
@@ -32,7 +32,7 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     //- open graph data
     meta(property='og:title', content=title)
     meta(property='og:type', content='website')
-    meta(property='og:url', content="//#{process.env.npm_package_config_subdomain}")
+    meta(property='og:url', content="//#{domain}")
     meta(property='og:image', content="#{cacheUrls[0]}/images/apple-touch-icon-114x114.png")
     meta(property='og:description', content=metaKeywords)
     meta(property='og:site_name', content=name)
@@ -47,7 +47,7 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     if production
       link(href="#{cacheUrls[1]}/builds/site.css?#{changeset}", rel='stylesheet', type='text/css')
     else
-      link(href="//#{subdomain}:#{dev_port}/builds/site.css", rel='stylesheet', type='text/css')
+      link(href="//#{domain}:#{dev_port}/builds/site.css", rel='stylesheet', type='text/css')
 
   body
     //- server-side render in production (SEO)
@@ -63,4 +63,4 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     if production
       script(src="#{cacheUrls[3]}/builds/client.js?#{changeset}")
     else
-      script(src="//#{subdomain}:#{dev_port}/builds/client.js?#{changeset}")
+      script(src="//#{domain}:#{dev_port}/builds/client.js?#{changeset}")

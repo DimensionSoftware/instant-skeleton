@@ -51,8 +51,8 @@
     "node_port": 8080,
     "dev_port": 8081,
     "title": "Instant Skeleton | by DimensionSoftware.com",
-    "subdomain": "develop.com",
-    "cacheUrl": "//cache%n.%subdomain",
+    "domain": "develop.com",
+    "cacheUrl": "//cache%n.%domain",
     "development": {
       "limits": {
         "max": 0,
@@ -63,8 +63,8 @@
     },
     "test": {},
     "production": {
-      "subdomain": "dimensionsoftware.com",
-      "cacheUrl": "//cache%n.%subdomain",
+      "domain": "dimensionsoftware.com",
+      "cacheUrl": "//cache%n.%domain",
       "limits": {
         "whiteList": [],
         "blackList": [],

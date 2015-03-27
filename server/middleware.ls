@@ -64,7 +64,7 @@ export app-cache = (next) ->*
 
 # localize package.json config for env
 merge = {}
-merge{name,title,meta-keywords,subdomain} = config # pick these
+merge{name,title,meta-keywords,domain} = config # pick these
 merge <<< config[env]                                   # merge in current env's config
 merge.features = features                               # merge in features
 export config-locals = (App) ->
@@ -72,12 +72,11 @@ export config-locals = (App) ->
   (next) ->*
     [@locals[k] = v for let k,v of merge]               # ...and localize our config
 
-    subdomain = process.env.SUBDOMAIN or merge.subdomain
-    @locals.cache-urls = # create cache-urls from subdomain
-      #["//cache#{if i is 1 then '' else i}.#{process.env.SUBDOMAIN or config.subdomain}" for i in [1 to 4]]
+    domain = process.env.DOMAIN or merge.domain
+    @locals.cache-urls = # create cache-urls from domain
       for i in [1 to 4]
         config.cache-url
-          .replace '%subdomain', subdomain
+          .replace '%domain', domain
           .replace '%n', if i is 1 then '' else i
 
     unless @locals.env is \production
@@ -151,7 +150,7 @@ export etags = (next) ->*
 
 export webpack = (next) ->*
   if @locals.env isnt \production # webpackdev headers
-    @set \Access-Control-Allow-Origin "http://#{config.subdomain}:#{config.node_port}"
+    @set \Access-Control-Allow-Origin "http://#{config.domain}:#{config.node_port}"
     @set \Access-Control-Allow-Headers \X-Requested-With
   yield next
 

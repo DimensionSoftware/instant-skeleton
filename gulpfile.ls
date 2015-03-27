@@ -23,7 +23,7 @@ dotenv.load!
 const env       = process.env.NODE_ENV or \development
 const port      = parse-int (process.env.NODE_PORT or process.env.npm_package_config_node_port)
 const dev-port  = process.env.npm_package_config_dev_port
-const subdomain = process.env.SUBDOMAIN or process.env.npm_package_config_subdomain
+const domain    = process.env.DOMAIN or process.env.npm_package_config_domain
 
 const prod = env is \production
 
@@ -48,8 +48,8 @@ gulp.task \webpack:dev-server <[build:client]> (cb) ->
     hot: !prod
     debug: !prod
     devtool: \sourcemap
-    public-path:  "http://#subdomain:#dev-port/builds/"
-    content-base: "http://#subdomain:#port"
+    public-path:  "http://#domain:#dev-port/builds/"
+    content-base: "http://#domain:#port"
   }
   dev-server.listen dev-port, (err) ->
     if err then throw new gulp-util.PluginError "webpack-dev-server: #err"
@@ -65,7 +65,7 @@ gulp.task \development <[watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules bin build client shared/react test]>, node-args:'--harmony'}
     .once \start ->
       <- boot-delay-fn
-      open "http://#subdomain:#port"
+      open "http://#domain:#port"
 gulp.task \production <[build:client ]> (gulp-shell.task 'bin/start')
 
 
