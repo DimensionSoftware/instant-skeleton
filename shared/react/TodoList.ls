@@ -11,7 +11,7 @@ require! {
 # TodoList
 module.exports = component \TodoList ({todos,visible,search}:props, {name, on-delete, on-change, show-name}) ->
   # figure visible todos from ui selection
-  cn   = -> cx {active:visible.deref! is it}
+  cn = -> cx {active:visible.deref! is it}
   show-only = (active) ->
     visible.update -> active
     window.scroll-to 0 0
@@ -41,13 +41,12 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
     Input search, {placeholder: 'Search ...'}
     h2 void name
     if list.count!
-      sorted = list.sort (a, b) -> (b.get \date) - (a.get \date)
+      sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
         .entries!
       # FIXME hack until "for x of* y!" es6 iterators
       # https://github.com/gkz/LiveScript/issues/667
       while sorted.next!value
         let key = that.0
-
           li {key} [
             Check (todos.cursor [key, \completed]), {on-change}
             Input (todos.cursor [key, \title]), { # save edits
@@ -55,9 +54,8 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
               on-key-up: -> if it.key-code is 13 then save-edit it, key
             }
             div {class-name:\fx}
-            if show-name
-              title = todos.get-in [key, \name]
-              ActiveDate (todos.cursor [key, \date]), {title}
+            if show-name # add author's name + date
+              ActiveDate (todos.cursor [key, \date]), {title:(todos.get-in [key, \name])}
             else
               ActiveDate (todos.cursor [key, \date])
             div {

@@ -15,7 +15,6 @@ module.exports = component \PublicPage page-mixins, ({{path,locals,session,every
 
   DOM.div class-name: \PublicPage, [
     Header {title-cur:(locals.cursor \current-title), name}, {after-save:(-> sync-everyone!), save-cursor:(everyone.cursor \todos)}
-
     # render everyone's todos
     TodoList { # props
       todos:   (everyone.cursor \todos)
@@ -23,7 +22,7 @@ module.exports = component \PublicPage page-mixins, ({{path,locals,session,every
       search:  (locals.cursor \search)
     }, { # statics
       +show-name
-      name: \Public,
+      name: 'Public TODO'
       on-delete: (-> sync-everyone!), on-change:(-> sync-everyone!)
     }
     Link {href:R(\MyTodoPage)} 'Back →'

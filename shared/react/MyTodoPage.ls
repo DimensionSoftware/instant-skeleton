@@ -16,7 +16,6 @@ module.exports = component \MyTodoPage page-mixins, ({{path,locals,session,every
 
   DOM.div class-name: \MyTodoPage, [
     Header {title-cur:(locals.cursor \current-title), name}, {after-save:(-> sync-session!), save-cursor:(session.cursor \todos)}
-
     # render my session todos
     TodoList { # props
       todos:   (session.cursor \todos)
