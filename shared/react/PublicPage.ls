@@ -18,14 +18,15 @@ module.exports = component \PublicPage page-mixins, ({{path,locals,session,every
 
     # render everyone's todos
     TodoList { # props
-      todos: (everyone.cursor \todos),
+      todos:   (everyone.cursor \todos)
       visible: (everyone.cursor \visible)
+      search:  (locals.cursor \search)
     }, { # statics
       +show-name
-      name:      'Public\'s TODO',
+      name: \Public,
       on-delete: (-> sync-everyone!), on-change:(-> sync-everyone!)
     }
-    Link {href:R(\MyTodoPage)} 'Add My items →'
+    Link {href:R(\MyTodoPage)} 'Back →'
     Footer {name, path, last-page:(session.get \lastPage)}
   ]
 

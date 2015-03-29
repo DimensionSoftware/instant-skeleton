@@ -8,19 +8,28 @@ require! {
 }
 
 # TodoList
-module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, on-change, show-name}) ->
+module.exports = component \TodoList ({todos,visible,search}:props, {name, on-delete, on-change, show-name}) ->
   # figure visible todos from ui selection
   cn   = -> cx {active:visible.deref! is it}
-  show = (active) ->
+  show-only = (active) ->
     visible.update -> active
+    window.scroll-to 0 0
     sync-session!
-  # show visible todos only
-  list = todos.filter (todo) ->
-    c = todo.get \completed
-    switch visible.deref! or \all
-      | \all       => true
-      | \active    => !c
-      | \completed => c
+
+  list = todos
+    .filter (todo) -> # show visible todos only
+      return false unless todo.get # guard
+      c = todo.get \completed
+      switch visible.deref! or \all
+        | \all       => true
+        | \active    => !c
+        | \completed => c
+    .filter (todo) -> # show search-filtered todos only
+      v = search.deref!
+      return false unless todo.get # guard
+      return true unless v         # guard
+      ((todo.get \title).index-of v) >= 0
+
   save-edit = (e, key) ->
     todos.update-in [key, \title], ->
       on-change!
@@ -28,6 +37,7 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
 
   # todo list
   ol void [
+    Input search, {placeholder: 'Search ...'}
     h2 void name
     if list.count!
       # FIXME hack until "for x of* y!" es6 iterators
@@ -42,24 +52,24 @@ module.exports = component \TodoList ({todos,visible}:props, {name, on-delete, o
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
             }
+            div {class-name:\fx}
             if show-name then span {title} title
             div {
               title: \Delete
               class-name: \delete,
               on-click: ->
-                console.log key
                 if confirm 'Permanently delete?'
                   todos.delete key
                   if on-delete then on-delete!
             }, \x
           ]
     else
-      li void [ div void '(empty)' ]
+      li void [ div {class-name:\placeholder} '(empty)' ]
 
     # filters
     div {class-name:\actions} [
-      a {on-click:(-> show \all), class-name:(cn \all)} \All
-      a {on-click:(-> show \active), class-name:(cn \active)} \Active
-      a {on-click:(-> show \completed), class-name:(cn \completed)} \Completed
+      a {on-click:(-> show-only \all), class-name:(cn \all)} \All
+      a {on-click:(-> show-only \active), class-name:(cn \active)} \Active
+      a {on-click:(-> show-only \completed), class-name:(cn \completed)} \Completed
     ]
   ]

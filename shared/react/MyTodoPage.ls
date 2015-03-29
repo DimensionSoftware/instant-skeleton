@@ -19,14 +19,15 @@ module.exports = component \MyTodoPage page-mixins, ({{path,locals,session,every
 
     # render my session todos
     TodoList { # props
-      todos:   (session.cursor \todos),
+      todos:   (session.cursor \todos)
       visible: (session.cursor \visible)
+      search:  (locals.cursor \search)
     }, { # statics
       name:      "#{if name then "#name's TODO" else 'My TODO'}"
       on-delete: (-> sync-session!)
       on-change: (-> sync-session!)
     }
-    Link {href:R(\PublicPage)} 'Public TODO →'
+    Link {href:R(\PublicPage)} 'Public →'
     Footer {name, path, last-page:(session.get \lastPage)}
   ]
 
