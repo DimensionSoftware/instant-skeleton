@@ -19,7 +19,7 @@ module.exports = component \PublicPage page-mixins, ({{path,locals,session,every
     # render everyone's todos
     TodoList { # props
       todos:   (everyone.cursor \todos)
-      visible: (everyone.cursor \visible)
+      visible: (locals.cursor \visible)
       search:  (locals.cursor \search)
     }, { # statics
       +show-name
