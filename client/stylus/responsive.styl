@@ -1,8 +1,4 @@
 
-@media all and (max-width: 320px)
-  body
-    zoom .9
-
 @media all and (max-width: 768px)
   body
     font-size .8em
@@ -24,7 +20,7 @@
       header
         left 0
         right 0
-        top (grid * 1.1)
+        top (grid * 6.4)
         form
           margin 0 grid 0 (grid * 5.8)
           .clip
@@ -36,9 +32,13 @@
             padding-right grid
       ol
         padding 0 0 (grid * 5) 0
+        > input
+          right grid
+          max-width grid * 5
         li
           span
             right (grid * 2)
+            max-width grid * 9
         + a
           right grid * 1.5
       .actions

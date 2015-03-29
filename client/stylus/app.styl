@@ -110,9 +110,8 @@ h2, h3
       .clip
         overflow hidden
         input[type='text']
-          padding-top 5px
+          padding-top 9px
           padding-bottom @padding-top
-          font-style italic
           font-size 1.1em
           border-bottom 1px solid lighten(themeColor, 35%)
           background transparent
@@ -151,6 +150,7 @@ h2, h3
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
+  min-height grid * 36.3
   form
     position relative
     input[type='text']
@@ -206,9 +206,11 @@ h2, h3
         padding 0 6px
         right grid * 5.5
         font-weight 200
-        font-size .85em
+        font-size .7em
+        font-style italic
+        color lighten(textColor, 30%)
         z-index onTop
-        max-width 150px
+        max-width 200px
         overflow ellipsis
       .placeholder
         text-indent grid * 7
@@ -287,7 +289,8 @@ h2, h3
     font-size .8em
     text-transform capitalize
   footer
-    min-height 69px
+    position relative
+    min-height grid * 10
     text-align center
     margin-top grid * 7
     .navigation
