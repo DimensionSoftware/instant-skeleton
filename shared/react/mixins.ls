@@ -5,9 +5,13 @@ require! {
   immutable
 }
 
+state = { last-offset: 0px, -initial-load }
+
 export initial-state-async =
   get-initial-state-async: (cb) ->
-    request # fetch state
+    # TODO better on mobile to use primus websocket for surfing?
+    unless state.initial-load then state.initial-load = true; return # guard
+    request # fetch state (GET request is cacheable vs. websocket)
       .get window.location.pathname
       .set \Accept \application/json
       .query window.location.search
@@ -20,6 +24,7 @@ export initial-state-async =
         cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
+    true
 
 export focus-input =
   component-did-mount: ->
@@ -35,7 +40,6 @@ export scroll =
   component-will-unmount: ->
     window.remove-event-listener \scroll, scrolled, false
 
-state = { last-offset: 0px }
 function scrolled
   body   = document.get-elements-by-tag-name \body .0 # cache
   offset = window.page-y-offset
