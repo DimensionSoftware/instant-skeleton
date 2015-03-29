@@ -3,6 +3,7 @@
 {a,ol,li,span,div,h2} = DOM
 
 require! {
+  \./ActiveDate
   \./Input
   \./Check
 }
@@ -53,7 +54,11 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
               on-key-up: -> if it.key-code is 13 then save-edit it, key
             }
             div {class-name:\fx}
-            if show-name then span {title} title
+            if show-name
+              title = todos.get-in [key, \name]
+              ActiveDate (todos.cursor [key, \date]), {title}
+            else
+              ActiveDate (todos.cursor [key, \date])
             div {
               title: \Delete
               class-name: \delete,
