@@ -17,15 +17,27 @@ a
   display inline-block
   color themeColor
   text-decoration none
-  transition border-bottom .01s ease-in
+  transition border-bottom .023s ease-in .01s
   border-bottom 1px solid transparent
+  &:after
+    content ''
+    position absolute
+    left 0
+    right 0
+    width 0
+    bottom -1px
+    height 4px
+    background themeColor
+    transition all .1s ease-out .25s
   &:hover, &:visited
-    color darken(themeColor, 20%)
+    color darken(themeColor, 10%)
   &:hover
-    transform scale(1.02)
+    transform scale(1.03)
     transition none
-    border-bottom-color themeColor
-    box-shadow inset 0 -4px 0 rgba(themeColor, .5)
+    box-shadow inset 0 -3px 0 tint(themeColor, 30%)
+    &:after
+      transition width .1s ease-in
+      width 100%
 
 h1, h2, h3, h4, h5, h6
   margin-top (grid/3)
