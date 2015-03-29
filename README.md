@@ -204,9 +204,7 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 * ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
 * ADD: Selenium and more tests
 * ADD: Coverage.js working with LiveScript
-* ADD: sortable todos
 * ADD: sum todos in Navigation
-* ADD: add ticking timestamp to todo ui
 * FIX: whitelist to ipv6 match
 
 &nbsp;

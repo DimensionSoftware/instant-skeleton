@@ -41,12 +41,13 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
     Input search, {placeholder: 'Search ...'}
     h2 void name
     if list.count!
+      sorted = list.sort (a, b) -> (b.get \date) - (a.get \date)
+        .entries!
       # FIXME hack until "for x of* y!" es6 iterators
       # https://github.com/gkz/LiveScript/issues/667
-      h = list.entries!
-      while h.next!value
+      while sorted.next!value
         let key = that.0
-          title = todos.get-in [key, \name]
+
           li {key} [
             Check (todos.cursor [key, \completed]), {on-change}
             Input (todos.cursor [key, \title]), { # save edits
