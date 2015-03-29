@@ -151,7 +151,7 @@ h2, h3
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
-  min-height grid * 38.5
+  min-height grid * 32
   form
     position relative
     input[type='text']
@@ -170,7 +170,7 @@ h2, h3
       color darken(themeColor, 30%)
       z-index onTop
   ol
-    min-height 400px
+    min-height grid * 30
     padding-bottom grid * 5
     margin-top 0
     margin-bottom (grid / 2)
@@ -291,7 +291,7 @@ h2, h3
     text-transform capitalize
   footer
     position relative
-    min-height grid * 10
+    min-height grid * 4
     text-align center
     margin-top grid * 7
     .navigation
@@ -312,16 +312,30 @@ h2, h3
       font-size .9em
       a
         font-size @font-size
-.fb-like
-  position absolute
-  bottom grid * 5
-  left 50%
-  margin-left -34px
-.ribbon
-  position fixed
-  z-index 1
-  top -9px
-  right -8px
-  opacity .75
-  &:hover
-    opacity 1
+
+// when features.dimension is true...
+body
+  .dimension
+    margin 0 auto
+    text-align center
+    .dimension-logo
+      bottom grid * 8
+      left -(grid / 2)
+    .fb-like
+      display block!important
+      bottom -17px
+      left grid * 2.3
+      position relative
+      min-width 123px
+      visibility hidden
+    .ribbon
+      position fixed
+      z-index 1
+      top -9px
+      right -8px
+      opacity .75
+      &:hover
+        opacity 1
+  &.loaded
+    .dimension
+      visibility visible
