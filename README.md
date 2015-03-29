@@ -206,6 +206,7 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 * ADD: Coverage.js working with LiveScript
 * ADD: sortable todos
 * ADD: sum todos in Navigation
+* ADD: add ticking timestamp to todo ui
 * FIX: whitelist to ipv6 match
 
 &nbsp;
