@@ -34,7 +34,7 @@ export focus-input =
         ..focus!
         ..select!
 
-export scroll =
+export scroller =
   component-did-mount: ->
     window.add-event-listener \scroll, scrolled, false
   component-will-unmount: ->
@@ -43,6 +43,7 @@ export scroll =
 function scrolled
   body   = document.get-elements-by-tag-name \body .0 # cache
   offset = window.page-y-offset
+  # add relevant scroll classes
   window.toggle-class body, \scrolled (offset > 1px)
   window.toggle-class body, \down     (state.last-offset < offset)
   window.toggle-class body, \up       (state.last-offset > offset)
