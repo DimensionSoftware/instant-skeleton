@@ -182,6 +182,7 @@ export primus-koa-session = (store, keys) ->
       next!
 
 function primus-koa-session-helper req, name, keys
+  return void unless req.headers.cookie # guard
   # function used by Cookies
   # https://github.com/expressjs/cookies
   cache = {}
