@@ -8,21 +8,18 @@
       font-size 1.8em
     img
       transform scale(.65)
-    &.scrolled
-      .PublicPage, .MyTodoPage
-        header
-          form
-            margin (grid / 2) grid 0 (grid * 5.4)
-
     .PublicPage, .MyTodoPage
       padding-left 0
       padding-right @padding-left
+      overflow hidden
+      h2
+        margin-left grid * 5
       header
         left 0
         right 0
         top (grid * 6.4)
         form
-          margin 0 grid 0 (grid * 5.8)
+          margin 0
           .clip
             input[type='text']
               height 22px
@@ -34,27 +31,33 @@
         padding 0 0 (grid * 5) 0
         > input
           right grid
-          max-width grid * 5
+          max-width grid * 7
         li
+          input[type='text']
+            text-indent grid * 4.5
           span
             right (grid * 2)
             max-width grid * 9
         + a
           right grid * 1.5
       .actions
-        margin (grid * 1.5) 0 (grid / 2) (grid * 7)
+        margin auto
+        left 0
+        right 0
       footer
         margin-top (grid * 4)
         .navigation
           text-align left
           position relative
-          margin 0 0 (grid * 4) (grid * 7)
-          max-width 100px
+          margin 0 0 (grid * 9) (grid * 8)
+          font-size 1.2em
 
     .HomePage
       form
         margin-left grid * 4
         margin-right @margin-left
         overflow hidden
-  .fb-like, .ribbon
-    display none!important
+
+    .dimension
+      .fb-like, .ribbon
+        display none!important
