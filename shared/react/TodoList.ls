@@ -47,17 +47,22 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
       # https://github.com/gkz/LiveScript/issues/667
       while sorted.next!value
         let key = that.0
+          show-date = if todos.has-in [key, \completed-at] then [key, \completed-at] else [key, \date]
           li {key} [
-            Check (todos.cursor [key, \completed]), {on-change}
+            Check (todos.cursor [key, \completed]), {on-change: ~>
+              on-change if it.deref!
+                todos.update-in [key, \completed-at], -> new Date!get-time!
+              else
+                todos.delete-in [key, \completed-at]}
             Input (todos.cursor [key, \title]), { # save edits
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
             }
             div {class-name:\fx}
-            if show-name # add author's name + date
-              ActiveDate (todos.cursor [key, \date]), {title:(todos.get-in [key, \name])}
+            ActiveDate (todos.cursor show-date), if show-name
+              {title:(todos.get-in [key, \name])} # add author's name
             else
-              ActiveDate (todos.cursor [key, \date])
+              {}
             div {
               title: \Delete
               class-name: \delete,
