@@ -1,0 +1,109 @@
+
+// general style first
+nav
+  animation fadeIn .6s ease-in
+  position fixed
+  z-index onTop
+  bottom grid
+  right grid * 1.5
+  text-align right
+  padding 2px 15px
+  color lighten(textColor, 50%)
+  font-size .75em
+  // switch toggles on-off the nav menu's <UL>
+  .switch
+    position fixed
+    z-index onTop * 2
+    right grid * 2.5
+    bottom grid * 2
+    input[type='checkbox']
+      display none
+    // this is a heavily modified css-only (jsfrei & faster) version of @elijahmanor's:
+    // http://www.elijahmanor.com/css-animated-hamburger-icon/
+    .hamburger
+      position absolute
+      padding grid (grid * 3.5) (grid * 1.6) 0
+      display none
+      // the hamburger itself:
+      & + .fx, & + .fx:before, & + .fx:after, & ~ .bg
+        position absolute
+        z-index onTop * 2
+        content ''
+        display none
+        right 0
+        cursor pointer
+        border-radius 1px
+        height 3px
+        width 25px
+        background themeColor
+      & + .fx:before
+        top -(grid - 3)
+      & + .fx:after
+        bottom -(grid - 3)
+      & + .fx, & + .fx:before, & + .fx:after
+        transition all .2s ease-in
+    ul
+      background rgba(#fff, .85)
+      border 1px solid #fafafa
+      padding grid (grid * 2)
+      margin 0
+      list-style-type none
+  > small
+    text-transform capitalize
+
+
+// handle nav on small mobile devices (mostly phones)
+@media all and (max-width: 768px)
+  body.scrolled
+    .switch
+      top grid * 2.5
+      transition top .1s ease-in
+  nav
+    display block
+    .switch
+      top grid * 1.8
+      bottom auto
+      height grid
+      width grid
+      transition none
+      .hamburger
+        display block
+        & + .fx, & + .fx:before, & + .fx:after
+          display block
+        & ~ .bg
+          display block
+          background #fff
+          border 1px solid tint(themeColor, 80%)
+          right -5px
+          top -12px
+          padding 11px 4px
+          z-index (onTop * 2) - 1
+        &:not(checked) ~ ul
+          transform translateX(500px)
+          transition none
+        // checked state
+        &:checked
+          padding 0 grid * 2
+          & + .fx
+            background-color transparent
+          & + .fx:before, &:checked + .fx:after
+            top 0
+          & + .fx:before
+            transform rotate(45deg)
+          & + .fx:after
+            transform rotate(-45deg)
+          & ~ .bg
+            border-color transparent
+          & ~ ul
+            // show drawer
+            transform translateY(0)
+            transition transform .1s ease-in
+            position fixed
+            padding-top grid * 8
+            top 0
+            right 0
+            left 0
+            bottom 0
+            text-align center
+            font-size 4em
+            line-height 1.5em
