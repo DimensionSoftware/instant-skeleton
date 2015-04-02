@@ -17,7 +17,7 @@ module.exports = component \HomePage page-mixins, ({{path,locals,session,everyon
 
   div class-name: \HomePage,
     # allow name to be set
-    h1 void if name then "Greetings #name!" else 'Hello! What\'s Your Name?'
+    h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'
     hr void
     form {on-submit:-> false} [
       Input (session.cursor \name), {ref:\focus, placeholder:'Your Name'}

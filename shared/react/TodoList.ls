@@ -1,6 +1,6 @@
 
 # destructure only what's needed
-{a,ol,li,span,div,h2} = DOM
+{a,ol,li,div,h2} = DOM
 
 require! {
   \./ActiveDate
@@ -38,7 +38,7 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
 
   # todo list
   ol void [
-    Input search, {placeholder: 'Search ...'}
+    Input search, {placeholder: 'Search'}
     h2 void name
     if list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron

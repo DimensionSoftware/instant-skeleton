@@ -1,0 +1,26 @@
+
+// when features.dimension is true...
+body
+  .dimension
+    text-align center
+    .dimension-logo
+      bottom grid * 8
+      left -(grid / 2)
+    .fb-like
+      display block
+      bottom -17px
+      left grid * 2.3
+      position relative
+      min-width 123px
+      visibility hidden
+    .ribbon
+      position fixed
+      z-index 1
+      top -9px
+      right -8px
+      opacity .75
+      &:hover
+        opacity 1
+  &.loaded
+    .dimension
+      visibility visible
