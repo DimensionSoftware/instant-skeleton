@@ -47,4 +47,5 @@ function scrolled
   window.toggle-class body, \scrolled (offset > 1px)
   window.toggle-class body, \down     (state.last-offset < offset)
   window.toggle-class body, \up       (state.last-offset > offset)
+  window.toggle-class body, \bottom   (window.inner-height + window.scroll-y) >= document.body.offset-height
   state.last-offset := offset
