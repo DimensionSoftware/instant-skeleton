@@ -14,7 +14,7 @@ nav
   .switch
     position fixed
     z-index onTop * 2
-    right grid * 2.5
+    right grid * 2
     bottom grid * 2
     input[type='checkbox']
       display none
@@ -41,9 +41,10 @@ nav
       & + .fx:after
         bottom -(grid - 3)
       & + .fx, & + .fx:before, & + .fx:after
-        transition all .2s ease-in
+        transition all .15s ease-in
+    // the menu
     ul
-      background rgba(#fff, .85)
+      background rgba(#fff, .8)
       border 1px solid #fafafa
       padding grid (grid * 2)
       margin 0
@@ -56,7 +57,7 @@ nav
 @media all and (max-width: 768px)
   body.scrolled
     .switch
-      top grid * 2.5
+      top grid * 2
       transition top .1s ease-in
   nav
     display block
@@ -96,6 +97,7 @@ nav
             border-color transparent
           & ~ ul
             // show drawer
+            background rgba(#fff, .9)
             transform translateY(0)
             transition transform .1s ease-in
             position fixed
