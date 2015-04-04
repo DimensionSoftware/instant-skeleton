@@ -5,6 +5,11 @@
     font-size .8em
     padding 0
     margin 0
+    &.scrolled
+      // hide blue line up top on mobile (reclaim pixles)
+      &:after
+        border none
+        border-bottom none
     h1
       font-size 1.8em
       margin-left grid
@@ -15,9 +20,10 @@
       padding-left grid
       padding-right @padding-left
     .PublicPage, .MyTodoPage
+      margin-bottom grid * 6
       padding-left 0
       padding-right @padding-left
-      overflow hidden
+      overflow visible
       h2
         vertical-align bottom
         margin-top 40px
@@ -49,6 +55,7 @@
           top -(grid * 3.3)
           max-width grid * 15
         li
+          overflow hidden
           input[type='checkbox']
             margin-top -3px
           input[type='text']
@@ -61,11 +68,9 @@
             text-indent grid * 5.1
           .delete
             right grid
-        // "next" link
+        // "next" link (hidden-- use hamburger)
         + a
-          margin-top -67px
-          font-size 1.12em
-          right grid * 1.5
+          display none
       .actions
         font-size 1.2em
         margin auto
@@ -73,7 +78,6 @@
         right 0
       footer
         z-index onTop * 2
-        margin-top grid
     .HomePage
       form
         margin-left grid * 2
@@ -82,7 +86,7 @@
 
     .dimension
       position fixed
-      bottom 0
+      bottom grid
       left 50%
       z-index 0
       margin-left -120px

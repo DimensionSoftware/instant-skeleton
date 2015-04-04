@@ -144,20 +144,22 @@ h2, h3
       right grid * 2.7
       font-size 1.1em
       padding 2px 10px
+      background-color tint(themeColor, 98%)
       border-radius 30px
-      border 1px solid #f0f0f0
+      border 1px solid tint(themeColor, 85%)
       border-bottom-width 2px
       z-index 1
       color lighten(textColor, 50%)
       &:focus, &:hover
         color lighten(textColor, 40%)
-        border-color #eee
+        border-color tint(themeColor, 60%)
       &:focus
-        border-color tint(themeColor, 20%)
+        border-color tint(themeColor, 50%)
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
   min-height grid * 30
+  margin-bottom grid * 12
   // inputs for adding a todo
   form
     position relative
@@ -189,7 +191,7 @@ h2, h3
     border-right 1px solid darken(borderColor, 12%)
     border-top none
     border-bottom 2px solid darken(borderColor, 7%)
-    box-shadow 0 2px 2px -1px tint(themeColor, 60%), 0 2px 20px -1px borderColor, 0 30px 37px -35px darken(borderColor, 5%)
+    box-shadow 0 1px 2px -1px tint(themeColor, 60%), 0 2px 20px -1px borderColor
     // two red lines simulating 8x11 paper
     &:after
       position absolute
@@ -313,9 +315,7 @@ h2, h3
 
   footer
     position relative
-    min-height grid * 4
     text-align center
-    margin-top grid * 7
     .last-visited
       font-size .9em
       a
