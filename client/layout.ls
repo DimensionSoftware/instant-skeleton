@@ -3,6 +3,7 @@ require! {
   react: {create-factory}:React
   immutable: window.Immutable
   immstruct
+  \famous/inputs/FastClick
   \../shared/react/App
   \../shared/features
   \./stylus/master
