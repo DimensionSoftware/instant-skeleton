@@ -10,6 +10,9 @@
       &:after
         border none
         border-bottom none
+    a:hover:after
+      display none
+      transition none
     h1
       font-size 1.8em
       margin-left grid
@@ -49,10 +52,13 @@
         box-shadow none
         border-bottom-width 1px
         background-color #fff
+        // simulated paper lines
+        &:after
+          left grid * 3.5
         // search
         > input
           left grid * 3.5
-          top -(grid * 3.3)
+          top -(grid * 3.5)
           max-width grid * 15
         li
           overflow hidden
@@ -76,6 +82,10 @@
         margin auto
         left 0
         right 0
+        padding 0
+        a
+          margin 0 (grid * 2)
+          min-width grid * 4.5
       footer
         z-index onTop * 2
     .HomePage
