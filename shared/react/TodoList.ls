@@ -11,7 +11,7 @@ require! {
 # TodoList
 module.exports = component \TodoList ({todos,visible,search}:props, {name, on-delete, on-change, show-name}) ->
   # figure visible todos from ui selection
-  cn = -> cx {active:visible.deref! is it}
+  cn = -> cx {active:(visible.deref! or \all) is it}
   show-only = (active) ->
     visible.update -> active
     window.scroll-to 0 0
