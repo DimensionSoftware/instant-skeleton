@@ -44,13 +44,15 @@ nav
         transition all .15s ease-in
     // the menu
     ul
-      background rgba(#fff, .8)
+      background rgba(#fff, .85)
       border 1px solid #fff
       padding grid (grid * 2)
       margin 0
       list-style-type none
-  > small
-    text-transform capitalize
+      > small
+        color darken(textColor, 20%)
+        text-transform capitalize
+        font-weight bold
 
 
 // handle nav on small mobile devices (mostly phones)
@@ -104,5 +106,5 @@ nav
             left 0
             bottom 0
             text-align center
-            font-size 4em
+            font-size 3em
             line-height 1.5em

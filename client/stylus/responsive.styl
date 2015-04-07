@@ -2,7 +2,7 @@
 // handle phones and narrower screens
 @media all and (max-width: 768px)
   body
-    font-size .8em
+    font-size .85em
     padding 0
     margin 0
     &.scrolled
@@ -35,7 +35,7 @@
       header
         left 0
         right 0
-        top (grid * 6.6)
+        top (grid * 7)
         form
           margin 0
           .clip
@@ -59,17 +59,23 @@
         > input
           left grid * 3.5
           top -(grid * 3.5)
-          max-width grid * 15
+          max-width grid * 17
         li
           overflow hidden
           input[type='checkbox']
             margin-top -3px
           input[type='text']
-            text-indent grid * 4.5
+            text-indent grid * 4.3
+            &:focus + .fx, &:hover + .fx
+              margin-right 0
           span
+            position relative
+            display block
             font-style normal
-            right (grid * 2)
-            max-width grid * 9
+            left (grid * 5)
+            top 0
+            max-width 100%
+            background-color transparent
           .placeholder
             text-indent grid * 5.1
           .delete
@@ -96,7 +102,7 @@
 
     .dimension
       position fixed
-      bottom grid
+      bottom -(grid * 2)
       left 50%
       z-index 0
       margin-left -120px

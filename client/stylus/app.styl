@@ -129,7 +129,7 @@ h2, h3
           transition opacity .15s ease-in
           &:hover, &:focus
             border-bottom-color themeColor
-            background-image linear-gradient(to top, tint(themeColor, 90%), rgba(#ffffff, .95) 45px)
+            background-image linear-gradient(to top, tint(themeColor, 88%), #ffffff 45px)
             transition none
       button
         visibility hidden
@@ -138,6 +138,7 @@ h2, h3
         height 36px
   ol
     > input
+      width 200px
       position absolute
       font-weight 100
       top grid * 3.5
@@ -154,7 +155,9 @@ h2, h3
         color lighten(textColor, 40%)
         border-color tint(themeColor, 60%)
       &:focus
+        width 230px
         border-color tint(themeColor, 50%)
+        transition width .03s ease-in
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
@@ -233,6 +236,7 @@ h2, h3
         max-width 200px
         overflow ellipsis
       .placeholder
+        margin (grid * 1.5) 0
         text-indent grid * 7
       input[type='checkbox']
         position absolute
