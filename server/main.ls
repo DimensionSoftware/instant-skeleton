@@ -38,7 +38,7 @@ function restart
     App  = require \./App
     args = [
       parse-int (process.env.NODE_PORT or process.env.npm_package_config_node_port)
-      process.env.CHANGESET
+      process.env.CHANGESET or process.env.npm_package_version
     ]
 
     # start!
