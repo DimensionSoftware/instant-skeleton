@@ -105,7 +105,8 @@ function live-stream primus, db, name, key-compare-fn
       s-stream = db.create-live-stream!
         ..pipe channel # pipe updates
         ..on \data (data) ->
-          v = if typeof! data.value is \Object then data.value else JSON.parse data.value # FIXME huh?
+          # FIXME levelup ignores value-encoding
+          v = if typeof! data.value is \Object then data.value else JSON.parse data.value
           if key-compare-fn
             if key-compare-fn(data, spark) then send v
           else
@@ -114,5 +115,6 @@ function live-stream primus, db, name, key-compare-fn
       # <- save live updates from client
       spark.on \data (data) ->
         # TODO check permissions from request.key (eg. deleting from public)
-        db.put spark.request.key, JSON.stringify data # FIXME huh?
-
+        # FIXME levelup ignores value-encoding
+        # if key-compare-fn, then use session as key
+        db.put (if key-compare-fn then spark.request.key else name), JSON.stringify data
