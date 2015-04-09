@@ -4,8 +4,6 @@ nav
   animation fadeIn .6s ease-in
   position fixed
   z-index onTop
-  bottom grid
-  right grid * 1.5
   text-align right
   padding 2px 15px
   color lighten(textColor, 50%)
@@ -14,8 +12,9 @@ nav
   .switch
     position fixed
     z-index onTop * 2
-    right grid * 2
-    bottom grid * 2
+    left grid
+    top grid * 6.2
+    bottom 0
     input[type='checkbox']
       display none
     // this is a heavily modified css-only (jsfrei & faster) version of @elijahmanor's:
@@ -44,13 +43,13 @@ nav
         transition all .15s ease-in
     // the menu
     ul
-      background rgba(#fff, .85)
-      border 1px solid #fff
       padding grid (grid * 2)
       margin 0
       list-style-type none
       > small
-        color darken(textColor, 20%)
+        display inline-block
+        width grid * 10.5
+        color lighten(textColor, 25%)
         text-transform capitalize
         font-weight bold
 
@@ -64,6 +63,8 @@ nav
     display block
     .switch
       top grid * 1.8
+      left auto
+      right grid * 1.5
       bottom auto
       height grid
       width grid
@@ -108,3 +109,5 @@ nav
             text-align center
             font-size 3em
             line-height 1.5em
+            small
+              width auto

@@ -22,6 +22,8 @@
     button
       padding-left grid
       padding-right @padding-left
+    .Page
+      margin-left 0
     .PublicPage, .MyTodoPage
       margin-bottom grid * 6
       padding-left 0
@@ -48,6 +50,7 @@
         z-index 1
         overflow visible
         padding 0 0 (grid * 5) 0
+        margin-left 0
         margin-bottom 125px
         box-shadow none
         border-bottom-width 1px
@@ -99,12 +102,3 @@
         margin-left grid * 2
         margin-right @margin-left
         overflow hidden
-
-    .dimension
-      position fixed
-      bottom -(grid * 2)
-      left 50%
-      z-index 0
-      margin-left -120px
-      .fb-like, .ribbon
-        display none!important

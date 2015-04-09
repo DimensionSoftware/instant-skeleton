@@ -9,7 +9,8 @@ maxWidth     = 1200px
 
 bounce = cubic-bezier(0,1.72,0,.75)
 
-headerBackground=tint(themeColor, 96%)
+headerBackground = tint(themeColor, 96%)
+leftNavWidth     = 125px
 
 body
   margin-top 0
@@ -22,7 +23,7 @@ body
     right 0
     bottom 0
     left 0
-    background-image linear-gradient(#ffffff 80%, #eeeeee)
+    background-image linear-gradient(#fdfdfd 80%, #f4f4f4)
   &:after
     content ''
     position fixed
@@ -78,9 +79,11 @@ h1, h2
 h2, h3
   margin-top grid * 4
 
-.Page > div
-  animation focusIn .03s ease-in
-  backface-visibility hidden
+.Page
+  margin-left leftNavWidth + (grid * 2)
+  > div
+    animation focusIn .03s ease-in
+    backface-visibility hidden
 
 .HomePage
   max-width 800px
@@ -99,20 +102,23 @@ h2, h3
   h2
     margin-top grid * 3.3
     margin-bottom grid * 6.5
+    text-overflow ellipsis
+    overflow hidden
+    height 1em
   header
     position fixed
-    left grid * 4
-    right grid * 4
+    left 22.2 * grid
+    right 0
     z-index onTop + 1
     top grid * 7.6
-    margin 0 auto 0 auto
+    margin 0 auto
     max-width maxWidth
     transition transform .2s ease-out
     form
-      margin 0 (grid * 2.8) 0 (grid * 4.5)
+      margin 0 (grid * 7) 0 0
       .clip
         overflow hidden
-        border-right 1px solid themeColor
+        border-right 1px solid lighten(themeColor, 80%)
         input[type='text']
           padding-top 9px
           padding-bottom @padding-top
@@ -122,7 +128,7 @@ h2, h3
           background transparent
           background-image linear-gradient(to top, tint(themeColor, 93%), rgba(#ffffff, .85) 45px)
           opacity 1
-          padding-left 9px
+          padding-left 13px
           margin-left 4px
           max-width maxWidth - 50px
           border-bottom-color themeColor
@@ -144,7 +150,7 @@ h2, h3
       top grid * 3.5
       right grid * 2.7
       font-size 1.1em
-      padding 2px 10px
+      padding 3px 15px
       background-color tint(themeColor, 98%)
       border-radius 30px
       border 1px solid tint(themeColor, 85%)
@@ -157,7 +163,7 @@ h2, h3
       &:focus
         width 230px
         border-color tint(themeColor, 50%)
-        transition width .03s ease-in
+        transition width .01s ease-in
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
@@ -185,13 +191,10 @@ h2, h3
   ol
     min-height grid * 30
     padding-bottom grid * 5
-    margin-top 0
-    margin-bottom (grid / 2)
+    margin 0 0 (grid / 2) 0
     position relative
     overflow hidden
-    borderColor = #eee
-    border-bottom 2px solid borderColor
-    box-shadow 0 1px 5px -1px borderColor
+    border-bottom 2px solid tint(themeColor, 93%)
     // two lines simulating 8x11 paper
     &:after
       position absolute
@@ -201,9 +204,9 @@ h2, h3
       bottom 0
       content ''
       width 3px
-      height 100%
-      border-left 1px solid tint(themeColor, 80%)
-      border-right 1px solid tint(themeColor, 80%)
+      height 90%
+      border-left 1px solid tint(themeColor, 85%)
+      border-right 1px solid tint(themeColor, 85%)
     &:before
       position absolute
       z-index onTop
@@ -212,7 +215,6 @@ h2, h3
       bottom 0
       content ''
       width 1px
-      height 100%
       background-color borderColor
     // todo list iem
     li
@@ -252,11 +254,13 @@ h2, h3
         width 100%
         & + .fx
           border-bottom 1px solid transparent
-        &:hover + .fx
-          border-bottom 1px solid rgba(themeColor, .2)
-        &:focus + .fx, &:hover + .fx
+          transition all .35s ease-out .2s
+        &:focus + .fx, &:focus:hover + .fx
           border-bottom 1px solid rgba(themeColor, .8)
           margin-right grid * 2
+        &:hover + .fx
+          border-bottom 1px solid rgba(themeColor, .2)
+          transition none
         &:hover, &:focus
           ~ .delete
             display block
@@ -306,23 +310,29 @@ h2, h3
       bottom 0
       left 50%
       font-size 1.1em
-      margin-left -202px
+      margin-left -133px
       padding 0 (grid * 4.5)
       background-color rgba(#fff, .95)
-      animation fadeIn .6s ease-in
+      animation fadeIn .8s ease-in
       backface-visibility hidden
       a
         position relative
         padding (grid * 1.5) 0 grid 0
+        border-bottom 5px solid transparent
         margin 0 (grid * 2)
         min-width 40px
+        fadeOut(40%)
+        transition all .2s ease-in .01s
+        text-transform lowercase
+        &:hover
+          transition none
         &.active
-          //text-transform uppercase
-          box-shadow inset 0 -3px 0 tint(themeColor, 40%)
+          text-transform capitalize
+          fadeOut(0)
           font-weight bold
-          border-bottom-color themeColor
+          border-bottom-color darken(themeColor, 10%)
           transform scale(1.08)
-          transition transform .2s ease-in
+          transition none
 
   // "next" link
   > a

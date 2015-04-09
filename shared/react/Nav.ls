@@ -16,7 +16,7 @@ module.exports = component \Nav ({name, path, last-page}:props) ->
       span {class-name: 'bg'}
       # items inside
       ul void [
-        small void name
+        small void (name or \\u0001) # don't jank the dom
         routes.list
           .filter (-> it?1 isnt path)
           .map (route) ->

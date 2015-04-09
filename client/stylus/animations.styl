@@ -1,7 +1,21 @@
 
+fadeOut(px)
+  -o-filter grayscale(px)
+  -ms-filter grayscale(px)
+  -moz-filter grayscale(px)
+  -webkit-filter grayscale(px)
+  filter grayscale(px)
+
+blurry(px)
+  -o-filter blur(px)
+  -ms-filter blur(px)
+  -moz-filter blur(px)
+  -webkit-filter blur(px)
+  filter blur(px)
+
 @keyframes fadeIn
   0%
-    opacity .5
+    opacity .4
   100%
     opacity 1
 
@@ -12,16 +26,10 @@
 @keyframes focusIn
   0%
     opacity .3
-    -o-filter blur(1px)
-    -ms-filter blur(1px)
-    -moz-filter blur(1px)
-    -webkit-filter blur(1px)
+    blurry(1px)
   100%
     opacity 1
-    -o-filter blur(0)
-    -ms-filter blur(0)
-    -moz-filter blur(0)
-    -webkit-filter blur(0)
+    blurry(0)
 
 @keyframes fallInX
   0%

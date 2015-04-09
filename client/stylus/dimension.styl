@@ -1,7 +1,9 @@
 
 // when features.dimension is true...
+
 body
   .dimension
+    padding-left leftNavWidth
     text-align center
     .dimension-logo
       bottom grid * 11
@@ -24,3 +26,16 @@ body
   &.loaded
     .dimension
       visibility visible
+
+// handle mobile screens
+@media all and (max-width: 768px)
+  body
+    .dimension
+      position fixed
+      padding-left 0
+      bottom -(grid * 2)
+      left 50%
+      z-index 0
+      margin-left -120px
+      .fb-like, .ribbon
+        display none!important

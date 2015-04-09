@@ -26,15 +26,15 @@ a
     right 0
     width 0
     bottom -1px
-    height 6px
+    height 5px
     background themeColor
     transition all .1s ease-out .25s
   &:hover, &:visited
-    color darken(themeColor, 10%)
+    color darken(themeColor, 12%)
   &:hover
     transform scale(1.03)
     transition none
-    box-shadow inset 0 -3px 0 tint(themeColor, 30%)
+    border-bottom-color tint(themeColor, 50%)
     &:after
       transition width .1s ease-in
       width 100%

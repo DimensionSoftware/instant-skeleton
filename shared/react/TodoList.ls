@@ -77,8 +77,8 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
 
     # filters
     div {class-name:\actions} [
-      a {on-click:(-> show-only \all), class-name:(cn \all)} \All
-      a {on-click:(-> show-only \active), class-name:(cn \active)} \Active
-      a {on-click:(-> show-only \completed), class-name:(cn \completed)} \Completed
+      a {on-click:(-> show-only \all), class-name:'nofx ' + cn \all} \All
+      a {on-click:(-> show-only \active), class-name:'nofx ' + cn \active} \Active
+      a {on-click:(-> show-only \completed), class-name:'nofx ' + cn \completed} \Completed
     ]
   ]
