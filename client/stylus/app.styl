@@ -23,7 +23,7 @@ body
     right 0
     bottom 0
     left 0
-    background-image linear-gradient(#fdfdfd 80%, #f4f4f4)
+    background-image linear-gradient(#fdfdfd 80%, #f0f0f0)
   &:after
     content ''
     position fixed
@@ -31,13 +31,11 @@ body
     left 0
     right 0
     top 0
-    border-bottom 3px solid themeColor
-    box-shadow 0 0 12px 8px #fff
-    opacity 0
-    transition opacity .5s ease-in .1s
+    border-bottom 2px solid themeColor
+    transition box-shadow .5s ease-in .1s
   &.scrolled
     &:after
-      opacity 1
+      box-shadow 0 0 12px 8px #fff
       transition none
     .PublicPage, .MyTodoPage
       header
@@ -123,19 +121,18 @@ h2, h3
           padding-top 9px
           padding-bottom @padding-top
           font-size 1.1em
-          border-bottom 1px solid lighten(themeColor, 35%)
+          border-bottom 2px solid lighten(themeColor, 65%)
           text-indent grid * 4.7
           background transparent
-          background-image linear-gradient(to top, tint(themeColor, 93%), rgba(#ffffff, .85) 45px)
+          background-image linear-gradient(to top, tint(themeColor, 85%), rgba(#ffffff, .85) 45px)
           opacity 1
           padding-left 13px
           margin-left 4px
           max-width maxWidth - 50px
-          border-bottom-color themeColor
           transition opacity .15s ease-in
           &:hover, &:focus
             border-bottom-color themeColor
-            background-image linear-gradient(to top, tint(themeColor, 88%), #ffffff 45px)
+            background-image linear-gradient(to top, tint(themeColor, 81%), #ffffff 49px)
             transition none
       button
         visibility hidden
@@ -151,18 +148,18 @@ h2, h3
       right grid * 2.7
       font-size 1.1em
       padding 3px 15px
-      background-color tint(themeColor, 98%)
+      background-color tint(themeColor, 95%)
       border-radius 30px
       border 1px solid tint(themeColor, 85%)
       border-bottom-width 2px
       z-index 1
       color lighten(textColor, 50%)
       &:focus, &:hover
-        color lighten(textColor, 40%)
-        border-color tint(themeColor, 60%)
+        color lighten(textColor, 25%)
+        border-color tint(themeColor, 5%)
+        background-color tint(themeColor, 92%)
       &:focus
         width 230px
-        border-color tint(themeColor, 50%)
         transition width .01s ease-in
 
 .HomePage, .MyTodoPage, .PublicPage
@@ -221,7 +218,7 @@ h2, h3
       position relative
       display block
       max-width 100%
-      animation openSpace .25s bounce forwards, fallInX .35s bounce both
+      animation openSpace .25s ease-out forwards, fallInX .35s bounce both
       animation-delay .035s
       backface-visibility hidden
       span
@@ -318,7 +315,7 @@ h2, h3
       a
         position relative
         padding (grid * 1.5) 0 grid 0
-        border-bottom 5px solid transparent
+        border-bottom 8px solid transparent
         margin 0 (grid * 2)
         min-width 40px
         fadeOut(40%)
