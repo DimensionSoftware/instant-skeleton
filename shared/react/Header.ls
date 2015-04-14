@@ -20,7 +20,7 @@ module.exports = component \Header ({name,title-cur}:props, {after-save, save-cu
     header void [
       form {on-submit:~> it.prevent-default!} [
         div {class-name:\clip} [
-          Input title-cur, {key:\focus, ref:\focus, placeholder:'Add an Item ...'}
+          Input title-cur, {key:\focus, ref:\focus, placeholder:'Add an Item ...', +spellcheck}
         ]
         button {on-click}, \Save
       ]

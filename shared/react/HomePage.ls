@@ -20,7 +20,7 @@ module.exports = component \HomePage page-mixins, ({{path,locals,session,everyon
     h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'
     hr void
     form {on-submit:-> false} [
-      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name'}
+      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name', +spellcheck}
       button {title:'Open multiple browsers to test', on-click} \Save
     ]
     Footer {name, path, last-page:(session.get \lastPage)}

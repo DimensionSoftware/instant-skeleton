@@ -38,7 +38,7 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
 
   # todo list
   ol void [
-    Input search, {placeholder: 'Search'}
+    Input search, {placeholder: 'Search', +spellcheck}
     h2 void name
     if list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
@@ -57,6 +57,7 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
             Input (todos.cursor [key, \title]), { # save edits
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
+              +spellcheck
             }
             div {class-name:\fx}
             ActiveDate (todos.cursor show-date), if show-name

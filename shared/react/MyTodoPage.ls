@@ -3,7 +3,6 @@
 
 require! {
   \./mixins
-  \./Input
   \./Check
   \./Header
   \./Footer
