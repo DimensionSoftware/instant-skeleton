@@ -38,12 +38,13 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 
 # main
 # ----
-init-react!  # expose app cursor
 init-primus! # setup realtime
 
 # setup realtime streams w/ leveldb
 init-live-stream \everyone
-init-live-stream \session -> window.toggle-class body, \loaded # trigger ui loaded after session applies
+init-live-stream \session (session) ->
+  init-react session # expose app cursor
+  window.toggle-class body, \loaded # trigger ui loaded after session applies
 
 function init-primus
   primus = window.primus = Primus.connect!
@@ -72,11 +73,12 @@ function init-primus
 function init-live-stream name, cb=(->)
   # create realtime "live" data streams w/ leveldb
   ch = window.primus.channel name
-    ..once \data cb # ready
+    ..once \data (data) ->
+      cb force-object(data)
     ..on \data (data) ->
       # stream updates from server
-      cur = if typeof! data is \Object then data else JSON.parse data # force Object
-      if cur then app.update name, -> Immutable.fromJS cur
+      cur = force-object data
+      if cur then window.app.update name, -> Immutable.fromJS cur
     ..on \open ->
       # fn to stream updates to server
       window["sync#{capitalize name}"] = ->
@@ -87,12 +89,16 @@ function init-live-stream name, cb=(->)
       # cleanup
       delete window["#{name}Sync"]
 
-function init-react
+# FIXME workaround for levelup's broken transforms
+function force-object data
+  if typeof! data is \Object then data else JSON.parse data
+
+function init-react session
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct { # default
     path,
     locals,
-    session:{}
+    session:{} <<< session
     everyone:{},
   }
   render = -> # update on animation frames (avoids browser janks)
