@@ -105,7 +105,7 @@ function init-react session
     window.app = cur = state.cursor!
     React.render App(cur), body # render app to body
     cur
-  state.on \next-animation-frame render
+  set-timeout (-> state.on \next-animation-frame render), 1000ms
   render!
 
 function capitalize s
