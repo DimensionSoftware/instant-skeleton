@@ -78,7 +78,7 @@ function init-live-stream name, cb=(->)
     ..on \data (data) ->
       # stream updates from server
       cur = force-object data
-      if cur then window.app.update name, -> Immutable.fromJS cur
+      if cur and window.app then window.app.update name, -> Immutable.fromJS cur
     ..on \open ->
       # fn to stream updates to server
       window["sync#{capitalize name}"] = ->
