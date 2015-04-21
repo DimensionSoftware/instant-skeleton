@@ -10,12 +10,16 @@ module.exports = component \Input (props, statics={}) ->
   options = {
     auto-focus
     on-change
-    on-focus:      -> if auto-focus then it.current-target.select! # select, too!
-    type:          \text
-    tabindex:      statics.tabindex
-    placeholder:   statics.placeholder
-    default-value: props.deref!
+    +controlled
+    type: \text
+    on-focus: -> if auto-focus then it.current-target.select! # select, too!
   } <<< statics
-  console.log statics.tabindex
+
+  # how to bind this input
+  v = props.deref!
+  if options.controlled
+    options.value = v
+  else # only default
+    options.default-value = v
 
   DOM.input options
