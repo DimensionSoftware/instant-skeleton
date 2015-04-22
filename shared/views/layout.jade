@@ -51,9 +51,10 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
 
   body
     //- server-side render in production (SEO)
-    if production
-      block body
-        != body
+    .react
+      if production
+        block body
+          != body
 
     script.
       window.locals=!{delete(locals.body) && JSON.stringify(locals)};

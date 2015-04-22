@@ -9,7 +9,9 @@ require! {
   \./resources
 }
 
-body = document.get-elements-by-tag-name \body .0 # cache
+[body, react] = # cache
+  [document.get-elements-by-tag-name \body .0,
+   document.get-elements-by-class-name \react .0]
 
 # statics
 # -------
@@ -103,7 +105,7 @@ function init-react session
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
-    React.render App(cur), body # render app to body
+    React.render App(cur), react # render app to body
     cur
   set-timeout (-> state.on \next-animation-frame render), 1000ms
   render!
