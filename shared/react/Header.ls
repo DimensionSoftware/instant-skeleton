@@ -9,8 +9,11 @@ require! {
 {header,form,button,div} = DOM
 
 module.exports = component \Header ({name,title-cur}:props, {after-save, save-cursor}:statics) ->
-    on-key-up = -> # clear input
-      if it.key-code is 13 then it.current-target.value = ''
+    on-key-up = ->
+      if it.key-code is 13
+        it.current-target.value = '' # clear input
+        title-cur.update -> ''       # reset cursor
+
     on-click = -> # save todo
       if title = title-cur.deref!
         date = new Date!get-time!
