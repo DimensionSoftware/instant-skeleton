@@ -23,7 +23,7 @@ body
     right 0
     bottom 0
     left 0
-    background-image linear-gradient(#fdfdfd 80%, #f0f0f0)
+    background-image linear-gradient(#fbfbfb 80%, #f0f0f0)
   &:after
     content ''
     position fixed
@@ -71,8 +71,6 @@ hr
 
 h1, h2
   margin-top grid * 2.5
-  font-family Consolas,Monaco,'Andale Mono',monospace
-  letter-spacing -1px
 
 h2, h3
   margin-top grid * 4
@@ -102,7 +100,6 @@ h2, h3
     margin-bottom grid * 6.5
     text-overflow ellipsis
     overflow hidden
-    height 1em
   header
     position fixed
     left 22.2 * grid
@@ -113,7 +110,7 @@ h2, h3
     max-width maxWidth
     transition transform .2s ease-out
     form
-      margin 0 (grid * 7) 0 0
+      margin 0 (grid * 4) 0 0
       .clip
         overflow hidden
         border-right 1px solid lighten(themeColor, 80%)
@@ -124,7 +121,7 @@ h2, h3
           border-bottom 2px solid lighten(themeColor, 65%)
           text-indent grid * 4.7
           background transparent
-          background-image linear-gradient(to top, tint(themeColor, 85%), rgba(#ffffff, .85) 45px)
+          background-image linear-gradient(to top, tint(themeColor, 80%), rgba(#ffffff, .8) 55px)
           opacity 1
           padding-left 13px
           margin-left 4px
@@ -132,7 +129,7 @@ h2, h3
           transition opacity .15s ease-in
           &:hover, &:focus
             border-bottom-color themeColor
-            background-image linear-gradient(to top, tint(themeColor, 81%), #ffffff 49px)
+            background-image linear-gradient(to top, tint(themeColor, 76%), #ffffff 49px)
             transition none
       button
         visibility hidden
@@ -145,10 +142,10 @@ h2, h3
       position absolute
       font-weight 100
       top grid * 3.5
-      right grid * 2.7
+      right 0
       font-size 1.1em
       padding 3px 15px
-      background-color tint(themeColor, 95%)
+      background-color tint(themeColor, 90%)
       border-radius 30px
       border 1px solid tint(themeColor, 85%)
       border-bottom-width 2px
@@ -160,7 +157,7 @@ h2, h3
         background-color tint(themeColor, 92%)
       &:focus
         width 230px
-        transition width .01s ease-in
+        transition width .001s ease-in
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
@@ -228,11 +225,11 @@ h2, h3
         padding 0 6px
         right grid * 5.5
         font-weight 200
-        font-size .8em
+        font-size .75em
         font-style italic
         color lighten(textColor, 30%)
         z-index onTop
-        max-width 200px
+        max-width 250px
         overflow ellipsis
       .placeholder
         margin (grid * 1.5) 0
@@ -335,7 +332,7 @@ h2, h3
   > a
     position absolute
     margin-top -36px
-    right (grid * 4.2)
+    right (grid * 2.2)
     font-size .8em
     text-transform capitalize
 

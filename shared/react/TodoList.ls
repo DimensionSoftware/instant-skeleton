@@ -38,7 +38,7 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
 
   # todo list
   ol void [
-    Input search, {placeholder: 'Search', +spellcheck}
+    Input search, {tab-index: 1, placeholder: 'Search', +spellcheck}
     h2 void name
     if list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron

@@ -1,6 +1,6 @@
 
 body
-  font-family 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial'
+  font-family "Myriad Set Pro","Lucida Grande","Helvetica Neue","Helvetica","Arial","Verdana","sans-serif"
   line-height 1.5em
   padding 1em
   color textColor
@@ -12,6 +12,7 @@ body
     transition opacity .15s ease-in
 
 a
+  outline none
   position relative
   cursor pointer
   display inline-block
@@ -19,6 +20,8 @@ a
   text-decoration none
   transition border-bottom .023s ease-in .01s
   border-bottom 2px solid transparent
+  &:focus
+    border-bottom 2px solid themeColor
   &:after
     content ''
     position absolute
