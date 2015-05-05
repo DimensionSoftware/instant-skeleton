@@ -48,6 +48,10 @@ init-live-stream \session (session) ->
   init-react session # expose app cursor
   window.toggle-class body, \loaded # trigger ui loaded after session applies
 
+window.application-cache.add-event-listener \noupdate ->
+  <- set-timeout _, 1000ms          # yield
+  window.toggle-class body, \loaded # force ui load when 100% cache
+
 function init-primus
   primus = window.primus = Primus.connect!
     ..on \close ->
