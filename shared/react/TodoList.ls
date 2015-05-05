@@ -57,7 +57,7 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
             Input (todos.cursor [key, \title]), { # save edits
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
-              +spellcheck
+              +spell-check
             }
             div {class-name:\fx}
             ActiveDate (todos.cursor show-date), if show-name

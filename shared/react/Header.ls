@@ -21,11 +21,11 @@ module.exports = component \Header ({name,title-cur}:props, {after-save, save-cu
         save-cursor.set uuid.v4!, Immutable.fromJS todo # add
         after-save!
 
-    header void [
-      form {on-submit:~> it.prevent-default!} [
-        div {class-name:\clip} [
+    header do
+      class-name: \header
+      form do
+        on-submit: ~> it.prevent-default!
+        div do
+          class-name: \clip
           Input title-cur, {tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +spell-check, -controlled}
-        ]
-        button {on-click}, \Save
-      ]
-    ]
+        button {on-click} \Save
