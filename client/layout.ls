@@ -40,17 +40,13 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 
 # main
 # ----
-init-primus! # setup realtime
-
-# setup realtime streams w/ leveldb
-init-live-stream \everyone
-init-live-stream \session (session) ->
-  init-react session # expose app cursor
-  window.toggle-class body, \loaded # trigger ui loaded after session applies
+init-primus!    # setup realtime socket
+init-realtime!  # socket data + react
 
 window.application-cache.add-event-listener \noupdate ->
   <- set-timeout _, 1000ms          # yield
   window.toggle-class body, \loaded # force ui load when 100% cache
+
 
 function init-primus
   primus = window.primus = Primus.connect!
@@ -95,23 +91,33 @@ function init-live-stream name, cb=(->)
       # cleanup
       delete window["#{name}Sync"]
 
-# FIXME workaround for levelup's broken transforms
+function init-realtime
+  # setup realtime streams w/ leveldb
+  [stream, load] = [{}, (key, val) -->
+    stream[key] = val
+    init-react stream]
+  init-live-stream \everyone (load \everyone)
+  init-live-stream \session (load \session)
+
 function force-object data
+  # FIXME workaround for levelup's broken transforms
   if typeof! data is \Object then data else JSON.parse data
 
-function init-react session
+function init-react data
+  return unless data.session and data.everyone
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct { # default
     path,
     locals,
-    session:{} <<< session
-    everyone:{},
+    session:  {} <<< data.session
+    everyone: {} <<< data.everyone
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
     React.render App(cur), react # render app to body
     cur
   set-timeout (-> state.on \next-animation-frame render), 1000ms
+  window.toggle-class body, \loaded # trigger ui loaded after session applies
   render!
 
 function capitalize s
