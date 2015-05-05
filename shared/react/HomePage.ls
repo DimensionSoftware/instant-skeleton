@@ -13,14 +13,22 @@ module.exports = component \HomePage page-mixins, ({{path,locals,session,everyon
 
   on-click = ~>
     sync-session! # sync across sessions
-    @navigate R(\MyTodoPage)
+    @navigate (R \MyTodoPage)
 
-  div class-name: \HomePage,
-    # allow name to be set
+  # allow name to be set
+  div do
+    class-name: \HomePage
+
     h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'
     hr void
-    form {on-submit:-> false} [
-      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name', +spellcheck, -controlled}
-      button {title:'Open multiple browsers to test', on-click} \Save
-    ]
-    Footer {name, path, last-page:(session.get \lastPage)}
+
+    form do
+      on-submit: -> it.prevent-default!
+      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name', +spell-check, -controlled}
+
+      button do
+        title:    'Open multiple browsers to test'
+        on-click: on-click
+        \Save
+
+    Footer {name, path, last-page: (session.get \lastPage)}

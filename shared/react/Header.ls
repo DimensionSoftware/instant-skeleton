@@ -21,7 +21,7 @@ module.exports = component \Header ({name,title-cur}:props, {after-save, save-cu
     header void [
       form {on-submit:~> it.prevent-default!} [
         div {class-name:\clip} [
-          Input title-cur, {tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +spellcheck, -controlled}
+          Input title-cur, {tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +spell-check, -controlled}
         ]
         button {on-click}, \Save
       ]
