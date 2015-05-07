@@ -74,9 +74,12 @@ function init-primus
 
 function init-live-stream name, cb=(->)
   # create realtime "live" data streams w/ leveldb
+  force-response = set-timeout cb, 1500ms
   ch = window.primus.channel name
     ..once \data (data) ->
-      cb force-object(data)
+      # stream initial data from server
+      clear-timeout force-response
+      cb (force-object data)
     ..on \data (data) ->
       # stream updates from server
       cur = force-object data
@@ -94,7 +97,7 @@ function init-live-stream name, cb=(->)
 function init-realtime
   # setup realtime streams w/ leveldb
   [stream, load] = [{}, (key, val) -->
-    stream[key] = val
+    stream[key] = val or {} # default
     init-react stream]
   init-live-stream \everyone (load \everyone)
   init-live-stream \session (load \session)
