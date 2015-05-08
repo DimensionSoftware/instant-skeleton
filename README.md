@@ -168,9 +168,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 9. **Production deployment?  We got you covered!**
 
-       Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  [We recommend
-       Upstart](https://blog.jalada.co.uk/simple-upstart-script-to-keep-a-node-process-alive/) to keep your process
-       alive.  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.
+       Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  We recommend [Systemd](http://www.certdepot.net/rhel7-get-started-systemd/) or [Upstart](https://blog.jalada.co.uk/simple-upstart-script-to-keep-a-node-process-alive/) to keep your process alive.  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.
 
 10. **What about iOS/Droid &amp; and mobile devices?**
 
