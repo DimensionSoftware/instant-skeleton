@@ -1,5 +1,5 @@
 require! {
-  \LiveScript
+  \livescript
   events: EventEmitter
 
   \./App
