@@ -85,7 +85,7 @@
     "css-loader": "^0.12.0",
     "dotenv": "^1.1.0",
     "engine.io": "^1.5.1",
-    "extract-text-webpack-plugin": "^0.7.0",
+    "extract-text-webpack-plugin": "^0.8.0",
     "famous": "^0.3.5",
     "immstruct": "^1.4.0",
     "immutable": "^3.7.2",
@@ -105,8 +105,8 @@
     "level-sublevel": "^6.4.6",
     "leveldown": "^1.0.4",
     "levelup": "DimensionSoftware/node-levelup",
-    "moment": "^2.10.2",
     "livescript-loader": "DimensionSoftware/livescript-loader",
+    "moment": "^2.10.3",
     "nib": "~1.1.0",
     "omniscient": "^3.1.0",
     "prelude-ls": "^1.1.1",
@@ -125,10 +125,10 @@
     "stylus-loader": "shama/stylus-loader",
     "superagent": "^1.2.0",
     "uuid": "^2.0.1",
-    "webpack": "^1.8.11"
+    "webpack": "^1.9.5"
   },
   "devDependencies": {
-    "blanket": "^1.1.6",
+    "blanket": "^1.1.7",
     "chai": "^2.3.0",
     "gulp": "^3.8.11",
     "gulp-livescript": "^2.3.0",
@@ -140,7 +140,7 @@
     "gulp-webpack": "^1.4.0",
     "mocha": "^2.2.4",
     "open": "0.0.5",
-    "react-hot-loader": "^1.2.6",
+    "react-hot-loader": "^1.2.7",
     "sinon": "^1.14.1",
     "supertest": "^0.15.0",
     "webpack-dev-server": "^1.8.2"
