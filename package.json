@@ -82,7 +82,7 @@
   "dependencies": {
     "livescript": "^1.4.0",
     "co": "^4.5.4",
-    "css-loader": "^0.12.0",
+    "css-loader": "^0.12.1",
     "dotenv": "^1.1.0",
     "engine.io": "^1.5.1",
     "extract-text-webpack-plugin": "^0.8.0",
@@ -103,7 +103,7 @@
     "level-live-stream": "^1.4.9",
     "level-party": "DimensionSoftware/level-party",
     "level-sublevel": "^6.4.6",
-    "leveldown": "^1.0.4",
+    "leveldown": "^1.0.6",
     "levelup": "DimensionSoftware/node-levelup",
     "livescript-loader": "DimensionSoftware/livescript-loader",
     "moment": "^2.10.3",
@@ -142,7 +142,7 @@
     "open": "0.0.5",
     "react-hot-loader": "^1.2.7",
     "sinon": "^1.14.1",
-    "supertest": "^0.15.0",
+    "supertest": "^1.0.1",
     "webpack-dev-server": "^1.8.2"
   }
 }
