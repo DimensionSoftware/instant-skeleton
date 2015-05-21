@@ -1,11 +1,11 @@
-<center>
+<p align="center">
 [![Instant Skeleton](https://dimensionsoftware.com/images/skull_keys.png)](https://dimensionsoftware.com)
 
 Instant-Skeleton
 ================
 [![Gitter](https://badges.gitter.im/Join
 Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Dimension Software](http://img.shields.io/badge/HTML-5-blue.svg?style=flat)](https://dimensionsoftware.com)
-</center>
+</p>
 
 Build Bigger with Less
 ----------------------
@@ -207,6 +207,6 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 
 &nbsp;
 
-<center>
+<p align="center">
 [![Fresh Software by Dimension](https://dimensionsoftware.com/images/software_by.png)](https://dimensionsoftware.com)
-</center>
+</p>
