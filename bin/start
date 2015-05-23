@@ -3,6 +3,7 @@
 pid='app.pid' # pid file name
 
 if [ "$NODE_ENV" = 'production' ]; then
+  date
   # compile server app
   # TODO use webpack
   echo -n 'Compiling app server '

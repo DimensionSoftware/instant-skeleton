@@ -3,6 +3,7 @@
 pid='app.pid' # pid file name
 
 if [ -e "$pid" ]; then
+  date
   kill `cat $pid`
   rm $pid
 else
