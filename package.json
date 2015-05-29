@@ -93,7 +93,7 @@
     "koa-better-ratelimit": "^2.1.2",
     "koa-generic-session": "^1.8.0",
     "koa-helmet": "0.1.0",
-    "koa-jade": "^0.3.1",
+    "koa-jade": "^1.0.1",
     "koa-level": "^1.0.0",
     "koa-locals": "^0.3.0",
     "koa-logger": "^1.2.2",
