@@ -117,7 +117,7 @@ function init-react data
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
-    React.render App(cur), react # render app to body
+    React.render (App cur), react # render app to body
     cur
   set-timeout (-> state.on \next-animation-frame render), 1000ms
   window.toggle-class body, \loaded # trigger ui loaded after session applies
