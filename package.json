@@ -115,7 +115,7 @@
     "primus-emitter": "^3.1.0",
     "primus-multiplex": "^3.1.0",
     "primus-resource": "^2.0.6",
-    "react": "^0.12.2",
+    "react": "^0.13.3",
     "react-async": "^2.1.0",
     "react-responsive": "0.0.6",
     "react-router-component": "^0.24.4",
