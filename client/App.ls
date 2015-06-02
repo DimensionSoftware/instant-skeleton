@@ -74,11 +74,11 @@ function init-primus
 
 function init-live-stream name, cb=(->)
   # create realtime "live" data streams w/ leveldb
-  force-response = set-timeout cb, 1000ms
+  force-ui-response = set-timeout (-> init-realtime!; cb!), 1000ms # attempt re-init and render
   ch = window.primus.channel name
     ..once \data (data) ->
       # stream initial data from server
-      clear-timeout force-response
+      clear-timeout force-ui-response
       cb (force-object data)
     ..on \data (data) ->
       # stream updates from server
