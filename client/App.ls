@@ -74,11 +74,11 @@ function init-primus
 
 function init-live-stream name, cb=(->)
   # create realtime "live" data streams w/ leveldb
-  force-response = set-timeout cb, 1000ms
+  force-ui-response = set-timeout (-> init-realtime!; cb!), 1000ms # attempt re-init and render
   ch = window.primus.channel name
     ..once \data (data) ->
       # stream initial data from server
-      clear-timeout force-response
+      clear-timeout force-ui-response
       cb (force-object data)
     ..on \data (data) ->
       # stream updates from server
@@ -117,7 +117,7 @@ function init-react data
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
-    React.render App(cur), react # render app to body
+    React.render (App cur), react # render app to body
     cur
   set-timeout (-> state.on \next-animation-frame render), 1000ms
   window.toggle-class body, \loaded # trigger ui loaded after session applies

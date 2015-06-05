@@ -1,26 +1,29 @@
 
 require! {
-  'react/addons': {create-element,{class-set:cx}:addons}:React
+  'react/addons': {create-factory,{class-set:cx}:addons}:React
   omniscient: component
   immutable: Immutable
-  'react-router-component': {Location,Locations,Pages,Page,NotFound,Link,NavigatableMixin}:Router
+  'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
   'react-async': {Mixin}
   \./mixins
 }
 page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
 
+# factories
+Location  = create-factory Router.Location
+Locations = create-factory Router.Locations
+
 # statics for ease-of-use DSL in Pages
 global <<< {R, React, cx, Router, page-mixins, component, Immutable}
 global.DOM = React.DOM
-global.Link = Router.Link
+global.Link = create-factory Router.Link
 
 
 # Dynamically load components referenced in routes.list.
 pages = routes.list.reduce ((namespace, route) ->
   namespace[route.0] = require "./#{route.0}"
   namespace), {}
-
 
 module.exports = component \App (props) ->
   location = (route) ->
@@ -31,13 +34,11 @@ module.exports = component \App (props) ->
       session: props.cursor \session
       everyone: props.cursor \everyone
     }
-    Location { key:name, ref:name, path:route.1, handler:pages[name], props:page-props }
+    Location { key:name, ref:name, path:route.1, handler:pages[name].jsx, props:page-props }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
     .map    (-> location it)
 
   # render page
-  Locations { class-name:\Page, path: props.get \path } [
-    ...locations-for-routes
-  ]
+  Locations { class-name:\Page, path: (props.get \path) }, ...locations-for-routes

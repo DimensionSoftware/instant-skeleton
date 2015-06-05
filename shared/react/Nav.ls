@@ -30,6 +30,7 @@ module.exports = component \Nav ({name, path, last-page}:props) ->
           .filter (-> it?1 isnt path)
           .map (route) ->
             li do
+              key: route.0
               class-name: \route
               Link do
                 href: (R route.0)

@@ -10,7 +10,7 @@ var env       = process.env.NODE_ENV || 'development'
   , dev_port  = process.env.npm_package_config_dev_port  || 8081;
 
 var entry =
-  { client: ['./client/layout' ] }
+  { client: ['./client/App' ] }
 
 var plugins =
   [ new webpack.optimize.DedupePlugin()
