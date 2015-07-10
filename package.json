@@ -105,7 +105,7 @@
     "leveldown": "^1.3.0",
     "levelup": "^1.2.1",
     "livescript": "^1.4.0",
-    "livescript-loader": "hzamani/livescript-loader#c14583d57b827523f75b684c96bd111634173bce",
+    "livescript-loader": "0.1.5",
     "moment": "^2.10.3",
     "nib": "~1.1.0",
     "omniscient": "^3.1.0",
