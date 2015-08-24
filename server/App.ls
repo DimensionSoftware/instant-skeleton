@@ -53,7 +53,7 @@ module.exports =
         ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
-        ..use helmet.defaults!            # solid secure base
+        ..use helmet!                     # solid secure base
         ..use middleware.webpack
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals @  # load env-sensitive config into locals
