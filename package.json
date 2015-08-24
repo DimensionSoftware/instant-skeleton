@@ -137,7 +137,7 @@
     "gulp-stylus": "^2.0.3",
     "gulp-util": "^3.0.5",
     "gulp-watch": "^4.2.4",
-    "gulp-webpack": "^1.4.0",
+    "webpack-stream": "^2.1.0",
     "mocha": "^2.2.5",
     "open": "0.0.5",
     "react-hot-loader": "^1.2.7",
