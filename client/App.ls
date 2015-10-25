@@ -78,12 +78,10 @@ function init-primus
 
 function init-live-stream name, use-storage, cb=(->)
   # create realtime "live" data streams w/ leveldb
-  force-ui-response = set-timeout (-> init-realtime!; cb!), 1000ms # attempt re-init and render
   ch = window.primus.channel name
     ..once \data (data) ->
       # stream initial data from server
-      clear-timeout force-ui-response
-      cb (force-object data)
+      cb (force-object data) # re-render
     ..on \data (data) ->
       # stream updates from server
       cur = force-object data
@@ -91,6 +89,7 @@ function init-live-stream name, use-storage, cb=(->)
       if cur and window.app then window.app.update name, -> Immutable.fromJS cur
     ..on \open ->
       # fn to stream updates to server
+      cb! # immediately render ui -- FIXME correctly wait for data stream above (avoids browser janks)
       window["sync#{capitalize name}"] = ->
         app = window.app
         owned = app.update-in [name, \spark-id], -> window.spark-id # add update's owner
