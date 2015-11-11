@@ -76,7 +76,7 @@ function init-primus
 
   resources primus # init primus-resources
 
-function init-live-stream name, cb=(->)
+function init-live-stream name, use-storage, cb=(->)
   # create realtime "live" data streams w/ leveldb
   force-ui-response = set-timeout (-> init-realtime!; cb!), 1000ms # attempt re-init and render
   ch = window.primus.channel name
@@ -87,6 +87,7 @@ function init-live-stream name, cb=(->)
     ..on \data (data) ->
       # stream updates from server
       cur = force-object data
+      if use-storage then storage.set name, cur # local storage
       if cur and window.app then window.app.update name, -> Immutable.fromJS cur
     ..on \open ->
       # fn to stream updates to server
@@ -103,15 +104,15 @@ function init-realtime
   [stream, load] = [{}, (key, val) -->
     stream[key] = val or {} # default
     init-react stream]
-  init-live-stream \everyone (load \everyone)
-  init-live-stream \session (load \session)
+  init-live-stream \everyone false (load \everyone)
+  init-live-stream \session  true  (load \session)
 
 function force-object data
   # FIXME workaround for levelup's broken transforms
   if typeof! data is \Object then data else JSON.parse data
 
 function init-react data
-  return unless data.session and data.everyone
+  if data.session === {} then data.session = window.storage.get \session # use local storage
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct { # default
     path,
