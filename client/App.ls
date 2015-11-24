@@ -9,6 +9,9 @@ require! {
   \./resources
 }
 
+if locals.env isnt \production # hot-load stylus
+  require \./stylus/master.styl
+
 [body, react] = # cache
   [document.get-elements-by-tag-name \body .0,
    document.get-elements-by-class-name \react .0]
