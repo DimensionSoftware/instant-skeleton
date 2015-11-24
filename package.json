@@ -85,7 +85,6 @@
     "dotenv": "^1.1.0",
     "engine.io": "^1.5.1",
     "extract-text-webpack-plugin": "^0.8.1",
-    "famous": "^0.7.1",
     "immstruct": "^2.0.0",
     "immutable": "^3.7.3",
     "keygrip": "^1.0.1",
