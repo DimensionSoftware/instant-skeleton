@@ -1,13 +1,16 @@
 
 # Checkbox
-module.exports = component \Check (props, {label,title,on-change}:statics) ->
+
+Check = component \Check ({cursor,label,title,on-change}:props) ->
   do-change = ->
-    new-props = props.update -> not props.deref!
+    new-props = cursor.update -> not cursor.deref!
     if on-change then on-change new-props
 
   # got a label?
-  el = DOM.input statics <<< {value:props.deref!, type:\checkbox, checked:props.deref!, on-change:do-change}
+  el = DOM.input props <<< {value:cursor.deref!, type:\checkbox, checked:cursor.deref!, on-change:do-change}
   if label
     DOM.label {title} [ el, DOM.span void " #label" ]
   else
     el
+
+module.exports = ignore <[ label title onChange ]> Check

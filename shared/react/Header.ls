@@ -8,7 +8,7 @@ require! {
 # destructure only what's needed
 {header,form,button,div} = DOM
 
-module.exports = component \Header ({name,title-cur}:props, {after-save, save-cursor}:statics) ->
+module.exports = component \Header ({after-save, save-cursor, name, title-cur}:props) ->
     on-key-up = ->
       if it.key-code is 13
         it.current-target.value = '' # clear input
@@ -27,5 +27,5 @@ module.exports = component \Header ({name,title-cur}:props, {after-save, save-cu
         on-submit: ~> it.prevent-default!
         div do
           class-name: \clip
-          Input title-cur, {tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +spell-check, -controlled}
+          Input {cursor:title-cur, tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +spell-check, -controlled}
         button {on-click} \Save

@@ -4,6 +4,7 @@ require! {
   classnames: cx
   omniscient: component
   immutable: Immutable
+  omnipotent: {{ignore}:decorator}
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
   \./mixins
@@ -15,7 +16,7 @@ Location  = create-factory Router.Location
 Locations = create-factory Router.Locations
 
 # statics for ease-of-use DSL in Pages
-global <<< {R, React, cx, Router, page-mixins, component, Immutable}
+global <<< {R, React, cx, Router, page-mixins, component, Immutable, ignore}
 global.DOM = React.DOM
 global.Link = create-factory Router.Link
 

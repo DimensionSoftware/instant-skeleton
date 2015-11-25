@@ -108,6 +108,7 @@
     "livescript-loader": "^0.1.5",
     "moment": "^2.10.3",
     "nib": "~1.1.0",
+    "omnipotent": "^1.2.1",
     "omniscient": "^4.1.1",
     "pm2": "^0.15.10",
     "prelude-ls": "^1.1.2",

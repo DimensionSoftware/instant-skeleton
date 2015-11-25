@@ -24,7 +24,7 @@ module.exports = component \HomePage page-mixins, ({{path,locals,session,everyon
 
     form do
       on-submit: -> it.prevent-default!
-      Input (session.cursor \name), {ref:\focus, placeholder:'Your Name', +spell-check, -controlled}
+      Input {cursor:(session.cursor \name), ref:\focus, placeholder:'Your Name', +spell-check, -controlled}
 
       button do
         title:    'Open multiple browsers to test'

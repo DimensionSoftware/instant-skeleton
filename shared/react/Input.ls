@@ -1,11 +1,11 @@
 
 # Input
-module.exports = component \Input (props, statics={}) ->
-  auto-focus = statics.ref is \focus
+module.exports = ignore <[ focus ]>, component \Input ({cursor}:props) ->
+  auto-focus = props.ref is \focus
   on-change  = (e) ->
     v = e.current-target.value
     if v?0 isnt ' ' # disallow space as first char
-      props.update -> v
+      cursor.update -> v
 
   options = {
     auto-focus
@@ -13,10 +13,10 @@ module.exports = component \Input (props, statics={}) ->
     +controlled
     type: \text
     on-focus: -> if auto-focus then it.current-target.select! # select, too!
-  } <<< statics
+  } <<< props
 
   # how to bind this input
-  v = props.deref!
+  v = cursor.deref!
   if options.controlled
     options.value = v
   else # only default
