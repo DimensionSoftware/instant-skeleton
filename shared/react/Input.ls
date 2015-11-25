@@ -1,7 +1,7 @@
 
 # Input
 module.exports = ignore <[ focus ]>, component \Input ({cursor}:props) ->
-  auto-focus = props.ref is \focus
+  auto-focus = props.ref is \focus or props.auto-focus
   on-change  = (e) ->
     v = e.current-target.value
     if v?0 isnt ' ' # disallow space as first char
