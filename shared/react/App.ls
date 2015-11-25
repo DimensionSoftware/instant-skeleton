@@ -1,14 +1,14 @@
 
 require! {
-  'react/addons': {create-factory,{class-set:cx}:addons}:React
+  react: {create-factory}:React
+  classnames: cx
   omniscient: component
   immutable: Immutable
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
-  'react-async': {Mixin}
   \./mixins
 }
-page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
+page-mixins = [mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
 
 # factories
 Location  = create-factory Router.Location
@@ -34,7 +34,7 @@ module.exports = component \App (props) ->
       session: props.cursor \session
       everyone: props.cursor \everyone
     }
-    Location { key:name, ref:name, path:route.1, handler:pages[name].jsx, props:page-props }
+    Location { key:name, ref:name, path:route.1, handler:pages[name], props:page-props }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])

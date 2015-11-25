@@ -14,6 +14,7 @@ require! {
   'koa-better-ratelimit': limit
 
   react: {create-element, DOM}:React
+  'react-dom/server': React-DOM-Server
 
   \../shared/features
   \../shared/react/App
@@ -160,7 +161,7 @@ export webpack = (next) ->*
 export react = (next) ->* # set body to react tree
   path  = url.parse (@url or '/') .pathname
   state = immstruct {path, @locals, @session}
-  @locals.body = React.render-to-string (App state.cursor!)
+  @locals.body = ReactDOMServer.render-to-string (App state.cursor!)
   @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
