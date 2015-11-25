@@ -36,7 +36,6 @@ function restart
   start = ->
     supervisor.starting = true
     port = parse-int(process.env.NODE_APP_INSTANCE or 0) + parse-int(process.env.NODE_PORT or process.env.npm_package_config_node_port)
-    console.log \port: port
     App  = require \./App
     args =
       port
