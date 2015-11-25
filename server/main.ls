@@ -35,11 +35,12 @@ process.on \message (msg) ->
 function restart
   start = ->
     supervisor.starting = true
+    port = parse-int(process.env.NODE_APP_INSTANCE or 0) + parse-int(process.env.NODE_PORT or process.env.npm_package_config_node_port)
+    console.log \port: port
     App  = require \./App
-    args = [
-      parse-int (process.env.NODE_PORT or process.env.npm_package_config_node_port)
+    args =
+      port
       process.env.CHANGESET or process.env.npm_package_version
-    ]
 
     # start!
     supervisor.instance := new App ...args

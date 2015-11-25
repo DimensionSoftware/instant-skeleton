@@ -108,6 +108,7 @@
     "moment": "^2.10.3",
     "nib": "~1.1.0",
     "omniscient": "^3.1.0",
+    "pm2": "^0.15.10",
     "prelude-ls": "^1.1.2",
     "pretty-error": "^1.1.2",
     "primus": "^3.0.2",

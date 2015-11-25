@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pid='app.pid' # pid file name
-
 if [ "$NODE_ENV" = 'production' ]; then
   date
   # compile server app
@@ -18,16 +16,9 @@ if [ "$NODE_ENV" = 'production' ]; then
   echo 'Building client bundle ...'
   webpack
 
-  # "graceful" stop?
-  if [ -e "$pid" ]; then
-    echo 'Stop running app server ...'
-    npm stop
-  fi
-
-  # run!
+  # run using pm2!
   echo "Booting new app!"
-  node --harmony build/server/main.js 2>&1 >>app.log &
-  echo $! > "$pid"
+  pm2 start processes.json
 
 else
   # defer to gulp
