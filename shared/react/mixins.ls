@@ -9,8 +9,9 @@ require! {
 state = { last-offset: 0px, -initial-load }
 
 export initial-state-async =
-  get-initial-state-async: (cb) ->
+  component-will-mount: (cb) ->
     # TODO better on mobile to use primus websocket for surfing?
+    console.log \will-mount
     unless state.initial-load then state.initial-load = true; return # guard
     request # fetch state (GET request is cacheable vs. websocket)
       .get window.location.pathname
@@ -18,11 +19,13 @@ export initial-state-async =
       .query window.location.search
       .query { +_surf }
       .end (err, res) ->
+        console.log \surfed!
         return unless res.body and res.body.locals # guard
         # update page & local cursor (state)
         window.app.update \locals -> immutable.fromJS res.body.locals
         window.app.update \path   -> res.body.path
-        cb void res.body
+        console.log \body!
+        #cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
     true
