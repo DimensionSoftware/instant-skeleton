@@ -3,6 +3,7 @@ require! {
   superagent: request
   immstruct
   immutable
+  \react-dom
 }
 
 state = { last-offset: 0px, -initial-load }
@@ -30,7 +31,7 @@ export focus-input =
   component-did-mount: ->
     <~ set-timeout _, 150ms # yield for smoothness
     if @refs.focus
-      that.getDOMNode!
+      react-dom.findDOMNode that
         ..focus!
         ..select!
 
