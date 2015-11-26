@@ -7,10 +7,10 @@ require! {
   omnipotent: {{ignore}:decorator}
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
-  #'react-async': {Mixin}
+  'react-async': {Mixin}
   \./mixins
 }
-page-mixins = [mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
+page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
 
 # factories
 Location  = create-factory Router.Location
