@@ -119,6 +119,7 @@
     "primus-resource": "^2.0.6",
     "react": "^0.14.3",
     "react-router-component": "^0.28.0",
+    "react-async": "DimensionSoftware/react-async#react-0.14.x",
     "replacestream": "^4.0.0",
     "shelljs": "^0.5.1",
     "style-loader": "^0.13.0",
