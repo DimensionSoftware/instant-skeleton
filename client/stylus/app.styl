@@ -113,24 +113,20 @@ h2, h3
       margin 0 (grid * 4) 0 0
       .clip
         overflow hidden
-        border-right 1px solid lighten(themeColor, 80%)
         input[type='text']
           padding-top 9px
           padding-bottom @padding-top
           font-size 1.1em
-          border-bottom 2px solid lighten(themeColor, 65%)
+          border-left 1px solid lighten(textColor, 90%)
+          border-bottom 2px solid lighten(textColor, 65%)
           text-indent grid * 4.7
-          background transparent
-          background-image linear-gradient(to top, tint(themeColor, 80%), rgba(#ffffff, .8) 55px)
           opacity 1
           padding-left 13px
           margin-left 4px
           max-width maxWidth - 50px
           transition opacity .15s ease-in
-          &:hover, &:focus
+          &:focus
             border-bottom-color themeColor
-            background-image linear-gradient(to top, tint(themeColor, 76%), #ffffff 49px)
-            transition none
       button
         visibility hidden
         padding 0 (grid * 2)
@@ -145,16 +141,12 @@ h2, h3
       right 0
       font-size 1.1em
       padding 3px 15px
-      background-color tint(themeColor, 90%)
       border-radius 30px
-      border 1px solid tint(themeColor, 85%)
-      border-bottom-width 2px
+      border 1px solid tint(textColor, 85%)
       z-index 1
       color lighten(textColor, 50%)
       &:focus, &:hover
         color lighten(textColor, 25%)
-        border-color tint(themeColor, 5%)
-        background-color tint(themeColor, 92%)
       &:focus
         width 230px
         transition width .001s ease-in
@@ -199,8 +191,8 @@ h2, h3
       content ''
       width 3px
       height 90%
-      border-left 1px solid tint(themeColor, 85%)
-      border-right 1px solid tint(themeColor, 85%)
+      border-left 1px solid tint(textColor, 90%)
+      border-right 1px solid tint(textColor, 90%)
     &:before
       position absolute
       z-index onTop
