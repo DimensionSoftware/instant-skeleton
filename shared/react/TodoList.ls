@@ -50,23 +50,17 @@ TodoList = component \TodoList ({todos,visible,search, name, on-delete, on-chang
         let key = that.0
           show-date = if todos.has-in [key, \completed-at] then [key, \completed-at] else [key, \date]
           li {key} [
-            Check (todos.cursor [key, \completed]), {on-change: ~>
-              on-change if it.deref!
-                todos.update-in [key, \completed-at], -> new Date!get-time!
-              else
-                todos.delete-in [key, \completed-at]}
             Input {
+              key: \title
               cursor: (todos.cursor [key, \title])
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
               +spell-check
             }
-            div {class-name:\fx}
-            ActiveDate (todos.cursor show-date), if show-name
-              {title:(todos.get-in [key, \name])} # add author's name
-            else
-              {}
+            div {key:\fx class-name:\fx}
+            ActiveDate {key: \date, cursor: (todos.cursor show-date), title:(todos.get-in [key, \name])} # author's name
             div {
+              key: \delete
               title: \Delete
               class-name: \delete,
               on-click: ->
@@ -76,10 +70,10 @@ TodoList = component \TodoList ({todos,visible,search, name, on-delete, on-chang
             }, \x
           ]
     else
-      li void [ div {class-name:\placeholder} '(empty)' ]
+      li key:\placeholder, [ div {class-name:\placeholder} '(empty)' ]
 
     # filters
-    div {class-name:\actions} [
+    div {key:\actions class-name:\actions} [
       a {key: \all on-click:(-> show-only \all), class-name:'nofx ' + cn \all} \All
       a {key: \active on-click:(-> show-only \active), class-name:'nofx ' + cn \active} \Active
       a {key: \completed on-click:(-> show-only \completed), class-name:'nofx ' + cn \completed} \Completed

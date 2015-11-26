@@ -5,8 +5,8 @@ require! {
 
 ticker = # keep dates up-to-date
   component-did-mount: ->
-    @int = set-interval (~> if @is-mounted! then @force-update!), 1000 * 60
-  component-did-unmount: ->
+    @int = set-interval (~> if @is-mounted! then @force-update!), 1000ms * 60s
+  component-will-unmount: ->
     clear-interval @int
 
 # TodoList
