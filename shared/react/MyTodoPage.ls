@@ -10,21 +10,26 @@ require! {
 }
 
 # MyTodoPage
-module.exports = component \MyTodoPage page-mixins, ({{path,locals,session,everyone}:props}) ->
+MyTodoPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
   name = session.get \name
 
   DOM.div class-name: \MyTodoPage, [
-    Header {title-cur:(locals.cursor \current-title), name}, {after-save:(-> sync-session!), save-cursor:(session.cursor \todos)}
+    Header do
+      key:          \header
+      name:         name
+      after-save:   -> sync-session!
+      save-cursor:  session.cursor \todos
+      title-cursor: locals.cursor \current-title
     # render my session todos
-    TodoList { # props
-      todos:   (session.cursor \todos)
-      visible: (locals.cursor \visible)
-      search:  (locals.cursor \search)
+    TodoList do # props
+      todos:     session.cursor \todos
+      visible:   locals.cursor \visible
+      search:    locals.cursor \search
       name:      "#{if name then "#name's TODO" else 'My TODO'}"
-      on-delete: (-> sync-session!)
-      on-change: (-> sync-session!)
-    }
+      on-delete: -> sync-session!
+      on-change: -> sync-session!
     Link {href:R(\PublicPage)} 'Public →'
     Footer {name, path, last-page:(session.get \lastPage)}
   ]
 
+module.exports = ignore <[ titleCursor afterSave saveCursor ]> MyTodoPage

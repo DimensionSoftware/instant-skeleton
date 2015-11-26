@@ -10,7 +10,7 @@ require! {
 
 
 # TodoList
-TodoList = component \TodoList ({todos,visible,search, name, on-delete, on-change, show-name}) ->
+TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-change, show-name}) ->
   # figure visible todos from ui selection
   cn = -> cx {active:(visible.deref! or \all) is it}
   show-only = (active) ->
@@ -39,8 +39,8 @@ TodoList = component \TodoList ({todos,visible,search, name, on-delete, on-chang
 
   # todo list
   ol void [
-    Input {cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
-    h2 void name
+    Input {key:\search cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
+    h2 key: \name, name
     if list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
         .entries!

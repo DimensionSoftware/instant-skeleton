@@ -8,7 +8,7 @@ require! {
 }
 
 # HomePage
-module.exports = component \HomePage page-mixins, ({{path,locals,session,everyone}:props}) ->
+module.exports = component page-mixins, ({{path,locals,session,everyone}:props}) ->
   name = session.get \name
 
   on-click = ~>

@@ -10,8 +10,8 @@ ticker = # keep dates up-to-date
     clear-interval @int
 
 # TodoList
-module.exports = component \ActiveDate ticker, (props, {title=''}={}) ->
-  date = props.deref!
+module.exports = component \ActiveDate ticker, ({cursor, title}:props) ->
+  date = cursor.deref!
   [calendar, from-now] =
     [moment(date, \x).calendar!,
      moment(date, \x).from-now!]
