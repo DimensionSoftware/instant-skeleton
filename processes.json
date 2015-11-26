@@ -1,0 +1,21 @@
+{
+  "apps" : [{
+    "name"              : "Instant Skeleton",
+    "script"            : "./build/server/main.js",
+    "instances"         : 4,
+    "node_args"         : "--harmony",
+    "log_date_format"   : "YYYY-MM-DD HH:mm Z",
+    "max_memory_restart": "250",
+    "env": {
+        "NODE_ENV": "production",
+        "AWESOME_SERVICE_API_TOKEN": "xxx"
+    },
+    "watch"      : false,
+    "error_file" : "./logs/err.log",
+    "out_file"   : "./logs/out.log",
+    "pid_file"   : "./logs/app.pid",
+    "exec_mode"  : "fork_mode",
+    "port"       : 8080
+  }]
+}
+

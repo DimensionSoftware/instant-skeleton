@@ -8,8 +8,9 @@ require! {
   \./Check
 }
 
+
 # TodoList
-module.exports = component \TodoList ({todos,visible,search}:props, {name, on-delete, on-change, show-name}) ->
+TodoList = component \TodoList ({todos,visible,search, name, on-delete, on-change, show-name}) ->
   # figure visible todos from ui selection
   cn = -> cx {active:(visible.deref! or \all) is it}
   show-only = (active) ->
@@ -38,7 +39,7 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
 
   # todo list
   ol void [
-    Input search, {tab-index: 1, placeholder: 'Search', +spell-check}
+    Input {cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
     h2 void name
     if list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
@@ -54,7 +55,8 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
                 todos.update-in [key, \completed-at], -> new Date!get-time!
               else
                 todos.delete-in [key, \completed-at]}
-            Input (todos.cursor [key, \title]), { # save edits
+            Input {
+              cursor: (todos.cursor [key, \title])
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
               +spell-check
@@ -83,3 +85,5 @@ module.exports = component \TodoList ({todos,visible,search}:props, {name, on-de
       a {key: \completed on-click:(-> show-only \completed), class-name:'nofx ' + cn \completed} \Completed
     ]
   ]
+
+module.exports = ignore <[ name onDelete onChange showName ]> TodoList

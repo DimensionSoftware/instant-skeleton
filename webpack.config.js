@@ -13,20 +13,21 @@ var entry =
   { client: ['./client/App' ] }
 
 var plugins =
-  [ new webpack.optimize.DedupePlugin()
-  , new ExtractText('site.css', { allChunks:true })
+  [ new ExtractText('site.css', { allChunks:true })
   ]
-var loaders =
-  [ { test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') } ]
+var loaders = []
 
 // init
 // ----
 if (prod) { // production settings
+  plugins.push(new ExtractText('site.css', { allChunks:true }))
   plugins.push(new webpack.optimize.UglifyJsPlugin())
+  loaders.push({ test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') })
   loaders.push({ test: /\.ls$/, loader: 'livescript-loader?const=true' })
 } else {
   plugins.push(new webpack.HotModuleReplacementPlugin())
   // add hot-reload
+  loaders.push({ test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' })
   loaders.push({ test: /\.ls$/, loaders: ['react-hot', 'livescript-loader?const=true'] })
   entry.client.push
     ('webpack/hot/dev-server'

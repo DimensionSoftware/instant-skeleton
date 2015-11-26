@@ -20,7 +20,6 @@ module.exports = component \MyTodoPage page-mixins, ({{path,locals,session,every
       todos:   (session.cursor \todos)
       visible: (locals.cursor \visible)
       search:  (locals.cursor \search)
-    }, { # statics
       name:      "#{if name then "#name's TODO" else 'My TODO'}"
       on-delete: (-> sync-session!)
       on-change: (-> sync-session!)

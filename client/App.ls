@@ -1,6 +1,7 @@
 
 require! {
   react: {create-factory}:React
+  \react-dom
   immutable: window.Immutable
   immstruct
   \../shared/react/App
@@ -8,6 +9,9 @@ require! {
   \./stylus/master
   \./resources
 }
+
+if locals.env isnt \production # hot-load stylus
+  require \./stylus/master.styl
 
 [body, react] = # cache
   [document.get-elements-by-tag-name \body .0,
@@ -117,7 +121,7 @@ function init-react data
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
-    React.render (App cur), react # render app to body
+    react-dom.render (App cur), react # render app to body
     cur
   set-timeout (-> state.on \next-animation-frame render), 1000ms
   window.toggle-class body, \loaded # trigger ui loaded after session applies

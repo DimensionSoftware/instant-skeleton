@@ -59,6 +59,7 @@ SERVER
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
 * **DotEnv** -- https://github.com/motdotla/dotenv
+* **pm2** -- https://github.com/Unitech/pm2
 
 SHARED
 
@@ -80,7 +81,6 @@ SHARED
 
 CLIENT
 
-* **Famo.us** -- https://famo.us
 * **Stylus** -- https://learnboost.github.io/stylus
     * **nib** -- https://github.com/tj/nib
 
@@ -125,8 +125,8 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
        + Variables are **const**ants
        + [Immutable.JS](https://github.com/facebook/immutable-js) persistent data structures
-       + [ES6](http://tc39wiki.calculist.org/es6/), useful stack traces &amp; source maps
-       + Check out our [perf](https://github.com/DimensionSoftware/instant-skeleton/tree/perf) branch for runtime profiling
+       + [ES6](http://tc39wiki.calculist.org/es6/), friendly stack traces &amp; source maps
+       + [PM2](http://pm2.keymetrics.io/) instrumentation &amp; process supervision for the 99.999%
 
 4. **How rapid is development?**
 
@@ -168,16 +168,12 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 9. **Production deployment?  We got you covered!**
 
-       Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  We recommend [Systemd](http://www.certdepot.net/rhel7-get-started-systemd/) or [Upstart](https://blog.jalada.co.uk/simple-upstart-script-to-keep-a-node-process-alive/) to keep your process alive.  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.
+       Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  Production builds
+       shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure production.
 
 10. **What about iOS/Droid &amp; and mobile devices?**
 
-       Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and
-       [NW.js](http://nwjs.io/)!  [React Native](https://github.com/facebook/react-native) support is on the horizon.
-
-11. **Does this work with io.js?**
-
-       Absolutely.
+       Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/)!
 
 
 ## [Hire Us!](mailto:keith@dimensionsoftware.com)
@@ -198,7 +194,6 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 ## [TODO](https://todo.powerbulletin.com)
 
 
-* ADD: [Famo.us+React](https://github.com/Famous/famous-react/issues)
 * ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
 * ADD: Selenium and more tests
 * ADD: Coverage.js working with LiveScript

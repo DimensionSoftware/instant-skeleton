@@ -46,8 +46,6 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     //- stylus (using cdn in production)
     if production
       link(href="#{cacheUrls[1]}/builds/site.css?#{changeset}", rel='stylesheet', type='text/css')
-    else
-      link(href="//#{domain}:#{dev_port}/builds/site.css", rel='stylesheet', type='text/css')
 
   body
     //- server-side render in production (SEO)
@@ -78,7 +76,7 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
             js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=311191419029490&version=v2.0";
             fjs.parentNode.insertBefore(js, fjs);
           }(document, 'script', 'facebook-jssdk'));
-        a.dimension-logo(href='https://dimensionsoftware.com', target='_blank')
-          img(src='https://dimensionsoftware.com/images/software_by.png', width='241')
+        a.dimension-logo(href='https://dimensionsoftware.com', target='_blank', title='Dimension Software Consulting in Los Angeles')
+          img(src='https://dimensionsoftware.com/images/software_by.png', width='241', alt='Node.JS Software by Dimension', title='Node.JS Consulting by Dimension Software')
         a.ribbon.nofx(href='https://github.com/dimensionsoftware', title='Dimension Software Node.JS Examples!', target='_blank')
-          img(alt='Dimension Software Node.JS Examples', src='https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67', data-canonical-src='https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png')
+          img(title='Software by Dimension in Los Angeles', alt='Dimension Software Node.JS Examples', src='https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67', data-canonical-src='https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png')

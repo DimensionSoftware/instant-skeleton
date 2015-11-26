@@ -1,11 +1,7 @@
 #!/bin/sh
 
-pid='app.pid' # pid file name
-
-if [ -e "$pid" ]; then
-  date
-  kill `cat $pid`
-  rm $pid
+if [ "$NODE_ENV" = 'production' ]; then
+  pm2 stop processes.json
 else
   echo 'App is not running.'
 fi
