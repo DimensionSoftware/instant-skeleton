@@ -90,8 +90,7 @@ How much does your stack weigh?  Keeping Instant Skeleton light as possible mean
 no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  Zero external service
 dependencies make deploying a cinch.  Persistence is [LevelDB](https://github.com/google/leveldb).  The rest is up to you!
 
-With technologies like [Famo.us](https://famou.us) and a savvy, cutting-edge HTML5 core, Instant Skeleton provides true
-first-class mobile experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
+With a cutting-edge HTML5 core, Instant Skeleton provides true first-class mobile web experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
 
 From nothing, you have potential to build greatness; only-- with Instant Skeleton, you start way ahead with the best
 curated tools for lifting heavy, realtime functionality into the browser with insane productivity.  Unlock the
@@ -169,7 +168,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 9. **Production deployment?  We got you covered!**
 
        Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  Production builds
-       shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure production.
+       shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure [PM2](http://pm2.keymetrics.io/) production.
 
 10. **What about iOS/Droid &amp; and mobile devices?**
 
