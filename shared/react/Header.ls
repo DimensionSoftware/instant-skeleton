@@ -27,5 +27,5 @@ module.exports = component \Header ({after-save, save-cursor, name, title-cursor
         on-submit: ~> it.prevent-default!
         div do
           class-name: \clip
-          Input {cursor:title-cursor, tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +spell-check, -controlled}
+          Input {cursor:title-cursor, tab-index:2, key:\focus, ref:\focus, placeholder:'Add an Item ...', on-key-up, +auto-focus, +spell-check, -controlled}
         button {on-click} \Save
