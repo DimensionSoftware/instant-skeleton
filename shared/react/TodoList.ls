@@ -5,7 +5,6 @@
 require! {
   \./ActiveDate
   \./Input
-  \./Check
 }
 
 
