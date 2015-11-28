@@ -115,14 +115,14 @@ export static-assets = (next) ->* # apply our config
 
 # jade templates
 export jade = (next) ->*
-  unless state.jade-fn then state.jade-fn := koa-jade.middleware {
+  unless state.jade-fn then state.jade-fn := new koa-jade {
     view-path: \shared/views
     pretty:    @locals.env isnt \production
     no-cache:  @locals.env isnt \production
     -compile-debug
     -debug
   }
-  yield (state.jade-fn.bind @) next
+  yield (state.jade-fn.middleware.bind @) next
 
 
 # rate limiting
