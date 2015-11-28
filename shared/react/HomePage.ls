@@ -14,18 +14,21 @@ module.exports = component page-mixins, ({{path,locals,session,everyone}:props})
   on-click = ~>
     sync-session! # sync across sessions
     @navigate (R \MyTodoPage)
+    it.prevent-default!
 
   # allow name to be set
   div do
     class-name: \HomePage
-
     h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'
     hr void
-
     form do
-      on-submit: -> it.prevent-default!
-      Input {cursor:(session.cursor \name), ref:\focus, placeholder:'Your Name', +spell-check, +auto-focus, -controlled}
-
+      on-submit: ~> it.prevent-default!
+      Input do
+        cursor:      session.cursor \name
+        ref:         \focus
+        placeholder: 'Your Name'
+        spell-check: true
+        auto-focus:  true
       button do
         title:    'Open multiple browsers to test'
         on-click: on-click
