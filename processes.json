@@ -5,7 +5,7 @@
     "instances"         : 4,
     "node_args"         : "--harmony",
     "log_date_format"   : "YYYY-MM-DD HH:mm Z",
-    "max_memory_restart": "250",
+    "max_memory_restart": "250M",
     "env": {
         "NODE_ENV": "production",
         "AWESOME_SERVICE_API_TOKEN": "xxx"
