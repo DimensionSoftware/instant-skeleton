@@ -23,7 +23,7 @@
       "host" : "YOUR-SERVER-ADDRESS",
       "ref"  : "origin/develop",
       "repo" : "git@github.com:DimensionSoftware/instant-skeleton.git",
-      "path" : "/opt/instant-skeleton",
+      "path" : "/staging/instant-skeleton",
       "post-deploy" : "npm i && npm start"
     },
     "production" : {
