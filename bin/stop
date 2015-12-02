@@ -3,7 +3,7 @@
 if [ "$NODE_ENV" = 'production' ]; then
   echo -n 'Stopping app @ '
   date
-  pm2 stop processes.json
+  pm2 stop ecosystem.json
 
 else
   # running?

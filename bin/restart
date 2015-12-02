@@ -4,7 +4,7 @@ if [ "$NODE_ENV" = 'production' ]; then
   # use pm2 for start or restart
   echo -n "Reloading app @ "
   date
-  pm2 startOrRestart processes.json --env production
+  pm2 startOrRestart ecosystem.json --env production
 
 else
   # defer to gulp

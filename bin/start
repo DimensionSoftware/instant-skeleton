@@ -9,7 +9,7 @@ if [ "$NODE_ENV" = 'production' ]; then
   # run using pm2!
   echo -n 'Booting new app @ '
   date
-  pm2 start processes.json
+  pm2 start ecosystem.json
 
 else
   pid='app.pid'
