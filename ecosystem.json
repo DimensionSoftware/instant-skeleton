@@ -22,7 +22,7 @@
       "user" : "YOUR-USER-NAME",
       "host" : "YOUR-SERVER-ADDRESS",
       "ref"  : "origin/develop",
-      "repo" : "https://github.com/DimensionSoftware/instant-skeleton",
+      "repo" : "git@github.com:DimensionSoftware/instant-skeleton.git",
       "path" : "/opt/instant-skeleton",
       "post-deploy" : "npm i && npm start"
     },
@@ -30,9 +30,9 @@
       "user" : "YOUR-USER-NAME",
       "host" : "YOUR-SERVER-ADDRESS",
       "ref"  : "origin/master",
-      "repo" : "https://github.com/DimensionSoftware/instant-skeleton",
+      "repo" : "git@github.com:DimensionSoftware/instant-skeleton.git",
       "path" : "/opt/instant-skeleton",
-      "post-deploy" : "npm i && npm start"
+      "post-deploy" : "NODE_ENV=production npm i && npm start"
     }
   }
 }
