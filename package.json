@@ -12,6 +12,7 @@
     "docs": "groc --github ![node_modules/] server/main.ls {server,shared,client}/**.ls README.md",
     "start": "bin/start",
     "stop": "bin/stop",
+    "restart": "bin/restart",
     "unit": "mocha -R nyan --harmony --compilers ls:livescript",
     "coverage": "mocha -r blanket -R html-cov --harmony --compilers ls:livescript > build/coverage.html && open build/coverage.html",
     "clean": "node --harmony `which gulp` clean"

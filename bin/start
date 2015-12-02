@@ -1,26 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ "$NODE_ENV" = 'production' ]; then
+  # build server & client with gulp
+  echo -n 'Building app @ '
   date
-  # compile server app
-  # TODO use webpack
-  echo -n 'Compiling app server '
-  for f in `find . -name \*.ls -print`
-  do
-    node_modules/.bin/lsc -c -o build/`dirname $f` $f
-    echo -n '.'
-  done
-  echo '| done.'
-
-  # compile client app & css
-  echo 'Building client bundle ...'
-  webpack
+  node --harmony `which gulp` build:server build:client
 
   # run using pm2!
-  echo "Booting new app!"
+  echo -n 'Booting new app @ '
+  date
   pm2 start processes.json
 
 else
-  # defer to gulp
+  pid='app.pid'
+  # log pid if detached & defer to gulp
   node --harmony `which gulp`
+  echo $! > "$pid"
 fi
