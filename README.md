@@ -59,7 +59,7 @@ SERVER
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
 * **DotEnv** -- https://github.com/motdotla/dotenv
-* **pm2** -- https://github.com/Unitech/pm2
+* **PM2** -- https://github.com/Unitech/pm2
 
 SHARED
 
@@ -167,10 +167,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 9. **Production deployment?  We got you covered!**
 
-       Export a proper NODE_ENV and expect the correct behaviors with "npm start" and "npm stop".  Production builds
-       shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure [PM2](http://pm2.keymetrics.io/) production.
+       Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure [PM2](http://pm2.keymetrics.io/) production.
 
-10. **What about iOS/Droid &amp; and mobile devices?**
+10. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
 
        Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/)!
 
@@ -193,6 +192,7 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 ## [TODO](https://todo.powerbulletin.com)
 
 
+* ADD: [RethinkDB](http://rethinkdb.com/)
 * ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
 * ADD: Selenium and more tests
 * ADD: Coverage.js working with LiveScript
