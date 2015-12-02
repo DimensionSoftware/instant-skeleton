@@ -16,6 +16,24 @@
     "pid_file"   : "./logs/app.pid",
     "exec_mode"  : "fork_mode",
     "port"       : 8080
-  }]
+  }],
+  "deploy" : {
+    "development" : {
+      "user" : "YOUR-USER-NAME",
+      "host" : "YOUR-SERVER-ADDRESS",
+      "ref"  : "origin/develop",
+      "repo" : "https://github.com/DimensionSoftware/instant-skeleton",
+      "path" : "/opt/instant-skeleton",
+      "post-deploy" : "npm i && npm start"
+    },
+    "production" : {
+      "user" : "YOUR-USER-NAME",
+      "host" : "YOUR-SERVER-ADDRESS",
+      "ref"  : "origin/master",
+      "repo" : "https://github.com/DimensionSoftware/instant-skeleton",
+      "path" : "/opt/instant-skeleton",
+      "post-deploy" : "npm i && npm start"
+    }
+  }
 }
 
