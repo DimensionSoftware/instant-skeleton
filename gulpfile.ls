@@ -66,7 +66,7 @@ gulp.task \development <[watch build:server webpack:dev-server ]> ->
     .once \start ->
       <- boot-delay-fn
       open "http://#domain:#port"
-gulp.task \production <[build:client ]> (gulp-shell.task 'bin/start')
+gulp.task \production <[build:client ]> -> process.exit 0
 
 
 # main

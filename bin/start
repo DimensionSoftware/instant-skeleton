@@ -4,7 +4,7 @@ if [ "$NODE_ENV" = 'production' ]; then
   # build server & client with gulp
   echo -n 'Building app @ '
   date
-  node --harmony `which gulp` build:server build:client
+  node --harmony `which gulp`
 
   # run using pm2!
   echo -n 'Booting new app @ '
