@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$NODE_ENV" = 'production' ]; then
   # build server & client with gulp
