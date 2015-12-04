@@ -16,14 +16,14 @@ body
   margin-top 0
   padding-top 0
   &:before
+    background url('http://wallpoper.com/images/00/22/27/48/dark-forest_00222748.jpg')
     content ''
     position fixed
-    z-index -1
-    top 0
     right 0
+    top 0
+    z-index -1
     bottom 0
     left 0
-    background-image linear-gradient(#fbfbfb 80%, #f0f0f0)
   &:after
     content ''
     position fixed
@@ -64,6 +64,16 @@ body
               background headerBackground
             button
               opacity 1
+  .react
+    &:before
+      content ''
+      position fixed
+      z-index -1
+      top 0
+      right 0
+      bottom 0
+      left 0
+      background-image linear-gradient(rgba(255,255,255,.95) 60%, rgba(225,225,225,.7))
 
 hr
   border-top-color rgba(textColor, .015)
@@ -182,7 +192,7 @@ h2, h3
     margin 0 0 (grid / 2) 0
     position relative
     overflow hidden
-    border-bottom 2px solid tint(themeColor, 93%)
+    border-bottom 1px solid #eee
     // two lines simulating 8x11 paper
     &:after
       position absolute
@@ -215,7 +225,8 @@ h2, h3
       span
         position absolute
         top 2px
-        background rgba(255,255,255,.85)
+        background rgba(255,255,255,.45)
+        border-radius 3px
         padding 0 6px
         right grid * 5.5
         font-weight 200
