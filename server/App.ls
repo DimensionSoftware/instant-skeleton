@@ -9,13 +9,8 @@ require! {
   'pretty-error': PrettyError
 
   koa
-  \koa-level
   \koa-logger
   'koa-helmet': helmet
-
-  'level-sublevel'
-  \level-live-stream
-  'level-party': level
 
   'koa-generic-session': koa-session
 
@@ -35,11 +30,11 @@ pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
 prod = env is \production
 
-db      = level-sublevel(level './shared/db' {value-encoding:\json})
-sdb     = db.sublevel \session
-edb     = db.sublevel \everyone
-store   = koa-level {db:sdb}
-session = koa-session {store}
+#db      = level-sublevel(level './shared/db' {value-encoding:\json})
+#sdb     = db.sublevel \session
+#edb     = db.sublevel \everyone
+#store   = koa-level {db:sdb}
+#session = koa-session {store}
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -61,7 +56,7 @@ module.exports =
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.app-cache        # offline support
         ..use middleware.static-assets    # static assets handler
-        ..use session                     # leveldb session support
+        #..use session                     # leveldb session support
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
         ..use pages                       # apply pages
@@ -71,18 +66,18 @@ module.exports =
 
       # boot http & websocket servers
       @server = http.create-server @app.callback!
-      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
-        ..before (middleware.primus-koa-session store, @app.keys)
-        ..use \multiplex primus-multiplex
-        ..use \emitter primus-emitter
-        ..use \resource primus-resource
-        ..remove \primus.js
+#      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
+#        ..before (middleware.primus-koa-session store, @app.keys)
+#        ..use \multiplex primus-multiplex
+#        ..use \emitter primus-emitter
+#        ..use \resource primus-resource
+#        ..remove \primus.js
 
-      # init realtime resources
-      resources.init sdb, @primus
-      # init live streams
-      live-stream @primus, edb, \everyone
-      live-stream @primus, sdb, \session, (data, spark) -> data.key is spark.request.key
+#      # init realtime resources
+#      resources.init sdb, @primus
+#      # init live streams
+#      live-stream @primus, edb, \everyone
+#      live-stream @primus, sdb, \session, (data, spark) -> data.key is spark.request.key
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
@@ -96,25 +91,25 @@ module.exports =
       db.close cb
 
 
-function live-stream primus, db, name, key-compare-fn
-  level-live-stream.install db
-  channel = primus.channel name
-    ..on \connection (spark) ->
-      # -> send live updates to client
-      send = -> spark.write (it <<< {updated: new Date!get-time!}) # timestamp
-      s-stream = db.create-live-stream!
-        ..pipe channel # pipe updates
-        ..on \data (data) ->
-          # FIXME levelup ignores value-encoding
-          v = if typeof! data.value is \Object then data.value else JSON.parse data.value
-          if key-compare-fn
-            if key-compare-fn(data, spark) then send v
-          else
-            send v
-
-      # <- save live updates from client
-      spark.on \data (data) ->
-        # TODO check permissions from request.key (eg. deleting from public)
-        # FIXME levelup ignores value-encoding
-        # if key-compare-fn, then use session as key
-        db.put (if key-compare-fn then spark.request.key else name), JSON.stringify data
+#function live-stream primus, db, name, key-compare-fn
+#  level-live-stream.install db
+#  channel = primus.channel name
+#    ..on \connection (spark) ->
+#      # -> send live updates to client
+#      send = -> spark.write (it <<< {updated: new Date!get-time!}) # timestamp
+#      s-stream = db.create-live-stream!
+#        ..pipe channel # pipe updates
+#        ..on \data (data) ->
+#          # FIXME levelup ignores value-encoding
+#          v = if typeof! data.value is \Object then data.value else JSON.parse data.value
+#          if key-compare-fn
+#            if key-compare-fn(data, spark) then send v
+#          else
+#            send v
+#
+#      # <- save live updates from client
+#      spark.on \data (data) ->
+#        # TODO check permissions from request.key (eg. deleting from public)
+#        # FIXME levelup ignores value-encoding
+#        # if key-compare-fn, then use session as key
+#        db.put (if key-compare-fn then spark.request.key else name), JSON.stringify data

@@ -76,39 +76,39 @@ function init-primus
 
   resources primus # init primus-resources
 
-function init-live-stream name, use-storage, cb=(->)
-  # create realtime "live" data streams w/ leveldb
-  ch = window.primus.channel name
-    ..once \data (data) ->
-      # stream initial data from server
-      cb (force-object data) # re-render
-    ..on \data (data) ->
-      # stream updates from server
-      cur = force-object data
-      if use-storage then storage.set name, cur # local storage
-      if cur and window.app then window.app.update name, -> Immutable.fromJS cur
-    ..on \open ->
-      # fn to stream updates to server
-      cb! # immediately render ui -- FIXME correctly wait for data stream above (avoids browser janks)
-      window["sync#{capitalize name}"] = ->
-        app = window.app
-        owned = app.update-in [name, \spark-id], -> window.spark-id # add update's owner
-        ch.write (owned.get name .toJS!)
-    ..on \close ->
-      # cleanup
-      delete window["#{name}Sync"]
-
-function init-realtime
-  # setup realtime streams w/ leveldb
-  [stream, load] = [{}, (key, val) -->
-    stream[key] = val or {} # default
-    init-react stream]
-  init-live-stream \everyone false (load \everyone)
-  init-live-stream \session  true  (load \session)
-
-function force-object data
-  # FIXME workaround for levelup's broken transforms
-  if typeof! data is \Object then data else JSON.parse data
+#function init-live-stream name, use-storage, cb=(->)
+#  # create realtime "live" data streams w/ leveldb
+#  ch = window.primus.channel name
+#    ..once \data (data) ->
+#      # stream initial data from server
+#      cb (force-object data) # re-render
+#    ..on \data (data) ->
+#      # stream updates from server
+#      cur = force-object data
+#      if use-storage then storage.set name, cur # local storage
+#      if cur and window.app then window.app.update name, -> Immutable.fromJS cur
+#    ..on \open ->
+#      # fn to stream updates to server
+#      cb! # immediately render ui -- FIXME correctly wait for data stream above (avoids browser janks)
+#      window["sync#{capitalize name}"] = ->
+#        app = window.app
+#        owned = app.update-in [name, \spark-id], -> window.spark-id # add update's owner
+#        ch.write (owned.get name .toJS!)
+#    ..on \close ->
+#      # cleanup
+#      delete window["#{name}Sync"]
+#
+#function init-realtime
+#  # setup realtime streams w/ leveldb
+#  [stream, load] = [{}, (key, val) -->
+#    stream[key] = val or {} # default
+#    init-react stream]
+#  init-live-stream \everyone false (load \everyone)
+#  init-live-stream \session  true  (load \session)
+#
+#function force-object data
+#  # FIXME workaround for levelup's broken transforms
+#  if typeof! data is \Object then data else JSON.parse data
 
 function init-react data
   if data.session === {} then data.session = window.storage.get \session # use local storage
