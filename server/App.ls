@@ -12,7 +12,12 @@ require! {
   \koa-logger
   'koa-helmet': helmet
 
-  'koa-generic-session': koa-session
+  \koa-generic-session-rethinkdb
+  \koa-generic-session : session
+
+  'rethinkdb-websocket-server': {r, RQ, listen}
+  'react-rethinkdb/dist/node': {Session}
+  'rethinkdbdash': rethinkdb
 
   primus: Primus
   \primus-emitter
@@ -34,7 +39,19 @@ prod = env is \production
 #sdb     = db.sublevel \session
 #edb     = db.sublevel \everyone
 #store   = koa-level {db:sdb}
+
+#store = new Session!
+#console.log \store: store
+
 #session = koa-session {store}
+connection = rethinkdb do
+  connection:
+    host: \localhost
+    port: 28015
+
+store = new koa-generic-session-rethinkdb {connection}
+  ..setup!
+
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -56,7 +73,7 @@ module.exports =
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.app-cache        # offline support
         ..use middleware.static-assets    # static assets handler
-        #..use session                     # leveldb session support
+        ..use session {store}             # reactdb session support
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
         ..use pages                       # apply pages
@@ -66,6 +83,11 @@ module.exports =
 
       # boot http & websocket servers
       @server = http.create-server @app.callback!
+      listen do
+        http-server: @server
+        http-path:   \/db
+        unsafely-allow-any-query: true
+
 #      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
 #        ..before (middleware.primus-koa-session store, @app.keys)
 #        ..use \multiplex primus-multiplex
