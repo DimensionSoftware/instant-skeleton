@@ -44,8 +44,8 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 
 # main
 # ----
-init-primus!    # setup realtime socket
-init-realtime!  # socket data + react
+#init-primus!    # setup realtime socket
+#init-realtime!  # socket data + react
 
 window.application-cache.add-event-listener \noupdate ->
   <- set-timeout _, 1000ms          # yield

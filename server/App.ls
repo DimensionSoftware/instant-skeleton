@@ -4,6 +4,7 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
+  co
   fs
   http
   'pretty-error': PrettyError
@@ -12,7 +13,7 @@ require! {
   \koa-logger
   'koa-helmet': helmet
 
-  \koa-generic-session-rethinkdb
+  \koa-generic-session-rethinkdb : RethinkSession
   \koa-generic-session : session
 
   'rethinkdb-websocket-server': {r, RQ, listen}
@@ -45,12 +46,11 @@ prod = env is \production
 
 #session = koa-session {store}
 connection = rethinkdb do
-  connection:
-    host: \localhost
-    port: 28015
+  host: \localhost
+  port: 28015
 
-store = new koa-generic-session-rethinkdb {connection}
-  ..setup!
+store = new RethinkSession {connection}
+co store.setup! .then void, -> console.error "RethinkDB Error: #it"
 
 
 ### App's purpose is to abstract instantiation from starting & stopping
