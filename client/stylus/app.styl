@@ -16,7 +16,8 @@ body
   margin-top 0
   padding-top 0
   &:before
-    background url('http://wallpoper.com/images/00/22/27/48/dark-forest_00222748.jpg')
+    background url('http://wallpoper.com/images/00/22/27/48/dark-forest_00222748.jpg') no-repeat center center fixed
+    background-size cover
     content ''
     position fixed
     right 0
@@ -314,7 +315,8 @@ h2, h3
       border-radius 3px
       border-bottom-right-radius 0
       border-bottom-left-radius 0
-      background-color rgba(#fff, .05)
+      border-bottom 2px solid #000
+      background-color rgba(#fff, .08)
       animation fadeIn .8s ease-in
       backface-visibility hidden
       a
