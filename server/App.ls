@@ -86,7 +86,7 @@ module.exports =
       listen do
         http-server: @server
         http-path:   \/db
-        unsafely-allow-any-query: true
+        unsafely-allow-any-query: !prod
 
 #      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
 #        ..before (middleware.primus-koa-session store, @app.keys)

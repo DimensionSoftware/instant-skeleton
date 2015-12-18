@@ -154,6 +154,7 @@ export webpack = (next) ->*
   if @locals.env isnt \production # webpackdev headers
     @set \Access-Control-Allow-Origin "http://#{config.domain}:#{config.node_port}"
     @set \Access-Control-Allow-Headers \X-Requested-With
+    @set \Access-Control-Allow-Credentials true
   yield next
 
 

@@ -1,6 +1,7 @@
 
 require! {
   react: {create-factory}:React
+  'react-rethinkdb/dist/node': {Session}
   \react-dom
   immutable: window.Immutable
   immstruct
@@ -46,6 +47,13 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 # ----
 #init-primus!    # setup realtime socket
 #init-realtime!  # socket data + react
+sess = new Session!
+  ..connect do
+    host:   \localhost
+    port:   8080 # FIXME use config
+    path:   \/db
+    secure: false
+init-react sess
 
 window.application-cache.add-event-listener \noupdate ->
   <- set-timeout _, 1000ms          # yield
