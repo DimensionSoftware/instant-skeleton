@@ -9,7 +9,7 @@ Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge
 
 Build Bigger with Less
 ----------------------
-Best realtime framework to lift heavy functionality lightening quick with Node.JS
+Best realtime framework to lift heavy functionality lightening quick with Node.JS &amp; RethinkDB!
 
 __[DOCUMENTATION](http://dimensionsoftware.github.io/instant-skeleton) . [DEMO](https://todo.powerbulletin.com)__
 
@@ -21,20 +21,18 @@ __[DOCUMENTATION](http://dimensionsoftware.github.io/instant-skeleton) . [DEMO](
 
 ## Create Your First Page
 
-Building your SEO-friendly, realtime application is simple!  Instant Skeleton cobbles together the best of functional
-React.JS into a single, routable concept that makes your on-screen productivity incredible:
+Building your SEO-friendly, secure, realtime streaming application is simple!  Instant Skeleton cobbles together the best of functional React.JS into a single, routable concept that makes your on-screen productivity incredible:
 
->  ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [Immutable.JS](https://github.com/facebook/immutable-js)*
+>  ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [RethinkDB](http://rethinkdb.com)*
 
-1. Add a Page Route
+1. [Install RethinkDB](http://rethinkdb.com/docs/install/)
+
+2. Add a Page Route &amp; Handler
 
         $ vim shared/routes.ls
-
-2. Add a Page Handler for the Route
-
         $ vim server/pages.ls
 
-3. Add a Component for the Page
+3. Add a React Component for the Page
 
         $ vim shared/react/[ROUTE-NAME].ls
 
@@ -44,7 +42,7 @@ React.JS into a single, routable concept that makes your on-screen productivity 
 * `DOMAIN`    -- domain of site
 * `CACHE_URL` -- format for cache urls, eg: "//cache%n.%domain"
 
-[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L50-L91) and [customize with a .env file](https://github.com/motdotla/dotenv)!
+[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L50-L80) and [customize with a .env file](https://github.com/motdotla/dotenv)!
 
 ## References
 
@@ -55,7 +53,6 @@ SERVER
     * **webpack** -- https://github.com/shama/gulp-webpack
 * **Koa** -- http://koajs.com
     * **helmet** -- https://github.com/venables/koa-helmet
-    * **level sessions** -- https://github.com/purposeindustries/koa-level
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
 * **DotEnv** -- https://github.com/motdotla/dotenv
@@ -69,15 +66,8 @@ SHARED
     * **immutable.js** -- https://github.com/facebook/immutable-js
     * **omniscient** -- https://omniscientjs.github.io/
     * **hot-loader** -- http://gaearon.github.io/react-hot-loader/
-* **Primus** -- https://github.com/primus/primus
-    * **engine.io** -- https://github.com/Automattic/engine.io
-    * **emitter** -- https://github.com/cayasso/primus-emitter
-    * **multiplex** -- https://github.com/cayasso/primus-multiplex
-    * **resource** -- https://github.com/cayasso/primus-resource
-* **LevelDB** -- https://github.com/google/leveldb
-    * **party** -- https://github.com/substack/level-party
-    * **sublevel** -- https://github.com/dominictarr/level-sublevel
-    * **livestream** -- https://github.com/dominictarr/level-live-stream
+* **RethinkDB** -- http://rethinkdb.com
+    * **rethinkdb sessions** -- https://github.com/mikemintz/rethinkdb-websocket-server
 
 CLIENT
 
@@ -86,9 +76,7 @@ CLIENT
 
 ## Principles
 
-How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This
-no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  Zero external service
-dependencies make deploying a cinch.  Persistence is [LevelDB](https://github.com/google/leveldb).  The rest is up to you!
+How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  [RethinkDB is the single dependency to install](http://rethinkdb.com/docs/install/) and a cinch to scale your needs forward.  The rest is up to you!
 
 With a cutting-edge HTML5 core, Instant Skeleton provides true first-class mobile web experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
 
@@ -141,35 +129,16 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
        vim shared/features.ls
        ```
 
-6. **How can I add my own data store?**
-
-       Simply require &amp; hook it into your Page handler or Resource:
-
-       ```sh
-       vim server/pages.ls
-       vim server/resources.ls
-       ```
-
-7. **How easy is session management?**
-
-       Sessions are streamed realtime with [LevelDB](https://github.com/google/leveldb) &amp; [Primus](https://github.com/primus/primus).
-
-       ```sh
-       vim server/pages.ls
-       vim client/layout.ls
-       vim shared/react/HomePage.ls
-       ```
-
-8. **What about cacheability?**
+6. **What about cacheability?**
 
        All Pages are completely cacheable!  Etags &amp; proper cache-control headers are automagically set on every Page and sessions stream in real-time on Page load.  The idea is to persist personalization in user sessions.
 
 
-9. **Production deployment?  We got you covered!**
+7. **Production deployment?  We got you covered!**
 
        Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure [PM2](http://pm2.keymetrics.io/) production.
 
-10. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
+8. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
 
        Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/)!
 
@@ -192,12 +161,11 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 ## [TODO](https://todo.powerbulletin.com)
 
 
-* ADD: [RethinkDB](http://rethinkdb.com/)
 * ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
+* ADD: [Code Coverage](https://github.com/furqanZafar/gulp-livescript-istanbul0
 * ADD: Selenium and more tests
-* ADD: Coverage.js working with LiveScript
-* ADD: sum todos in Navigation
-* FIX: whitelist to ipv6 match
+* ADD: Sum todos in Navigation
+* FIX: Whitelist to ipv6 match
 
 &nbsp;
 
