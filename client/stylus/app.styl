@@ -18,6 +18,8 @@ body
   &:before
     background url('http://wallpoper.com/images/00/22/27/48/dark-forest_00222748.jpg') no-repeat center center fixed
     background-size cover
+    animation-name fallInX
+    animation-duration 2.5s
     content ''
     position fixed
     right 0
@@ -127,7 +129,7 @@ h2, h3
       .clip
         overflow hidden
         input[type='text']
-          padding-top 9px
+          padding-top 12px
           padding-bottom @padding-top
           font-size 1.1em
           border-left 1px solid lighten(textColor, 90%)
@@ -145,6 +147,7 @@ h2, h3
         padding 0 (grid * 2)
         font-size 1em
         height 36px
+  // search
   ol
     > input
       width 200px
@@ -152,17 +155,19 @@ h2, h3
       font-weight 100
       top grid * 3.5
       right 0
-      font-size 1.1em
-      padding 3px 15px
+      font-size .8em
+      font-style italic
+      padding 4px 15px
       border-radius 30px
       border 1px solid tint(textColor, 85%)
       z-index 1
       color lighten(textColor, 50%)
+      transition width .2s ease-out
       &:focus, &:hover
         color lighten(textColor, 25%)
       &:focus
         width 230px
-        transition width .001s ease-in
+        transition none
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
@@ -223,6 +228,7 @@ h2, h3
       animation openSpace .25s ease-out forwards, fallInX .35s bounce both
       animation-delay .035s
       backface-visibility hidden
+      margin-left 10px
       span
         position absolute
         top 2px
@@ -239,7 +245,7 @@ h2, h3
         overflow ellipsis
       .placeholder
         margin (grid * 1.5) 0
-        text-indent grid * 7
+        text-indent grid * 6
       input[type='checkbox']
         position absolute
         left grid
@@ -248,7 +254,7 @@ h2, h3
       input[type='text']
         padding 5px 9px
         font-size 1em
-        text-indent grid * 6
+        text-indent grid * 5
         background none
         border none
         width 100%
@@ -257,7 +263,7 @@ h2, h3
           transition all .35s ease-out .2s
         &:focus + .fx, &:focus:hover + .fx
           border-bottom 1px solid rgba(themeColor, .8)
-          margin-right grid * 2
+          margin-right grid / 2
         &:hover + .fx
           border-bottom 1px solid rgba(themeColor, .2)
           transition none
@@ -285,7 +291,7 @@ h2, h3
         position absolute
         display none
         cursor pointer
-        right grid * 3
+        right grid
         font-weight bold
         font-size 1.3em
         top 1px
