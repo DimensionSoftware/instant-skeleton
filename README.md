@@ -162,7 +162,7 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 
 
 * ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
-* ADD: [Code Coverage](https://github.com/furqanZafar/gulp-livescript-istanbul0
+* ADD: [Code Coverage](https://github.com/furqanZafar/gulp-livescript-istanbul)
 * ADD: Selenium and more tests
 * ADD: Sum todos in Navigation
 * FIX: Whitelist to ipv6 match
