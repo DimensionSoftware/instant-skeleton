@@ -38,7 +38,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
 
   # todo list
   ol void [
-    Input {key:\search cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
+    Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
     h2 key: \name, name
     if list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
