@@ -119,6 +119,7 @@
     "stylus": "^0.52.4",
     "stylus-loader": "^1.2.0",
     "superagent": "^1.6.1",
+    "tls": "0.0.1",
     "uuid": "^2.0.1",
     "webpack": "^1.10.1"
   },
