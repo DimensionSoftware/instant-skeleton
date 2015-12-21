@@ -20,13 +20,13 @@ require! {
   'react-rethinkdb/dist/node': {Session}
   'rethinkdbdash': rethinkdb
 
-  primus: Primus
-  \primus-emitter
-  \primus-multiplex
-  \primus-resource
+#  primus: Primus
+#  \primus-emitter
+#  \primus-multiplex
+#  \primus-resource
 
   \./pages
-  \./resources
+  #\./resources
   \./middleware
 
   \../shared/features
@@ -45,9 +45,9 @@ prod = env is \production
 #console.log \store: store
 
 #session = koa-session {store}
-connection = rethinkdb do
-  host: \localhost
-  port: 28015
+db-host    = \localhost
+db-port    = 28015
+connection = rethinkdb {db-host, db-port}
 
 store = new RethinkSession {connection}
 co store.setup! .then void, -> console.error "RethinkDB Error: #it"
@@ -86,6 +86,8 @@ module.exports =
       listen do
         http-server: @server
         http-path:   \/db
+        db-host:     db-host
+        db-port:     db-port
         unsafely-allow-any-query: !prod
 
 #      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
@@ -108,7 +110,7 @@ module.exports =
     stop: (cb = (->)) ->
       console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & quit listening
-      <~ @primus.destroy
+      #<~ @primus.destroy
       <~ @server.close
       db.close cb
 
