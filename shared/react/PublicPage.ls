@@ -11,7 +11,10 @@ require! {
 
 # PublicPage
 PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
-  name = (session.get \name) or \Anonymous
+  [name, todo-count] =
+    (session.get \name) or \Anonymous
+    if everyone.get \todos then that.count! else 0
+
   DOM.div class-name: \PublicPage, [
     Header do
       key:          \header
@@ -20,13 +23,14 @@ PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
       save-cursor:  everyone.cursor \todos
       title-cursor: locals.cursor \current-title
     # render everyone's todos
+    DOM.h4 void todo-count
     TodoList { # props
       key:     \todo-list
       todos:   everyone.cursor \todos
       visible: locals.cursor \visible
       search:  locals.cursor \search
       +show-name
-      name: 'Public TODO'
+      name: "TODO Items for Everyone"
       on-delete: (-> sync-everyone!), on-change:(-> sync-everyone!)
     }
     Link {key:\link href:R(\MyTodoPage)} 'Back →'
