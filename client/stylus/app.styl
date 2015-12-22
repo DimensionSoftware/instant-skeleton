@@ -115,6 +115,19 @@ h2, h3
     margin-bottom grid * 6.5
     text-overflow ellipsis
     overflow hidden
+  // count
+  h4
+    position absolute
+    left grid * 7
+    top grid * 3.4
+    border-radius 100%
+    font-size .85em
+    color lighten(textColor, 20%)
+    background-color rgba(backgroundColor, .8)
+    padding (grid / 2)
+    animation-name fallInX
+    animation-duration .35s
+    animation-timing-function ease-in-out
   header
     position fixed
     left 22.2 * grid
