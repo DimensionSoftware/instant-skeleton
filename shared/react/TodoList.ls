@@ -5,6 +5,7 @@
 require! {
   \./ActiveDate
   \./Input
+  \./Check
 }
 
 
@@ -49,7 +50,15 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
         let key = that.0
           show-date = if todos.has-in [key, \completed-at] then [key, \completed-at] else [key, \date]
           li {key} [
-            Input {
+            Check {
+              cursor:    todos.cursor [key, \completed]
+              on-change: -> # save completion
+                on-change if it.deref!
+                  todos.update-in [key, \completed-at], -> new Date!get-time!
+                else
+                  todos.delete-in [key, \completed-at]
+            }
+            Input { # saves edits
               key: \title
               cursor: (todos.cursor [key, \title])
               on-blur:   -> save-edit it, key
