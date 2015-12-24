@@ -41,7 +41,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
   ol void [
     Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
     h2 key: \name, name
-    if list.count!
+    if count = list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
         .entries!
       # FIXME hack until "for x of* y!" es6 iterators
@@ -78,7 +78,11 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
             }, \x
           ]
     else
-      li key:\placeholder, [ div {class-name:\placeholder} '(empty)' ]
+      li key:\placeholder, [ div {class-name:\placeholder} \Empty ]
+    if search.deref!
+      li do
+        class-name: \results
+        "#count search result#{if count > 1 or count is 0 then \s else ''}"
 
     # filters
     div {key:\actions class-name:\actions} [
