@@ -196,7 +196,6 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 * ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
 * ADD: Selenium and more tests
 * ADD: Coverage.js working with LiveScript
-* ADD: sum todos in Navigation
 * FIX: whitelist to ipv6 match
 
 &nbsp;
