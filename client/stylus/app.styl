@@ -93,7 +93,6 @@ h2, h3
   padding-bottom grid * 30
   margin-left leftNavWidth + (grid * 2)
   > div
-    animation focusIn .03s ease-in
     backface-visibility hidden
 
 .HomePage
@@ -115,6 +114,19 @@ h2, h3
     margin-bottom grid * 6.5
     text-overflow ellipsis
     overflow hidden
+  // count
+  h4
+    position absolute
+    left grid * 7
+    top grid * 3.4
+    border-radius 100%
+    font-size .85em
+    color lighten(textColor, 20%)
+    background-color rgba(backgroundColor, .8)
+    padding (grid / 2)
+    animation-name fallInX
+    animation-duration .25s
+    animation-timing-function ease-in-out
   header
     position fixed
     left 22.2 * grid
@@ -198,7 +210,6 @@ h2, h3
     margin 0 0 (grid / 2) 0
     position relative
     overflow hidden
-    border-bottom 1px solid #eee
     // two lines simulating 8x11 paper
     &:after
       position absolute
@@ -308,6 +319,13 @@ h2, h3
         text-decoration line-through
         border-bottom-color transparent
         color tint(darken(themeColor, 80%), 50%)
+    .results
+      position absolute
+      bottom 0
+      padding-left grid
+      font-size .8em
+      font-weight bold
+      color lighten(textColor, 20%)
     // action buttons for "all", "active" & "completed"
     .actions
       text-align center

@@ -132,7 +132,7 @@ function init-react data
     react-dom.render (App cur), react # render app to body
     cur
   set-timeout (-> state.on \next-animation-frame render), 1000ms
-  window.toggle-class body, \loaded # trigger ui loaded after session applies
+  window.toggle-class body, \loaded # trigger ui loaded
   render!
 
 function capitalize s

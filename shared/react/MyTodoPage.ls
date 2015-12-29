@@ -11,7 +11,9 @@ require! {
 
 # MyTodoPage
 MyTodoPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
-  name = session.get \name
+  [name, todo-count] =
+    session.get \name
+    if session.get \todos then that.count! else 0
 
   DOM.div class-name: \MyTodoPage, [
     Header do
@@ -21,6 +23,7 @@ MyTodoPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
       save-cursor:  session.cursor \todos
       title-cursor: locals.cursor \current-title
     # render my session todos
+    DOM.h4 void todo-count
     TodoList do # props
       todos:     session.cursor \todos
       visible:   locals.cursor \visible

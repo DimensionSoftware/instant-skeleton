@@ -5,6 +5,7 @@
 require! {
   \./ActiveDate
   \./Input
+  \./Check
 }
 
 
@@ -40,7 +41,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
   ol void [
     Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
     h2 key: \name, name
-    if list.count!
+    if count = list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
         .entries!
       # FIXME hack until "for x of* y!" es6 iterators
@@ -49,7 +50,15 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
         let key = that.0
           show-date = if todos.has-in [key, \completed-at] then [key, \completed-at] else [key, \date]
           li {key} [
-            Input {
+            Check {
+              cursor:    todos.cursor [key, \completed]
+              on-change: -> # save completion
+                on-change if it.deref!
+                  todos.update-in [key, \completed-at], -> new Date!get-time!
+                else
+                  todos.delete-in [key, \completed-at]
+            }
+            Input { # saves edits
               key: \title
               cursor: (todos.cursor [key, \title])
               on-blur:   -> save-edit it, key
@@ -69,7 +78,11 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
             }, \x
           ]
     else
-      li key:\placeholder, [ div {class-name:\placeholder} '(empty)' ]
+      li key:\placeholder, [ div {class-name:\placeholder} \Empty ]
+    if search.deref!
+      li do
+        class-name: \results
+        "#count search result#{if count > 1 or count is 0 then \s else ''}"
 
     # filters
     div {key:\actions class-name:\actions} [
