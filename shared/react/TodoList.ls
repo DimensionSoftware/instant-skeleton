@@ -39,7 +39,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
 
   # todo list
   ol void [
-    Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
+    Input \search, {type:\search, cursor: search, tab-index: 1, placeholder: 'Search', +spell-check}
     h2 key: \name, name
     if count = list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
@@ -50,7 +50,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
         let key = that.0
           show-date = if todos.has-in [key, \completed-at] then [key, \completed-at] else [key, \date]
           li {key} [
-            Check {
+            Check "#{key}check", {
               cursor:    todos.cursor [key, \completed]
               on-change: -> # save completion
                 on-change if it.deref!
@@ -58,17 +58,16 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
                 else
                   todos.delete-in [key, \completed-at]
             }
-            Input { # saves edits
-              key: \title
+            Input "#{key}title", { # saves edits
               cursor: (todos.cursor [key, \title])
               on-blur:   -> save-edit it, key
               on-key-up: -> if it.key-code is 13 then save-edit it, key
               +spell-check
             }
             div {key:\fx class-name:\fx}
-            ActiveDate {key: \date, cursor: (todos.cursor show-date), title:(todos.get-in [key, \name])} # author's name
+            ActiveDate "#{key}date", {cursor: (todos.cursor show-date), title:(todos.get-in [key, \name])} # author's name
             div {
-              key: \delete
+              key: "#{key}delete"
               title: \Delete
               class-name: \delete,
               on-click: ->
@@ -78,9 +77,10 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
             }, \x
           ]
     else
-      li key:\placeholder, [ div {class-name:\placeholder} \Empty ]
+      li key:\placeholder, [ div {key: \placeholder class-name: \placeholder} \Empty ]
     if search.deref!
       li do
+        key: \results
         class-name: \results
         "#count search result#{if count > 1 or count is 0 then \s else ''}"
 
