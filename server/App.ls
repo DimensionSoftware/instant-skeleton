@@ -4,6 +4,7 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
+  express
   co
   fs
   http
@@ -81,14 +82,26 @@ module.exports =
       # config environment
       if env isnt \test then @app.use koa-logger!
 
+      session-creator = (url-query-params) ->
+        {user-id, auth-token} = url-query-params
+        user-id
+
       # boot http & websocket servers
-      @server = http.create-server @app.callback!
+      app = express!
+      app.get '/' (req, res, next) ->
+        console.log \here
+        res.status 200 .send \yo!
+        next!
+      @server = http.create-server app
+
       listen do
         http-server: @server
         http-path:   \/db
         db-host:     db-host
         db-port:     db-port
+        session-creator: session-creator
         unsafely-allow-any-query: !prod
+        query-white-list: []
 
 #      @primus = new Primus @server, transformer: \engine.io, parser: \JSON
 #        ..before (middleware.primus-koa-session store, @app.keys)
