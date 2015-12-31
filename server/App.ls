@@ -27,24 +27,14 @@ require! {
 
 pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
-prod = env is \production
 
-#db      = level-sublevel(level './shared/db' {value-encoding:\json})
-#sdb     = db.sublevel \session
-#edb     = db.sublevel \everyone
-#store   = koa-level {db:sdb}
-
-#store = new Session!
-#console.log \store: store
-
-#session = koa-session {store}
+# TODO use config variables
 db-host    = \localhost
 db-port    = 28015
+db-path    = '/db'
 connection = rethinkdb {db-host, db-port}
-
 store = new RethinkSession {connection}
 co store.setup! .then void, -> console.error "RethinkDB Error: #it"
-
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -78,9 +68,10 @@ module.exports =
       @server = http.create-server @app.callback!
       listen do
         http-server: @server
-        http-path:   \/db
+        http-path:   db-path
         db-host:     db-host
         db-port:     db-port
+        unsafely-allow-any-query: env isnt \production
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb

@@ -32,10 +32,6 @@ html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
 export error-handler = (next) ->*
   try
     yield next
-    if @path is \/db
-      # TODO integrate rethinkdb-websocket-server
-      @status = 200
-      yield next
     if @status is 404 then throw 404 # no stack trace needed
   catch
     @status = if typeof! e is \Number then e else e.status or 500 # default 500

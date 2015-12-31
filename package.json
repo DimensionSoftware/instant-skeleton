@@ -114,6 +114,7 @@
     "react-router-component": "^0.28.0",
     "replacestream": "^4.0.0",
     "rethinkdb-websocket-server": "^0.3.2",
+    "rethinkdbdash": "^2.2.15",
     "shelljs": "^0.5.1",
     "style-loader": "^0.13.0",
     "stylus": "^0.53.0",

@@ -45,11 +45,11 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 # main
 # ----
 sess = new Session!
-  ..connect do
-    host:   \localhost
-    port:   8080 # FIXME use config
-    path:   \/db
-    secure: false
+sess.connect do
+  host:   \develop.com
+  port:   8080 # FIXME use config
+  path:   \/db
+  secure: false
 init-react sess
 
 window.application-cache.add-event-listener \noupdate ->
