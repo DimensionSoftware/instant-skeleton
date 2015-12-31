@@ -58,7 +58,6 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
       window.locals=!{delete(locals.body) && JSON.stringify(locals)};
 
     //- boot app bundle (using cdn in production)
-    script(src="#{cacheUrls[2]}/vendor/primus.js?#{changeset}")
     if production
       script(src="#{cacheUrls[3]}/builds/client.js?#{changeset}")
     else
