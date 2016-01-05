@@ -9,3 +9,4 @@ public/vendor/builds
 public/master.css
 shared/db
 node_modules
+rethinkdb_data
