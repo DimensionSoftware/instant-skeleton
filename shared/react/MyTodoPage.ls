@@ -23,7 +23,11 @@ MyTodoPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
       save-cursor:  session.cursor \todos
       title-cursor: locals.cursor \current-title
     # render my session todos
-    DOM.h4 void todo-count
+    DOM.h4 do
+      title: 'Total # of TODOs'
+      class-name: cx do
+        hidden: todo-count is 0
+      todo-count
     TodoList do # props
       todos:     session.cursor \todos
       visible:   locals.cursor \visible

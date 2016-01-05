@@ -23,7 +23,11 @@ PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
       save-cursor:  everyone.cursor \todos
       title-cursor: locals.cursor \current-title
     # render everyone's todos
-    DOM.h4 void todo-count
+    DOM.h4 do
+      title: 'Total # of TODOs'
+      class-name: cx do
+        hidden: todo-count is 0
+      todo-count
     TodoList { # props
       key:     \todo-list
       todos:   everyone.cursor \todos
