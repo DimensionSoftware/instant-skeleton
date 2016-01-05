@@ -15,7 +15,7 @@ PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
     (session.get \name) or \Anonymous
     if everyone.get \todos then that.count! else 0
 
-  DOM.div class-name: \PublicPage, [
+  DOM.div key: \PublicPage class-name: \PublicPage, [
     Header do
       key:          \header
       name:         name
@@ -24,6 +24,7 @@ PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
       title-cursor: locals.cursor \current-title
     # render everyone's todos
     DOM.h4 do
+      key: \count
       title: 'Total # of TODOs'
       class-name: cx do
         hidden: todo-count is 0
