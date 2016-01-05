@@ -39,7 +39,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
 
   # todo list
   ol void [
-    Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', results: 5, autosave: \search, +spell-check}
+    Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', results: 5, auto-save: \search, +spell-check}
     h2 key: \name, name
     if count = list.count!
       sorted = list.sort (a, b) -> (b.get \date) - (a.get \date) # reverse chron
@@ -82,8 +82,8 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
     if search.deref!
       li do
         class-name: \results
-        b void count
-        strong void " search result#{if count > 1 or count is 0 then \s else ''}"
+        b {key: \b} count
+        strong {key: \strong} " search result#{if count > 1 or count is 0 then \s else ''}"
 
     # filters
     div {key:\actions class-name:\actions} [
