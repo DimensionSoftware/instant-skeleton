@@ -27,15 +27,6 @@ process.on \SIGINT -> # for pm2 & friends
     <- set-timeout _, 300ms # allow event-loop some ticks
     process.exit 0
 
-process.on \message (msg) ->
-  cl = console.log
-  switch msg
-    | \shutdown => # force after 2s
-      cl 'Closing all connections: '
-      supervisor.instance.stop -> cl \done.
-      set-timeout (-> cl \killed.; process.exit 0), 2000ms
-
-
 function restart
   start = ->
     supervisor.starting = true
