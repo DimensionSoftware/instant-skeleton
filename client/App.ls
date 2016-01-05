@@ -1,7 +1,7 @@
 
 require! {
   react: {create-factory}:React
-  'react-rethinkdb/dist/node': {Session}
+  \react-rethinkdb : {Session}
   \react-dom
   immutable: window.Immutable
   immstruct
