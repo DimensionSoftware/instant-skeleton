@@ -53,7 +53,6 @@ sess.connect do
 init-react sess
 
 window.application-cache.add-event-listener \noupdate ->
-  <- set-timeout _, 1000ms          # yield
   window.toggle-class body, \loaded # force ui load when 100% cache
 
 
