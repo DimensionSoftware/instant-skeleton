@@ -123,7 +123,8 @@
     "superagent": "^1.6.1",
     "tls": "0.0.1",
     "uuid": "^2.0.1",
-    "webpack": "^1.12.9"
+    "webpack": "^1.12.9",
+    "webpack-sources": "^0.1.0"
   },
   "devDependencies": {
     "blanket": "^1.2.1",
