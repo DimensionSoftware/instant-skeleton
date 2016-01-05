@@ -4,7 +4,6 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
-  co
   http
   'pretty-error': PrettyError
 
@@ -28,14 +27,13 @@ require! {
 pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
 
-co store.setup! .then void, -> console.error "RethinkDB Error: #it"
 # connect to rethinkdb
 [db-host, db-port, http-path] =
   [process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
 store = new RethinkSession connection: rethinkdb {db-host, db-port}
-
+  ..setup!
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
