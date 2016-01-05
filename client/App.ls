@@ -46,9 +46,9 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 # ----
 sess = new Session!
 sess.connect do
-  host:   \develop.com
-  port:   8080 # FIXME use config
-  path:   \/db
+  host:   locals.domain
+  port:   locals.port
+  path:   '/db'
   secure: false
 init-react sess
 

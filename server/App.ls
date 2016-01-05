@@ -28,13 +28,14 @@ require! {
 pe   = new PrettyError!
 env  = process.env.NODE_ENV or \development
 
-# TODO use config variables
-db-host    = \localhost
-db-port    = 28015
-db-path    = '/db'
-connection = rethinkdb {db-host, db-port}
-store = new RethinkSession {connection}
 co store.setup! .then void, -> console.error "RethinkDB Error: #it"
+# connect to rethinkdb
+[db-host, db-port, http-path] =
+  [process.env.npm_package_config_domain,
+   process.env.npm_package_config_rethinkdb_port,
+   '/db']
+store = new RethinkSession connection: rethinkdb {db-host, db-port}
+
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -66,12 +67,7 @@ module.exports =
 
       # boot http & websocket servers
       @server = http.create-server @app.callback!
-      listen do
-        http-server: @server
-        http-path:   db-path
-        db-host:     db-host
-        db-port:     db-port
-        unsafely-allow-any-query: env isnt \production
+      listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production}
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
