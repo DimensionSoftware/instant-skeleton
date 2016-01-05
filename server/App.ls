@@ -32,7 +32,8 @@ env  = process.env.NODE_ENV or \development
   [process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
-store = new RethinkSession connection: rethinkdb {db-host, db-port}
+connection = rethinkdb {db-host, db-port}
+store      = new RethinkSession {connection}
   ..setup!
 
 ### App's purpose is to abstract instantiation from starting & stopping
@@ -73,6 +74,7 @@ module.exports =
 
     stop: (cb = (->)) ->
       console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
-      # cleanup & quit listening
-      # TODO close rethinkdb
+      # cleanup & cleanly quit listening
       <~ @server.close
+      connection.get-pool-master!drain!
+      cb!

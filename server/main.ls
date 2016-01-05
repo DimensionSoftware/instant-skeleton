@@ -22,6 +22,10 @@ console.log "\n[1;37m,.._________[0;m"
 restart! # initial b00t-up!
 
 process.on \SIGHUP -> restart!
+process.on \SIGINT -> # for pm2 & friends
+  supervisor.instance.stop ->
+    <- set-timeout _, 300ms # allow event-loop some ticks
+    process.exit 0
 
 process.on \message (msg) ->
   cl = console.log
