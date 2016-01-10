@@ -136,7 +136,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 7. **Production deployment?  We got you covered!**
 
-       Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak processes.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/processes.json) to configure [PM2](http://pm2.keymetrics.io/) production.
+       Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak ecosystem.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/ecosystem.json) to configure [PM2](http://pm2.keymetrics.io/) production.
 
 8. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
 
@@ -148,23 +148,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 Really digging our [software architecture](https://dimensionsoftware.com)?  Say Hello and let us know:
 [**keith@dimensionsoftware.com**](mailto:keith@dimensionsoftware.com)
 
-## Contributors &amp; Idea Factories
-
-[**Keith Hoerling**](https://github.com/khoerling) . 
-[**John Beppu**](https://github.com/beppu) . 
-[**Matt Elder**](https://github.com/dreamcodez) . 
-[**Dave Seleno**](https://github.com/onelesd) . 
-[**Mark Huge**](https://github.com/markhuge)
-
-[According to GitHub](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors) . [Become a Contributor](https://github.com/DimensionSoftware/instant-skeleton/fork) .  [Pull request friendly!](https://github.com/DimensionSoftware/instant-skeleton/fork)
-
-## [TODO](https://todo.powerbulletin.com)
-
-
-* ADD: [Viewdocs](http://progrium.viewdocs.io/viewdocs)
-* ADD: [Code Coverage](https://github.com/furqanZafar/gulp-livescript-istanbul)
-* ADD: Selenium and more tests
-* FIX: Whitelist to ipv6 match
+## [TODO Example Application](https://todo.powerbulletin.com)
 
 &nbsp;
 
