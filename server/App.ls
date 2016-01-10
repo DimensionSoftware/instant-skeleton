@@ -5,22 +5,17 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 #####
 require! {
   http
-  'pretty-error': PrettyError
-
+  \pretty-error : PrettyError
+  \react-rethinkdb : {Session}
+  \rethinkdb-websocket-server : {r, RQ, listen}
+  \rethinkdbdash : rethinkdb
   koa
-  \koa-logger
-  'koa-helmet': helmet
-
-  \koa-generic-session-rethinkdb : RethinkSession
+  \koa-helmet : helmet
   \koa-generic-session : session
-
-  'rethinkdbdash': rethinkdb
-  'rethinkdb-websocket-server': {r, RQ, listen}
-  'react-rethinkdb/dist/node': {Session}
-
+  \koa-generic-session-rethinkdb : RethinkSession
+  \koa-logger
   \./pages
   \./middleware
-
   \../shared/features
 }
 
