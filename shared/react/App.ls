@@ -5,12 +5,13 @@ require! {
   omniscient: component
   immutable: Immutable
   omnipotent: {{ignore}:decorator}
+  'react-rethinkdb': {r, QueryRequest, PropsMixin}
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
   'react-async': {Mixin}
   \./mixins
 }
-page-mixins = [Mixin, mixins.initial-state-async, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
+page-mixins = [mixins.rethinkdb, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
 
 # factories
 Location  = create-factory Router.Location

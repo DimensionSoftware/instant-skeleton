@@ -8,6 +8,53 @@ require! {
 
 state = { last-offset: 0px, -initial-load }
 
+# XXX based on https://github.com/mikemintz/react-rethinkdb/blob/master/src/Mixin.js
+update = (component, props, state) ->
+  [observed, {session, subscriptions}] = [
+    component.observe props, state
+    component._rethink-mixin-state ]
+  subscription-manager = session._subscription-manager
+
+  # close subscriptions no longer subscribed to
+  Object.keys subscriptions .for-each (key) ->
+    if not observed[key]
+      subscriptions[key].unsubscribe!
+      delete component.data[key]
+
+  # [re]-subscribe to active queries
+  Object.keys observed .for-each (key) ->
+    [old-subscription, query-request] = [
+      subscriptions[key]
+      observed[key]]
+    subscriptions[key]  = subscription-manager.subscribe component, query-request, query-result
+    component.data[key] = query-result
+    if old-subscription then old-subscription.unsubscribe!
+
+unmount = (component) ->
+  {subscriptions} = component._rethink-mixin-state
+  Object.keys subscriptions .for-each (key) ->
+    subscriptions[key].unsubscribe!
+
+export rethinkdb =
+  component-did-mount: ->
+    console.log \mount
+    # TODO update path
+    # TODO update locals over socket
+    [session, subscriptions] = [{}, {}]
+    @_rethink-mixin-state = {session, subscriptions}
+    update @, @props, @state
+
+    window.scroll-to 0 0 # reset scroll position
+    scrolled!
+  component-will-unmount: ->
+    unmount @
+    console.log \unmount
+  component-will-update: (next-props, next-state) ->
+    console.log \will-update
+    if next-props !== @props or next-state !== @state
+      update @, next-props, next-state
+
+# XXX deprecated-- slated for removal
 export initial-state-async =
   get-initial-state-async: (cb) ->
     # TODO better on mobile to use primus websocket for surfing?
@@ -42,7 +89,7 @@ export scroller =
     window.remove-event-listener \scroll, scrolled, false
 
 function scrolled
-  body   = document.get-elements-by-tag-name \body .0 # cache
+  body = document.get-elements-by-tag-name \body .0 # cache
   offset = window.page-y-offset
   # add relevant scroll classes
   window.toggle-class body, \scrolled (offset > 1px)

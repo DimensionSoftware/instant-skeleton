@@ -33,7 +33,7 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
     <- Notification.request-permission
     show!
 
-window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
+window.toggle-class = (elem, class-name, add=true) -> # add & remove class names (XXX: outside react, only!)
   if add # add
     if (body.class-name.index-of class-name) is -1
       body.class-name += " #class-name"
@@ -44,13 +44,13 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 
 # main
 # ----
-sess = new Session!
-sess.connect do
-  host:   locals.domain
-  port:   locals.port
-  path:   '/db'
-  secure: false
-init-react sess
+rethink-session = new Session!
+  ..connect do
+    host:   locals.domain
+    port:   locals.port
+    path:   '/db'
+    secure: false
+init-react {rethink-session}
 
 window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
@@ -62,8 +62,9 @@ function init-react data
   state = immstruct { # default
     path,
     locals,
-    session:  {} <<< data.session
-    everyone: {} <<< data.everyone
+    rethink-session: data.rethink-session
+    session:   {} <<< data.session
+    everyone:  {} <<< data.everyone
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
