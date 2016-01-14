@@ -1,5 +1,6 @@
 
 require! {
+  'react-rethinkdb': {r, QueryRequest, DefaultMixin, PropsMixin}
   superagent: request
   immstruct
   immutable
@@ -8,51 +9,18 @@ require! {
 
 state = { last-offset: 0px, -initial-load }
 
-# XXX based on https://github.com/mikemintz/react-rethinkdb/blob/master/src/Mixin.js
-update = (component, props, state) ->
-  [observed, {session, subscriptions}] = [
-    component.observe props, state
-    component._rethink-mixin-state ]
-  subscription-manager = session._subscription-manager
-
-  # close subscriptions no longer subscribed to
-  Object.keys subscriptions .for-each (key) ->
-    if not observed[key]
-      subscriptions[key].unsubscribe!
-      delete component.data[key]
-
-  # [re]-subscribe to active queries
-  Object.keys observed .for-each (key) ->
-    [old-subscription, query-request] = [
-      subscriptions[key]
-      observed[key]]
-    subscriptions[key]  = subscription-manager.subscribe component, query-request, query-result
-    component.data[key] = query-result
-    if old-subscription then old-subscription.unsubscribe!
-
-unmount = (component) ->
-  {subscriptions} = component._rethink-mixin-state
-  Object.keys subscriptions .for-each (key) ->
-    subscriptions[key].unsubscribe!
-
 export rethinkdb =
-  component-did-mount: ->
-    console.log \mount
-    # TODO update path
-    # TODO update locals over socket
-    [session, subscriptions] = [{}, {}]
-    @_rethink-mixin-state = {session, subscriptions}
-    update @, @props, @state
-
-    window.scroll-to 0 0 # reset scroll position
-    scrolled!
-  component-will-unmount: ->
-    unmount @
-    console.log \unmount
-  component-will-update: (next-props, next-state) ->
-    console.log \will-update
-    if next-props !== @props or next-state !== @state
-      update @, next-props, next-state
+  observe: (props, state) ->
+    console.log \observe-from-reactdb-mixin
+    # TODO fetch page locals
+    # TODO fetch initial session
+    turtles: new QueryRequest do
+      query: r.table('turtles') # RethinkDB query
+      changes: true             # subscribe to realtime changefeed
+      initial: []               # return [] while loading
+    #window.app.update \locals -> immutable.fromJS locals
+  component-will-receive-props: ->
+    console.log \component-will-receive-props
 
 # XXX deprecated-- slated for removal
 export initial-state-async =

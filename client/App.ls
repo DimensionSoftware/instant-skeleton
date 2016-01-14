@@ -1,7 +1,7 @@
 
 require! {
   react: {create-factory}:React
-  \react-rethinkdb : {Session}
+  \react-rethinkdb : {Session, DefaultSession}
   \react-dom
   immutable: window.Immutable
   immstruct
@@ -44,13 +44,12 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 
 # main
 # ----
-rethink-session = new Session!
-  ..connect do
+init-react do # b00t-- react & rethinkdb!
+  rethink-session: DefaultSession.connect do
     host:   locals.domain
     port:   locals.port
     path:   '/db'
     secure: false
-init-react {rethink-session}
 
 window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
@@ -62,9 +61,9 @@ function init-react data
   state = immstruct { # default
     path,
     locals,
-    rethink-session: data.rethink-session
     session:   {} <<< data.session
     everyone:  {} <<< data.everyone
+    rethink-session: data.rethink-session # FIXME shouldn't be props!
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
