@@ -19,8 +19,8 @@ require! {
   \../shared/features
 }
 
-pe   = new PrettyError!
-env  = process.env.NODE_ENV or \development
+pe  = new PrettyError!
+env = process.env.NODE_ENV or \development
 
 # connect to rethinkdb
 [db-host, db-port, http-path] =

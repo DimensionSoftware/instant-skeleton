@@ -150,8 +150,6 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  Say 
 
 ## [TODO Example Application](https://todo.powerbulletin.com)
 
-&nbsp;
-
 <center>
 [![Fresh Software by Dimension](https://dimensionsoftware.com/images/software_by.png)](https://dimensionsoftware.com)
 </center>
