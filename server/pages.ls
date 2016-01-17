@@ -7,8 +7,10 @@ require! {
 
   '../shared/features'
   '../shared/routes': {R}
+  \react-rethinkdb : {Session}
 }
 
+global.WebSocket = require \ws
 [app, router] = [koa!, koa-router!]
 
 # <PAGES>

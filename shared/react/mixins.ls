@@ -11,14 +11,18 @@ state = { last-offset: 0px, -initial-load }
 
 export rethinkdb =
   observe: (props, state) ->
-    console.log \observe-from-reactdb-mixin
-    # TODO fetch page locals
-    # TODO fetch initial session
-    turtles: new QueryRequest do
-      query: r.table('turtles') # RethinkDB query
-      changes: true             # subscribe to realtime changefeed
-      initial: []               # return [] while loading
+    console.log \inside-observe
+    session: new QueryRequest do
+      query:   r.table \session
+      changes: true
+#    everyone: new QueryRequest do
+#      query:   r.table \everyone
+#      changes: true
+#      initial: []
+
     #window.app.update \locals -> immutable.fromJS locals
+  componest-will-mount: ->
+    console.log \component-will-mount
   component-will-receive-props: ->
     console.log \component-will-receive-props
 

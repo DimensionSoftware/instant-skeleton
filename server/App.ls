@@ -62,6 +62,11 @@ module.exports =
       # boot http & websocket servers
       @server = http.create-server @app.callback!
       listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production}
+      console.log \connecting-to-session @port
+      @socket = new Session!
+        ..connect {host: db-host, port: @port, path: http-path, secure: false}
+        ..once-done-loading ->
+          console.log \after
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
