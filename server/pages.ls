@@ -10,7 +10,7 @@ require! {
   \react-rethinkdb : {Session}
 }
 
-global.WebSocket = require \ws
+global.WebSocket = require \ws # FIXME something smarter
 [app, router] = [koa!, koa-router!]
 
 # <PAGES>

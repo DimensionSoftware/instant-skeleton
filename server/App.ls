@@ -44,6 +44,7 @@ module.exports =
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
         ..use helmet!                     # solid secure base
+        ..use middleware.rethinkdb        # rethinkdb websocket
         ..use middleware.webpack          # proper dev-server headers
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals @  # load env-sensitive config into locals
@@ -62,11 +63,10 @@ module.exports =
       # boot http & websocket servers
       @server = http.create-server @app.callback!
       listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production}
-      console.log \connecting-to-session @port
-      @socket = new Session!
+      @rethink-session = new Session!
         ..connect {host: db-host, port: @port, path: http-path, secure: false}
-        ..once-done-loading ->
-          console.log \after
+        ..once-done-loading ~>
+          console.log \connected-to-session @port
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
