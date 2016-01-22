@@ -6,7 +6,6 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 require! {
   http
   \pretty-error : PrettyError
-  \react-rethinkdb : {Session}
   \rethinkdb-websocket-server : {r, RQ, listen}
   \rethinkdbdash : rethinkdb
   koa
@@ -60,13 +59,9 @@ module.exports =
       # config environment
       if env isnt \test then @app.use koa-logger!
 
-      # boot http & websocket servers
+      # boot http server
       @server = http.create-server @app.callback!
       listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production}
-      @rethink-session = new Session!
-        ..connect {host: db-host, port: @port, path: http-path, secure: false}
-        ..once-done-loading ~>
-          console.log \connected-to-session @port
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb

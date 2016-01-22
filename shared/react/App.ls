@@ -5,7 +5,7 @@ require! {
   omniscient: component
   immutable: Immutable
   omnipotent: {{ignore}:decorator}
-  'react-rethinkdb': {r, QueryRequest, DefaultMixin, PropsMixin}
+  'react-rethinkdb': {Session, r, QueryRequest, DefaultMixin, PropsMixin}
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
   'react-async': {Mixin}
@@ -29,6 +29,15 @@ pages = routes.list.reduce ((namespace, route) ->
   namespace), {}
 
 module.exports = component \App (props) ->
+  rethink-session = new Session!
+    ..connect do
+      host: props.get-in [\locals \db-host]
+      port: props.get-in [\locals \port]
+      path: '/db'
+      secure: false
+    ..once-done-loading ~>
+      console.log \connected-to-session @port
+
   location = (route) ->
     name = route.0
     page-props = { # export page cursors
@@ -37,7 +46,7 @@ module.exports = component \App (props) ->
       session: props.cursor \session
       everyone: props.cursor \everyone
     }
-    Location { key:name, rethink-session: (props.get \rethinkSession), ref:name, path:route.1, handler:pages[name], props:page-props }
+    Location { rethink-session, key:name, ref:name, path:route.1, handler:pages[name], props:page-props }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])

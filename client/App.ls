@@ -44,12 +44,7 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 
 # main
 # ----
-init-react do # b00t-- react & rethinkdb!
-  rethink-session: DefaultSession.connect do
-    host:   locals.domain
-    port:   locals.port
-    path:   '/db'
-    secure: false
+init-react {} # b00t-- react & rethinkdb!
 
 window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
@@ -63,7 +58,6 @@ function init-react data
     locals,
     session:   {} <<< data.session
     everyone:  {} <<< data.everyone
-    rethink-session: data.rethink-session # FIXME shouldn't be props!
   }
   render = -> # update on animation frames (avoids browser janks)
     window.app = cur = state.cursor!
