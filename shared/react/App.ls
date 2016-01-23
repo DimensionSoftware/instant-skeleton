@@ -36,16 +36,15 @@ module.exports = component \App (props) ->
       path: '/db'
       secure: false
     ..once-done-loading ~>
-      console.log \connected-to-session @port
+      # TODO re-render with session?
 
   location = (route) ->
     name = route.0
-    page-props = { # export page cursors
-      path: props.get \path
-      locals: props.cursor \locals
-      session: props.cursor \session
+    page-props = do # export page cursors
+      path:     props.get \path
+      locals:   props.cursor \locals
+      session:  props.cursor \session
       everyone: props.cursor \everyone
-    }
     Location { rethink-session, key:name, ref:name, path:route.1, handler:pages[name], props:page-props }
 
   locations-for-routes = routes.list

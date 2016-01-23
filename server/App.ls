@@ -43,7 +43,6 @@ module.exports =
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
         ..use helmet!                     # solid secure base
-        ..use middleware.rethinkdb        # rethinkdb websocket
         ..use middleware.webpack          # proper dev-server headers
         ..use middleware.error-handler    # 404 & 50x handler
         ..use middleware.config-locals @  # load env-sensitive config into locals
@@ -51,7 +50,7 @@ module.exports =
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.app-cache        # offline support
         ..use middleware.static-assets    # static assets handler
-        ..use session {store}             # rethinkdb session support
+        ..use session {store}             # rethinkdb session support for koa
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
         ..use pages                       # apply pages
