@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# export .env before booting node
+eval `sed 's/^/export /' .env`
+if [ -z "$NODE_ENV" ]; then
+  echo 'Please export a proper NODE_ENV as .env or otherwise'
+  exit 1
+fi
+
 if [ "$NODE_ENV" = 'production' ]; then
   # build server & client with gulp
   echo -n 'Building app @ '
