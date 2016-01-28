@@ -29,7 +29,7 @@ env = process.env.NODE_ENV or \development
    '/db']
 connection = rethinkdb {db-host, db-port}
 store      = new RethinkSession {connection}
-  ..setup!
+  ..setup! # initial tables
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =

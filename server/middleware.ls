@@ -1,7 +1,6 @@
 
 require! {
   co
-  \co-wait
   fs
   url
   crypto
@@ -108,7 +107,6 @@ export rethinkdb = (next) ->*
     ..connect {host: db-host, port: 8080, path: http-path, secure: false}
     ..once-done-loading ~>
       console.log \connected!
-  yield (co-wait 1500ms)
   yield next
 
 # static asset server

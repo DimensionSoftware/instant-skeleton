@@ -11,7 +11,7 @@ Build Bigger with Less
 ----------------------
 Best realtime framework to lift heavy functionality lightening quick with Node.JS &amp; RethinkDB!
 
-__[DOCUMENTATION](http://dimensionsoftware.github.io/instant-skeleton) . [DEMO](https://todo.powerbulletin.com)__
+__[DEMO](https://todo.powerbulletin.com)__
 
 ## Quick Start
 
@@ -148,7 +148,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 Really digging our [software architecture](https://dimensionsoftware.com)?  Say Hello and let us know:
 [**keith@dimensionsoftware.com**](mailto:keith@dimensionsoftware.com)
 
-## [TODO Example Application](https://todo.powerbulletin.com)
+##### [TODO Example Application](https://todo.powerbulletin.com)
 
 <center>
 [![Fresh Software by Dimension](https://dimensionsoftware.com/images/software_by.png)](https://dimensionsoftware.com)
