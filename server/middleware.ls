@@ -98,17 +98,6 @@ state = { # these middlewares are singletons
   rate-fn:   void
 }
 
-export rethinkdb = (next) ->*
-  [db-host, db-port, http-path] =
-    [process.env.npm_package_config_domain,
-    process.env.npm_package_config_rethinkdb_port,
-    '/db']
-  @locals.rethink-session = new Session!
-    ..connect {host: db-host, port: 8080, path: http-path, secure: false}
-    ..once-done-loading ~>
-      console.log \connected!
-  yield next
-
 # static asset server
 export static-assets = (next) ->* # apply our config
   if features.static-assets
