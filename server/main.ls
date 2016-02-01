@@ -5,7 +5,6 @@ require! {
 }
 
 # supervise instances of App
-# - TODO supervise more than a single instance
 
 # init
 # ---------

@@ -1,6 +1,7 @@
 
 require! {
   'react-rethinkdb': {r, QueryRequest, DefaultMixin, PropsMixin}
+  \react-rethinkdb/dist/QueryResult : {QueryResult}
   superagent: request
   immstruct
   immutable
@@ -9,9 +10,60 @@ require! {
 
 state = { last-offset: 0px, -initial-load }
 
+# riff'd off @mikemintz's awesome works:
+# https://github.com/mikemintz/react-rethinkdb/blob/master/src/Mixin.js
+update = (component, props, state) ->
+  return unless component.observe # guard
+  console.log \update!
+  observed                 = component.observe props, state
+  {session, subscriptions} = component._rethink-mixin-state
+  subscription-manager     = session._subscription-manager
+
+  # close subscriptions no longer subscribed to
+  Object.keys subscriptions .for-each((key) ->
+    console.log key
+    if !observed[key]
+      console.log \unsub: key
+      subscriptions[key].unsubscribe!
+      delete component.data[key])
+
+  # [re]-subscribe to active queries
+  Object.keys observed .for-each((key) ->
+    query-request      = observed[key]
+    old-subscription   = subscriptions[key]
+    query-result       = component.data[key] or (new QueryResult query-request.initial)
+    subscriptions[key] = subscription-manager.subscribe component, query-request, query-result
+    # TODO update window.app.{locals,session,everyone}
+    component.data[key] = query-result
+    console.log key, query-result
+    if old-subscription
+      old-subscription.unsubscribe!)
+
 export rethinkdb =
+  component-will-mount: ->
+    session = @props[\rethinkSession]
+
+    # guards
+    unless session and session._subscription-manager then throw new Error 'Mixin does not have Session'
+    unless session._conn-promise then throw new Error 'Must connect() before mounting'
+
+    @_rethink-mixin-state = {session, subscriptions: {}}
+    @data = @data or {}
+    update(@, @props, @state)
+
+  component-will-unmount: ->
+    console.log \component-will-unmount
+    {subscriptions} = @_rethink-mixin-state
+    key <- Object.keys subscriptions .for-each
+    subscriptions[key].unsubscribe!
+
+  component-will-update: (next-props, next-state) ->
+    if next-props !== @props or next-state !== @state
+      update @, next-props, next-state
+
   observe: (props, state) ->
     # TODO fetch all data for session & todos (everyone rights)
+    console.log \observe
     session: new QueryRequest do
       query:   r.table \session
       changes: true
@@ -20,9 +72,10 @@ export rethinkdb =
 #      changes: true
 #      initial: []
     #window.app.update \locals -> immutable.fromJS locals
+
   component-did-mount: ->
-    console.log \component-will-mount, @data
-    window.app.update \session ~> @data.session.value!
+    console.log \component-did-mount, @data
+    #window.app.update \session ~> @data.session.value!
     console.log @data.session.value!
 
 # XXX deprecated-- slated for removal

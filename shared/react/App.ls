@@ -11,7 +11,7 @@ require! {
   'react-async': {Mixin}
   \./mixins
 }
-page-mixins = [mixins.rethinkdb, PropsMixin(\rethinkSession), NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
+page-mixins = [mixins.rethinkdb, NavigatableMixin, mixins.focus-input, mixins.scroller] # common Page mixins
 
 # factories
 Location  = create-factory Router.Location
