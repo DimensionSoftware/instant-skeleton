@@ -14,7 +14,6 @@ state = { last-offset: 0px, -initial-load }
 # https://github.com/mikemintz/react-rethinkdb/blob/master/src/Mixin.js
 update = (component, props, state) ->
   return unless component.observe # guard
-  console.log \update!
   observed                 = component.observe props, state
   {session, subscriptions} = component._rethink-mixin-state
   subscription-manager     = session._subscription-manager
@@ -63,7 +62,6 @@ export rethinkdb =
 
   observe: (props, state) ->
     # TODO fetch all data for session & todos (everyone rights)
-    console.log \observe
     session: new QueryRequest do
       query:   r.table \session
       changes: true
@@ -73,34 +71,13 @@ export rethinkdb =
 #      initial: []
     #window.app.update \locals -> immutable.fromJS locals
 
-  component-did-mount: ->
-    console.log \component-did-mount, @data
-    #window.app.update \session ~> @data.session.value!
-    console.log @data.session.value!
+  component-will-receive-props: ->
+    console.log \new-props
 
-# XXX deprecated-- slated for removal
-export initial-state-async =
-  get-initial-state-async: (cb) ->
-    # TODO better on mobile to use primus websocket for surfing?
-    unless state.initial-load then state.initial-load = true; return # guard
-    request # fetch state (GET request is cacheable vs. websocket)
-      .get window.location.pathname
-      .set \Accept \application/json
-      .query window.location.search
-      .query { +_surf }
-      .end (err, res) ->
-        return unless res?body?locals # guard
-        # update page & local cursor (state)
-        window.app.update \locals -> immutable.fromJS res.body.locals
-        window.app.update \path   -> res.body.path
-        cb void res.body
-        window.scroll-to 0 0 # reset scroll position
-        scrolled!
-    true
 
 export focus-input =
   component-did-mount: ->
-    <~ set-timeout _, 150ms # yield for smoothness
+    <~ set-timeout _, 100ms # yield for smoothness
     if @refs.focus
       react-dom.findDOMNode that
         ..focus!
