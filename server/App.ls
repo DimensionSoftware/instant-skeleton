@@ -22,8 +22,9 @@ pe  = new PrettyError!
 env = process.env.NODE_ENV or \development
 
 # connect to rethinkdb
-[db-host, db-port, http-path] =
-  [process.env.npm_package_config_domain,
+[db, db-host, db-port, http-path] =
+  [process.env.npm_package_config_database,
+   process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
 connection = rethinkdb {db-host, db-port}

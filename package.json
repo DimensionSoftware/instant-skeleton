@@ -50,6 +50,7 @@
   "config": {
     "node_port": 8080,
     "dev_port": 8081,
+    "database": "test",
     "rethinkdb_port": 28015,
     "title": "Instant Skeleton | by DimensionSoftware.com",
     "domain": "develop.com",
@@ -64,6 +65,7 @@
     },
     "test": {},
     "production": {
+      "database": "production",
       "domain": "dimensionsoftware.com",
       "cacheUrl": "//cache%n.%domain",
       "limits": {
