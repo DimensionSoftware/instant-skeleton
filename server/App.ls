@@ -15,6 +15,7 @@ require! {
   \koa-logger
   \./pages
   \./middleware
+  \./query-whitelist
   \../shared/features
 }
 
@@ -61,7 +62,7 @@ module.exports =
 
       # boot http server
       @server = http.create-server @app.callback!
-      listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production}
+      listen {db-host, http-path, http-server: @server, -unsafely-allow-any-query, query-whitelist}
 
       # listen
       unless @port is \ephemeral then @server.listen @port, cb
