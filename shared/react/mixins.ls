@@ -48,7 +48,7 @@ export rethinkdb =
 
     @_rethink-mixin-state = {session, subscriptions: {}}
     @data = @data or {}
-    update(@, @props, @state)
+    update @, @props, @state
 
   component-will-unmount: ->
     console.log \component-will-unmount
@@ -63,7 +63,7 @@ export rethinkdb =
   observe: (props, state) ->
     # TODO fetch all data for session & todos (everyone rights)
     session: new QueryRequest do
-      query:   r.table \session
+      query:   r.table \sessions
       changes: true
 #    everyone: new QueryRequest do
 #      query:   r.table \everyone
