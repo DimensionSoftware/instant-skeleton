@@ -7,7 +7,7 @@ body
     bottom 0
     left 0
     right 0
-    border-top 1px solid #000
+    border-top 2px solid #000
     // "carbon-fiber" background
     box-shadow 0 5px 10px black inset
     background-color rgba(0,0,0,.8)
@@ -19,7 +19,7 @@ body
     padding-left leftNavWidth
     text-align center
     z-index onTop * 2
-    transition height .3s bounce .2s
+    transition height .2s bounce .5s
     &:after
       position absolute
       left 0
@@ -31,26 +31,26 @@ body
       height @width
       background linear-gradient(90deg, rgba(80, 80, 80, 0.6), rgba(80, 80, 80, 0), rgba(80, 80, 80, 0.6))
     &:hover
-      height 125px
-      transition none
+      height 175px
+      transition height 0s ease-out .2s
       .dimension-logo
         height 47px
         opacity 1
         transform translateY(-17px)
-        transition transform .08s ease-out
+        transition transform .05s ease-out .18s
     .dimension-logo
       opacity 0
       height 0
       left -55px
-      top 36px
+      top 45px
       border none
-      transition opacity .4s ease-out, transform .2s ease-out .2s
+      transition opacity .5s ease-out, transform .3s ease-out .2s
       z-index onTop
       &:after
         display none
     .fb-like
       display block
-      bottom grid * -1
+      bottom grid * -0.8
       height 28px
       left -25px
       position relative
