@@ -4,6 +4,7 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
+  co
   http
   \pretty-error : PrettyError
   \rethinkdb-websocket-server : {r, RQ, listen}
@@ -62,9 +63,16 @@ module.exports =
 
       # boot http server
       @server = http.create-server @app.callback!
-      listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production, query-whitelist}
 
-      # listen
+      # boot websockets
+      session-creator = (query-parms, headers) ->
+        console.log \headers: headers
+        {user-id, auth-token} = query-parms
+        console.log \query-parms: query-parms
+        co 1
+      listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
+
+      # listen, bind last
       unless @port is \ephemeral then @server.listen @port, cb
       @app
 
