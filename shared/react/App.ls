@@ -31,7 +31,7 @@ pages = routes.list.reduce ((namespace, route) ->
 module.exports = component \App (props) ->
   rethink-session = new Session!
     ..connect do
-      host: props.get-in [\locals \db-host]
+      host: props.get-in [\locals \domain]
       port: props.get-in [\locals \port]
       path: '/db'
       secure: false
