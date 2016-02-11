@@ -24,8 +24,9 @@ pe  = new PrettyError!
 env = process.env.NODE_ENV or \development
 
 # connect to rethinkdb
-[db, db-host, db-port, http-path] =
-  [process.env.npm_package_config_database,
+[keys, db, db-host, db-port, http-path] =
+  [[process.env.npm_package_config_keys_0], # XXX using first
+   process.env.npm_package_config_database,
    process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
@@ -42,7 +43,7 @@ module.exports =
       console.log "[1;37;32m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
 
       @app = koa! # attach middlewares
-        ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
+        ..keys = keys                     # cookie session secrets
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
         ..use helmet!                     # solid secure base
