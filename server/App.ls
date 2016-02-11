@@ -39,7 +39,7 @@ module.exports =
     (@port=8080, @changeset=\latest) ->
 
     start: (cb = (->)) ->
-      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "[1;37;32m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
 
       @app = koa! # attach middlewares
         ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
@@ -77,7 +77,7 @@ module.exports =
       @app
 
     stop: (cb = (->)) ->
-      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "\n[1;37;31m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & cleanly quit listening
       <~ @server.close
       connection.get-pool-master!drain!
