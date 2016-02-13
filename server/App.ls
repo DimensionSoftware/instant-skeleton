@@ -4,6 +4,7 @@ global <<< require \prelude-ls # immutable (ease-of-access)
 # App
 #####
 require! {
+  co
   http
   \pretty-error : PrettyError
   \rethinkdb-websocket-server : {r, RQ, listen}
@@ -23,8 +24,9 @@ pe  = new PrettyError!
 env = process.env.NODE_ENV or \development
 
 # connect to rethinkdb
-[db, db-host, db-port, http-path] =
-  [process.env.npm_package_config_database,
+[keys, db, db-host, db-port, http-path] =
+  [[process.env.npm_package_config_keys_0], # XXX using first
+   process.env.npm_package_config_database,
    process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
@@ -38,10 +40,10 @@ module.exports =
     (@port=8080, @changeset=\latest) ->
 
     start: (cb = (->)) ->
-      console.log "[1;37;30m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "[1;37;32m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
 
       @app = koa! # attach middlewares
-        ..keys = ['iAsNHei275_#@$#%^&']   # cookie session secrets
+        ..keys = keys                     # cookie session secrets
         ..on \error (err) ->
           console.error(pe.render err)    # error handler
         ..use helmet!                     # solid secure base
@@ -62,14 +64,21 @@ module.exports =
 
       # boot http server
       @server = http.create-server @app.callback!
-      listen {db-host, http-path, http-server: @server, unsafely-allow-any-query: env isnt \production, query-whitelist}
 
-      # listen
+      # boot websockets
+      session-creator = (query-parms, headers) ->
+        console.log \headers: headers
+        {user-id, auth-token} = query-parms
+        console.log \query-parms: query-parms
+        co 1
+      listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
+
+      # listen, bind last
       unless @port is \ephemeral then @server.listen @port, cb
       @app
 
     stop: (cb = (->)) ->
-      console.log "[1;37;30m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "\n[1;37;31m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & cleanly quit listening
       <~ @server.close
       connection.get-pool-master!drain!

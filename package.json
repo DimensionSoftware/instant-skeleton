@@ -48,6 +48,9 @@
   },
   "homepage": "https://github.com/DimensionSoftware/instant-skeleton",
   "config": {
+    "keys": [
+      "iAsNHei275_#@$#%^&"
+    ],
     "node_port": 8080,
     "dev_port": 8081,
     "database": "test",

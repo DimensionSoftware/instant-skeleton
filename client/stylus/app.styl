@@ -123,7 +123,7 @@ h2, h3
     animation-timing-function ease-in-out
   header
     position fixed
-    left 22.2 * grid
+    left 24 * grid
     right 0
     z-index onTop + 1
     top grid * 8.1
@@ -136,16 +136,14 @@ h2, h3
         overflow hidden
         input[type='text']
           padding-top grid
+          padding-left 0
+          padding-right 0
           padding-bottom @padding-top
           font-size 1.2em
           border-left 1px solid lighten(textColor, 90%)
-          border-bottom 2px solid lighten(textColor, 65%)
-          text-indent grid * 4.7
+          text-indent grid * 6
           opacity 1
-          padding-left 17px
-          margin-left 4px
           max-width maxWidth - 50px
-          transition opacity .15s ease-in
           &:focus
             border-bottom-color themeColor
       button
@@ -159,21 +157,24 @@ h2, h3
       width 200px
       position absolute
       font-weight 100
+      text-align center
       top grid * 3.5
       right 0
       font-size .8em
       font-style italic
-      padding 4px 15px
+      padding 4px 8px
       border-radius 30px
       border 1px solid tint(textColor, 85%)
+      text-indent 0
       z-index 1
       color lighten(textColor, 50%)
-      transition width .25s bounce
+      transition width .25s bounce, border .4s ease-out
       &:focus, &:hover
         color lighten(textColor, 25%)
       &:focus
         width 230px
-        transition none
+        text-align left
+        transition width .008s ease-out
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
