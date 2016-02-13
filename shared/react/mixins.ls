@@ -2,7 +2,6 @@
 require! {
   'react-rethinkdb': {r, QueryRequest, DefaultMixin, PropsMixin}
   \react-rethinkdb/dist/QueryResult : {QueryResult}
-  superagent: request
   immstruct
   immutable
   \react-dom

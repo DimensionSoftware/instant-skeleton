@@ -4,6 +4,7 @@ require! {
   \react-rethinkdb : {Session, DefaultSession}
   \react-dom
   immutable: window.Immutable
+  superagent: request
   immstruct
   \../shared/react/App
   \../shared/features
@@ -41,14 +42,29 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
     if (body.class-name.index-of class-name) > -1
       body.class-name = body.class-name.replace " #class-name", ''
 
-
-# main
-# ----
-init-react {} # b00t-- react & rethinkdb!
-
 window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
 
+window.sync-session = ->
+  window.storage.set \session (window.app.get-in [\session]).toJS!
+
+
+# main
+# ----
+init-react {}            # immediately boot react
+init-rethinkdb (err, session) ->
+  if err then throw err  # guard
+  if window.app          # update session cursor
+    that.update-in [\session] -> session
+  else
+    init-react {session} # react hasn't finished, so-- restart w/ session
+
+
+function init-rethinkdb cb
+  request
+    .get \/session
+    .set \Accept \application/json
+    .end (err, res) -> cb err, res.body
 
 function init-react data
   if data.session === {} then data.session = window.storage.get \session # use local storage

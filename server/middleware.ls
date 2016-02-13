@@ -175,16 +175,15 @@ export react-or-json = (next) ->*
     | \application/json => surf!
     | otherwise         => yield react
 
+export session = (next) ->* # sends session/auth token to client
+  if @url is \/session
+    delete @session.cookie
+    @body = @session
+  yield next
 
-# primus-koa-leveldb session
-export primus-koa-session = (store, keys) ->
-  (req, res, next) ->
-    req.key = "koa:sess:#{primus-koa-session-helper req, \koa.sid, keys}"
-    co(store.get req.key).then (session) ->
-      req.session = session
-      next!
+export rethinkdb-koa-session-helper
 
-function primus-koa-session-helper req, name, keys
+function rethinkdb-koa-session-helper req, name, keys
   return void unless req.headers.cookie # guard
   # function used by Cookies
   # https://github.com/expressjs/cookies

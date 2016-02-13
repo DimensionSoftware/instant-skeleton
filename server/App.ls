@@ -57,6 +57,7 @@ module.exports =
         ..use session {store}             # rethinkdb session support for koa
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
+        ..use middleware.session          # sends session to client
         ..use pages                       # apply pages
 
       # config environment
@@ -67,10 +68,8 @@ module.exports =
 
       # boot websockets
       session-creator = (query-parms, headers) ->
-        console.log \headers: headers
-        {user-id, auth-token} = query-parms
-        console.log \query-parms: query-parms
-        co 1
+        auth-token = "koa:sess:#{middleware.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
+        co {auth-token}
       listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
 
       # listen, bind last
