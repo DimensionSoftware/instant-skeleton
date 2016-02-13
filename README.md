@@ -9,7 +9,7 @@ Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge
 
 Be Your Own Angel Investor
 --------------------------
-Best realtime framework to lift heavy functionality lightening quick with Node.JS &amp; RethinkDB!
+Realtime framework to lift heavy functionality lightening quick with Node.JS &amp; RethinkDB!
 
 __[DEMO](https://todo.powerbulletin.com)__
 
@@ -23,7 +23,8 @@ __[DEMO](https://todo.powerbulletin.com)__
 
 Building your SEO-friendly, secure, realtime streaming application is simple!  Instant Skeleton cobbles together the best of functional React.JS into a single, routable concept that makes your on-screen productivity incredible:
 
->  ***Page*** | &nbsp; *declarative, isomorphic bits of [React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [RethinkDB](http://rethinkdb.com)*
+>  ***Page*** | &nbsp; *declarative, isomorphic bits of
+[React](http://facebook.github.io/react/docs/getting-started.html) + [Omniscient](https://omniscientjs.github.io/) + [RethinkDB](http://www.rethinkdb.com/api/javascript/)*
 
 1. [Install RethinkDB](http://rethinkdb.com/docs/install/)
 
@@ -36,13 +37,13 @@ Building your SEO-friendly, secure, realtime streaming application is simple!  I
 
         $ vim shared/react/[ROUTE-NAME].ls
 
-## Environment &amp; "npm config" Variables
+## Essential Environment &amp; "npm config" Variables
 * `NODE_ENV`  -- "development", "production" or "test"
 * `NODE_PORT` -- port to listen on
 * `DOMAIN`    -- domain of site
 * `CACHE_URL` -- format for cache urls, eg: "//cache%n.%domain"
 
-[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L50-L80) and [customize with a .env file](https://github.com/motdotla/dotenv)!
+[See all configurable variables in package.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/package.json#L50-L87) and [customize with a .env file](https://github.com/motdotla/dotenv)!
 
 ## References
 
@@ -55,6 +56,7 @@ SERVER
     * **helmet** -- https://github.com/venables/koa-helmet
     * **rate limit** -- https://github.com/tunnckoCore/koa-better-ratelimit
     * **static cache** -- https://github.com/koajs/static-cache
+    * **rethinkdbdash** -- https://github.com/neumino/rethinkdbdash
 * **DotEnv** -- https://github.com/motdotla/dotenv
 * **PM2** -- https://github.com/Unitech/pm2
 
@@ -67,7 +69,7 @@ SHARED
     * **omniscient** -- https://omniscientjs.github.io/
     * **hot-loader** -- http://gaearon.github.io/react-hot-loader/
 * **RethinkDB** -- http://rethinkdb.com
-    * **rethinkdb sessions** -- https://github.com/mikemintz/rethinkdb-websocket-server
+    * **rethinkdb sessions** -- https://github.com/mikemintz/rethinkdb-websocket-client
 
 CLIENT
 
@@ -138,6 +140,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
        Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak ecosystem.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/ecosystem.json) to configure [PM2](http://pm2.keymetrics.io/) production.
 
+
 8. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
 
        Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/)!
@@ -147,8 +150,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 Really digging our [software architecture](https://dimensionsoftware.com)?  Say Hello and let us know:
 [**keith@dimensionsoftware.com**](mailto:keith@dimensionsoftware.com)
+[Consider contributing!](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
 
-##### [TODO Example Application](https://todo.powerbulletin.com)
+##### [Example TODO Application](https://todo.powerbulletin.com)
 
 <center>
 [![Fresh Software by Dimension](https://dimensionsoftware.com/images/software_by.png)](https://dimensionsoftware.com)
