@@ -7,8 +7,8 @@ Instant-Skeleton
 Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Dimension Software](http://img.shields.io/badge/HTML-5-blue.svg?style=flat)](https://dimensionsoftware.com)
 </center>
 
-Build Bigger with Less
-----------------------
+Be Your Own Angel Investor
+--------------------------
 Best realtime framework to lift heavy functionality lightening quick with Node.JS &amp; RethinkDB!
 
 __[DEMO](https://todo.powerbulletin.com)__
@@ -78,10 +78,10 @@ CLIENT
 
 How much does your stack weigh?  Keeping Instant Skeleton light as possible means true agility and speed.  This no-compromise, SEO-friendly stack is fast, functional and streaming in realtime.  [RethinkDB is the single dependency to install](http://rethinkdb.com/docs/install/) and a cinch to scale your needs forward.  The rest is up to you!
 
-With a cutting-edge HTML5 core, Instant Skeleton provides true first-class mobile web experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
+Build bigger with less: a cutting-edge HTML5 core and true first-class mobile web experiences.  Got realtime physics at 60fps?  Real offline?  High-speed, secure websockets?  We do.
 
 From nothing, you have potential to build greatness; only-- with Instant Skeleton, you start way ahead with the best
-curated tools for lifting heavy, realtime functionality into the browser with insane productivity.  Unlock the
+curated tools for securely lifting heavy, realtime functionality into the browser with insane productivity.  Unlock the
 potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/DimensionSoftware/instant-skeleton/fork)
 
 ## FAQ
@@ -131,7 +131,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 6. **What about cacheability?**
 
-       All Pages are completely cacheable!  Etags &amp; proper cache-control headers are automagically set on every Page and sessions stream in real-time on Page load.  The idea is to persist personalization in user sessions.
+       All Pages are completely cacheable!  Etags &amp; proper cache-control headers are automagically set on every Page and sessions stream in real-time on load.  The idea is to persist personalization in user sessions, backed by HTML5 local storage.
 
 
 7. **Production deployment?  We got you covered!**
