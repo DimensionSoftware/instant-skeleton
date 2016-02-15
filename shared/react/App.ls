@@ -36,7 +36,8 @@ module.exports = component \App (props) ->
       path: '/db'
       secure: false
     ..once-done-loading ~>
-      # TODO re-render with session?
+      # XXX on server, response already sent without session
+      #session = (props.get-in [\session]).toJS!
 
   location = (route) ->
     name = route.0

@@ -25,7 +25,7 @@ env = process.env.NODE_ENV or \development
 
 # connect to rethinkdb
 [keys, db, db-host, db-port, http-path] =
-  [[process.env.npm_package_config_keys_0], # XXX using first
+  [[process.env.npm_package_config_keys_0], # XXX only using first
    process.env.npm_package_config_database,
    process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,

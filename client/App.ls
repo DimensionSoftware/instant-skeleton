@@ -46,7 +46,8 @@ window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
 
 window.sync-session = ->
-  window.storage.set \session (window.app.get-in [\session]).toJS!
+  window.storage.set \session (window.app.get \session .toJS!)
+  # TODO save in rethinkdb
 
 
 # main
@@ -54,10 +55,7 @@ window.sync-session = ->
 init-react {}            # immediately boot react
 init-rethinkdb (err, session) ->
   if err then throw err  # guard
-  if window.app          # update session cursor
-    that.update-in [\session] -> session
-  else
-    init-react {session} # react hasn't finished, so-- restart w/ session
+  init-react {session}   # re-init w/ session
 
 
 function init-rethinkdb cb

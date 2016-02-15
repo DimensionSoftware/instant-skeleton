@@ -148,9 +148,9 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 ## [Hire Us!](mailto:keith@dimensionsoftware.com)
 
-Really digging our [software architecture](https://dimensionsoftware.com)?  Say Hello and let us know:
-[**keith@dimensionsoftware.com**](mailto:keith@dimensionsoftware.com)
-[Consider contributing!](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
+Really digging our [software architecture](https://dimensionsoftware.com)?  [**Say Hello and let us know**](mailto:keith@dimensionsoftware.com)-- Instant Skeleton is battle-tested, having bootstrapped many of our most successful client projects.
+
+[We are pull-request-friendly, consider contributing today](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
 
 ##### [Example TODO Application](https://todo.powerbulletin.com)
 
