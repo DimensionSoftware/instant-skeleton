@@ -67,7 +67,7 @@ module.exports =
       @server = http.create-server @app.callback!
 
       # boot websockets
-      session-creator = (query-parms, headers) ->
+      session-creator = (query-parms, {headers}:req) ->
         auth-token = "koa:sess:#{middleware.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
         co {auth-token}
       listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
