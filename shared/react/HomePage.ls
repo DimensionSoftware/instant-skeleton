@@ -17,7 +17,6 @@ module.exports = component page-mixins, ({{path,locals,session,everyone}:props})
     it.prevent-default!
 
   # allow name to be set
-  console.log \render-with-session: this.data.session.value!
   div do
     class-name: \HomePage
     h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'

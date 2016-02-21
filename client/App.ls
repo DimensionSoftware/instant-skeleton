@@ -1,7 +1,7 @@
 
 require! {
   react: {create-factory}:React
-  \react-rethinkdb : {Session, DefaultSession}
+  \react-rethinkdb : {r}
   \react-dom
   immutable: window.Immutable
   superagent: request
@@ -46,13 +46,16 @@ window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
 
 window.sync-session = ->
-  window.storage.set \session (window.app.get \session .toJS!)
-  # TODO save in rethinkdb
+  s = window.app.get \session .toJS!  # current session
+  window.storage.set \session s       # save in local storage
+  window.rethink-session.run-query <| # save in rethinkdb
+    r.table \sessions .get s.id
+      .update s
 
 
 # main
 # ----
-init-react {}            # immediately boot react
+init-react {}            # immediately boot react & render
 init-rethinkdb (err, session) ->
   if err then throw err  # guard
   init-react {session}   # re-init w/ session

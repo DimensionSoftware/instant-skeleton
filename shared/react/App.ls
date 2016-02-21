@@ -37,7 +37,7 @@ module.exports = component \App (props) ->
       secure: false
     ..once-done-loading ~>
       # XXX on server, response already sent without session
-      #session = (props.get-in [\session]).toJS!
+      if window? then window.rethink-session = rethink-session
 
   location = (route) ->
     name = route.0
