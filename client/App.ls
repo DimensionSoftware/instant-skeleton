@@ -68,7 +68,7 @@ function init-rethinkdb cb
     .end (err, res) -> cb err, res.body
 
 function init-react data
-  if data.session === {} then data.session = window.storage.get \session # use local storage
+  if !data.session or data.session === {} then data.session = window.storage.get \session # use local storage
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct { # default
     path,
