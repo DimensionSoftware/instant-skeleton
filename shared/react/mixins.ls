@@ -1,5 +1,6 @@
 
 require! {
+  superagent: request
   'react-rethinkdb': {r, QueryRequest, DefaultMixin, PropsMixin}
   \react-rethinkdb/dist/QueryResult : {QueryResult}
   immstruct
@@ -8,6 +9,27 @@ require! {
 }
 
 state = { last-offset: 0px, -initial-load }
+
+# fetch page locals from koa
+export initial-state-async =
+  get-initial-state-async: (cb) ->
+    # TODO better on mobile to use primus websocket for surfing?
+    unless state.initial-load then state.initial-load = true; return # guard
+    request # fetch state (GET request is cacheable vs. websocket)
+      .get window.location.pathname
+      .set \Accept \application/json
+      .query window.location.search
+      .query { +_surf }
+      .end (err, res) ->
+        return unless res?body?locals # guard
+        # update page & local cursor (state)
+        window.app.update \locals -> immutable.fromJS res.body.locals
+        window.app.update \path   -> res.body.path
+        cb void res.body
+        window.scroll-to 0 0 # reset scroll position
+        scrolled!
+    true
+
 
 # riff'd off @mikemintz's awesome works:
 # https://github.com/mikemintz/react-rethinkdb/blob/master/src/Mixin.js
