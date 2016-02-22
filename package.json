@@ -117,7 +117,7 @@
     "react-async": "DimensionSoftware/react-async#react-0.14.x",
     "react-dom": "^0.14.7",
     "react-rethinkdb": "^0.5.4",
-    "react-router-component": "^0.30.0",
+    "react-router-component": "^0.31.2",
     "replacestream": "^4.0.0",
     "rethinkdb-websocket-server": "^0.4.0",
     "rethinkdbdash": "^2.2.17",

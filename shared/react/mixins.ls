@@ -16,15 +16,12 @@ update = (component, props, state) ->
   observed                 = component.observe props, state
   {session, subscriptions} = component._rethink-mixin-state
   subscription-manager     = session._subscription-manager
-
   # close subscriptions no longer subscribed to
   Object.keys subscriptions .for-each((key) ->
-    console.log key
     if !observed[key]
       console.log \unsub: key
       subscriptions[key].unsubscribe!
       delete component.data[key])
-
   # [re]-subscribe to active queries
   Object.keys observed .for-each((key) ->
     query-request      = observed[key]
@@ -33,32 +30,27 @@ update = (component, props, state) ->
     subscriptions[key] = subscription-manager.subscribe component, query-request, query-result
     # TODO update window.app.{locals,session,everyone}
     component.data[key] = query-result
-    console.log key, query-result
+    console.log \resub: key, query-result
     if old-subscription
       old-subscription.unsubscribe!)
+
 
 export rethinkdb =
   component-will-mount: ->
     session = @props[\rethinkSession]
-
     # guards
     unless session and session._subscription-manager then throw new Error 'Mixin does not have Session'
     unless session._conn-promise then throw new Error 'Must connect() before mounting'
-
     @_rethink-mixin-state = {session, subscriptions: {}}
     @data = @data or {}
     update @, @props, @state
-
   component-will-unmount: ->
-    console.log \component-will-unmount
     {subscriptions} = @_rethink-mixin-state
     key <- Object.keys subscriptions .for-each
     subscriptions[key].unsubscribe!
-
-  component-will-update: (next-props, next-state) ->
-    if next-props !== @props or next-state !== @state
-      update @, next-props, next-state
-
+  #component-will-update: (next-props, next-state) ->
+  #  if next-props !== @props or next-state !== @state
+  #    update @, next-props, next-state
   observe: ({props, rethink-session}, state) ->
     console.log \props: props, props.session.get \id
     # TODO fetch all data for session & todos (everyone rights)
@@ -66,8 +58,6 @@ export rethinkdb =
     session: new QueryRequest do
       query:   r.table \sessions .get (props.session.get \id)
       changes: true
-    #window.app.update \locals -> immutable.fromJS locals
-
   component-will-receive-props: ->
     console.log \new-props
 

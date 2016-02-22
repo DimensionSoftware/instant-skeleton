@@ -55,7 +55,7 @@ window.sync-session = ->
 
 # main
 # ----
-init-react {}            # immediately boot react & render
+init-react!              # immediately boot react & render
 init-rethinkdb (err, session) ->
   if err then throw err  # guard
   init-react {session}   # re-init w/ session
@@ -67,8 +67,8 @@ function init-rethinkdb cb
     .set \Accept \application/json
     .end (err, res) -> cb err, res.body
 
-function init-react data
-  if !data.session or data.session === {} then data.session = window.storage.get \session # use local storage
+function init-react data={session:{}}
+  if data.session === {} then data.session = window.storage.get \session # use local storage
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct { # default
     path,

@@ -10,7 +10,7 @@ require! {
 }
 
 # MyTodoPage
-MyTodoPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
+MyTodoPage = component page-mixins, ({{path,locals,session}:props}) ->
   [name, todo-count] =
     session.get \name
     if session.get \todos then that.count! else 0
