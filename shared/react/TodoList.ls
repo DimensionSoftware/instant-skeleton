@@ -30,7 +30,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
       v = search.deref!
       return false unless todo.get # guard
       return true unless v         # guard
-      ((todo.get \title).index-of v) >= 0
+      (todo.get \title .index-of v) >= 0
 
   save-edit = (e, key) ->
     todos.update-in [key, \title], ->
