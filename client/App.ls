@@ -3,7 +3,6 @@ require! {
   react: {create-factory}:React
   \react-rethinkdb : {r}
   \react-dom
-  immutable: window.Immutable
   superagent: request
   immstruct
   \../shared/react/App
@@ -76,16 +75,13 @@ function init-react data={session:{}}
     session:   {} <<< data.session
     everyone:  {} <<< data.everyone
   }
-  render = -> # update on animation frames (avoids browser janks)
+  render = -> # render app to <body>
     window.app = cur = state.cursor!
-    react-dom.render (App cur), react # render app to body
+    react-dom.render (App cur), react
     cur
-  set-timeout (-> state.on \next-animation-frame render), 1000ms
-  window.toggle-class body, \loaded # trigger ui loaded
-  render!
-
-function capitalize s
-  (s.char-at 0 .to-upper-case!) + s.slice 1
+  render!                                                       # initial render
+  window.toggle-class body, \loaded                             # trigger ui rendered
+  set-timeout (-> state.on \next-animation-frame render), 500ms # avoids browser janks
 
 if features.dimension # front!
   console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"
