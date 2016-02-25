@@ -61,7 +61,7 @@ init-rethinkdb (err, session) ->
 
 
 function init-rethinkdb cb
-  request
+  request # GET initial session
     .get \/session
     .set \Accept \application/json
     .end (err, res) -> cb err, res.body

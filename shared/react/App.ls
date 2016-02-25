@@ -39,18 +39,16 @@ module.exports = component \App (props) ->
       # XXX on server, response already sent without session
       if window? then window.rethink-session = rethink-session
 
-  location = (route) ->
-    name = route.0
-    page-props = do # export page cursors
-      path:     props.get \path
-      locals:   props.cursor \locals
-      session:  props.cursor \session
-      everyone: props.cursor \everyone
-    Location { rethink-session, key:name, ref:name, path:route.1, handler:pages[name], props:page-props }
+  location = ([name, path]:route) ->
+    [locals, session] =
+      props.cursor \locals
+      props.cursor \session
+    Location { locals, session, rethink-session, path, key:name, ref:name, handler:pages[name] }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
     .map    (-> location it)
 
-  # render page
-  Locations { class-name:\Page, path: (props.get \path) }, ...locations-for-routes
+  # render page @ path
+  path = props.get \path
+  Locations { class-name:\Page, path }, ...locations-for-routes

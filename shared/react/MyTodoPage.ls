@@ -10,9 +10,10 @@ require! {
 }
 
 # MyTodoPage
-MyTodoPage = component page-mixins, ({{path,locals,session}:props}) ->
-  [name, todo-count] =
+MyTodoPage = component page-mixins, ({locals,session}) ->
+  [name, path, todo-count] =
     session.get \name
+    @context.router.get-path!
     if session.get \todos then that.count! else 0
 
   DOM.div key: \MyTodoPage class-name: \MyTodoPage, [
@@ -29,7 +30,7 @@ MyTodoPage = component page-mixins, ({{path,locals,session}:props}) ->
       class-name: cx do
         hidden: todo-count is 0
       todo-count
-    TodoList do # props
+    TodoList do
       key: \todo-list
       todos:     session.cursor \todos
       visible:   locals.cursor \visible

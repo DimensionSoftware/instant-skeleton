@@ -10,9 +10,10 @@ require! {
 }
 
 # PublicPage
-PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
-  [name, todo-count] =
+PublicPage = component page-mixins, ({locals,session,everyone}) ->
+  [name, path, todo-count] =
     (session.get \name) or \Anonymous
+    @context.router.get-path!
     if everyone.get \todos then that.count! else 0
 
   DOM.div key: \PublicPage class-name: \PublicPage, [
@@ -29,7 +30,7 @@ PublicPage = component page-mixins, ({{path,locals,session,everyone}:props}) ->
       class-name: cx do
         hidden: todo-count is 0
       todo-count
-    TodoList { # props
+    TodoList {
       key:     \todo-list
       todos:   everyone.cursor \todos
       visible: locals.cursor \visible

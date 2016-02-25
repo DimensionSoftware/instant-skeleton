@@ -6,7 +6,7 @@ require! {
 # destructure only what's needed
 {label,input,span,a,nav,ul,li,small} = DOM
 
-module.exports = component \Nav ({name, path, last-page}:props) ->
+module.exports = component \Nav ({name, path, last-page}) ->
   # show all routes besides current
   nav do
     class-name: \nav

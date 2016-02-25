@@ -8,8 +8,9 @@ require! {
 }
 
 # HomePage
-module.exports = component page-mixins, ({{path,locals,session}:props}) ->
+module.exports = component page-mixins, ({locals,session}) ->
   name = session.get \name
+  path = @context.router.get-path!
 
   on-click = ~>
     sync-session! # sync across sessions

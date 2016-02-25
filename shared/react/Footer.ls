@@ -5,7 +5,7 @@
 require! \./Nav
 
 # Footer
-module.exports = component \Footer ({name, path, last-page}:props) ->
+module.exports = component \Footer ({name, path, last-page}) ->
   footer do
     class-name: \footer
 
