@@ -43,16 +43,20 @@ update = (component, props, state) ->
     if !observed[key]
       console.log \unsub: key
       subscriptions[key].unsubscribe!
-      delete component.data[key])
+      delete component.data[key]
+      #window.app.data.delete key
+      console.log \component: component
+  )
+
   # [re]-subscribe to active queries
   Object.keys observed .for-each((key) ->
     query-request      = observed[key]
     old-subscription   = subscriptions[key]
     query-result       = component.data[key] or (new QueryResult query-request.initial)
     subscriptions[key] = subscription-manager.subscribe component, query-request, query-result
-    # TODO update window.app.{locals,session,everyone}
     component.data[key] = query-result
     console.log \resub: key, query-result
+    #window.app.data.update key, query-result
     if old-subscription
       old-subscription.unsubscribe!)
 
