@@ -77,12 +77,11 @@ export rethinkdb =
   #component-will-update: (next-props, next-state) ->
   #  if next-props !== @props or next-state !== @state
   #    update @, next-props, next-state
-  observe: ({props, rethink-session}, state) ->
-    console.log \props: props, props.session.get \id
+  observe: ({locals, session, rethink-session}, state) ->
     # TODO fetch all data for session & todos (everyone rights)
-    return {} unless props.session.get \id # guard
+    return {} unless session.get \id # guard
     session: new QueryRequest do
-      query:   r.table \sessions .get (props.session.get \id)
+      query:   r.table \sessions .get (session.get \id)
       changes: true
   component-will-receive-props: ->
     console.log \new-props
