@@ -10,7 +10,7 @@ maxWidth     = 1200px
 bounce = cubic-bezier(0,1.72,0,.75)
 
 headerBackground = tint(themeColor, 96%)
-leftNavWidth     = 125px
+leftNavWidth     = 115px
 
 body
   margin-top 0
@@ -84,7 +84,7 @@ h2, h3
 
 .Page
   padding-bottom grid * 30
-  margin-left leftNavWidth + (grid * 2)
+  margin-left leftNavWidth
   > div
     backface-visibility hidden
 
@@ -174,7 +174,7 @@ h2, h3
       &:focus
         width 230px
         text-align left
-        transition width .008s ease-out
+        transition width .005s ease-out
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
