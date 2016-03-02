@@ -31,19 +31,21 @@ pages = routes.list.reduce ((namespace, route) ->
 module.exports = component \App (props) ->
   rethink-session = new Session!
     ..connect do
-      host: props.get-in [\locals \domain]
-      port: props.get-in [\locals \port]
-      path: '/db'
+      host:   props.get-in [\locals \domain]
+      port:   props.get-in [\locals \port]
+      path:   '/db'
       secure: false
     ..once-done-loading ~>
       # XXX on server, response already sent without session
-      if window? then window.rethink-session = rethink-session
+      console.log \done-loading
+      if window? then window.rethink-session = rethink-session # stash
 
   location = ([name, path]:route) ->
-    [locals, session] =
+    [locals, session, everyone] =
       props.cursor \locals
       props.cursor \session
-    Location { locals, session, rethink-session, path, key:name, ref:name, handler:pages[name] }
+      props.cursor \everyone
+    Location { locals, session, everyone, rethink-session, path, key:name, ref:name, handler:pages[name] }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])

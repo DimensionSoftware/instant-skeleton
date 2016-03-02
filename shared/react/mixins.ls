@@ -1,7 +1,8 @@
 
 require! {
   superagent: request
-  'react-rethinkdb': {r, QueryRequest, DefaultMixin, PropsMixin}
+  'react-rethinkdb': {r, QueryRequest}
+  \react-rethinkdb/dist/QueryState  : {QueryState}
   \react-rethinkdb/dist/QueryResult : {QueryResult}
   immstruct
   immutable
@@ -43,48 +44,65 @@ update = (component, props, state) ->
     if !observed[key]
       console.log \unsub: key
       subscriptions[key].unsubscribe!
-      delete component.data[key]
+      #delete component.data[key]
       #window.app.data.delete key
-      console.log \component: component
+      #console.log \component: component
   )
 
   # [re]-subscribe to active queries
   Object.keys observed .for-each((key) ->
+    console.log \sub: key
     query-request      = observed[key]
     old-subscription   = subscriptions[key]
-    query-result       = component.data[key] or (new QueryResult query-request.initial)
+    #query-result       = component.data[key] or (new QueryResult query-request.initial)
+    query-result = new QueryResult query-request.initial
     subscriptions[key] = subscription-manager.subscribe component, query-request, query-result
-    component.data[key] = query-result
-    console.log \resub: key, query-result
+    #component.data[key] = query-result
     #window.app.data.update key, query-result
     if old-subscription
       old-subscription.unsubscribe!)
 
 
+subscriptions = {} # QueryState manager
 export rethinkdb =
   component-will-mount: ->
-    session = @props[\rethinkSession]
+    rs = @props.rethink-session
     # guards
-    unless session and session._subscription-manager then throw new Error 'Mixin does not have Session'
-    unless session._conn-promise then throw new Error 'Must connect() before mounting'
-    @_rethink-mixin-state = {session, subscriptions: {}}
-    @data = @data or {}
-    update @, @props, @state
+    if rs and !rs._subscription-manager then throw new Error 'Mixin does not have Session'
+    unless rs._conn-promise then throw new Error 'Must connect() before mounting'
+    # subscribe rethink queries to components
+    run-query = rs.run-query.bind rs
+    for name, query-request of @observe @props
+      console.log \sub: name
+      query-result = new QueryResult query-request.initial
+      subscriptions[name] = new QueryState(
+        query-request,
+        run-query,
+        query-result,
+        on-update = -> # on update
+          console.log \update: query-result.value!
+        on-close = ->
+          console.log \on-close)
+      if window? # in browser
+        subscriptions[name]
+          ..subscribe @, query-result
+          ..updateHandler = on-update # XXX why isn't this passed in above?
+          ..handle-connect!
   component-will-unmount: ->
-    {subscriptions} = @_rethink-mixin-state
-    key <- Object.keys subscriptions .for-each
-    subscriptions[key].unsubscribe!
-  #component-will-update: (next-props, next-state) ->
-  #  if next-props !== @props or next-state !== @state
-  #    update @, next-props, next-state
+    # TODO unsubscribe queries
+    #{subscriptions} = @_rethink-mixin-state
+    #Object.keys subscriptions .for-each (key) ->
+    #  subscriptions[key].unsubscribe!
   observe: ({locals, session, rethink-session}, state) ->
     # TODO fetch all data for session & todos (everyone rights)
-    return {} unless session.get \id # guard
-    session: new QueryRequest do
-      query:   r.table \sessions .get (session.get \id)
+    everyone: new QueryRequest do
+      query:   r.table \everyone
       changes: true
-  component-will-receive-props: ->
-    console.log \new-props
+      initial: []
+    #return {} unless session.get \id # guard
+    #session: new QueryRequest do
+    #  query:   r.table \sessions .get (session.get \id)
+    #  changes: true
 
 
 export focus-input =
