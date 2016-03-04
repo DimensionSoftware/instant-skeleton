@@ -80,7 +80,8 @@ export rethinkdb =
         run-query,
         query-result,
         on-update = -> # on update
-          console.log \update: query-result.value!
+          console.log \name: name, \update: query-result.value!
+          window.app.update name, -> immutable.fromJS query-result.value!
         on-close = ->
           console.log \on-close)
       if window? # in browser
@@ -99,10 +100,9 @@ export rethinkdb =
       query:   r.table \everyone
       changes: true
       initial: []
-    #return {} unless session.get \id # guard
-    #session: new QueryRequest do
-    #  query:   r.table \sessions .get (session.get \id)
-    #  changes: true
+    session: new QueryRequest do
+      query:   r.table \sessions .get (session.get \id)
+      changes: true
 
 
 export focus-input =
