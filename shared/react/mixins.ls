@@ -34,7 +34,7 @@ export initial-state-async =
 subscriptions = {} # QueryState manager
 export rethinkdb =
   component-will-mount: ->
-    rs = @props.rethink-session
+    rs = @props.RethinkSession
     # guards
     if rs and !rs._subscription-manager then throw new Error 'Mixin does not have Session'
     unless rs._conn-promise then throw new Error 'Must connect() before mounting'

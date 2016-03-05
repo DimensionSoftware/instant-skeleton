@@ -47,14 +47,14 @@ window.application-cache.add-event-listener \noupdate ->
 window.sync-session = ->
   s = window.app.get \session .toJS!  # current session
   window.storage.set \session s       # save in local storage
-  window.rethink-session.run-query <| # save in rethinkdb
+  global.RethinkSession.run-query <| # save in rethinkdb
     r.table \sessions .get s.id
       .update s
 
 window.sync-everyone = ->
   e = window.app.get \everyone .toJS! # current session
   window.storage.set \everyone e      # save in local storage
-  window.rethink-session.run-query <| # save in rethinkdb
+  global.RethinkSession.run-query <| # save in rethinkdb
     r.table \everyone .insert e
 
 # main

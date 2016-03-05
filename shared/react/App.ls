@@ -21,6 +21,7 @@ Locations = create-factory Router.Locations
 global <<< {R, React, cx, Router, page-mixins, component, Immutable, ignore}
 global.DOM = React.DOM
 global.Link = create-factory Router.Link
+global.RethinkSession = void # singleton
 
 
 # Dynamically load components referenced in routes.list.
@@ -29,7 +30,7 @@ pages = routes.list.reduce ((namespace, route) ->
   namespace), {}
 
 module.exports = component \App (props) ->
-  rethink-session = new Session!
+  unless global.RethinkSession then global.RethinkSession = new Session!
     ..connect do
       host:   props.get-in [\locals \domain]
       port:   props.get-in [\locals \port]
@@ -38,14 +39,13 @@ module.exports = component \App (props) ->
     ..once-done-loading ~>
       # XXX on server, response already sent without session
       console.log \done-loading
-      if window? then window.rethink-session = rethink-session # stash
 
   location = ([name, path]:route) ->
     [locals, session, everyone] =
       props.cursor \locals
       props.cursor \session
       props.cursor \everyone
-    Location { locals, session, everyone, rethink-session, path, key:name, ref:name, handler:pages[name] }
+    Location { locals, session, everyone, global.RethinkSession, path, key:name, ref:name, handler:pages[name] }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
