@@ -6,6 +6,7 @@ require! {
   \react-rethinkdb/dist/QueryResult : {QueryResult}
   immstruct
   immutable
+  \throttle-debounce : {debounce}
   \react-dom
 }
 
@@ -28,7 +29,6 @@ export initial-state-async =
         cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
-        state.initial-load = false
     true
 
 subscriptions = {} # QueryState manager
@@ -57,8 +57,9 @@ export rethinkdb =
           query-request,
           run-query,
           query-result,
-          on-update = -> # on update
+          on-update = debounce 1000ms, false, -> # on update prevent server hammering
             v = query-result.value!
+            if v === (window.app.get name .toJS!) then return # guard
             window.app.update name, -> immutable.fromJS if typeof! v is \Array then v.0 else v # unbox
           on-close = ->) # TODO
         if window? # in browser
