@@ -73,9 +73,10 @@ export rethinkdb =
       query:   r.table \everyone
       changes: true
       initial: []
-    session: new QueryRequest do
-      query:   r.table \sessions .get (session.get \id)
-      changes: true
+    if id = session.get \id # fetch session, too
+      session: new QueryRequest do
+        query:   r.table \sessions .get id
+        changes: true
 
 export focus-input =
   component-did-mount: ->
