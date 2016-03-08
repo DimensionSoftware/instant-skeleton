@@ -34,8 +34,8 @@ export initial-state-async =
 subscriptions = {} # QueryState manager
 export rethinkdb =
   component-will-mount: ->
+    # init rethink & guards
     rs = @props.RethinkSession
-    # guards
     if rs and !rs._subscription-manager then throw new Error 'Mixin does not have Session'
     unless rs._conn-promise then throw new Error 'Must connect() before mounting'
 
@@ -57,7 +57,7 @@ export rethinkdb =
           query-request,
           run-query,
           query-result,
-          on-update = debounce 1000ms, false, -> # on update prevent server hammering
+          on-update = debounce 500ms, false, -> # on update prevent server hammering
             v = query-result.value!
             if v === (window.app.get name .toJS!) then return # guard
             window.app.update name, -> immutable.fromJS if typeof! v is \Array then v.0 else v # unbox

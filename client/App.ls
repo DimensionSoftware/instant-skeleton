@@ -80,8 +80,10 @@ function init-react data={session:{}}
     session:   {} <<< data.session
     everyone:  {} <<< data.everyone
   }
-  render = -> # render app to <body>
+  render = (new-cur, old-cur, path) -> # render app to <body>
     window.app = cur = state.cursor!
+    console.log \render: data.session
+    if new-cur then console.log new-cur.toJS!, old-cur.toJS!, path.0 else ''
     react-dom.render (App cur), react
     cur
   render!                                                       # initial render

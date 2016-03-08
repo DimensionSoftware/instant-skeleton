@@ -38,7 +38,6 @@ module.exports = component \App (props) ->
       secure: false
     ..once-done-loading ~>
       # XXX on server, response already sent without session
-      console.log \done-loading
 
   location = ([name, path]:route) ->
     [locals, session, everyone] =
