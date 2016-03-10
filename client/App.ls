@@ -65,10 +65,8 @@ window.sync-everyone = ->
 init-react! # immediately boot react & render
 init-rethinkdb (err, session) ->
   if err then throw err # guard
-  console.log \update-session
   storage.set \session session
-  a = window.app.update \session -> immutable.fromJS session
-  console.log a.toJS!
+  s = window.app.update \session -> immutable.fromJS session
 
 
 function init-rethinkdb cb

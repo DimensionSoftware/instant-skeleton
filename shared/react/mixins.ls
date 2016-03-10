@@ -14,7 +14,7 @@ state = { last-offset: 0px, -initial-load }
 
 # fetch page locals from koa
 export initial-state-async =
-  get-initial-state-async: (cb) ->
+  get-initial-state-async: debounce 1000ms, true, (cb) ->
     unless state.initial-load then state.initial-load = true; return # guard
     request # fetch state (GET request is cacheable vs. websocket)
       .get window.location.pathname
@@ -53,20 +53,16 @@ export rethinkdb =
       unless subscriptions[name] # guard
         console.log \+sub: name
         query-result = new QueryResult query-request.initial
-        qs = new QueryState(
-          query-request,
-          run-query,
-          query-result,
-          on-update = debounce 500ms, false, -> # on update prevent server hammering
-            v = query-result.value!
-            if v === (window.app.get name .toJS!) then return # guard
-            if storage? then storage.set name, v # store locally
-            window.app.update name, -> immutable.fromJS if typeof! v is \Array then v.0 else v # unbox
-          on-close = ->) # TODO
+        query-state  = new QueryState(query-request, run-query, query-result)
         if window? # in browser
-          subscriptions[name] = qs.subscribe @, query-result .unsubscribe # save unsubscribe
-          qs
-            ..updateHandler = on-update # XXX why isn't this passed in above?
+          subscriptions[name] = query-state.subscribe @, query-result .unsubscribe # save unsubscribe
+          query-state
+            ..updateHandler = debounce 500ms, false, ->  # prevent server hammering
+              v   = query-result.value!
+              val = if typeof! v is \Array then v.0 else v   # unbox
+              return if val === (window.app.get name .toJS!) # guard
+              if storage? then storage.set name, val         # store locally
+              window.app.update name, -> immutable.fromJS val
             ..handle-connect!
   observe: ({locals, session, RethinkSession}, state) ->
     # fetch all data for session & todos (everyone rights)
@@ -78,6 +74,7 @@ export rethinkdb =
       session: new QueryRequest do
         query:   r.table \sessions .get id
         changes: true
+        initial: if storage? then storage.get \session
 
 export focus-input =
   component-did-mount: ->
