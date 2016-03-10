@@ -38,7 +38,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
       e.current-target.value
 
   # todo list
-  ol void [
+  ol {key: \ol} [
     Input {type:\search, key:\search cursor: search, tab-index: 1, placeholder: 'Search', results: 5, auto-save: \search, +spell-check}
     h2 key: \name, name
     if count = list.count!
@@ -51,6 +51,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
           show-date = if todos.has-in [key, \completed-at] then [key, \completed-at] else [key, \date]
           li {key} [
             Check {
+              key:       "c-#key"
               cursor:    todos.cursor [key, \completed]
               on-change: -> # save completion
                 on-change if it.deref!
@@ -81,6 +82,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
       li key:\placeholder, [ ]
     if search.deref!
       li do
+        key: \results
         class-name: \results
         b {key: \b} count
         strong {key: \strong} " search result#{if count > 1 or count is 0 then \s else ''}"
