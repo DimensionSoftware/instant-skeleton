@@ -60,6 +60,7 @@ export rethinkdb =
           on-update = debounce 500ms, false, -> # on update prevent server hammering
             v = query-result.value!
             if v === (window.app.get name .toJS!) then return # guard
+            if storage? then storage.set name, v # store locally
             window.app.update name, -> immutable.fromJS if typeof! v is \Array then v.0 else v # unbox
           on-close = ->) # TODO
         if window? # in browser
@@ -72,7 +73,7 @@ export rethinkdb =
     everyone: new QueryRequest do
       query:   r.table \everyone
       changes: true
-      initial: []
+      initial: if storage? then storage.get \everyone
     if id = session.get \id # fetch session, too
       session: new QueryRequest do
         query:   r.table \sessions .get id

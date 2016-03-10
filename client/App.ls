@@ -4,6 +4,7 @@ require! {
   \react-rethinkdb : {r}
   \react-dom
   superagent: request
+  immutable
   immstruct
   \../shared/react/App
   \../shared/features
@@ -45,24 +46,29 @@ window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
 
 window.sync-session = ->
-  s = window.app.get \session .toJS!  # current session
-  window.storage.set \session s       # save in local storage
+  s = window.app.get \session .toJS! # current session
+  storage.set \session s             # save in local storage
   global.RethinkSession.run-query <| # save in rethinkdb
     r.table \sessions .get s.id
       .update s
 
+# XXX automagically save
 window.sync-everyone = ->
-  e = window.app.get \everyone .toJS! # current session
-  window.storage.set \everyone e      # save in local storage
-  global.RethinkSession.run-query <| # save in rethinkdb
-    r.table \everyone .insert e
+  s = window.app.get \everyone .toJS! # current everyone
+  storage.set \everyone s             # save in local storage
+  global.RethinkSession.run-query <|  # save in rethinkdb
+    r.table \everyone .insert s
+
 
 # main
 # ----
-init-react!              # immediately boot react & render
+init-react! # immediately boot react & render
 init-rethinkdb (err, session) ->
-  if err then throw err  # guard
-  init-react {session}   # re-init w/ session
+  if err then throw err # guard
+  console.log \update-session
+  storage.set \session session
+  a = window.app.update \session -> immutable.fromJS session
+  console.log a.toJS!
 
 
 function init-rethinkdb cb
@@ -71,8 +77,7 @@ function init-rethinkdb cb
     .set \Accept \application/json
     .end (err, res) -> cb err, res.body
 
-function init-react data={session:{}}
-  if data.session === {} then data.session = window.storage.get \session # use local storage
+function init-react data={session:storage.get(\session), everyone: storage.get(\everyone)}
   [locals, path] = [window.locals, window.location.pathname]
   state = immstruct { # default
     path,
@@ -82,7 +87,7 @@ function init-react data={session:{}}
   }
   render = (new-cur, old-cur, path) -> # render app to <body>
     window.app = cur = state.cursor!
-    console.log \render: data.session
+    console.log \render:
     if new-cur then console.log new-cur.toJS!, old-cur.toJS!, path.0 else ''
     react-dom.render (App cur), react
     cur
