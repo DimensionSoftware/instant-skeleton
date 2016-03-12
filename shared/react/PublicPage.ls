@@ -2,6 +2,7 @@
 # destructure only what's needed
 
 require! {
+  \react-rethinkdb : {r}
   uuid
   \./mixins
   \./Header
@@ -10,18 +11,21 @@ require! {
 }
 
 # PublicPage
-PublicPage = component page-mixins, ({locals,session,everyone}) ->
+PublicPage = component page-mixins, ({RethinkSession,locals,session,everyone}) ->
   [name, path, todo-count] =
     (session.get \name) or \Anonymous
     @context.router.get-path!
-    if everyone.get \todos then that.count! else 0
+    if everyone then that.count! else 0
 
   DOM.div key: \PublicPage class-name: \PublicPage, [
     Header do
       key:          \header
       name:         name
-      after-save:   -> sync-everyone!
-      save-cursor:  everyone.cursor \todos
+      after-save:   (key, todo) ->
+        console.log \add: key, todo
+        RethinkSession.run-query <| # save in rethinkdb
+          r.table \everyone .insert todo
+      save-cursor:  everyone
       title-cursor: locals.cursor \current-title
     # render everyone's todos
     DOM.h4 do
@@ -32,12 +36,19 @@ PublicPage = component page-mixins, ({locals,session,everyone}) ->
       todo-count
     TodoList {
       key:     \todo-list
-      todos:   everyone.cursor \todos
+      todos:   everyone
       visible: locals.cursor \visible
       search:  locals.cursor \search
       +show-name
       name: "TODO Items for Everyone"
-      on-delete: (-> sync-everyone!), on-change:(-> sync-everyone!)
+      on-delete: (key) ->
+        RethinkSession.run-query <| # save in rethinkdb
+          r.table \everyone .delete key
+      on-change: (key, todo) ->
+        RethinkSession.run-query <|
+          r.table \everyone
+            .get todo.id
+            .update (todo)
     }
     Link {key:\link href:R(\MyTodoPage)} 'Back →'
     Footer {key:\footer name, path, last-page:(session.get \lastPage)}

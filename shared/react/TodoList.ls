@@ -33,9 +33,9 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
       (todo.get \title .index-of v) >= 0
 
   save-edit = (e, key) ->
-    todos.update-in [key, \title], ->
-      on-change!
+    cur = todos.update-in [key, \title], ->
       e.current-target.value
+    on-change key, (cur.get key .toJS!)
 
   # todo list
   ol {key: \ol} [
@@ -54,10 +54,11 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
               key:       "c-#key"
               cursor:    todos.cursor [key, \completed]
               on-change: -> # save completion
-                on-change if it.deref!
+                cur = if it.deref!
                   todos.update-in [key, \completed-at], -> new Date!get-time!
                 else
                   todos.delete-in [key, \completed-at]
+                on-change key, (cur.get key .toJS!)
             }
             Input { # saves edits
               key: \title
@@ -75,7 +76,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
               on-click: ->
                 if confirm 'Permanently delete?'
                   todos.delete key
-                  if on-delete then on-delete!
+                  if on-delete then on-delete key
             }, \x
           ]
     else

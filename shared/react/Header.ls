@@ -13,14 +13,14 @@ module.exports = component \Header ({after-save=(->), save-cursor, name, title-c
       if it.key-code is 13
         it.current-target.value = '' # clear input
         title-cursor.update -> ''    # reset cursor
-        after-save!
 
     on-click = -> # save todo
       if title = title-cursor.deref!
         date = new Date!get-time!
         todo = {title, -completed, name, date}
-        save-cursor.set uuid.v4!, Immutable.fromJS todo # add
-        after-save!
+        key  = uuid.v4!
+        save-cursor.set key, Immutable.fromJS todo # add
+        after-save key, todo
 
     header do
       class-name: \header

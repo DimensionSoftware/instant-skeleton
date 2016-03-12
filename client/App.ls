@@ -52,13 +52,6 @@ window.sync-session = ->
     r.table \sessions .get s.id
       .update s
 
-# XXX automagically save
-window.sync-everyone = ->
-  s = window.app.get \everyone .toJS! # current everyone
-  storage.set \everyone s             # save in local storage
-  global.RethinkSession.run-query <|  # save in rethinkdb
-    r.table \everyone .insert s
-
 
 # main
 # ----
