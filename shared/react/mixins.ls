@@ -44,7 +44,7 @@ export rethinkdb =
     self = @
     for let name, unsubscribe of subscriptions
       unless (self.observe self.props)[name]
-        console.log \-sub: name, unsubscribe
+        console?log \-sub: name, unsubscribe
         unsubscribe!
         delete subscriptions[name]
 
@@ -52,7 +52,7 @@ export rethinkdb =
     run-query = rs.run-query.bind rs
     for let name, query-request of @observe @props
       unless subscriptions[name] # guard
-        console.log \+sub: name
+        console?log \+sub: name
         query-result = new QueryResult query-request.initial
         query-state  = new QueryState(query-request, run-query, query-result)
         if window? # in browser
