@@ -66,7 +66,7 @@ init-react! # immediately boot react & render
 init-rethinkdb (err, session) ->
   if err then throw err # guard
   storage.set \session session
-  s = window.app.update \session -> immutable.fromJS session
+  window.app.update \session -> immutable.fromJS session
 
 
 function init-rethinkdb cb
@@ -85,8 +85,6 @@ function init-react data={session:storage.get(\session), everyone: storage.get(\
   }
   render = (new-cur, old-cur, path) -> # render app to <body>
     window.app = cur = state.cursor!
-    console.log \render:
-    if new-cur then console.log new-cur.toJS!, old-cur.toJS!, path.0 else ''
     react-dom.render (App cur), react
     cur
   render!                                                       # initial render

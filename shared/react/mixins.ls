@@ -6,29 +6,30 @@ require! {
   \react-rethinkdb/dist/QueryResult : {QueryResult}
   immstruct
   immutable
-  \throttle-debounce : {debounce}
   \react-dom
 }
 
-state = { last-offset: 0px, -initial-load }
+state = { last-offset: 0px, last-path: void }
 
 # fetch page locals from koa
 export initial-state-async =
-  get-initial-state-async: debounce 1000ms, true, (cb) ->
-    unless state.initial-load then state.initial-load = true; return # guard
+  get-initial-state-async: (cb) ->
+    path = window.location.pathname
+    return if state.last-path is path # guard
+    window.app = window.app.update \path -> immutable.fromJS path
     request # fetch state (GET request is cacheable vs. websocket)
-      .get window.location.pathname
+      .get path
       .set \Accept \application/json
       .query window.location.search
       .query { +_surf }
       .end (err, res) ->
         return unless res?body?locals # guard
         # update page & local cursor
-        window.app.update \locals -> immutable.fromJS res.body.locals
-        window.app.update \path   -> immutable.fromJS res.body.path
+        window.app = window.app.update \locals -> immutable.fromJS res.body.locals
         cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
+        state.last-path = path
     true
 
 subscriptions = {} # QueryState manager
@@ -57,12 +58,12 @@ export rethinkdb =
         if window? # in browser
           subscriptions[name] = query-state.subscribe @, query-result .unsubscribe # save unsubscribe
           query-state
-            ..updateHandler = debounce 500ms, false, ->  # prevent server hammering
+            ..updateHandler = ->
               v   = query-result.value!
               val = if typeof! v is \Array then v.0 else v   # unbox
               return if val === (window.app.get name .toJS!) # guard
               if storage? then storage.set name, val         # store locally
-              window.app.update name, -> immutable.fromJS val
+              window.app = window.app.update name, -> immutable.fromJS val
             ..handle-connect!
   observe: ({locals, session, RethinkSession}, state) ->
     # fetch all data for session & todos (everyone rights)
