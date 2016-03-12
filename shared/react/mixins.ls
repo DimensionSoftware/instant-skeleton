@@ -59,23 +59,24 @@ export rethinkdb =
           subscriptions[name] = query-state.subscribe @, query-result .unsubscribe # save unsubscribe
           query-state
             ..updateHandler = ->
-              v   = query-result.value!
-              val = if typeof! v is \Array then v.0 else v   # unbox
+              val = query-result.value!
               return if val === (window.app.get name .toJS!) # guard
               if storage? then storage.set name, val         # store locally
               window.app = window.app.update name, -> immutable.fromJS val
             ..handle-connect!
   observe: ({locals, session, RethinkSession}, state) ->
     # fetch all data for session & todos (everyone rights)
-    everyone: new QueryRequest do
-      query:   r.table \everyone
-      changes: true
-      initial: if storage? then storage.get \everyone
+    requests =
+      everyone: new QueryRequest do
+        query:   r.table \everyone
+        changes: true
+        initial: if storage? then storage.get \everyone
     if id = session.get \id # fetch session, too
-      session: new QueryRequest do
+      requests.session = new QueryRequest do
         query:   r.table \sessions .get id
         changes: true
         initial: if storage? then storage.get \session
+    requests
 
 export focus-input =
   component-did-mount: ->
