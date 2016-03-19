@@ -16,7 +16,7 @@ export initial-state-async =
   get-initial-state-async: (cb) ->
     path = window.location.pathname
     return if state.last-path is path # guard
-    window.app = window.app.update \path -> immutable.fromJS path
+    window.app.update \path -> immutable.fromJS path
     request # fetch state (GET request is cacheable vs. websocket)
       .get path
       .set \Accept \application/json
@@ -25,7 +25,7 @@ export initial-state-async =
       .end (err, res) ->
         return unless res?body?locals # guard
         # update page & local cursor
-        window.app = window.app.update \locals -> immutable.fromJS res.body.locals
+        window.app.update \locals -> immutable.fromJS res.body.locals
         cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
@@ -50,21 +50,23 @@ export rethinkdb =
 
     # subscribe rethink queries to components
     run-query = rs.run-query.bind rs
-    for let name, query-request of @observe @props
+    for let name, request of @observe @props
       unless subscriptions[name] # guard
         console?log \+sub: name
-        query-result = new QueryResult query-request.initial
-        query-state  = new QueryState(query-request, run-query, query-result)
+        result = new QueryResult request.initial
+        state  = new QueryState request, run-query, result
         if window? # in browser
-          subscriptions[name] = query-state.subscribe @, query-result .unsubscribe # save unsubscribe
-          query-state
-            ..updateHandler = ->
-              val = query-result.value!
+          subscriptions[name] = state.subscribe @, result .unsubscribe # save unsubscribe
+          state
+            ..update-handler = ->
+              val = result.value!
+              console.log \got-val: val
               return if val === (window.app.get name .toJS!) # guard
               if storage? then storage.set name, val         # store locally
-              window.app = window.app.update name, -> immutable.fromJS val
+              window.app.update name, -> immutable.fromJS val
             ..handle-connect!
   observe: ({locals, session, RethinkSession}, state) ->
+    # TODO allow Pages to specify their own observe:
     # fetch all data for session & todos (everyone rights)
     requests =
       everyone: new QueryRequest do
