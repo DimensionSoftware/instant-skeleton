@@ -9,13 +9,14 @@ require! {
 
 # HomePage
 module.exports = component page-mixins, ({locals,session}) ->
-  name = session.get \name
-  path = @context.router.get-path!
+  [name, path] =
+    session.get \name
+    @context.router.get-path!
 
-  on-click = ~>
+  on-click = (e) ~>
+    e.prevent-default!
+    @navigate <| R \MyTodoPage
     sync-session! # sync across sessions
-    @navigate (R \MyTodoPage)
-    it.prevent-default!
 
   # allow name to be set
   div do
@@ -23,7 +24,7 @@ module.exports = component page-mixins, ({locals,session}) ->
     h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'
     hr void
     form do
-      on-submit: ~> it.prevent-default!
+      on-submit: (.prevent-default!)
       Input do
         cursor:      session.cursor \name
         ref:         \focus

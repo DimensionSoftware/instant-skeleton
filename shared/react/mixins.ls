@@ -1,7 +1,7 @@
 
 require! {
   superagent: request
-  'react-rethinkdb': {r, QueryRequest}
+  \react-rethinkdb : {r, QueryRequest}
   \react-rethinkdb/dist/QueryState  : {QueryState}
   \react-rethinkdb/dist/QueryResult : {QueryResult}
   immstruct
@@ -59,11 +59,18 @@ export rethinkdb =
           subscriptions[name] = state.subscribe @, result .unsubscribe # save unsubscribe
           state
             ..update-handler = ->
-              val = result.value!
-              console.log \got-val: val
-              return if val === (window.app.get name .toJS!) # guard
-              if storage? then storage.set name, val         # store locally
-              window.app.update name, -> immutable.fromJS val
+              [cur, prev] =
+                result.value!
+                window.app.get name .toJS!
+              console.log \cur: cur
+              if cur.token is window.token then console.log \token-guard; return # our update
+              # guard if cur older than prev or equal
+              if cur === prev then console.log \equal-guard; return
+              #r = objectcompare cur, prev
+              if cur.updated
+                if cur.updated <= prev.updated then console.log \updated-guard; return
+              if storage? then storage.set name, cur # store locally
+              window.app.update name, -> immutable.fromJS cur
             ..handle-connect!
   observe: ({locals, session, RethinkSession}, state) ->
     # TODO allow Pages to specify their own observe:

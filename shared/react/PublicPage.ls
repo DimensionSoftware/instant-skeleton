@@ -22,9 +22,10 @@ PublicPage = component page-mixins, ({RethinkSession,locals,session,everyone}) -
       key:          \header
       name:         name
       after-save:   (key, todo) ->
-        console.log \add: key, todo
         RethinkSession.run-query <| # save in rethinkdb
-          r.table \everyone .insert todo
+          r.table \everyone
+            .insert todo
+            #.update updated: r.now!
       save-cursor:  everyone
       title-cursor: locals.cursor \current-title
     # render everyone's todos
@@ -48,7 +49,7 @@ PublicPage = component page-mixins, ({RethinkSession,locals,session,everyone}) -
         RethinkSession.run-query <|
           r.table \everyone
             .get todo.id
-            .update (todo)
+            .update todo
     }
     Link {key:\link href:R(\MyTodoPage)} 'Back →'
     Footer {key:\footer name, path, last-page:(session.get \lastPage)}

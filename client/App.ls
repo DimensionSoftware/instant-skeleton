@@ -46,10 +46,15 @@ window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
 
 window.sync-session = ->
-  s = window.app.get \session .toJS! # current session
-  storage.set \session s             # save in local storage
+  [window.token, s] =
+    Math.random! * 9999999999      # TODO better random token
+    window.app.get \session .toJS! # current session
+  s.token = window.token
+  storage.set \session s # save in local storage
+  console.log \updated: s
   global.RethinkSession.run-query <| # save in rethinkdb
-    r.table \sessions .get s.id
+    r.table \sessions
+      .get s.id
       .update s
 
 
