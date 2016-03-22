@@ -11,8 +11,6 @@ require! {
   \rethinkdbdash : rethinkdb
   koa
   \koa-helmet : helmet
-  \koa-generic-session : session
-  \koa-generic-session-rethinkdb : RethinkSession
   \koa-logger
   \./pages
   \./middleware
@@ -31,8 +29,6 @@ env = process.env.NODE_ENV or \development
    process.env.npm_package_config_rethinkdb_port,
    '/db']
 connection = rethinkdb {db, db-host, db-port}
-store      = new RethinkSession {connection, db}
-  ..setup! # initial tables
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -54,10 +50,8 @@ module.exports =
         ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
         ..use middleware.app-cache        # offline support
         ..use middleware.static-assets    # static assets handler
-        ..use session {store}             # rethinkdb session support for koa
         ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
         ..use middleware.etags            # auto etag every page for caching
-        ..use middleware.session          # sends session to client
         ..use pages                       # apply pages
 
       # config environment
