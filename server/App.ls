@@ -9,11 +9,12 @@ require! {
   \pretty-error : PrettyError
   \rethinkdb-websocket-server : {r, RQ, listen}
   \rethinkdbdash : rethinkdb
-  koa
+  \koa-generic-session : session
   \koa-helmet : helmet
   \koa-logger
+  koa
   \./pages
-  \./middleware
+  \./middleware : mw
   \./query-whitelist
 }
 
@@ -27,7 +28,8 @@ env = process.env.NODE_ENV or \development
    process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
-connection = rethinkdb {db, db-host, db-port}
+connection  = rethinkdb {db, db-host, db-port}
+koa-session = (mw.rethinkdb-koa-session {connection, db})!
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -36,22 +38,23 @@ module.exports =
 
     start: (cb = (->)) ->
       console.log "[1;37;32m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
-
       @app = koa! # attach middlewares
-        ..keys = keys                     # cookie session secrets
+        ..keys = keys                  # cookie session secrets
         ..on \error (err) ->
-          console.error(pe.render err)    # error handler
-        ..use helmet!                     # solid secure base
-        ..use middleware.webpack          # proper dev-server headers
-        ..use middleware.error-handler    # 404 & 50x handler
-        ..use middleware.config-locals @  # load env-sensitive config into locals
-        ..use middleware.health-probe     # for upstream balancers, proxies & caches 
-        ..use middleware.rate-limit       # rate limiting for all requests (override in package.json config)
-        ..use middleware.app-cache        # offline support
-        ..use middleware.static-assets    # static assets handler
-        ..use middleware.jade             # use minimalistic jade layout (escape-hatch from react)
-        ..use middleware.etags            # auto etag every page for caching
-        ..use pages                       # apply pages
+          console.error(pe.render err) # error handler
+        ..use helmet!                  # solid secure base
+        ..use mw.webpack               # proper dev-server headers
+        ..use mw.error-handler         # 404 & 50x handler
+        ..use mw.config-locals @       # load env-sensitive config into locals
+        ..use mw.health-probe          # for upstream balancers, proxies & caches 
+        ..use mw.rate-limit            # rate limiting for all requests (override in package.json config)
+        ..use mw.app-cache             # offline support
+        ..use mw.static-assets         # static assets handler
+        ..use mw.jade                  # use minimalistic jade layout (escape-hatch from react)
+        ..use mw.etags                 # auto etag every page for caching
+        ..use <| session koa-session   # rethinkdb session support for koa
+        ..use mw.session               # sends session to client
+        ..use pages                    # apply pages
 
       # config environment
       if env isnt \test then @app.use koa-logger!
@@ -61,7 +64,7 @@ module.exports =
 
       # boot websockets
       session-creator = (query-parms, {headers}:req) ->
-        auth-token = "koa:sess:#{middleware.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
+        auth-token = "koa:sess:#{mw.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
         co {auth-token}
       listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
 

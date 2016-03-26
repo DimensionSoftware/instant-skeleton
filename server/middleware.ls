@@ -10,8 +10,9 @@ require! {
 
   \koa-jade
   \koa-locals
-  'koa-static-cache': koa-static
-  'koa-better-ratelimit': limit
+  \koa-static-cache : koa-static
+  \koa-better-ratelimit : limit
+  \koa-generic-session : generic-session
 
   react: {create-element, DOM}:React
   'react-dom/server': React-DOM-Server
@@ -174,6 +175,16 @@ export react-or-json = (next) ->*
   if @query[\_surf] then surf! else switch @type # explicit or content negotiation
     | \application/json => surf!
     | otherwise         => yield react
+
+export rethinkdb-koa-session = ({connection, db=\sessions}) ->
+  console.log \here: connection, db
+  class RethinkSession
+    (@connection=connection, @db=db, @table=\sessions) ->
+      console.log \const: connection, db, @table
+    get: (sid) ->*
+      console.log \get
+    set: (sid, session) ->*
+      console.log \set
 
 export session = (next) ->* # sends session/auth token to client
   if @url is \/session
