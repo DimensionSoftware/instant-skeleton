@@ -10,6 +10,7 @@ require! {
   \react-rethinkdb : {Session}
 }
 
+global.WebSocket = require \ws # FIXME something smarter
 [app, router] = [koa!, koa-router!]
 # export pages for all routes by default
 for [route, path] in list
