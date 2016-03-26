@@ -6,26 +6,24 @@ require! {
   './middleware': mw
 
   '../shared/features'
-  '../shared/routes': {R}
+  '../shared/routes': {R, list}
   \react-rethinkdb : {Session}
 }
 
-global.WebSocket = require \ws # FIXME something smarter
 [app, router] = [koa!, koa-router!]
+# export pages for all routes by default
+for [route, path] in list
+  router.get R(route), (next) ->*
+    yield mw.react-or-json
+    yield next
 
-# <PAGES>
-# TODO make simple handler-less routes
+
+# <CUSTOM PAGE HANDLERS>
 router.get R(\HomePage), (next) ->*
+  # TODO something
+  console.log 'Navigated to HomePage!'
   yield mw.react-or-json
   yield next
-
-if features.todo-example
-  router.get R(\MyTodoPage), (next) ->*
-    yield mw.react-or-json
-    yield next
-  router.get R(\PublicPage), (next) ->*
-    yield mw.react-or-json
-    yield next
-# </PAGES>
+# </CUSTOM PAGES>
 
 module.exports = router.routes!

@@ -15,7 +15,6 @@ require! {
   \./pages
   \./middleware
   \./query-whitelist
-  \../shared/features
 }
 
 pe  = new PrettyError!
