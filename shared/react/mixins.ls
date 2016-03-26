@@ -77,7 +77,7 @@ export rethinkdb =
     # fetch all data for session & todos (everyone rights)
     requests =
       everyone: new QueryRequest do
-        query:   r.table \everyone
+        query:   r.table \everyone .order-by index: r.desc \date
         changes: true
         initial: if storage? then storage.get \everyone
     if id = session.get \id # fetch session, too
