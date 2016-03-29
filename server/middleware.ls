@@ -191,6 +191,9 @@ export rethinkdb-koa-session =
 export session = (next) ->* # sends session/auth token to client
   if @url is \/session
     delete @session.cookie
+    # ensure no caching
+    @set \pragma \no-cache
+    @set \cache-control \no-cache
     @body = @session
   yield next
 
