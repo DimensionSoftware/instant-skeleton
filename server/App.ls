@@ -28,15 +28,15 @@ env = process.env.NODE_ENV or \development
    process.env.npm_package_config_domain,
    process.env.npm_package_config_rethinkdb_port,
    '/db']
-connection  = rethinkdb {db, db-host, db-port}
-koa-session = new mw.rethinkdb-koa-session {connection, db}
+connection = rethinkdb {db, db-host, db-port}
+store      = new mw.rethinkdb-koa-session {connection, db}
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
   class App
     (@port=8080, @changeset=\latest) ->
 
-    start: (cb = (->)) ->
+    start: (cb=->) ->
       console.log "[1;37;32m+ [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       @app = koa! # attach middlewares
         ..keys = keys                  # cookie session secrets
@@ -52,7 +52,7 @@ module.exports =
         ..use mw.static-assets         # static assets handler
         ..use mw.jade                  # use minimalistic jade layout (escape-hatch from react)
         ..use mw.etags                 # auto etag every page for caching
-        ..use <| session koa-session   # rethinkdb session support for koa
+        ..use session {store}          # rethinkdb session support for koa
         ..use mw.session               # sends session to client
         ..use pages                    # apply pages
 
@@ -72,7 +72,7 @@ module.exports =
       unless @port is \ephemeral then @server.listen @port, cb
       @app
 
-    stop: (cb = (->)) ->
+    stop: (cb=->) ->
       console.log "\n[1;37;31m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & cleanly quit listening
       <~ @server.close

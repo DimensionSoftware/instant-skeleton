@@ -178,15 +178,21 @@ export react-or-json = (next) ->*
 
 export rethinkdb-koa-session =
   class RethinkSession
-    ({@connection=connection, @db=db or \sessions, @table=\sessions}) ->
-    get: (sid) ->*
-      console.log \get
-    set: (sid, session) ->*
-      console.log \set
-    destroy: ->*
-      console.log \destroy
+    ({@connection=connection, @db=db or \sessions, @table-name=\sessions}) ->
     table: ->
       @connection.db @db .table @table-name
+    set: (sid, new-session) ->*
+      cur = yield @get sid # current session
+      yield unless cur or cur === {}
+        @table!insert {sid} <<< new-session
+      else
+        # TODO use smarter .update
+        @table!get sid .replace {sid, id: cur.id} <<< new-session
+    get: (sid) ->*
+      (yield @table!get-all sid, index: \sid).0
+    destroy: ->*
+      console.log \destroy
+      if @get!0 then yield @table!get s.0.id .delete!
 
 export session = (next) ->* # sends session/auth token to client
   if @url is \/session
