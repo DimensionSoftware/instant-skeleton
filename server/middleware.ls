@@ -190,9 +190,9 @@ export rethinkdb-koa-session =
         @table!get sid .replace {sid, id: cur.id} <<< new-session
     get: (sid) ->*
       (yield @table!get-all sid, index: \sid).0
-    destroy: ->*
-      console.log \destroy
-      if @get!0 then yield @table!get s.0.id .delete!
+    destroy: (sid) ->*
+      cur = yield @get sid # current session
+      if cur then yield @table!get cur.id .delete!
 
 export session = (next) ->* # sends session/auth token to client
   if @url is \/session
