@@ -23,8 +23,8 @@ for [route, path] in list
 router.get R(\HomePage), (next) ->*
   # TODO something
   console.log 'Navigated to HomePage!'
-  console.log \sess: @session
   @session.page = \home
+  console.log \sess: @session
   yield mw.react-or-json
   yield next
 # </CUSTOM PAGES>

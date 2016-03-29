@@ -29,7 +29,7 @@ env = process.env.NODE_ENV or \development
    process.env.npm_package_config_rethinkdb_port,
    '/db']
 connection  = rethinkdb {db, db-host, db-port}
-koa-session = (mw.rethinkdb-koa-session {connection, db})!
+koa-session = new mw.rethinkdb-koa-session {connection, db}
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =

@@ -176,15 +176,17 @@ export react-or-json = (next) ->*
     | \application/json => surf!
     | otherwise         => yield react
 
-export rethinkdb-koa-session = ({connection, db=\sessions}) ->
-  console.log \here: connection, db
+export rethinkdb-koa-session =
   class RethinkSession
-    (@connection=connection, @db=db, @table=\sessions) ->
-      console.log \const: connection, db, @table
+    ({@connection=connection, @db=db or \sessions, @table=\sessions}) ->
     get: (sid) ->*
       console.log \get
     set: (sid, session) ->*
       console.log \set
+    destroy: ->*
+      console.log \destroy
+    table: ->
+      @connection.db @db .table @table-name
 
 export session = (next) ->* # sends session/auth token to client
   if @url is \/session
