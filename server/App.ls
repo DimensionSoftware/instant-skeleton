@@ -30,6 +30,7 @@ env = process.env.NODE_ENV or \development
    '/db']
 connection = rethinkdb {db, db-host, db-port}
 store      = new mw.rethinkdb-koa-session {connection, db}
+co <| init-rethinkdb db, connection # init rethinkdb tables & indexes
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =
@@ -78,3 +79,8 @@ module.exports =
       <~ @server.close
       connection.get-pool-master!drain!
       cb!
+
+function* init-rethinkdb db, connection
+  try yield connection.db-create db
+  try yield connection.db db .table-create \everyone
+  try yield connection.db db .table \everyone .index-create \date
