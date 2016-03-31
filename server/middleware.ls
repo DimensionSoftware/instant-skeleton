@@ -179,6 +179,11 @@ export react-or-json = (next) ->*
 export rethinkdb-koa-session =
   class RethinkSession
     ({@connection=connection, @db=db or \sessions, @table-name=\sessions}) ->
+      co @setup # auto setup tables & indexes
+    setup: ~>*
+      try yield @connection.db-create @db
+      try yield @connection.db @db .table-create @table-name
+      try yield @connection.db @db .table @table-name .index-create \sid
     table: ->
       @connection.db @db .table @table-name
     set: (sid, new-session) ->*
