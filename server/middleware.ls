@@ -176,6 +176,17 @@ export react-or-json = (next) ->*
     | \application/json => surf!
     | otherwise         => yield react
 
+# TODO refactor into separate npm
+# XXX based on http://blog.vjeux.com/2011/javascript/object-difference.html
+function difference template, override
+  ret={}
+  for let name of template
+    if typeof! override[name] is \Object
+      diff = difference template[name], override[name]
+      ret[name] = diff unless diff === {}
+    else if template[name] !== override[name]
+      ret[name] = template[name]
+  ret
 export rethinkdb-koa-session =
   class RethinkSession
     ({@connection=connection, @db=db or \sessions, @table-name=\sessions}) ->
@@ -187,12 +198,11 @@ export rethinkdb-koa-session =
     table: ->
       @connection.db @db .table @table-name
     set: (sid, new-session) ->*
-      cur = yield @get sid # current session
-      yield unless cur or cur === {}
+      cur = yield @get sid           # current session
+      yield unless cur or cur === {} # initial
         @table!insert {sid} <<< new-session
-      else
-        # TODO use smarter .update
-        @table!get sid .replace {sid, id: cur.id} <<< new-session
+      else                           # .update/merge changes
+        @table!get cur.id .update <| difference new-session, cur
     get: (sid) ->*
       (yield @table!get-all sid, index: \sid).0
     destroy: (sid) ->*
@@ -208,8 +218,8 @@ export session = (next) ->* # sends session/auth token to client
     @body = @session
   yield next
 
+# TODO refactor into a separate npm
 export rethinkdb-koa-session-helper
-
 function rethinkdb-koa-session-helper req, name, keys
   return void unless req.headers.cookie # guard
   # function used by Cookies
