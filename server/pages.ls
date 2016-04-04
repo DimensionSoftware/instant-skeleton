@@ -15,10 +15,6 @@ global.WebSocket = require \ws # FIXME something smarter
 # export pages for all routes by default
 for let [route, path] in list
   router.get R(route), (next) ->*
-    [@session.last-page, @session.on-page] =
-      @session.on-page
-      route
-    console.log \s: @session
     yield mw.react-or-json
     yield next
 
@@ -26,9 +22,11 @@ for let [route, path] in list
 # <CUSTOM PAGE HANDLERS>
 router.get R(\HomePage), (next) ->*
   # TODO something
+  # XXX using @session will result the inability to cache & bugs!
+  # [@session.last-page, @session.on-page] =
+  #   @session.on-page
+  #   route
   console.log 'Navigated to HomePage!'
-  @session.test = \home + Math.random! * 20
-  console.log \s: @session
   yield mw.react-or-json
   yield next
 # </CUSTOM PAGES>
