@@ -41,6 +41,7 @@ export rethinkdb =
     unless rs._conn-promise then throw new Error 'Must connect() before mounting'
 
     # only unsubscribe non-reuse queries
+    @_rethink-mixin-state = {}
     self = @
     for let name, unsubscribe of subscriptions
       unless (self.observe self.props)[name]

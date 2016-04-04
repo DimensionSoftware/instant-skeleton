@@ -5,7 +5,7 @@ require! {
   omniscient: component
   immutable: Immutable
   omnipotent: {{ignore}:decorator}
-  'react-rethinkdb': {Session, r, QueryRequest, DefaultMixin, PropsMixin}
+  'react-rethinkdb': {Session, r}
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
   'react-async': {Mixin}
