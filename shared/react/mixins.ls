@@ -64,7 +64,7 @@ export rethinkdb =
                 window.app.get name .toJS!
               console.log \cur: cur
               console.log 'undefined cur value guard'; return unless cur # guard
-              if cur.token is window.token then console.log \token-guard; return # our update
+              if window.token and cur.token is window.token then console.log \token-guard; return # our update
               # guard if cur older than prev or equal
               if cur === prev then console.log \equal-guard; return
               #r = objectcompare cur, prev
