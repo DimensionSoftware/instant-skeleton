@@ -124,6 +124,7 @@
     "stylus": "^0.54.2",
     "stylus-loader": "^1.5.1",
     "superagent": "^1.8.3",
+    "throttle-debounce": "^0.1.1",
     "tls": "0.0.1",
     "uuid": "^2.0.1",
     "webpack": "^1.12.14",
