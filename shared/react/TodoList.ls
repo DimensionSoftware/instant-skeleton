@@ -10,7 +10,7 @@ require! {
 
 
 # TodoList
-TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-change, show-name}) ->
+TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-change=->, show-name}) ->
   # figure visible todos from ui selection
   cn = -> cx {active:(visible.deref! or \all) is it}
   show-only = (active) ->
