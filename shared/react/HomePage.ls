@@ -16,7 +16,6 @@ module.exports = component page-mixins, ({locals,session}) ->
   on-click = (e) ~>
     e.prevent-default!
     @navigate <| R \MyTodoPage
-    sync-session! # sync across sessions
 
   # allow name to be set
   div do

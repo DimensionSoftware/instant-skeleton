@@ -20,7 +20,6 @@ MyTodoPage = component page-mixins, ({locals,session}) ->
     Header do
       key:          \header
       name:         name
-      after-save:   -> sync-session!
       save-cursor:  session.cursor \todos
       title-cursor: locals.cursor \current-title
     # render my session todos
@@ -36,8 +35,6 @@ MyTodoPage = component page-mixins, ({locals,session}) ->
       visible:   locals.cursor \visible
       search:    locals.cursor \search
       name:      "#{if name then "#name's TODO" else 'My TODO'}"
-      on-delete: -> sync-session!
-      on-change: -> sync-session!
     Link {key: \link, href:R(\PublicPage)} 'Public →'
     Footer {key: \footer, name, path, last-page:(session.get \lastPage)}
   ]

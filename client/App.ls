@@ -3,6 +3,7 @@ require! {
   react: {create-factory}:React
   \react-rethinkdb : {r}
   \react-dom
+  \throttle-debounce : {debounce}
   superagent: request
   immutable
   immstruct
@@ -45,18 +46,6 @@ window.toggle-class = (elem, class-name, add=true) -> # add & remove class names
 window.application-cache.add-event-listener \noupdate ->
   window.toggle-class body, \loaded # force ui load when 100% cache
 
-window.sync-session = ->
-  [window.token, s] =
-    Math.random! * 9999999999      # TODO better random token
-    window.app.get \session .toJS! # current session
-  s.token = window.token
-  storage.set \session s # save in local storage
-  console.log \updated: s
-  global.RethinkSession.run-query <| # save in rethinkdb
-    r.table \sessions
-      .get s.id
-      .update s
-
 
 # main
 # ----
@@ -66,7 +55,6 @@ init-rethinkdb (err, session) ->
   storage.set \session session
   window.app.update \session -> immutable.fromJS session
 
-
 function init-rethinkdb cb
   request # GET initial session
     .get \/session
@@ -75,19 +63,28 @@ function init-rethinkdb cb
 
 function init-react data={session:storage.get(\session), everyone: storage.get(\everyone)}
   [locals, path] = [window.locals, window.location.pathname]
-  state = immstruct { # default
+  struct = immstruct { # default
     path,
     locals,
     session:   {} <<< data.session
     everyone:  {} <<< data.everyone
   }
   render = (new-cur, old-cur, path) -> # render app to <body>
-    window.app = cur = state.cursor!
+    window.app = cur = struct.cursor!
     react-dom.render (App cur), react
     cur
-  render!                                                       # initial render
-  window.toggle-class body, \loaded                             # trigger ui rendered
-  set-timeout (-> state.on \next-animation-frame render), 500ms # avoids browser janks
+  render!                              # initial render
+  window.toggle-class body, \loaded    # trigger ui rendered
+  <- set-timeout _, 500ms              # avoid browser janks
+  struct.on \next-animation-frame render
+
+  ref = struct.reference [\session]    # automagically save sessions
+    ..observe <| debounce 250ms ->
+      session = ref.cursor!toJS!
+      global.RethinkSession.run-query <|
+        r.table \sessions
+          .get session.id
+          .update session
 
 if features.dimension # front!
   console?log "·▄▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄ . ▐ ▄ .▄▄ · ▪         ▐ ▄ \n██▪ ██ ██ ·██ ▐███▪▀▄.▀·•█▌▐█▐█ ▀. ██ ▪     •█▌▐█\n▐█· ▐█▌▐█·▐█ ▌▐▌▐█·▐▀▀▪▄▐█▐▐▌▄▀▀▀█▄▐█· ▄█▀▄ ▐█▐▐▌\n██. ██ ▐█▌██ ██▌▐█▌▐█▄▄▌██▐█▌▐█▄▪▐█▐█▌▐█▌.▐▌██▐█▌\n▀▀▀▀▀• ▀▀▀▀▀  █▪▀▀▀ ▀▀▀ ▀▀ █▪ ▀▀▀▀ ▀▀▀ ▀█▄▀▪▀▀ █▪\nHey, you-- join us!  https://dimensionsoftware.com"

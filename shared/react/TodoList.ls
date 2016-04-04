@@ -16,7 +16,6 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
   show-only = (active) ->
     visible.update -> active
     window.scroll-to 0 0
-    sync-session!
 
   list = todos
     .filter (todo) -> # show visible todos only
