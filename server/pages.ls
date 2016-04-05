@@ -15,6 +15,7 @@ global.WebSocket = require \ws # FIXME something smarter
 # export pages for all routes by default
 for let [route, path] in list
   router.get R(route), (next) ->*
+    @session.on-page = route
     yield mw.react-or-json
     yield next
 
@@ -29,6 +30,6 @@ router.get R(\HomePage), (next) ->*
   console.log 'Navigated to HomePage!'
   yield mw.react-or-json
   yield next
-# </CUSTOM PAGES>
+# </CUSTOM PAGE HANDLERS>
 
 module.exports = router.routes!
