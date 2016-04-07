@@ -39,9 +39,9 @@ export rethinkdb =
     rs = @props.RethinkSession
     if rs and !rs._subscription-manager then throw new Error 'Mixin does not have Session'
     unless rs._conn-promise then throw new Error 'Must connect() before mounting'
+    @_rethink-mixin-state = {} # XXX fix for react-rethinkdb (not used)
 
     # only unsubscribe non-reuse queries
-    @_rethink-mixin-state = {}
     self = @
     for let name, unsubscribe of subscriptions
       unless (self.observe self.props)[name]
@@ -63,14 +63,11 @@ export rethinkdb =
               [cur, prev] =
                 result.value!
                 window.app.get name .toJS!
-              console.log \cur: cur
-              console.log 'undefined cur value guard'; return unless cur # guard
-              if window.token and cur.token is window.token then console.log \token-guard; return # our update
-              # guard if cur older than prev or equal
-              if cur === prev then console.log \equal-guard; return
-              #r = objectcompare cur, prev
-              if cur.updated
-                if cur.updated <= prev.updated then console.log \updated-guard; return
+              # guards
+              return unless cur
+              return if cur === prev
+              return if window.token and cur.token is window.token
+              return if cur.updated and cur.updated <= prev.updated
               if storage? then storage.set name, cur # store locally
               window.app.update name, -> immutable.fromJS cur
             ..handle-connect!

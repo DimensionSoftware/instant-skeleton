@@ -30,7 +30,6 @@ config = pkg.config
 html404 = fs.read-file-sync "#cwd/public/404.html" .to-string!
 html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
 
-
 export error-handler = (next) ->*
   try
     yield next
@@ -44,7 +43,6 @@ export error-handler = (next) ->*
       @type = \html
       @body = if @status is 404 then html404 else html50x
     unless @status is 404 then @app.emit \error, e, @ # report to koa, too
-
 
 # app-cache manifest needs headers
 export app-cache = (next) ->*
@@ -63,7 +61,6 @@ export app-cache = (next) ->*
     else
       @status = 404
   else yield next
-
 
 # localize package.json config for env
 merge = {}
@@ -92,7 +89,6 @@ export config-locals = (App) ->
             "#v:#{@locals.port}"
     yield next
 
-
 state = { # these middlewares are singletons
   static-fn: void
   jade-fn:   void
@@ -114,7 +110,6 @@ export static-assets = (next) ->* # apply our config
   else
     yield next
 
-
 # jade templates
 export jade = (next) ->*
   unless state.jade-fn then state.jade-fn := new koa-jade {
@@ -125,7 +120,6 @@ export jade = (next) ->*
     -debug
   }
   yield (state.jade-fn.middleware.bind @) next
-
 
 # rate limiting
 export rate-limit = (next) ->* # apply our config
@@ -151,14 +145,12 @@ export etags = (next) ->*
   if @locals.body?to-string!  # ...and digest if exists on way up
     @etag = digest that
 
-
 export webpack = (next) ->*
   if @locals.env isnt \production # webpackdev headers
     @set \Access-Control-Allow-Origin "http://#{config.domain}:#{config.node_port}"
     @set \Access-Control-Allow-Headers \X-Requested-With
     @set \Access-Control-Allow-Credentials true
   yield next
-
 
 # react
 export react = (next) ->* # set body to react tree
@@ -211,7 +203,6 @@ export rethinkdb-koa-session =
 
 export session = (next) ->* # sends session/auth token to client
   if @url is \/session
-    delete @session.cookie
     # ensure no caching
     @set \pragma \no-cache
     @set \cache-control \no-cache
@@ -228,12 +219,10 @@ function rethinkdb-koa-session-helper req, name, keys
   get-pattern = (name) ->
     if cache[name] then return that
     cache[name] = new RegExp "(?:^|;) *#{name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")}=([^;]*)"
-
   # match name (session) cookie
   n-match = req.headers.cookie.match(get-pattern name)
   n-val   = n-match?1
   unless keys then return n-val # unsigned
-
   # verify signed cookies with keygrip
   s-match = req.headers.cookie.match(get-pattern "#name.sig")
   k = new Keygrip keys

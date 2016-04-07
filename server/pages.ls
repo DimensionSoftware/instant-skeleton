@@ -2,15 +2,13 @@
 require! {
   \koa
   \koa-router
-
   './middleware': mw
-
   '../shared/features'
   '../shared/routes': {R, list}
   \react-rethinkdb : {Session}
+  \ws : global.WebSocket
 }
 
-global.WebSocket = require \ws # FIXME something smarter
 [app, router] = [koa!, koa-router!]
 # export pages for all routes by default
 for let [route, path] in list
