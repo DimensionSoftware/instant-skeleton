@@ -9,8 +9,16 @@ require! {
   \./TodoList
 }
 
+fetch-rethinkdb = # fetch data for this component
+  observe: ({locals, session, RethinkSession}, state) ->
+    # MyTodoPage's TODO list comes from the everyone cursor
+    # following is an example of how to observe: at the page-level:
+    #todos: new QueryRequest do
+    #  query:   r.table \todos .order-by index: r.desc \date
+    #  changes: true
+
 # MyTodoPage
-MyTodoPage = component page-mixins, ({locals,session}) ->
+MyTodoPage = component [fetch-rethinkdb] ++ page-mixins, ({locals,session}) ->
   [name, path, todo-count] =
     session.get \name
     @context.router.get-path!

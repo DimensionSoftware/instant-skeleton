@@ -1,7 +1,6 @@
 
 require! {
   superagent: request
-  \react-rethinkdb : {r, QueryRequest}
   \react-rethinkdb/dist/QueryState  : {QueryState}
   \react-rethinkdb/dist/QueryResult : {QueryResult}
   immstruct
@@ -42,29 +41,28 @@ export rethinkdb =
     if rs and !rs._subscription-manager then throw new Error 'Mixin does not have Session'
     unless rs._conn-promise then throw new Error 'Must connect() before mounting'
     @_rethink-mixin-state = {} # XXX fix for react-rethinkdb (not used)
-
-    # only unsubscribe non-reuse queries
+    observing = (@default-observe @props) <<< if @observe then @observe @props else {}
     self = @
+    # unsubscribe queries no-longer needed
     for let name, unsubscribe of subscriptions
-      unless (self.observe self.props)[name]
-        console?log \-sub: name, unsubscribe
+      unless observing[name]
+        console?log \-sub: name
         unsubscribe!
-        delete subscriptions[name]
-
     # subscribe rethink queries to components
     run-query = rs.run-query.bind rs
-    for let name, request of @observe @props
+    for let name, request of observing
       unless subscriptions[name] # guard
         console?log \+sub: name
         result = new QueryResult request.initial
-        state  = new QueryState request, run-query, result
+        state  = new QueryState request, run-query, result, -> delete subscriptions[name]
         if window? # in browser
           subscriptions[name] = state.subscribe @, result .unsubscribe # save unsubscribe
           state
             ..update-handler = ->
+              exists = window.app.get name
               [cur, prev] =
                 result.value!
-                window.app.get name .toJS!
+                if exists then window.app.get name .toJS! else {}
               # guards
               return unless cur
               return if cur === prev
@@ -73,20 +71,16 @@ export rethinkdb =
               if storage? then storage.set name, cur # store locally
               window.app.update name, -> immutable.fromJS cur
             ..handle-connect!
-  observe: ({locals, session, RethinkSession}, state) ->
-    # TODO allow Pages to specify their own observe:
+  default-observe: ({locals, session, RethinkSession}, state) ->
     # fetch all data for session & todos (everyone rights)
-    requests =
-      everyone: new QueryRequest do
-        query:   r.table \everyone .order-by index: r.desc \date
-        changes: true
-        initial: if storage? then storage.get \everyone
-    if id = session.get \id # fetch session, too
-      requests.session = new QueryRequest do
-        query:   r.table \sessions .get id
-        changes: true
-        initial: if storage? then storage.get \session
-    requests
+    everyone: new QueryRequest do
+      query:   r.table \everyone .order-by index: r.desc \date
+      changes: true
+      initial: if storage? then storage.get \everyone
+    session: new QueryRequest do
+      query:   r.table \sessions .get <| session.get \id
+      changes: true
+      initial: if storage? then storage.get \session
 
 export focus-input =
   component-did-mount: ->

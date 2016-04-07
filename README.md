@@ -147,9 +147,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 ## TODO Prior to Merge into Master
 
-1. **Add** allow Pages to observe: their own
-
-2. **Fix** sorting &amp; filtering on everybody's TODO
+1. **Fix** sorting &amp; filtering on everybody's TODO
 
 ## [Hire Us!](mailto:keith@dimensionsoftware.com)
 

@@ -13,7 +13,7 @@ require! {
 # export pages for all routes by default
 for let [route, path] in list
   router.get R(route), (next) ->*
-    @session.on-page = route
+    @session.on-page = route # cache-friendly
     yield mw.react-or-json
     yield next
 

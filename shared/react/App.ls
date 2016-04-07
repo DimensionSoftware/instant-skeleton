@@ -5,7 +5,7 @@ require! {
   omniscient: component
   immutable: Immutable
   omnipotent: {{ignore}:decorator}
-  'react-rethinkdb': {Session, r}
+  'react-rethinkdb': {QueryRequest, Session, r}
   'react-router-component': {Pages,Page,NotFound,NavigatableMixin}:Router
   '../routes': {R}:routes
   'react-async': {Mixin}
@@ -18,7 +18,7 @@ Location  = create-factory Router.Location
 Locations = create-factory Router.Locations
 
 # statics for ease-of-use DSL in Pages
-global <<< {R, React, cx, Router, page-mixins, component, Immutable, ignore}
+global <<< {R, React, cx, Router, page-mixins, component, Immutable, ignore, r, QueryRequest}
 global.DOM = React.DOM
 global.Link = create-factory Router.Link
 global.RethinkSession = void # singleton
