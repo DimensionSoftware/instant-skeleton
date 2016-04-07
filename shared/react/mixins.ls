@@ -15,7 +15,9 @@ state = { last-offset: 0px, last-path: void }
 export initial-state-async =
   get-initial-state-async: (cb) ->
     path = window.location.pathname
-    return if state.last-path is path # guard
+    unless state.last-path or state.last-path is path # guard
+      state.last-path := path
+      return
     window.app.update \path -> immutable.fromJS path
     request # fetch state (GET request is cacheable vs. websocket)
       .get path
@@ -29,7 +31,7 @@ export initial-state-async =
         cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
-        state.last-path = path
+        state.last-path := path
     true
 
 subscriptions = {} # QueryState manager
