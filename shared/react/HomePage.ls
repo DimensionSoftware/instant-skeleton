@@ -35,4 +35,4 @@ module.exports = component page-mixins, ({locals,session}) ->
         on-click: on-click
         \Save
 
-    Footer {name, path, last-page: (session.get \lastPage)}
+    Footer {name, path}

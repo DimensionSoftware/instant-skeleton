@@ -52,7 +52,7 @@ PublicPage = component page-mixins, ({RethinkSession,locals,session,everyone}) -
             .update todo
     }
     Link {key:\link href:R(\MyTodoPage)} 'Back →'
-    Footer {key:\footer name, path, last-page:(session.get \lastPage)}
+    Footer {key:\footer name, path}
   ]
 
 module.exports = ignore <[ titleCursor afterSave saveCursor ]> PublicPage

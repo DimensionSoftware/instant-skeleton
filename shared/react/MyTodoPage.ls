@@ -36,7 +36,7 @@ MyTodoPage = component page-mixins, ({locals,session}) ->
       search:    locals.cursor \search
       name:      "#{if name then "#name's TODO" else 'My TODO'}"
     Link {key: \link, href:R(\PublicPage)} 'Public →'
-    Footer {key: \footer, name, path, last-page:(session.get \lastPage)}
+    Footer {key: \footer, name, path}
   ]
 
 module.exports = ignore <[ titleCursor afterSave saveCursor ]> MyTodoPage

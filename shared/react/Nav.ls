@@ -6,7 +6,7 @@ require! {
 # destructure only what's needed
 {label,input,span,a,nav,ul,li,small} = DOM
 
-module.exports = component \Nav ({name, path, last-page}) ->
+module.exports = component \Nav ({name, path}) ->
   # show all routes besides current
   nav do
     class-name: \nav
@@ -35,15 +35,6 @@ module.exports = component \Nav ({name, path, last-page}) ->
               Link do
                 href: (R route.0)
                 "#{page-title route.0} →"
-
-        # render last visited (sync'd across all sessions)
-        if last-page
-          li do
-            class-name: \last-visited
-            small void 'Last visited '
-            Link do
-              href: (R last-page)
-              (page-title last-page)
 
 function page-title
   it.replace /Page$/ ''
