@@ -69,7 +69,7 @@ SHARED
     * **omniscient** -- https://omniscientjs.github.io/
     * **hot-loader** -- http://gaearon.github.io/react-hot-loader/
 * **RethinkDB** -- http://rethinkdb.com
-    * **rethinkdb sessions** -- https://github.com/mikemintz/rethinkdb-websocket-client
+    * **rethinkdb sessions** -- https://github.com/mikemintz/react-rethinkdb
 
 CLIENT
 
@@ -145,12 +145,19 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
        Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/)!
 
+## TODO Prior to Merge into Master
+
+1. **Fix** Only hit each url once on the server (no extra surf)
+
+2. **Add** allow Pages to observe: their own
+
+3. **Fix** sorting &amp; filtering on everybody's TODO
 
 ## [Hire Us!](mailto:keith@dimensionsoftware.com)
 
 Really digging our [software architecture](https://dimensionsoftware.com)?  [**Say Hello and let us know**](mailto:keith@dimensionsoftware.com)-- Instant Skeleton is battle-tested, having bootstrapped many of our most successful client projects.
 
-[We are pull-request-friendly, consider contributing today](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
+[We are pull-request-friendly, consider contributing today!](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
 
 ##### [Example TODO Application](https://todo.powerbulletin.com)
 
