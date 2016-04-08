@@ -138,22 +138,18 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 7. **Production deployment?  We got you covered!**
 
-       Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak ecosystem.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/ecosystem.json) to configure [PM2](http://pm2.keymetrics.io/) production.
+       Export a proper NODE_ENV and expect the correct behaviors with "npm start", "npm stop" &amp; "npm restart".  Production builds shrink tiny, bootstrapping a reduced set of modules and client dependencies.  [Tweak ecosystem.json](https://github.com/DimensionSoftware/instant-skeleton/blob/master/ecosystem.json) to configure [PM2](http://pm2.keymetrics.io/) production.  For highly secure, end-to-end SSL, prefer termination infront of Node.JS.
 
 
 8. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
 
-       Instant Skeleton is designed to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/)!
-
-## TODO Prior to Merge into Master
-
-1. **Fix** sorting &amp; filtering on everybody's TODO
+       Instant Skeleton is engineered to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/).  Of course, [React Native](https://facebook.github.io/react-native/) provides the best native experience.  Use realtime, secure WebSockets for communication back to your Instant Skeleton application!
 
 ## [Hire Us!](mailto:keith@dimensionsoftware.com)
 
 Really digging our [software architecture](https://dimensionsoftware.com)?  [**Say Hello and let us know**](mailto:keith@dimensionsoftware.com)-- Instant Skeleton is battle-tested, having bootstrapped many of our most successful client projects.
 
-[We are pull-request-friendly, consider contributing today!](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
+[We are pull-request-friendly, contribute today!](https://github.com/DimensionSoftware/instant-skeleton/graphs/contributors)
 
 ##### [Example TODO Application](https://todo.powerbulletin.com)
 
