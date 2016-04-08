@@ -8,7 +8,7 @@ require! {
 # destructure only what's needed
 {header,form,button,div} = DOM
 
-module.exports = component \Header ({after-save=(->), save-cursor, name, title-cursor}) ->
+module.exports = component \Header ({after-save=(->), save-cursor, name=\Anonymous, title-cursor}) ->
     on-key-up = ->
       if it.key-code is 13
         it.current-target.value = '' # clear input
