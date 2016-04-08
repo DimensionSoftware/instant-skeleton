@@ -1,6 +1,6 @@
 {
   "name": "instant-skeleton",
-  "version": "3.2.1",
+  "version": "4.0.0",
   "description": "The Best, Most Opinionated Realtime Framework to Lift Heavy Functionality Lightening Quick with Node.JS",
   "main": "build/server/main.js",
   "engines": {
