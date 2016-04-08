@@ -23,6 +23,7 @@ TodoList = component \TodoList ({todos, visible, search, name, on-delete, on-cha
       on-change key, (cur.get key .toJS!)
 
   list = todos
+    .to-ordered-map!
     .filter (todo) -> # show visible todos only
       return false unless todo.get # guard
       c = todo.get \completed
