@@ -6,7 +6,6 @@ build
 logs
 npm-debug.log
 public/builds
-public/vendor/builds
 public/master.css
 shared/db
 node_modules
