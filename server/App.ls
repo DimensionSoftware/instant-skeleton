@@ -23,10 +23,10 @@ env = process.env.NODE_ENV or \development
 
 # connect to rethinkdb
 [keys, db, db-host, db-port, http-path] =
-  [[process.env.npm_package_config_keys_0], # XXX only using first
-   process.env.npm_package_config_database,
-   process.env.npm_package_config_domain,
-   process.env.npm_package_config_rethinkdb_port,
+  [[process.env.npm_package_config_keys_0         or \AEeaEUA3152589], # XXX only using first
+   process.env.npm_package_config_database        or \test,
+   process.env.npm_package_config_domain          or \develop.com,
+   process.env.npm_package_config_rethinkdb_port  or 28015,
    '/db']
 connection = rethinkdb {db, db-host, db-port}
 store      = new mw.rethinkdb-koa-session {connection, db}
