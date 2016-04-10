@@ -10,10 +10,11 @@ if [ -z "$NODE_ENV" ]; then
 fi
 
 if [ "$NODE_ENV" = 'production' ]; then
-  # build server & client with gulp
-  echo -n 'Building app @ '
-  date
-  node --harmony `which gulp`
+  if [ ! -d 'build' ]; then
+    echo 'Best to deploy pre-built, versioned artifacts than build in production'
+    echo '`- building & booting: '
+    NODE_ENV=development npm i && `which gulp` production
+  fi
 
   # run using pm2!
   echo -n 'Booting new app @ '
@@ -22,7 +23,7 @@ if [ "$NODE_ENV" = 'production' ]; then
 
 else
   pid='app.pid'
-  # log pid if detached & defer to gulp
+  # log pid if detached & defer to gulp to build & boot
   node --harmony `which gulp`
   echo $! > "$pid"
 fi
