@@ -18,11 +18,12 @@ fetch-rethinkdb = # fetch data for this component
     #  changes: true
 
 # MyTodoPage
-MyTodoPage = component [fetch-rethinkdb] ++ page-mixins, ({locals,session}) ->
-  [name, path, todo-count] =
+MyTodoPage = component [fetch-rethinkdb] ++ page-mixins, ({locals,session,props}) ->
+  [name, path, todo-count, todos] =
     session.get \name
     @context.router.get-path!
     if session.get \todos then that.count! else 0
+    props.cursor \todos # example cursor for observing above
 
   DOM.div key: \MyTodoPage class-name: \MyTodoPage, [
     Header do

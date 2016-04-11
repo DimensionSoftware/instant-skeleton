@@ -44,7 +44,7 @@ module.exports = component \App (props) ->
       props.cursor \locals
       props.cursor \session
       props.cursor \everyone
-    Location { locals, session, everyone, global.RethinkSession, path, key:name, ref:name, handler:pages[name] }
+    Location { props, locals, session, everyone, global.RethinkSession, path, key:name, ref:name, handler:pages[name] }
 
   locations-for-routes = routes.list
     .filter (-> pages[it.0])
