@@ -82,6 +82,7 @@ function init-react data={session:storage.get(\session), everyone: storage.get(\
     ..observe <| debounce 250ms ->
       session = ref.cursor!toJS!
       throw new Error 'No session id' unless session.id
+      storage.set \session session
       global.RethinkSession.run-query <|
         r.table \sessions
           .get session.id
