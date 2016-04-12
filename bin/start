@@ -12,8 +12,12 @@ fi
 if [ "$NODE_ENV" = 'production' ]; then
   if [ ! -d 'build' ]; then
     echo 'Best to deploy pre-built, versioned artifacts than build in production'
-    echo '`- building & booting: '
+    echo '`- installing dev tools, building & booting: '
     NODE_ENV=development npm i && `which gulp` production
+    if [ $? -ne 0 ]; then
+      echo '`- unable to successfully build, consider "npm i --force"!'
+      exit 1
+    fi
   fi
 
   # run using pm2!
