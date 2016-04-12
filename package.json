@@ -114,7 +114,7 @@
     "pretty-error": "^2.0.0",
     "react": "^0.14.8",
     "react-async": "DimensionSoftware/react-async#react-0.14.x",
-    "react-dom": "^15.0.1",
+    "react-dom": "^0.14.8",
     "react-rethinkdb": "^0.5.5",
     "react-router-component": "^0.32.0",
     "replacestream": "^4.0.0",
