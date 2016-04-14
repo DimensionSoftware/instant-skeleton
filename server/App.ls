@@ -13,6 +13,7 @@ require! {
   \koa-helmet : helmet
   \koa-logger
   koa
+  primus: Primus
   \./pages
   \./middleware : mw
   \./query-whitelist
@@ -64,6 +65,10 @@ module.exports =
       @server = http.create-server @app.callback!
 
       # boot websockets
+      @primus = new Primus @server, transformer: \uws, parser: \JSON
+        #..before <| middleware.primus-koa-session store, @app.keys
+        ..remove \primus.js
+
       session-creator = (query-parms, {headers}:req) ->
         auth-token = "koa:sess:#{mw.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
         co {auth-token}
@@ -76,6 +81,7 @@ module.exports =
     stop: (cb=->) ->
       console.log "\n[1;37;31m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & cleanly quit listening
+      <~ @primus.destroy
       <~ @server.close
       connection.get-pool-master!drain!
       cb!

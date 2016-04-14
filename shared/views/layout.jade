@@ -60,8 +60,10 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     //- boot app bundle (using cdn in production)
     if production
       script(src="#{cacheUrls[3]}/builds/client.js?#{changeset}")
+      script(src="#{cacheUrls[2]}/vendor/primus.js?#{changeset}")
     else
       script(src="//#{domain}:#{dev_port}/builds/client.js?#{changeset}")
+      script(src="//#{domain}:#{dev_port}/vendor/primus.js?#{changeset}")
 
     //- add dimension logo, github fork & fb like button
     if features.dimension

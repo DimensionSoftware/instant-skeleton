@@ -55,6 +55,26 @@ init-rethinkdb (err, session) ->
   storage.set \session session
   window.app.update \session -> immutable.fromJS session
 
+function init-primus
+  primus = window.primus = Primus.connect!
+    ..on \close ->
+        # count seconds disconnected
+        if locals.env is \production
+          window.closed-duration   = 0
+          window.closed-duration-i = set-interval (-> window.closed-duration++), 1000ms
+    ..on \changeset (c) ->
+      # alert on newer application version launch
+      if locals.env is \production
+        if c isnt locals.changeset
+          notify 'Reload' {body:'A newer version has launched!'}
+    ..on \open ->
+      # alert user of a stale page?
+      if locals.env is \production and window.closed-duration-i
+        clear-interval that
+        if window.closed-duration > 3s
+          notify 'Reload' {body:'A newer version of this page is ready!'}
+      window.spark-id <- primus.id # easy identify primus connection
+
 function init-rethinkdb cb
   request # GET initial session
     .get \/session
