@@ -8,23 +8,21 @@ require! {
 
 # init
 # ---------
-supervisor =
-  starting: false # already starting new instance?
-  instance: void  # singleton (for now)
-
-dotenv.load! # load local environment vars from .env
+dotenv.load!
+supervisor = {-starting, -instance}
 
 
 # main
 # ---------
-console.log "\n[1;37m,.._________[0;m"
+console.log "\n[1;37m▄═━一一一  一    .. .[0;m"
 restart! # initial b00t-up!
 
-process.on \SIGHUP -> restart!
-process.on \SIGINT -> # for pm2 & friends
-  supervisor.instance.stop ->
-    <- set-timeout _, 300ms # allow event-loop some ticks
-    process.exit 0
+process
+  ..on \SIGHUP restart
+  ..on \SIGINT -> # for pm2 & friends
+    supervisor.instance.stop ->
+      <- set-timeout _, 150ms # allow event-loop cleanup ticks
+      process.exit 0
 
 function restart
   start = ->
