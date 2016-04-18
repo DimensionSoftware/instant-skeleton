@@ -209,10 +209,7 @@ export session = (next) ->* # sends session/auth token to client
     @body = @session
   yield next
 
-# TODO refactor into a separate npm
-export rethinkdb-koa-session-helper
-function rethinkdb-koa-session-helper req, name, keys
-  return void unless req.headers.cookie # guard
+export rethinkdb-koa-session-helper = (req, name, keys) ->
   # function used by Cookies
   # https://github.com/expressjs/cookies
   cache = {}
@@ -228,6 +225,14 @@ function rethinkdb-koa-session-helper req, name, keys
   k = new Keygrip keys
   if k.index("#name=#n-val", s-match?1) < 0 then return void
   n-val
+
+# TODO refactor into a separate npm
+export primus-koa-session = (store, keys) ->
+  (req, res, next) ->
+    req.key = "koa:sess:#{rethinkdb-koa-session-helper req, \koa.sid, keys}"
+    co(store.get req.key).then (session) ->
+      req.session = session
+      next!
 
 function digest body
   crypto.create-hash \md5 .update body .digest \hex

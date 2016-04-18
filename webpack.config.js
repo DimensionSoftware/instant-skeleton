@@ -13,9 +13,10 @@ var entry =
   { client: ['./client/App' ] }
 
 var plugins =
-  [ new ExtractText('site.css', { allChunks:true })
-  ]
-var loaders = []
+  [ new ExtractText('site.css', { allChunks:true }) ]
+
+var loaders =
+  [ { test: /\.json$/, loader: 'json' } ]
 
 // init
 // ----
@@ -49,10 +50,10 @@ module.exports =
   , optimize: prod
   , entry:    entry
   , plugins:  plugins
-  , resolve:  { extensions: ['', '.ls', '.js', '.styl'] }
+  , resolve:  { extensions: ['', '.ls', '.js', '.json', '.styl'] }
   , module:   { loaders: loaders }
   , stylus:   { use: [nib()] }
-  , node:     { fs: 'empty' }
+  , node:     { net: 'empty', fs: 'empty' }
   , output:
     { path:       path.join(__dirname, 'public/builds')
     , filename:   "[name].js"

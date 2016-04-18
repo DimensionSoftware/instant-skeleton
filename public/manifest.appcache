@@ -5,6 +5,7 @@ CACHE MANIFEST
 CACHE:
 /
 %cacheUrls1%/builds/site.css?%changeset%
+%cacheUrls2%/vendor/primus.js?%changeset%
 %cacheUrls3%/builds/client.js?%changeset%
 %cacheUrls%/favicon.ico
 %cacheUrls%/images/apple-touch-icon.png

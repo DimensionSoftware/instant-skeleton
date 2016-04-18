@@ -1,5 +1,7 @@
 
 require! {
+  net
+  rethinkdb
   react: {create-factory}:React
   \react-rethinkdb : {r}
   \react-dom
@@ -7,6 +9,7 @@ require! {
   superagent: request
   immutable
   immstruct
+  primus: \Primus
   \../shared/react/App
   \../shared/features
   \./stylus/master
@@ -35,7 +38,7 @@ window.notify = (title, obj={body:''}) -> # to better use desktop notifications
     <- Notification.request-permission
     show!
 
-window.toggle-class = (elem, class-name, add=true) -> # add & remove class names (XXX: outside react, only!)
+window.toggle-class = (elem, class-name, add=true) -> # add & remove class names outside react
   if add # add
     if (body.class-name.index-of class-name) is -1
       body.class-name += " #class-name"
@@ -49,19 +52,21 @@ window.application-cache.add-event-listener \noupdate ->
 
 # main
 # ----
-init-react! # immediately boot react & render
-init-rethinkdb (err, session) ->
-  if err then throw err # guard
-  storage.set \session session
-  window.app.update \session -> immutable.fromJS session
+init-react! # immediately render
+init-primus!
+#init-rethinkdb (err, session) ->
+#  if err then throw err # guard
+#  storage.set \session session
+#  window.app.update \session -> immutable.fromJS session
 
 function init-primus
-  primus = window.primus = Primus.connect!
+  primus = window.primus = new Primus #Primus.rethinkdb-connect {process, net, rethinkdb}
     ..on \close ->
-        # count seconds disconnected
-        if locals.env is \production
-          window.closed-duration   = 0
-          window.closed-duration-i = set-interval (-> window.closed-duration++), 1000ms
+      # count seconds disconnected
+      if locals.env is \production
+        [window.closed-duration, window.closed-duration-i] =
+          0
+          set-interval (-> window.closed-duration++), 1000ms
     ..on \changeset (c) ->
       # alert on newer application version launch
       if locals.env is \production
@@ -74,6 +79,8 @@ function init-primus
         if window.closed-duration > 3s
           notify 'Reload' {body:'A newer version of this page is ready!'}
       window.spark-id <- primus.id # easy identify primus connection
+    ..rethinkdb-connect {process, net, rethinkdb}, (err, conn) ->
+      console.log \connected-to-rethink
 
 function init-rethinkdb cb
   request # GET initial session

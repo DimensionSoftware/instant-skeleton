@@ -65,14 +65,17 @@ module.exports =
       @server = http.create-server @app.callback!
 
       # boot websockets
-      @primus = new Primus @server, transformer: \uws, parser: \JSON
-        #..before <| middleware.primus-koa-session store, @app.keys
+      @primus = new Primus @server, transport: \uws parser: \binary
+        ..before <| mw.primus-koa-session store, keys
+        ..use \rethinkdb (require \rethinkdb-primus <| host: db-host, port: db-port)
+        ..on \connection (spark) ->
+          spark.pipe-to-rethinkDB {+log-queries, unsafely-allow-any-query: env isnt \production, query-whitelist}
         ..remove \primus.js
 
-      session-creator = (query-parms, {headers}:req) ->
-        auth-token = "koa:sess:#{mw.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
-        co {auth-token}
-      listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
+#      session-creator = (query-parms, {headers}:req) ->
+#        auth-token = "koa:sess:#{mw.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
+#        co {auth-token}
+#      listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
 
       # listen, bind last
       unless @port is \ephemeral then @server.listen @port, cb

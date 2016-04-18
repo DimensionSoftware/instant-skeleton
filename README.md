@@ -143,7 +143,7 @@ potential of HTML5 and Node.JS.  [Start hacking now!](https://github.com/Dimensi
 
 8. **What about Native Desktop, iOS/Droid &amp; and mobile devices?**
 
-       Instant Skeleton is engineered to drop right into a [Cordova Container](https://cordova.apache.org/) and [NW.js](http://nwjs.io/).  Of course, [React Native](https://facebook.github.io/react-native/) provides the best native experience.  Use realtime, secure WebSockets for communication back to your Instant Skeleton application!
+       Instant Skeleton is engineered to drop right into a [Electron](http://electron.atom.io/), [Cordova](https://cordova.apache.org/) and [NW.js](http://nwjs.io/).  Of course, [React Native](https://facebook.github.io/react-native/) provides the best native experience for mobile.  Use realtime, secure WebSockets for communication back to your Instant Skeleton application!
 
 ## [Hire Us!](mailto:keith@dimensionsoftware.com)
 
