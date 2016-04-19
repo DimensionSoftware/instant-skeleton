@@ -41,17 +41,6 @@ gulp.task \build:server ->
 
 gulp.task \build:client run-compiler # build client app bundle
 
-gulp.task \build:primus (cb) ->
-  const [app, path] =
-    new App port
-    \./public/builds/vendor/primus.js
-  if fs.exists-sync path then cb!; return # guard
-  <- fs.mkdir \./public/builds/vendor
-  <- app.start
-  app # save primus client from koa config
-    ..primus.save path
-    ..stop cb
-
 gulp.task \clean ->
   gulp.src \build {-read}
     .pipe gulp-clean!
@@ -59,7 +48,7 @@ gulp.task \clean ->
 
 # watching
 # --------
-gulp.task \webpack:dev-server <[build:primus build:client]> (cb) ->
+gulp.task \webpack:dev-server <[build:client]> (cb) ->
   const dev-server = new WebpackDevServer compiler, {
     +quiet
     hot: !prod
@@ -82,7 +71,7 @@ gulp.task \development <[watch webpack:dev-server ]> ->
     .once \start ->
       <- set-timeout _, 1700ms # TODO child-to-parent messaging?
       open "http://#domain:#port"
-gulp.task \production <[build:primus build:client ]> -> process.exit 0
+gulp.task \production <[build:client ]> -> process.exit 0
 
 # main
 # ----
