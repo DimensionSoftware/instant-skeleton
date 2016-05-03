@@ -74,7 +74,7 @@ module.exports =
       @app
 
     stop: (cb=->) ->
-      console.log "[1;37;31m- [1;37;40m#env[0;m @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
+      console.log "[1;37;31m- [1;37;40m#env[0;m #{process.pid} @ port [1;37;40m#{@port}[0;m ##{@changeset[to 5].join ''}"
       # cleanup & cleanly quit listening
       <~ @server.close
       connection.get-pool-master!drain!
