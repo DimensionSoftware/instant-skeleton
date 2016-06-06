@@ -78,7 +78,7 @@ export rethinkdb =
       changes: true
       initial: if storage? then storage.get \everyone
     session: new QueryRequest do
-      query:   r.table \sessions .get <| session.get \id
+      query:   r.table \sessions .get <| session.get \id or 0
       changes: true
       initial: if storage? then storage.get \session
 
