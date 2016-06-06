@@ -15,9 +15,10 @@ require! {
 if locals.env isnt \production # hot-load stylus
   require \./stylus/master.styl
 
-[body, react] = # cache
-  [document.get-elements-by-tag-name \body .0,
-   document.get-elements-by-class-name \react .0]
+[delay, body, react] = # cache
+  500ms
+  document.get-elements-by-tag-name \body .0,
+  document.get-elements-by-class-name \react .0
 
 # statics
 # -------
@@ -49,37 +50,41 @@ window.application-cache.add-event-listener \noupdate ->
 
 # main
 # ----
-init-react! # immediately boot react & render
-init-rethinkdb (err, session) ->
-  if err then throw err # guard
-  storage.set \session session
-  window.app.update \session -> immutable.fromJS session
+init-react void (struct, cur) ->    # immediately boot react & render
+  window.toggle-class body, \loaded # trigger ui rendered
+  init-session (err, session) ->    # lazy init session
+    if err then throw err # guard
+    storage.set \session session
+    cur.update \session -> immutable.fromJS session
+    init-references struct, cur
 
-function init-rethinkdb cb
-  request # GET initial session
-    .get \/session
-    .set \Accept \application/json
-    .end (err, res) -> cb err, res.body
 
-function init-react data={session:storage.get(\session), everyone: storage.get(\everyone)}
-  [locals, path] = [window.locals, window.location.pathname]
+function init-react data={session:storage.get(\session), everyone: storage.get(\everyone)}, cb=(->)
+  [locals, path] =
+    window.locals
+    window.location.pathname
   struct = immstruct { # default
     path,
     locals,
-    session:   {} <<< data.session
-    everyone:  {} <<< data.everyone
+    session: {} <<< data.session
+    everyone:{} <<< data.everyone
   }
   render = (new-cur, old-cur, path) -> # render app to <body>
-    window.app = cur = struct.cursor!
+    cur = window.app = struct.cursor!
     react-dom.render (App cur), react
     cur
-  render!                              # initial render
-  window.toggle-class body, \loaded    # trigger ui rendered
-  <- set-timeout _, 500ms              # avoid browser janks
   struct.on \next-animation-frame render
+  cb struct, render! # initial render
 
-  ref = struct.reference [\session]    # automagically save sessions
-    ..observe <| debounce 250ms ->
+function init-session cb
+  request # GET initial session
+    .get \/session
+    .set \Accept \application/json
+    .end (err, res) -> cb err, res?body
+
+function init-references struct, cur
+  ref = struct.reference [\session] # automagically save sessions
+    ..observe <| debounce (delay / 2), ->
       session = ref.cursor!toJS!
       throw new Error 'No session id' unless session.id
       storage.set \session session
