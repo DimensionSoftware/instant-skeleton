@@ -18,7 +18,9 @@ console.log "\n[1;37m▄═━一一一  一    .. .[0;m"
 restart! # initial b00t-up!
 
 process
-  ..on \SIGHUP restart
+  ..on \SIGHUP ->
+    for k,v of require.cache then delete require.cache[k] # clear require cache
+    restart!
   ..on \SIGINT -> # for pm2 & friends
     supervisor.instance.stop ->
       <- set-timeout _, 150ms # allow event-loop cleanup ticks
