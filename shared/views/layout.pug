@@ -27,25 +27,25 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
     //- schema data for google & google+
     meta(itemprop='name', content=name)
     meta(itemprop='description', content=metaKeywords)
-    meta(itemprop='image', content="#{cacheUrls[0]}/images/apple-touch-icon-114x114.png")
+    meta(itemprop='image', content=cacheUrls[0] + '/images/apple-touch-icon-114x114.png')
 
     //- open graph data
     meta(property='og:title', content=title)
     meta(property='og:type', content='website')
-    meta(property='og:url', content="//#{domain}")
-    meta(property='og:image', content="#{cacheUrls[0]}/images/apple-touch-icon-114x114.png")
+    meta(property='og:url', content='//' + domain)
+    meta(property='og:image', content=cacheUrls[0] + '/images/apple-touch-icon-114x114.png')
     meta(property='og:description', content=metaKeywords)
     meta(property='og:site_name', content=name)
 
     //- links first
-    link(href="#{cacheUrls[0]}/favicon.ico",rel='shortcut icon',type='image/x-icon')
-    link(href="#{cacheUrls[0]}/images/apple-touch-icon.png", rel='apple-touch-icon')
-    link(href="#{cacheUrls[0]}/images/apple-touch-icon-72x72.png", sizes="72x72", rel='apple-touch-icon')
-    link(href="#{cacheUrls[0]}/images/apple-touch-icon-114x114.png", sizes="114x114", rel='apple-touch-icon')
+    link(href=cacheUrls[0] + '/favicon.ico',rel='shortcut icon',type='image/x-icon')
+    link(href=cacheUrls[0] + '/images/apple-touch-icon.png', rel='apple-touch-icon')
+    link(href=cacheUrls[0] + '/images/apple-touch-icon-72x72.png', sizes="72x72", rel='apple-touch-icon')
+    link(href=cacheUrls[0] + '/images/apple-touch-icon-114x114.png', sizes="114x114", rel='apple-touch-icon')
 
     //- stylus (using cdn in production)
     if production
-      link(href="#{cacheUrls[1]}/builds/site.css?#{changeset}", rel='stylesheet', type='text/css')
+      link(href=cacheUrls[1] + '/builds/site.css?' + changeset, rel='stylesheet', type='text/css')
 
   body
     //- server-side render in production (SEO)
@@ -59,9 +59,9 @@ html(manifest=(features.offline ? '/manifest.appcache' : undefined))
 
     //- boot app bundle (using cdn in production)
     if production
-      script(src="#{cacheUrls[3]}/builds/client.js?#{changeset}")
+      script(src=cacheUrls[3] + '/builds/client.js?' + changeset)
     else
-      script(src="//#{domain}:#{dev_port}/builds/client.js?#{changeset}")
+      script(src='//' + domain + ':' + dev_port + '/builds/client.js?' + changeset)
 
     //- add dimension logo, github fork & fb like button
     if features.dimension

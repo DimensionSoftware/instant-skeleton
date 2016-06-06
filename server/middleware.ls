@@ -8,7 +8,7 @@ require! {
   replacestream
   keygrip: Keygrip
 
-  \koa-jade
+  \koa-pug
   \koa-locals
   \koa-static-cache : koa-static
   \koa-better-ratelimit : limit
@@ -112,7 +112,7 @@ export static-assets = (next) ->* # apply our config
 
 # jade templates
 export jade = (next) ->*
-  unless state.jade-fn then state.jade-fn := new koa-jade {
+  unless state.jade-fn then state.jade-fn := new koa-pug {
     view-path: \shared/views
     pretty:    @locals.env isnt \production
     no-cache:  @locals.env isnt \production
