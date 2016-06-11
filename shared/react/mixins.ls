@@ -17,7 +17,7 @@ export initial-state-async =
     unless state.last-path or state.last-path is path # guard
       state.last-path := path
       return
-    window.app.update \path -> immutable.fromJS path
+    app.update \path -> immutable.fromJS path
     request # fetch state (GET request is cacheable vs. websocket)
       .get path
       .set \Accept \application/json
@@ -26,7 +26,7 @@ export initial-state-async =
       .end (err, res) ->
         return unless res?body?locals # guard
         # update page & local cursor
-        window.app.update \locals -> immutable.fromJS res.body.locals
+        app.update \locals -> immutable.fromJS res.body.locals
         cb void res.body
         window.scroll-to 0 0 # reset scroll position
         scrolled!
@@ -55,22 +55,22 @@ export rethinkdb =
         console?log \+sub: name
         result = new QueryResult request.initial
         state  = new QueryState request, run-query, result, -> delete subscriptions[name]
-        if window? # in browser
-          subscriptions[name] = state.subscribe @, result .unsubscribe # save unsubscribe
-          state
-            ..update-handler = ->
-              exists = window.app.get name
-              [cur, prev] =
-                result.value!
-                if exists then window.app.get name .toJS! else {}
-              # guards
-              return unless cur
-              return if cur === prev
-              return if window.token and cur.token is window.token
-              return if cur.updated and cur.updated <= prev.updated
-              if storage? then storage.set name, cur # store locally
-              window.app.update name, -> immutable.fromJS cur
-            ..handle-connect!
+        if request.initial then app.update name, -> immutable.fromJS <| result.value {+allow-stale-query}
+        subscriptions[name] = state.subscribe @, result .unsubscribe # save unsubscribe
+        state
+          ..update-handler = ->
+            exists = app.get name
+            [cur, prev] =
+              result.value {+allow-stale-query}
+              if exists then app.get name .toJS! else {}
+            # guards
+            return unless cur
+            return if cur === prev
+            return if window?token and cur.token is window.token
+            return if cur.updated and cur.updated <= prev.updated
+            if storage? then storage.set name, cur # store locally
+            app.update name, -> immutable.fromJS cur
+          ..handle-connect!
   default-observe: ({locals, session, RethinkSession}, state) ->
     # fetch all data for session & todos (everyone rights)
     everyone: new QueryRequest do

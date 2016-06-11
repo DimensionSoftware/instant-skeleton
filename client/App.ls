@@ -70,7 +70,7 @@ function init-react data={session:storage.get(\session), everyone: storage.get(\
     everyone:{} <<< data.everyone
   }
   render = (new-cur, old-cur, path) -> # render app to <body>
-    cur = window.app = struct.cursor!
+    cur = global.app = struct.cursor!
     react-dom.render (App cur), react
     cur
   struct.on \next-animation-frame render

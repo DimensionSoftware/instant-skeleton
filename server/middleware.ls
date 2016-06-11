@@ -154,9 +154,10 @@ export webpack = (next) ->*
 
 # react
 export react = (next) ->* # set body to react tree
-  path  = url.parse (@url or '/') .pathname
-  state = immstruct {path, @locals, @session}
-  @locals.body = ReactDOMServer.render-to-string (App state.cursor!)
+  path   = url.parse (@url or '/') .pathname
+  state  = immstruct {path, @locals, @session}
+  cursor = global.app = state.cursor!
+  @locals.body = ReactDOMServer.render-to-string <| App cursor
   @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
