@@ -39,6 +39,7 @@ module.exports = component \App (props) ->
     ..once-done-loading ~>
       # XXX on server, response already sent without session
 
+  props.update \path -> path
   location = ([name, path]:route) ->
     [locals, session, everyone] =
       props.cursor \locals

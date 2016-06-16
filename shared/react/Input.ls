@@ -1,7 +1,6 @@
 
 # Input
-module.exports = ignore <[ focus ]>, component \Input ({cursor, auto-focus, ref}:opts) ->
-  should-auto-focus = ref is \focus or auto-focus
+module.exports = ignore <[ focus ]>, component \Input ({cursor, auto-focus}:opts) ->
   on-change  = (e) ->
     v = e.current-target.value
     if v?0 isnt ' ' # disallow space as first char
@@ -12,7 +11,7 @@ module.exports = ignore <[ focus ]>, component \Input ({cursor, auto-focus, ref}
     on-change
     +controlled
     type: \text
-    on-focus: -> if should-auto-focus then it.current-target.select! # select, too!
+    on-focus: -> if auto-focus then it.current-target.select! # select, too!
   } <<< opts
 
   # how to bind this input
