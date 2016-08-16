@@ -34,6 +34,7 @@ const [prod, compiler] =
 
 # building
 # --------
+gulp.task \build <[build:client build:server]> -> process.exit 0
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header, const:true} # strip
