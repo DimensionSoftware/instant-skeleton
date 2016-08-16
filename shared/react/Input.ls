@@ -20,5 +20,6 @@ module.exports = ignore <[ focus ]>, component \Input ({cursor, auto-focus}:opts
     options.value = v
   else # only default
     options.default-value = v
+  delete options.controlled
 
   DOM.input options
