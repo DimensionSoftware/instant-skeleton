@@ -30,12 +30,13 @@ pages = routes.list.reduce ((namespace, route) ->
   namespace), {}
 
 module.exports = component \App (props) ->
+  [prod, secure, host] =
+    \production is props.get-in [\locals \env]
+    window?location.protocol is \https:
+    props.get-in [\locals \domain]
+  port = if window?location.port then that else (if secure then 443 else 80)
   unless global.RethinkSession then global.RethinkSession = new Session!
-    ..connect do
-      host:   props.get-in [\locals \domain]
-      port:   props.get-in [\locals \port]
-      path:   '/db'
-      secure: false
+    ..connect {host, port, secure, path: '/db'}
     ..once-done-loading ~>
       # XXX on server, response already sent without session
 
