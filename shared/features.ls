@@ -18,5 +18,5 @@ module.exports = {
   +dimension        # dimension banners
   +static-assets    # disable to run in a separate process
 
-  offline: prod     # enable in production
+  offline: false    # disable offline unless necessary (prevent glorious caching)
 }
