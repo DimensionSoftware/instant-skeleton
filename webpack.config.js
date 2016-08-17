@@ -2,12 +2,12 @@
 var nib         = require('nib')
   , path        = require('path')
   , webpack     = require('webpack')
-  , ExtractText = require('extract-text-webpack-plugin');
+  , ExtractText = require('extract-text-webpack-plugin')
 
 var env       = process.env.NODE_ENV || 'development'
   , prod      = env === 'production'
   , domain    = process.env.DOMAIN || process.env.npm_package_config_domain || 'develop.com'
-  , dev_port  = process.env.npm_package_config_dev_port  || 8081;
+  , dev_port  = prod ? '' : ':' + (process.env.npm_package_config_dev_port || 8081)
 
 var entry =
   { client: ['./client/App' ] }
@@ -20,6 +20,7 @@ var loaders = []
 // init
 // ----
 if (prod) { // production settings
+  plugins.push(new webpack.DefinePlugin({'process.env': { 'NODE_ENV': '"production"' } }))
   plugins.push(new ExtractText('site.css', { allChunks:true }))
   plugins.push(new webpack.optimize.UglifyJsPlugin())
   loaders.push({ test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') })
@@ -33,7 +34,6 @@ if (prod) { // production settings
     ('webpack/hot/dev-server'
     , 'webpack-dev-server/client?http://'
       + domain
-      + ':'
       + dev_port
     )
 }
@@ -58,7 +58,6 @@ module.exports =
     , filename:   "[name].js"
     , publicPath: 'http://'
       + domain
-      + ':'
       + dev_port
       + '/builds/'
     }
