@@ -75,7 +75,7 @@ export config-locals = (App) ->
     domain    = process.env.DOMAIN or merge.domain
     cache-url = process.env.CACHE_URL or merge.cache_url
     @locals.cache-urls = # create cache-urls from domain
-      for i in [1 to 4]
+      for i in [1 to 5]
         cache-url
           .replace '%domain', domain
           .replace '%n', if i is 1 then '' else i
