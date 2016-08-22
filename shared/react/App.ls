@@ -36,7 +36,7 @@ module.exports = component \App (props) ->
     props.get-in [\locals \domain]
   port = if window?location.port then that else (if secure then 443 else 80)
   unless global.RethinkSession then global.RethinkSession = new Session!
-    ..connect {host, port, secure, path: '/db'}
+    ..connect {host, port, secure, path: '/db', auto-reconnect-delay-ms: 2000ms}
     ..once-done-loading ~>
       # XXX on server, response already sent without session
 
