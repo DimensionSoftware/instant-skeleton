@@ -22,7 +22,7 @@ var loaders = []
 if (prod) { // production settings
   plugins.push(new webpack.DefinePlugin({'process.env': { 'NODE_ENV': '"production"' } }))
   plugins.push(new ExtractText('site.css', { allChunks:true }))
-  plugins.push(new webpack.optimize.UglifyJsPlugin())
+  plugins.push(new webpack.optimize.UglifyJsPlugin({mangle: false}))
   loaders.push({ test: /\.styl$/, loader: ExtractText.extract('css-loader!stylus-loader') })
   loaders.push({ test: /\.ls$/, loader: 'livescript-loader?const=true' })
 } else {
