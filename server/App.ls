@@ -13,6 +13,7 @@ require! {
   \koa-helmet : helmet
   \koa-logger
   koa
+  \../shared/features : {unsafely-allow-any-query}
   \./pages
   \./middleware : mw
   \./query-whitelist
@@ -67,7 +68,7 @@ module.exports =
       session-creator = (query-parms, {headers}:req) ->
         auth-token = "koa:sess:#{mw.rethinkdb-koa-session-helper {headers}, \koa.sid, keys}"
         co {auth-token}
-      listen {db-host, http-path, http-server: @server, session-creator, unsafely-allow-any-query: env isnt \production, query-whitelist}
+      listen {db-host, http-path: '/db', http-server: @server, session-creator, unsafely-allow-any-query, query-whitelist}
 
       # listen, bind last
       unless @port is \ephemeral then @server.listen @port, cb
