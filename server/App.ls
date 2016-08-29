@@ -22,16 +22,17 @@ require! {
 pe  = new PrettyError!
 env = process.env.NODE_ENV or \development
 
-# connect to rethinkdb
-[keys, db, db-host, db-port, http-path] =
-  [[process.env.npm_package_config_keys_0         or \AEeaEUA3152589], # XXX only using first
+[keys, db, db-host, db-port] =
+  [process.env.npm_package_config_keys_0          or \AEeaEUA3152589],
    process.env.npm_package_config_database        or \test,
    process.env.npm_package_config_domain          or \develop.com,
-   process.env.npm_package_config_rethinkdb_port  or 28015,
-   '/db']
-connection = rethinkdb {db, db-host, db-port}
-store      = new mw.rethinkdb-koa-session {connection, db}
-co <| init-rethinkdb db, connection # init rethinkdb tables & indexes
+   process.env.npm_package_config_rethinkdb_port  or 28015
+
+# connect to rethinkdb
+connection       = rethinkdb {db, db-host, db-port}
+store            = new mw.rethinkdb-koa-session {connection, db}
+global.run-query = -> connection.db db # for whitelist, etc...
+co <| init-rethinkdb db, connection    # init rethinkdb tables & indexes
 
 ### App's purpose is to abstract instantiation from starting & stopping
 module.exports =

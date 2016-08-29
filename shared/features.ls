@@ -19,5 +19,5 @@ module.exports = {
   +static-assets    # disable to run in a separate process
   offline: false    # disable offline unless necessary (prevent glorious caching)
 
-  unsafely-allow-any-query: dev # when true, whitelist is used
+  unsafely-allow-any-query: dev # when true, whitelist is used to server-validate rethinkdb queries
 }
