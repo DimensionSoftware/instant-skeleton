@@ -10,16 +10,20 @@ maxWidth     = 1200px
 bounce = cubic-bezier(0,1.72,0,.75)
 
 headerBackground = tint(themeColor, 96%)
-leftNavWidth     = 125px
+leftNavWidth     = 115px
 
 body
   margin-top 0
   padding-top 0
+  .hidden
+    display none
+  // background image
   &:before
-    background url('http://wallpoper.com/images/00/22/27/48/dark-forest_00222748.jpg') no-repeat center center fixed
-    background-size cover
-    animation-name fallInX
-    animation-duration 3s
+    //background url('http://wallpoper.com/images/00/22/27/48/dark-forest_00222748.jpg') no-repeat center center fixed
+    //background-size cover
+    //animation-name fallInX
+    //animation-duration 2.5s
+    background-image linear-gradient(#fff 80%, #eaeaea)
     content ''
     position fixed
     right 0
@@ -67,17 +71,6 @@ body
               background headerBackground
             button
               opacity 1
-  .react
-    &:before
-      content ''
-      position fixed
-      z-index -1
-      top 0
-      right 0
-      bottom 0
-      left 0
-      background-image linear-gradient(rgba(255,255,255,.95) 60%, rgba(225,225,225,.7))
-
 hr
   border-top-color rgba(textColor, .015)
   margin grid * 3 auto
@@ -91,7 +84,7 @@ h2, h3
 
 .Page
   padding-bottom grid * 30
-  margin-left leftNavWidth + (grid * 2)
+  margin-left leftNavWidth
   > div
     backface-visibility hidden
 
@@ -111,17 +104,18 @@ h2, h3
     margin-left (grid * 7) - 1
   h2
     margin-top grid * 3.3
-    margin-bottom grid * 6.5
+    margin-bottom grid * 7.5
     text-overflow ellipsis
     overflow hidden
   // count
   h4
     position absolute
+    z-index onTop + 1
     left grid * 7
-    top grid * 3.4
+    top grid * 8.9
     border-radius 100%
-    font-size .85em
-    color lighten(textColor, 20%)
+    font-size .8em
+    color lighten(textColor, 40%)
     background-color rgba(backgroundColor, .8)
     padding (grid / 2)
     animation-name fallInX
@@ -129,10 +123,10 @@ h2, h3
     animation-timing-function ease-in-out
   header
     position fixed
-    left 22.2 * grid
+    left 207px
     right 0
     z-index onTop + 1
-    top grid * 7.6
+    top grid * 8.1
     margin 0 auto
     max-width maxWidth
     transition transform .2s ease-out
@@ -141,17 +135,15 @@ h2, h3
       .clip
         overflow hidden
         input[type='text']
-          padding-top 12px
+          padding-top grid
+          padding-left 0
+          padding-right 0
           padding-bottom @padding-top
-          font-size 1.1em
+          font-size 1.2em
           border-left 1px solid lighten(textColor, 90%)
-          border-bottom 2px solid lighten(textColor, 65%)
-          text-indent grid * 4.7
+          text-indent grid * 6
           opacity 1
-          padding-left 13px
-          margin-left 4px
           max-width maxWidth - 50px
-          transition opacity .15s ease-in
           &:focus
             border-bottom-color themeColor
       button
@@ -165,26 +157,28 @@ h2, h3
       width 200px
       position absolute
       font-weight 100
+      text-align center
       top grid * 3.5
       right 0
       font-size .8em
       font-style italic
-      padding 4px 15px
+      padding 4px 8px
       border-radius 30px
       border 1px solid tint(textColor, 85%)
+      text-indent 0
       z-index 1
       color lighten(textColor, 50%)
-      transition width .25s bounce
+      transition width .25s bounce, border .4s ease-out
       &:focus, &:hover
         color lighten(textColor, 25%)
       &:focus
         width 230px
-        transition none
+        text-align left
+        transition width .005s ease-out
 
 .HomePage, .MyTodoPage, .PublicPage
   overflow hidden
   min-height grid * 30
-  margin-bottom grid * 12
   // inputs for adding a todo
   form
     position relative
@@ -220,8 +214,8 @@ h2, h3
       content ''
       width 3px
       height 90%
-      border-left 1px solid tint(textColor, 90%)
-      border-right 1px solid tint(textColor, 90%)
+      border-left 1px solid tint(textColor, 95%)
+      border-right 1px solid tint(textColor, 95%)
     &:before
       position absolute
       z-index onTop
@@ -320,40 +314,41 @@ h2, h3
         border-bottom-color transparent
         color tint(darken(themeColor, 80%), 50%)
     .results
-      position absolute
-      bottom 0
-      padding-left grid
-      font-size .8em
-      font-weight bold
+      padding-left grid * 1.5
+      padding-top grid * 1.5
+      font-size .75em
       color lighten(textColor, 20%)
     // action buttons for "all", "active" & "completed"
+    backgroundColor = rgba(240,240,240,.8)
     .actions
       text-align center
       position fixed
       z-index onTop + 2
-      bottom 0
-      left 50%
+      bottom grid * 5.3
+      left 0
+      right 0
       font-size 1.1em
-      margin-left -133px
-      padding 0 (grid * 4.5)
+      padding 0 (grid * 6.5)
+      background-color backgroundColor
       border-radius 3px
       border-bottom-right-radius 0
       border-bottom-left-radius 0
-      border-bottom 2px solid #000
-      background-color rgba(#fff, .08)
       animation fadeIn .8s ease-in
       backface-visibility hidden
       a
         position relative
         padding (grid * 1.5) 0 grid 0
-        border-bottom 8px solid transparent
+        border-bottom 4px solid backgroundColor
         margin 0 (grid * 2)
-        min-width 40px
+        margin-left grid * 4
+        min-width 105px
         fadeOut(40%)
         transition all .2s ease-in .01s
         text-transform lowercase
         &:hover
           transition none
+          transform none
+          text-transform capitalize
         &.active
           text-transform capitalize
           fadeOut(0)

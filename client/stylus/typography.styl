@@ -6,10 +6,10 @@ body
   color textColor
   background bodyColor
   font-size 1.2em
-  opacity 0
   &.loaded
-    opacity 1
-    transition opacity .25s ease-out
+    animation-name fadeIn
+    animation-timing-function ease-out
+    animation-duration 1s
 
 a
   outline none

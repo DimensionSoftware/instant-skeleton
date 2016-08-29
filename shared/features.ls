@@ -14,9 +14,10 @@ dev  = env is \development
 
 
 module.exports = {
-  +todo-example
+  +todo-example     # disable to remove TODO app routes & logic
   +dimension        # dimension banners
   +static-assets    # disable to run in a separate process
+  offline: false    # disable offline unless necessary (prevent glorious caching)
 
-  offline: prod     # enable in production
+  unsafely-allow-any-query: dev # when true, whitelist is used to server-validate rethinkdb queries
 }

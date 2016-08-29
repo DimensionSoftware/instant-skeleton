@@ -1,7 +1,6 @@
 
 # Input
-module.exports = ignore <[ focus ]>, component \Input ({cursor}:props) ->
-  auto-focus = props.ref is \focus or props.auto-focus
+module.exports = ignore <[ focus ]>, component \Input ({cursor, auto-focus}:opts) ->
   on-change  = (e) ->
     v = e.current-target.value
     if v?0 isnt ' ' # disallow space as first char
@@ -13,7 +12,7 @@ module.exports = ignore <[ focus ]>, component \Input ({cursor}:props) ->
     +controlled
     type: \text
     on-focus: -> if auto-focus then it.current-target.select! # select, too!
-  } <<< props
+  } <<< opts
 
   # how to bind this input
   v = cursor.deref!
@@ -21,5 +20,6 @@ module.exports = ignore <[ focus ]>, component \Input ({cursor}:props) ->
     options.value = v
   else # only default
     options.default-value = v
+  delete options.controlled
 
   DOM.input options

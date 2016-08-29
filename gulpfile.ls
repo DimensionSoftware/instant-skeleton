@@ -9,6 +9,8 @@ require! {
   \gulp-shell
   \gulp-util
   \gulp-watch
+  \gulp-clean
+  \gulp-exit
   \webpack
 
   './package.json': config
@@ -20,18 +22,19 @@ require! {
 
 dotenv.load!
 
-const env       = process.env.NODE_ENV or \development
-const port      = parse-int (process.env.NODE_PORT or process.env.npm_package_config_node_port)
-const dev-port  = process.env.npm_package_config_dev_port
-const domain    = process.env.DOMAIN or process.env.npm_package_config_domain
+const [env, dev-port, domain, port] =
+  process.env.NODE_ENV or \development
+  process.env.npm_package_config_dev_port
+  process.env.DOMAIN or process.env.npm_package_config_domain
+  parse-int <| process.env.NODE_PORT or process.env.npm_package_config_node_port
 
-const prod = env is \production
+const [prod, compiler] =
+  env is \production
+  webpack wp-config # use code caching
 
-const compiler = webpack wp-config # use code caching
-
-
-gulp.task \build:test <[build:server]> -> process.exit!
-
+# building
+# --------
+gulp.task \build <[build:client build:server]> -> process.exit 0
 gulp.task \build:server ->
   gulp.src ['./{shared,server}/**/*.ls']
     .pipe gulp-livescript {+bare, -header, const:true} # strip
@@ -39,6 +42,10 @@ gulp.task \build:server ->
 
 gulp.task \build:client run-compiler # build client app bundle
 
+gulp.task \clean ->
+  gulp.src \build {-read}
+    .pipe gulp-clean!
+    .pipe gulp-exit!
 
 # watching
 # --------
@@ -58,26 +65,19 @@ gulp.task \webpack:dev-server <[build:client]> (cb) ->
 gulp.task \watch -> # changes needing server restart
   gulp.watch ['./server/**/*.ls' './shared/**/*.ls'] [\build:server]
 
-
 # env tasks
 # ---------
-gulp.task \development <[watch build:server webpack:dev-server ]> ->
+gulp.task \development <[watch webpack:dev-server ]> ->
   gulp-nodemon {script:config.main, ext:'ls jade', ignore:<[node_modules bin build client shared/react test]>, node-args:'--harmony'}
     .once \start ->
-      <- boot-delay-fn
+      <- set-timeout _, 1700ms # TODO child-to-parent messaging?
       open "http://#domain:#port"
-gulp.task \production <[build:server build:client ]> -> process.exit 0
-
+gulp.task \production <[build:client ]> -> process.exit 0
 
 # main
 # ----
-default-tasks = <[build:server ]>
-  ..push env
-gulp.task \default default-tasks
+gulp.task \default [\build:server env]
 
-
-function boot-delay-fn fn
-  set-timeout fn, 1700ms # TODO replace with child-to-parent msg
 
 function run-compiler cb
   (err, stats) <- compiler.run

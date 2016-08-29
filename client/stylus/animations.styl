@@ -1,37 +1,28 @@
 
-fadeOut(px)
-  -o-filter grayscale(px)
-  -ms-filter grayscale(px)
-  -moz-filter grayscale(px)
-  -webkit-filter grayscale(px)
-  filter grayscale(px)
+filter(args)
+  -o-filter args
+  -ms-filter args
+  -moz-filter args
+  -webkit-filter args
+  filter args
 
-blurry(px)
-  -o-filter blur(px)
-  -ms-filter blur(px)
-  -moz-filter blur(px)
-  -webkit-filter blur(px)
-  filter blur(px)
+fadeOut(n)
+  filter grayscale(n)
 
 @keyframes fadeIn
   0%
     opacity .4
+    filter grayscale(1)
+  25%
+    opacity .8
   100%
-    opacity 1
+    filter grayscale(0)
 
 @keyframes openSpace
   from
     background-color tint(themeColor, 97%)
   to
     max-height 50px
-
-@keyframes focusIn
-  0%
-    opacity .3
-    blurry(1px)
-  100%
-    opacity 1
-    blurry(0)
 
 @keyframes fallInX
   0%

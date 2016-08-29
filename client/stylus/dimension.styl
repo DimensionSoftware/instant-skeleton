@@ -7,19 +7,52 @@ body
     bottom 0
     left 0
     right 0
-    border-top 2px solid #eee
+    border-top 2px solid #000
+    // "carbon-fiber" background
+    box-shadow 0 5px 10px black inset
     background-color rgba(0,0,0,.8)
-    height 210px
+    background-image linear-gradient(45deg, #000000 8%, transparent 8%, transparent 92%, #000000 92%), linear-gradient(-45deg, #000000 8%, transparent 8%, transparent 92%, #000000 92%), linear-gradient(-45deg, #000000 8%, transparent 8%, transparent 92%, #000000 92%), linear-gradient(45deg, #000000 8%, transparent 8%, transparent 92%, #000000 92%), linear-gradient(-45deg, transparent 17%, #000000 17%, #000000 21%, transparent 21%, transparent 79%, #000000 79%, #000000 83%, transparent 83%), linear-gradient(45deg, transparent 29%, #000000 29%, #000000 33%, transparent 33%, transparent 67%, #000000 67%, #000000 71%, transparent 71%), linear-gradient(-135deg, #202020 10%, #090909 33%, transparent 33%, transparent 67%, #161616 67%, #202020 90%), linear-gradient(135deg, transparent 21%, #161616 21%, #2d2d2d 32.6%, #161616 64.5%, #202020 70.3%, #090909 79%, transparent 79%), linear-gradient(-135deg, transparent 21%, #161616 21%, #202020 40%, #202020 60%, #090909 79%, transparent 79%)
+    background-size 1.7em 1.7em
+    background-position 0em 1em, 1em 0, 0em 1em, 1em 0, 0 0, 0 0, 0 0, 0 0, 0 0
+    color white
+    height 52px
     padding-left leftNavWidth
     text-align center
-    z-index onTop
+    z-index onTop * 2
+    transition height .2s bounce .5s
+    &:after
+      position absolute
+      left 0
+      right 0
+      top 0
+      content ''
+      display block
+      width 100%
+      height @width
+      background linear-gradient(90deg, rgba(80, 80, 80, 0.6), rgba(80, 80, 80, 0), rgba(80, 80, 80, 0.6))
+    &:hover
+      height 175px
+      transition height 0s ease-out .2s
+      .dimension-logo
+        height 47px
+        opacity 1
+        transform translateY(-17px)
+        transition transform .07s ease-out .17s
     .dimension-logo
-      left -(grid / 2)
+      opacity 0
+      height 0
+      left -48px
+      top 45px
+      border none
+      transition opacity .5s ease-out, transform .3s ease-out .2s
+      z-index onTop
+      &:after
+        display none
     .fb-like
       display block
-      bottom -80px
+      bottom grid * -0.8
       height 28px
-      left grid * 2.3
+      left grid * -2
       position relative
       min-width 123px
       visibility hidden

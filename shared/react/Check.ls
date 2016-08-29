@@ -1,16 +1,16 @@
 
 # Checkbox
 
-Check = component \Check ({cursor,label,title,on-change}:props) ->
+Check = component \Check ({cursor,label,title,on-change}:opts) ->
   do-change = ->
-    new-props = cursor.update -> not cursor.deref!
-    if on-change then on-change new-props
+    change = cursor.update -> not cursor.deref!
+    if on-change then on-change change
 
   options = {
     cursor
     type: \checkbox
     checked: cursor.deref!
-  } <<< props
+  } <<< opts
   options.on-change = do-change
 
   # got a label?

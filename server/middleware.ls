@@ -8,13 +8,15 @@ require! {
   replacestream
   keygrip: Keygrip
 
-  \koa-jade
+  \koa-pug
   \koa-locals
-  'koa-static-cache': koa-static
-  'koa-better-ratelimit': limit
+  \koa-static-cache : koa-static
+  \koa-better-ratelimit : limit
+  \koa-generic-session : generic-session
 
   react: {create-element, DOM}:React
   'react-dom/server': React-DOM-Server
+  \react-rethinkdb : {Session}
 
   \../shared/features
   \../shared/react/App
@@ -27,7 +29,6 @@ config = pkg.config
 
 html404 = fs.read-file-sync "#cwd/public/404.html" .to-string!
 html50x = fs.read-file-sync "#cwd/public/50x.html" .to-string!
-
 
 export error-handler = (next) ->*
   try
@@ -42,7 +43,6 @@ export error-handler = (next) ->*
       @type = \html
       @body = if @status is 404 then html404 else html50x
     unless @status is 404 then @app.emit \error, e, @ # report to koa, too
-
 
 # app-cache manifest needs headers
 export app-cache = (next) ->*
@@ -62,7 +62,6 @@ export app-cache = (next) ->*
       @status = 404
   else yield next
 
-
 # localize package.json config for env
 merge = {}
 merge{name,title,meta-keywords,cache_url,domain} = config # pick these
@@ -76,7 +75,7 @@ export config-locals = (App) ->
     domain    = process.env.DOMAIN or merge.domain
     cache-url = process.env.CACHE_URL or merge.cache_url
     @locals.cache-urls = # create cache-urls from domain
-      for i in [1 to 4]
+      for i in [1 to 5]
         cache-url
           .replace '%domain', domain
           .replace '%n', if i is 1 then '' else i
@@ -89,7 +88,6 @@ export config-locals = (App) ->
           else
             "#v:#{@locals.port}"
     yield next
-
 
 state = { # these middlewares are singletons
   static-fn: void
@@ -112,10 +110,9 @@ export static-assets = (next) ->* # apply our config
   else
     yield next
 
-
 # jade templates
 export jade = (next) ->*
-  unless state.jade-fn then state.jade-fn := new koa-jade {
+  unless state.jade-fn then state.jade-fn := new koa-pug {
     view-path: \shared/views
     pretty:    @locals.env isnt \production
     no-cache:  @locals.env isnt \production
@@ -123,7 +120,6 @@ export jade = (next) ->*
     -debug
   }
   yield (state.jade-fn.middleware.bind @) next
-
 
 # rate limiting
 export rate-limit = (next) ->* # apply our config
@@ -149,19 +145,19 @@ export etags = (next) ->*
   if @locals.body?to-string!  # ...and digest if exists on way up
     @etag = digest that
 
-
 export webpack = (next) ->*
   if @locals.env isnt \production # webpackdev headers
     @set \Access-Control-Allow-Origin "http://#{config.domain}:#{config.node_port}"
     @set \Access-Control-Allow-Headers \X-Requested-With
+    @set \Access-Control-Allow-Credentials true
   yield next
-
 
 # react
 export react = (next) ->* # set body to react tree
-  path  = url.parse (@url or '/') .pathname
-  state = immstruct {path, @locals, @session}
-  @locals.body = ReactDOMServer.render-to-string (App state.cursor!)
+  path   = url.parse (@url or '/') .pathname
+  state  = immstruct {path, @locals, @session}
+  cursor = global.app = state.cursor!
+  @locals.body = ReactDOMServer.render-to-string <| App cursor
   @render \layout @locals
 
 # figure out whether the requester wants html or json and send the appropriate response
@@ -173,16 +169,50 @@ export react-or-json = (next) ->*
     | \application/json => surf!
     | otherwise         => yield react
 
+# TODO refactor into separate npm
+# XXX based on http://blog.vjeux.com/2011/javascript/object-difference.html
+function difference template, override
+  ret={}
+  for let name of template
+    if typeof! override[name] is \Object
+      diff = difference template[name], override[name]
+      ret[name] = diff unless diff === {}
+    else if template[name] !== override[name]
+      ret[name] = template[name]
+  ret
+export rethinkdb-koa-session =
+  class RethinkSession
+    ({@connection=connection, @db=db or \sessions, @table-name=\sessions}) ->
+      co @setup # auto setup tables & indexes
+    setup: ~>*
+      try yield @connection.db-create @db
+      try yield @connection.db @db .table-create @table-name
+      try yield @connection.db @db .table @table-name .index-create \sid
+    table: ->
+      @connection.db @db .table @table-name
+    set: (sid, new-session) ->*
+      cur = yield @get sid           # current session
+      yield unless cur or cur === {} # initial
+        @table!insert {sid} <<< new-session
+      else                           # .update/merge changes
+        @table!get cur.id .update <| difference new-session, cur
+    get: (sid) ->*
+      (yield @table!get-all sid, index: \sid).0
+    destroy: (sid) ->*
+      cur = yield @get sid # current session
+      if cur then yield @table!get cur.id .delete!
 
-# primus-koa-leveldb session
-export primus-koa-session = (store, keys) ->
-  (req, res, next) ->
-    req.key = "koa:sess:#{primus-koa-session-helper req, \koa.sid, keys}"
-    co(store.get req.key).then (session) ->
-      req.session = session
-      next!
+export session = (next) ->* # sends session/auth token to client
+  if @url is \/session
+    # ensure no caching
+    @set \pragma \no-cache
+    @set \cache-control \no-cache
+    @body = @session
+  yield next
 
-function primus-koa-session-helper req, name, keys
+# TODO refactor into a separate npm
+export rethinkdb-koa-session-helper
+function rethinkdb-koa-session-helper req, name, keys
   return void unless req.headers.cookie # guard
   # function used by Cookies
   # https://github.com/expressjs/cookies
@@ -190,12 +220,10 @@ function primus-koa-session-helper req, name, keys
   get-pattern = (name) ->
     if cache[name] then return that
     cache[name] = new RegExp "(?:^|;) *#{name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")}=([^;]*)"
-
   # match name (session) cookie
   n-match = req.headers.cookie.match(get-pattern name)
   n-val   = n-match?1
   unless keys then return n-val # unsigned
-
   # verify signed cookies with keygrip
   s-match = req.headers.cookie.match(get-pattern "#name.sig")
   k = new Keygrip keys

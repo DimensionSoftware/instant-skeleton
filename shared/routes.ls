@@ -1,9 +1,18 @@
+require! {
+  \../shared/features
+}
 
 export list =
-  # loads shared/react/HomePage.ls
-  * [ \HomePage,  '/' ]
-  * [ \MyTodoPage,  '/todo' ]
-  * [ \PublicPage,  '/public' ]
+  if features.todo-example
+    [
+      * \HomePage,   '/' # loads shared/react/HomePage.ls
+      * \MyTodoPage, '/todo'
+      * \PublicPage, '/public'
+    ]
+  else
+    [
+      * \HomePage,  '/'
+    ]
 
   # more route examples:
   # * [ \PromoPage,            '/clients/:Client_id/promos' ]

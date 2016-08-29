@@ -5,8 +5,8 @@
 require! \./Nav
 
 # Footer
-module.exports = component \Footer ({name, path, last-page}:props) ->
+module.exports = component \Footer ({name, path}) ->
   footer do
     class-name: \footer
 
-    Nav {name, path, last-page} # sync'd across sessions
+    Nav {name, path} # sync'd across sessions

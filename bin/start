@@ -1,10 +1,24 @@
 #!/bin/bash
 
+if [ -f '.env' ]; then
+  # export .env before booting node
+  eval `sed 's/^/export /' .env`; fi
+
+if [ -z "$NODE_ENV" ]; then
+  echo 'Please export a proper NODE_ENV as .env or otherwise'
+  exit 1
+fi
+
 if [ "$NODE_ENV" = 'production' ]; then
-  # build server & client with gulp
-  echo -n 'Building app @ '
-  date
-  node --harmony `which gulp`
+  if [ ! -d 'build' ]; then
+    echo 'Best to deploy pre-built, versioned artifacts than build in production'
+    echo '`- installing dev tools, building & booting: '
+    NODE_ENV=development npm i && `which gulp` production
+    if [ $? -ne 0 ]; then
+      echo '`- unable to successfully build, consider "npm i --force"!'
+      exit 1
+    fi
+  fi
 
   # run using pm2!
   echo -n 'Booting new app @ '
@@ -13,7 +27,7 @@ if [ "$NODE_ENV" = 'production' ]; then
 
 else
   pid='app.pid'
-  # log pid if detached & defer to gulp
+  # log pid if detached & defer to gulp to build & boot
   node --harmony `which gulp`
   echo $! > "$pid"
 fi

@@ -8,13 +8,14 @@ require! {
 }
 
 # HomePage
-module.exports = component page-mixins, ({{path,locals,session,everyone}:props}) ->
-  name = session.get \name
+module.exports = component page-mixins, ({locals,session}) ->
+  [name, path] =
+    session.get \name
+    @context.router.get-path!
 
-  on-click = ~>
-    sync-session! # sync across sessions
-    @navigate (R \MyTodoPage)
-    it.prevent-default!
+  on-click = (e) ~>
+    e.prevent-default!
+    @navigate <| R \MyTodoPage
 
   # allow name to be set
   div do
@@ -22,7 +23,7 @@ module.exports = component page-mixins, ({{path,locals,session,everyone}:props})
     h1 void if name then "Greetings #name!" else 'Hello! What\'s\u00a0Your\u00a0Name?'
     hr void
     form do
-      on-submit: ~> it.prevent-default!
+      on-submit: (.prevent-default!)
       Input do
         cursor:      session.cursor \name
         ref:         \focus
@@ -34,4 +35,4 @@ module.exports = component page-mixins, ({{path,locals,session,everyone}:props})
         on-click: on-click
         \Save
 
-    Footer {name, path, last-page: (session.get \lastPage)}
+    Footer {name, path}

@@ -1,3 +1,4 @@
+.env
 app.pid
 app.log
 doc
@@ -5,7 +6,7 @@ build
 logs
 npm-debug.log
 public/builds
-public/vendor/builds
 public/master.css
 shared/db
 node_modules
+rethinkdb_data

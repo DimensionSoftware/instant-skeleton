@@ -2,33 +2,32 @@
 require! {
   \koa
   \koa-router
-
   './middleware': mw
-
   '../shared/features'
-  '../shared/routes': {R}
+  '../shared/routes': {R, list}
+  \react-rethinkdb : {Session}
+  \ws : global.WebSocket
 }
 
 [app, router] = [koa!, koa-router!]
+# export pages for all routes by default
+for let [route, path] in list
+  router.get R(route), (next) ->*
+    @session.on-page = route # cache-friendly
+    yield mw.react-or-json
+    yield next
 
-# <PAGES>
+
+# <CUSTOM PAGE HANDLERS>
 router.get R(\HomePage), (next) ->*
-  @session.last-page = @session.on-page
-  @session.on-page   = \HomePage
+  # TODO something
+  # XXX using @session will result the inability to cache & bugs!
+  # [@session.last-page, @session.on-page] =
+  #   @session.on-page
+  #   route
+  console.log 'Navigated to HomePage!'
   yield mw.react-or-json
   yield next
-
-if features.todo-example
-  router.get R(\MyTodoPage), (next) ->*
-    @session.last-page = @session.on-page
-    @session.on-page   = \MyTodoPage
-    yield mw.react-or-json
-    yield next
-  router.get R(\PublicPage), (next) ->*
-    @session.last-page = @session.on-page
-    @session.on-page   = \PublicPage
-    yield mw.react-or-json
-    yield next
-# </PAGES>
+# </CUSTOM PAGE HANDLERS>
 
 module.exports = router.routes!
