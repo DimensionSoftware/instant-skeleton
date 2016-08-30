@@ -72,10 +72,12 @@
       "domain": "dimensionsoftware.com",
       "cacheUrl": "//cache%n.%domain",
       "limits": {
-        "whiteList": [],
         "blackList": [],
-        "duration": 1800000,
-        "max": 800
+        "duration": 60000,
+        "max": 1000
+        "whiteList": [
+          "::ffff:127.0.0.1"
+        ]
       }
     },
     "blanket": {
