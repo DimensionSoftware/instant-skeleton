@@ -25,7 +25,6 @@ router.get R(\HomePage), (next) ->*
   # [@session.last-page, @session.on-page] =
   #   @session.on-page
   #   route
-  console.log 'Navigated to HomePage!'
   yield mw.react-or-json
   yield next
 # </CUSTOM PAGE HANDLERS>

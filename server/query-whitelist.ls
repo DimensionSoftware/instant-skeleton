@@ -50,7 +50,6 @@ function session-id {sid} session
   session.sid is sid
 
 function session-auth-token {sid}, {auth-token}:rethinkdb-session
-  console.log sid, auth-token
   auth-token is sid
 
 function session-name {name}, {auth-token}:rethinkdb-session
