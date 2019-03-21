@@ -1,5 +1,5 @@
 <center>
-[![Instant Skeleton](https://dimensionsoftware.com/images/skull_keys.png)](https://dimensionsoftware.com)
+[![Instant Skeleton](https://dimensionsoftware.com/static/images/github/skull_keys.png)](https://dimensionsoftware.com)
 
 Instant-Skeleton
 ================
@@ -154,5 +154,5 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  [**S
 ##### [Example TODO Application](https://todo.powerbulletin.com)
 
 <center>
-[![Fresh Software by Dimension](https://dimensionsoftware.com/images/software_by.png)](https://dimensionsoftware.com)
+[![Fresh Software by Dimension](https://dimensionsoftware.com/static/images/github/software_by.png)](https://dimensionsoftware.com)
 </center>
