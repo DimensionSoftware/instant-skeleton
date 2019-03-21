@@ -69,12 +69,12 @@
     "test": {},
     "production": {
       "database": "production",
-      "domain": "dimensionsoftware.com",
-      "cacheUrl": "//cache%n.%domain",
+      "domain": "develop.com",
+      "cacheUrl": "//%domain",
       "limits": {
         "blackList": [],
         "duration": 60000,
-        "max": 1000
+        "max": 1000,
         "whiteList": [
           "::ffff:127.0.0.1"
         ]
