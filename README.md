@@ -1,17 +1,14 @@
 <center>
-[![Instant Skeleton](https://dimensionsoftware.com/static/images/github/skull_keys.png)](https://dimensionsoftware.com)
+[![Instant Skeleton][is-image]][ds-link]
 
 Instant-Skeleton
 ================
-[![Gitter](https://badges.gitter.im/Join
-Chat.svg)](https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Dimension Software](http://img.shields.io/badge/HTML-5-blue.svg?style=flat)](https://dimensionsoftware.com)
+[![Gitter][gitter-image]][gitter-link] [![Dimension Software][html5-image]][ds-link]
 </center>
 
 Be Your Own Angel Investor
 --------------------------
 Realtime framework to lift heavy functionality lightening quick with Node.JS &amp; RethinkDB!
-
-__[DEMO](https://todo.powerbulletin.com)__
 
 ## Quick Start
 
@@ -156,3 +153,9 @@ Really digging our [software architecture](https://dimensionsoftware.com)?  [**S
 <center>
 [![Fresh Software by Dimension](https://dimensionsoftware.com/static/images/github/software_by.png)](https://dimensionsoftware.com)
 </center>
+
+[ds-link]: https://dimensionsoftware.com
+[is-image]: https://dimensionsoftware.com/static/images/github/skull_keys.png
+[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-link]: https://gitter.im/DimensionSoftware/instant-skeleton?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[html5-image]: http://img.shields.io/badge/HTML-5-blue.svg?style=flat
